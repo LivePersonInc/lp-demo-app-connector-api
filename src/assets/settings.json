@@ -1,0 +1,11 @@
+{
+  "CSDS_DOMAIN": "hc1n.dev.lprnd.net",
+  "WEBHOOK_PORT": "8080",
+  "VERSION": "3",
+  "BRAND_ID": "le28440506",
+  "USERNAME": "eptest@liveperson.com",
+  "PASSWORD": "12345678?",
+  "APP_KEY": "140b14e5-fa56-4e17-b18f-7b5fa3efddc0",
+  "APP_SECRET": "2a5srg0shkhm2t4u4dknqtlkhj",
+  "ASYNC_MESSAGING": "qatrunk.dev.lprnd.net"
+}
