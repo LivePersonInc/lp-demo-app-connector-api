@@ -1,0 +1,177 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <mat-card class="lp-card">
+    <mat-card-content>
+      <h2>SEND API TEST WEB UI</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="lp-card">
+    <mat-card-header>
+      <h3>App JWT</h3>
+    </mat-card-header>
+    <mat-card-content>
+
+      <form class="basic-form">
+        <mat-error>
+          <!--Required Fields have to be filled-->
+        </mat-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </form>
+
+      <p *ngIf="appJWT" class="res-info">
+        {{appJWT}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button
+              (click)="getAppJWT()"
+              color="primary"
+              class="btn-left"
+              [disabled]="">
+        Get AppJWT
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="lp-card">
+    <mat-card-header>
+      <h3>CONSUMER JWS</h3>
+    </mat-card-header>
+    <mat-card-content>
+
+      <form class="basic-form">
+        <mat-error>
+          <!--Required Fields have to be filled-->
+        </mat-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="JWT" required [(ngModel)]="appJWT" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="ext_consumer_id" required [(ngModel)]="ext_consumer_id" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </form>
+
+      <p *ngIf="consumerJWS" class="res-info">
+        {{consumerJWS}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn-left"
+              (click)="getAppConsumerJWS()"
+              color="primary"
+              [disabled]="">
+        Get Consumer JWS
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="lp-card">
+    <mat-card-header>
+      <h3>OPEN CONVERSATION</h3>
+    </mat-card-header>
+    <mat-card-content>
+
+      <form class="basic-form">
+        <mat-error>
+          <!--Required Fields have to be filled-->
+        </mat-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="JWT" required [(ngModel)]="appJWT" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="consumer JWS" required [(ngModel)]="consumerJWS" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </form>
+      <p *ngIf="conversationId" class="res-info">
+        <label>Conversation id: </label> {{conversationId}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn-left"
+              (click)="openConversation()"
+              color="primary"
+              [disabled]="">
+        OPEN CONVERSATION
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="lp-card">
+    <mat-card-header>
+      <h3>SEND MESSAGE</h3>
+    </mat-card-header>
+    <mat-card-content>
+
+      <form class="basic-form">
+        <mat-error>
+          <!--Required Fields have to be filled-->
+        </mat-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="ConversationID" required [(ngModel)]="conversationId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Message" required [(ngModel)]="message" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </form>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn-left"
+              (click)="sendMessage()"
+              color="primary"
+              [disabled]="">
+        SEND MESSAGE
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="lp-card">
+    <mat-card-header>
+      <h3>CLOSE CONVERSATION</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="basic-form">
+        <mat-error>
+          <!--Required Fields have to be filled-->
+        </mat-error>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Conversation ID" required [(ngModel)]="conversationId" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn-left"
+              (click)="closeConversation()"
+              color="primary"
+              [disabled]="">
+        CLOSE CONVERSATION
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+
+
+
