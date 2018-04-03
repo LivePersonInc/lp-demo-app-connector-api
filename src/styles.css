@@ -3,4 +3,15 @@
 
 body {
   background-color: rgb(242, 242, 242);
+  font-family: "Open Sans","myriad-pro-1","myriad-pro-2",sans-serif;
+
+}
+/**TODO: Change primary color propertly**/
+.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary{
+  background-color: #ff720b;
+
+}
+
+.mat-input-element {
+  caret-color: #ff720b;
 }
