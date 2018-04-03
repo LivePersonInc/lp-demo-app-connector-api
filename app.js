@@ -6,11 +6,12 @@ const cors = require('cors');
 const umsBrigeServer = require("./server/umsBrige");
 const domains = require('./server/connector/CsdsProperties');
 const https = require('https');
-const http = require('http');
 const forceSsl = require('express-force-ssl');
 
-//load certificates
+//  configuration from a designated file.
+nconf.file({file:"settings.json"});
 
+//load certificates
 const key = fs.readFileSync('dev.lpchatforconnectorapi.com.key');
 const cert = fs.readFileSync( 'dev.lpchatforconnectorapi.com.crt' );
 const ca = fs.readFileSync( 'dev.lpchatforconnectorapi.com.crt' );
@@ -20,31 +21,24 @@ const options = {
   cert: cert,
   ca: ca
 };
-
-
-https.createServer(options, app).listen(443, function () {
-
-});
-
-
-
-//  configuration from a designated file.
-nconf.file({file:"settings.json"});
-
-
-app.domains = domains;
-app.use(forceSsl);
 app.use(cors());
+
+https.createServer(options, app).listen(443);
+app.domains = domains;
+
+//Force https
+app.use(forceSsl);
+
+
 app.use("/umsbrige", umsBrigeServer);
+//Serve our UI
 app.use(express.static('dist'));
 
-app.listen("80", function() {
+//http server
+app.listen("8282", function() {
   console.log("listening");
   app.isReady = true;
   app.emit("ready", true);
 });
-
-
-
 
 module.exports = app;
