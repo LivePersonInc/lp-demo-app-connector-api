@@ -6,9 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SendApiService } from "./services/send-api.service";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LpHeaderComponent } from './lp-header/lp-header.component';
+import { LpChatBoxComponent } from './lp-chat-box/lp-chat-box.component';
+import { LpTestServicesComponent } from './lp-test-services/lp-test-services.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LpHeaderComponent,
+    LpChatBoxComponent,
+    LpTestServicesComponent
   ],
   imports: [
     BrowserModule,
