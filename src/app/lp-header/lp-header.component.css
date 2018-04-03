@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  background-color: white;
+  min-height: 80px;
+}
+
+.logo {
+  padding: 20px;
+  left: 20px;
+  float: left;
+}
+
+img {
+  height:30px;
+}
+
+.title {
+  margin-right: 20px;
+  float: right;
+  margin-top: 10px;
+  color: #162036;
+}
