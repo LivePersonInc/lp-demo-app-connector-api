@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LpHeaderComponent } from './lp-header/lp-header.component';
 import { LpChatBoxComponent } from './lp-chat-box/lp-chat-box.component';
 import { LpTestServicesComponent } from './lp-test-services/lp-test-services.component';
+import { LpConversationComponent } from './lp-conversation/lp-conversation.component';
 @NgModule({
   declarations: [
     AppComponent,
     LpHeaderComponent,
     LpChatBoxComponent,
-    LpTestServicesComponent
+    LpTestServicesComponent,
+    LpConversationComponent
   ],
   imports: [
     BrowserModule,
