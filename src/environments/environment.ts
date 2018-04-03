@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  umsDomain: "localhost:8282",
+  umsDomain: "localhost",
   sentinel: "lp-sentinel-web-qa.dev.lprnd.net",
   idp:"qtvr-wng113.dev.lprnd.net",
   brandId: "le28440506",

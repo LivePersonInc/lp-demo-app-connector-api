@@ -50,7 +50,7 @@ export class SendApiService {
     console.log(headers);
     this.loadingSubject.next(true);
 
-    return this.http.post(`http://${environment.umsDomain}/umsbrige/openconv/${brandId}`, body, headers)
+    return this.http.post(`https://${environment.umsDomain}/umsbrige/openconv/${brandId}`, body, headers)
       .pipe(catchError(this.handleError));
   }
 
@@ -58,14 +58,14 @@ export class SendApiService {
     console.log(body);
     console.log(headers);
     this.loadingSubject.next(true);
-    return this.http.post(`http://${environment.umsDomain}/umsbrige/sendraw/${brandId}/conv/${convId}`, body, headers)
+    return this.http.post(`https://${environment.umsDomain}/umsbrige/sendraw/${brandId}/conv/${convId}`, body, headers)
       .pipe(catchError(this.handleError));
   }
 
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
     console.log(headers);
     this.loadingSubject.next(true);
-    return this.http.post(`http://${environment.umsDomain}/umsbrige/close/${brandId}/conv/${convId}`, null, headers)
+    return this.http.post(`https://${environment.umsDomain}/umsbrige/close/${brandId}/conv/${convId}`, null, headers)
       .pipe(
         catchError(this.handleError)
       );
