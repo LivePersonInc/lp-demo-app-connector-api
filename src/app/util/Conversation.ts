@@ -140,7 +140,7 @@ export class Conversation {
         console.log(res);
         this.messages.push(new ChatMessage("sent", new Date, message, "Test user", "ok"));
         resolve(res);
-        this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
+        this.handleSuccess("Message successfully sent to conversation with id " + this.conversationId);
       },error => {
         this.sendApiService.stopLoading();
         this.handleError(error);
