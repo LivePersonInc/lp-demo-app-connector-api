@@ -4,6 +4,7 @@ const nconf = require("nconf");
 const fs = require('fs');
 const cors = require('cors');
 const umsBrigeServer = require("./server/umsBrige");
+const notifications = require("./server/notifications");
 const domains = require('./server/connector/CsdsProperties');
 const https = require('https');
 const forceSsl = require('express-force-ssl');
@@ -31,6 +32,8 @@ app.use(forceSsl);
 
 
 app.use("/umsbrige", umsBrigeServer);
+app.use("/notifications", notifications); //receive webhooks notifications
+
 //Serve our UI
 app.use(express.static('dist'));
 
