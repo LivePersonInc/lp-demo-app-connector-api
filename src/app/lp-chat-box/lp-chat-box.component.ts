@@ -22,7 +22,6 @@ export class LpChatBoxComponent implements OnInit {
 
   public sendMessage(message) {
     this.onSendMessage.emit(message);
-    console.log(this.conversationHelper.messages);
   }
 
 }
