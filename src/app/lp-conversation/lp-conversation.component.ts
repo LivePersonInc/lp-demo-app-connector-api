@@ -12,27 +12,26 @@ import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage
 })
 export class LpConversationComponent implements OnInit {
   public brandId;
-  public messages: Array<ChatMessage>;
   public conversationHelper : Conversation;
   public isConvStarted:boolean;
   public appKey;
   public appSecret;
-  public isConversationStared: Boolean;
   constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService) { }
 
   ngOnInit() {
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
-    this.messages = [];
+    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
   }
 
-  public startConversation() {
+  public startConversation(initialMessage: string) {
     this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
     this.conversationHelper.getAppJWT().then(resolve => {
       this.conversationHelper.getAppConsumerJWS().then(resolve => {
-        this.conversationHelper.openConversation();
-        this.isConvStarted = true;
+        this.conversationHelper.openConversation(initialMessage).then( resolve => {
+          this.isConvStarted = true;
+        });
       });
     });
   }
@@ -43,11 +42,13 @@ export class LpConversationComponent implements OnInit {
   }
 
   public sendMessage(messageText : string) {
+    if(this.isConvStarted) {
       console.log(messageText);
-      this.conversationHelper.sendMessage(messageText).then( resolve => {
-        let message = new ChatMessage("sent", new Date, messageText, "Test user", "ok");
-        this.messages.push(message);
-      });
+      this.conversationHelper.sendMessage(messageText);
+    }else{
+      this.startConversation(messageText);
+    }
+
   }
 
 }

@@ -104,25 +104,28 @@ export class Conversation {
     })
   }
 
-  public openConversation() {
-    const headers = {'headers': {
-      'content-type':'application/json',
-      'Authorization': this.appJWT,
-      'x-lp-on-behalf':this.consumerJWS
-    }
-    };
-    let body;
-    body = JSON.stringify(this.getOpenConvRequestBody());
-
-    this.sendApiService.openConversation(this.branId,body, headers).subscribe(res => {
-      console.log(res);
-      this.conversationId = res["convId"];
-      this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
-    },error => {
-      this.sendApiService.stopLoading();
-      this.handleError(error);
-    });
-
+  public openConversation(initialMessage:string): Promise<any> {
+    return new Promise( (resolve, reject) => {
+      const headers = {
+        'headers': {
+          'content-type': 'application/json',
+          'Authorization': this.appJWT,
+          'x-lp-on-behalf': this.consumerJWS
+        }
+      };
+      let body = JSON.stringify(this.getOpenConvRequestBody(initialMessage));
+      this.sendApiService.openConversation(this.branId, body, headers).subscribe(res => {
+        console.log(res);
+        this.conversationId = res["convId"];
+        this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
+        this.messages.push(new ChatMessage("sent", new Date, initialMessage, "Test user", "ok"));
+        resolve(res);
+      }, error => {
+        this.sendApiService.stopLoading();
+        this.handleError(error);
+        reject(error);
+      });
+    })
   }
 
   public sendMessage(message: string): Promise<Object> {
@@ -179,7 +182,7 @@ export class Conversation {
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfing);
   }
 
-  private getOpenConvRequestBody(): any {
+  private getOpenConvRequestBody(initialMessage: string): any {
     let body = [];
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
@@ -205,7 +208,7 @@ export class Conversation {
     );
     this.setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
 
-    let event = new Event("ContentEvent", "text/plain", "Hi from ConversationHappyFlowTest!XXXXXXXX");
+    let event = new Event("ContentEvent", "text/plain", initialMessage);
     let publishContentEvent = new PublishContentEvent(this.conversationId, event);
     this.sendMsgPayload = new Request("req", "3", "ms.PublishEvent", publishContentEvent);
 
