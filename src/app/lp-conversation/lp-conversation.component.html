@@ -6,20 +6,29 @@
         <app-lp-chat-box></app-lp-chat-box>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2"  [rowspan]="1" >
-        <form class="basic-form">
-          <mat-error>
-            <!--Required Fields have to be filled-->
-          </mat-error>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Brand ID" required [(ngModel)]="branId" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-        </form>
+        <div class="content-container">
+          <form class="basic-form">
+            <mat-error>
+              <!--Required Fields have to be filled-->
+            </mat-error>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Brand ID" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </form>
+          <button mat-raised-button
+                  (click)="getAppJWT()"
+                  color="primary"
+                  class="btn-left"
+                  [disabled]="">
+            Start Conversation
+          </button>
+        </div>
       </mat-grid-tile>
 
 
