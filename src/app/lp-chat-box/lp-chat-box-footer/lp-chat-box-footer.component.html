@@ -1,4 +1,4 @@
 <div class="footer-container">
   <textarea [(ngModel)]="messageText"></textarea>
-  <button mat-button><i class="material-icons">send</i></button>
+  <button mat-button (click)="sendMessage()" [disabled]="messageText.length === 0"> <i class="material-icons">send</i></button>
 </div>

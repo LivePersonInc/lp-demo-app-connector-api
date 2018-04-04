@@ -12,6 +12,7 @@ import {PrivateData} from "../models/PrivateData";
 import {SetUserProfile} from "../models/SetUserProfile";
 import {Event} from "../models/Event";
 import {PublishContentEvent} from "../models/PublishContentEvent";
+import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
 
 
 export class Conversation {
@@ -30,11 +31,14 @@ export class Conversation {
   public httpOptions = {};
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
+  public messages: Array<ChatMessage>;
+
 
   constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string ) {
     this.branId = brandId;
     this.appKey = appKey;
     this.appSecret = appSecret;
+    this.messages = [];
 
     this.snackBarConfing = new MatSnackBarConfig();
     this.snackBarConfing.verticalPosition = 'top';
@@ -51,7 +55,7 @@ export class Conversation {
   }
 
 
-  public getAppJWT(): Promise {
+  public getAppJWT(): Promise<string> {
     return new Promise( (resolve, reject) => {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -75,7 +79,7 @@ export class Conversation {
 
   }
 
-  public getAppConsumerJWS(): Promise {
+  public getAppConsumerJWS(): Promise<string> {
     return new Promise( (resolve, reject) => {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -118,25 +122,32 @@ export class Conversation {
       this.sendApiService.stopLoading();
       this.handleError(error);
     });
+
   }
 
-  public sendMessage(message: string) {
-    const headers = {'headers': {
-      'content-type':'application/json',
-      'Authorization': this.appJWT,
-      'x-lp-on-behalf':this.consumerJWS
-    }
-    };
-    let body;
-    body = JSON.stringify(this.getMessageRequestBody(message));
-    console.log(body);
-    this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
-      console.log(res);
-      this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
-    },error => {
-      this.sendApiService.stopLoading();
-      this.handleError(error);
-    });
+  public sendMessage(message: string): Promise<Object> {
+    return new Promise( (resolve, reject) => {
+      const headers = {'headers': {
+        'content-type':'application/json',
+        'Authorization': this.appJWT,
+        'x-lp-on-behalf':this.consumerJWS
+        }
+      };
+      let body;
+      body = JSON.stringify(this.getMessageRequestBody(message));
+      console.log(body);
+      this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
+        console.log(res);
+        this.messages.push(new ChatMessage("sent", new Date, message, "Test user", "ok"));
+        resolve(res);
+        this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
+      },error => {
+        this.sendApiService.stopLoading();
+        this.handleError(error);
+        reject(error);
+      });
+    })
+
   }
 
   public closeConversation(){
