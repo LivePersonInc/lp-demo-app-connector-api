@@ -1,0 +1,13 @@
+.message-container{
+  padding: 10PX;
+  text-align: left;
+}
+
+.sent{
+  color: DARKSLATEGRAY;
+
+}
+
+.received {
+  margin-left: 50px;
+}
