@@ -5,6 +5,9 @@
   height: -webkit-calc(100% - 42px);
   border-radius: 3px;
   background-color: #FFFFFF;
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 500px;
 }
 .messages-area{
   width: 100%;
