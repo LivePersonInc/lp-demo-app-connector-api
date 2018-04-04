@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ChatMessage} from "./models/ChatMessage";
 
 @Component({
   selector: 'app-lp-chat-box-message',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LpChatBoxMessageComponent implements OnInit {
 
-  constructor() { }
+  @Input() public message: ChatMessage;
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }
