@@ -1,0 +1,31 @@
+:host{
+  height: 55px;
+}
+.footer-container {
+  width: 100%;
+  height: 55px;
+}
+textarea {
+  border: none;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  width: -webkit-calc(100%- 102px);
+  /* Firefox */
+  width: -moz-calc(100% - 102px);
+  /* WebKit */
+  width: -webkit-calc(100% - 102px);
+  /* Opera */
+  width: -o-calc(100% - 102px);
+  /* Standard */
+  width: calc(100% - 102px);
+  float: left;
+  height: 45px;
+  padding: 5px;
+}
+
+button{
+  height:100%;
+  float: right;
+
+}
