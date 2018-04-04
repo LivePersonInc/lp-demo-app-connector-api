@@ -11,7 +11,8 @@ import {Conversation} from "../util/Conversation";
 })
 export class LpConversationComponent implements OnInit {
   public brandId;
-  public convesationHelper : Conversation;
+  public conversationHelper : Conversation;
+  public isConvStarted:boolean;
   public appKey;
   public appSecret;
   public isConversationStared: Boolean;
@@ -27,12 +28,22 @@ export class LpConversationComponent implements OnInit {
   }
 
   public startConversation() {
-    this.convesationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
-    this.convesationHelper.getAppJWT().then(resolve => {
-      this.convesationHelper.getAppConsumerJWS().then( resolve => {
-        this.convesationHelper.openConversation();
+    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
+    this.conversationHelper.getAppJWT().then(resolve => {
+      this.conversationHelper.getAppConsumerJWS().then(resolve => {
+        this.conversationHelper.openConversation();
+        this.isConvStarted = true;
       });
     });
+  }
+
+  public closeConversation() {
+    this.conversationHelper.closeConversation();
+    this.isConvStarted = false;
+  }
+
+  public sendMessage() {
+
   }
 
 }

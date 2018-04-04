@@ -25,8 +25,15 @@
                   (click)="startConversation()"
                   color="primary"
                   class="btn-left"
-                  [disabled]="">
+                  [disabled]="isConvStarted">
             Start Conversation
+          </button>
+          <button mat-raised-button
+                  (click)="closeConversation()"
+                  color="primary"
+                  class="btn-left"
+                  [disabled]="!isConvStarted">
+            Close Conversation
           </button>
         </div>
       </mat-grid-tile>
