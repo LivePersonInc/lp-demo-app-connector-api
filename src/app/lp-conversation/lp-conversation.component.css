@@ -18,3 +18,7 @@
 mat-form-field.mat-form-field {
   font-size: 12px;
 }
+.content-container button{
+  float: left;
+  margin-left: 10px;
+}
