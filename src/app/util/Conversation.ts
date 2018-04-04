@@ -31,7 +31,7 @@ export class Conversation {
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
 
-  constructor(public sendApiService: SendApiService,public snackBar: MatSnackBar, brandId:string, appKey: string, appSecret: string ) {
+  constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string ) {
     this.branId = brandId;
     this.appKey = appKey;
     this.appSecret = appSecret;
@@ -50,44 +50,54 @@ export class Conversation {
     });
   }
 
-  public getAppJWT(){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'content-type':'application/x-www-form-urlencoded'
-      })
-    };
 
-    this.sendApiService.getAppJWT(this.branId,this.appKey,this.appSecret,httpOptions).subscribe(
-      res =>{
-        console.log(res);
-        this.handleSuccess("App JWT succesfully obtined");
-        this.appJWT = res['access_token'];
-      },  error => {
-        this.handleError(error);
-        this.sendApiService.stopLoading();
-      }
-    );
+  public getAppJWT(): Promise {
+    return new Promise( (resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'content-type':'application/x-www-form-urlencoded'
+        })
+      };
+
+      this.sendApiService.getAppJWT(this.branId,this.appKey,this.appSecret,httpOptions).subscribe(
+        res =>{
+          console.log(res);
+          this.handleSuccess("App JWT succesfully obtined");
+          this.appJWT = res['access_token'];
+          resolve(res['access_token']);
+        },  error => {
+          this.handleError(error);
+          reject(error);
+          this.sendApiService.stopLoading();
+        }
+      );
+    })
+
   }
 
-  public getAppConsumerJWS(){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'content-type':'application/json',
-        'Authorization': this.appJWT
-      })
-    };
-    console.log(httpOptions.headers);
-    const body = {"ext_consumer_id": this.ext_consumer_id};
-    this.sendApiService.getConsumerJWS(this.branId, body, httpOptions).subscribe(
-      res =>{
-        console.log(res);
-        this.consumerJWS = res['token'];
-        this.handleSuccess("Consumer JWS succesfully obtined");
-      },  error => {
-        this.handleError(error);
-        this.sendApiService.stopLoading();
-      }
-    );
+  public getAppConsumerJWS(): Promise {
+    return new Promise( (resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'content-type':'application/json',
+          'Authorization': this.appJWT
+        })
+      };
+      console.log(httpOptions.headers);
+      const body = {"ext_consumer_id": this.ext_consumer_id};
+      this.sendApiService.getConsumerJWS(this.branId, body, httpOptions).subscribe(
+        res =>{
+          console.log(res);
+          this.consumerJWS = res['token'];
+          resolve(res['token']);
+          this.handleSuccess("Consumer JWS succesfully obtined");
+        },  error => {
+          this.handleError(error);
+          reject(error);
+          this.sendApiService.stopLoading();
+        }
+      );
+    })
   }
 
   public openConversation() {
@@ -196,7 +206,5 @@ export class Conversation {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(this.conversationId,
       new Event("ContentEvent", "text/plain", message)));
   }
-
-
 
 }
