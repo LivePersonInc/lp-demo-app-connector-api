@@ -10,13 +10,17 @@ import { LpHeaderComponent } from './lp-header/lp-header.component';
 import { LpChatBoxComponent } from './lp-chat-box/lp-chat-box.component';
 import { LpTestServicesComponent } from './lp-test-services/lp-test-services.component';
 import { LpConversationComponent } from './lp-conversation/lp-conversation.component';
+import { LpChatBoxMessageComponent } from './lp-chat-box/lp-chat-box-message/lp-chat-box-message.component';
+import { LpChatBoxFooterComponent } from './lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component';
 @NgModule({
   declarations: [
     AppComponent,
     LpHeaderComponent,
     LpChatBoxComponent,
     LpTestServicesComponent,
-    LpConversationComponent
+    LpConversationComponent,
+    LpChatBoxMessageComponent,
+    LpChatBoxFooterComponent
   ],
   imports: [
     BrowserModule,
