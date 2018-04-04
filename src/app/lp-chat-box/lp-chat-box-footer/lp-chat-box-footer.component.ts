@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit Output} from '@angular/core';
 import {ChatMessage} from "../lp-chat-box-message/models/ChatMessage";
 
 @Component({
@@ -7,16 +7,20 @@ import {ChatMessage} from "../lp-chat-box-message/models/ChatMessage";
   styleUrls: ['./lp-chat-box-footer.component.css']
 })
 export class LpChatBoxFooterComponent implements OnInit {
+  @Output() onSendMessage = new EventEmitter<string>();
 
-  public message: ChatMessage;
+  public messageText: String;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.messageText = "";
+
   }
 
   public sendMessage() {
-
+    this.onSendMessage.emit(this.messageText);
   }
 
 }
