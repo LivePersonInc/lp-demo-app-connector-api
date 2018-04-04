@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../services/send-api.service";
 import {Conversation} from "../util/Conversation";
+import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
 
 @Component({
   selector: 'app-lp-conversation',
@@ -11,6 +12,7 @@ import {Conversation} from "../util/Conversation";
 })
 export class LpConversationComponent implements OnInit {
   public brandId;
+  public messages: Array<ChatMessage>;
   public conversationHelper : Conversation;
   public isConvStarted:boolean;
   public appKey;
@@ -19,12 +21,10 @@ export class LpConversationComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService) { }
 
   ngOnInit() {
-
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
-
-
+    this.messages = [];
   }
 
   public startConversation() {
@@ -42,8 +42,12 @@ export class LpConversationComponent implements OnInit {
     this.isConvStarted = false;
   }
 
-  public sendMessage() {
-
+  public sendMessage(messageText : string) {
+      console.log(messageText);
+      this.conversationHelper.sendMessage(messageText).then( resolve => {
+        let message = new ChatMessage("sent", new Date, messageText, "Test user", "ok");
+        this.messages.push(message);
+      });
   }
 
 }
