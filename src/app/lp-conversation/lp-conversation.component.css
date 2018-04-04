@@ -14,3 +14,7 @@
   font-size: small;
   color: mediumblue;
 }
+
+mat-form-field.mat-form-field {
+  font-size: 12px;
+}
