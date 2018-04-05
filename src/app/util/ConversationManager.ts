@@ -119,7 +119,7 @@ export class ConversationManager {
         console.log(res);
         this.conversationId = res["convId"];
         this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
-        this.messages.push(new ChatMessage("sent", new Date, initialMessage, "Test user", "ok"));
+        this.messages.push(new ChatMessage("sent", new Date, initialMessage, this.userName, "ok", this.getShowUserValue(this.userName)));
         resolve(res);
       }, error => {
         this.sendApiService.stopLoading();
@@ -142,7 +142,7 @@ export class ConversationManager {
       console.log(body);
       this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
         console.log(res);
-        this.messages.push(new ChatMessage("sent", new Date, message, "Test user", "ok"));
+        this.messages.push(new ChatMessage("sent", new Date, message, this.userName, "ok", this.getShowUserValue(this.userName)));
         resolve(res);
         this.handleSuccess("Message successfully sent to conversation with id " + this.conversationId);
       },error => {
@@ -220,6 +220,18 @@ export class ConversationManager {
   private getMessageRequestBody(message: string) {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(this.conversationId,
       new Event("ContentEvent", "text/plain", message)));
+  }
+
+  private getShowUserValue(userName:string): boolean {
+    if(this.messages && this.messages.length === 0){
+      return true;
+    }
+
+    if(this.messages && this.messages[this.messages.length - 1].userName !== userName) {
+       return true;
+     }
+
+    return false;
   }
 
 }
