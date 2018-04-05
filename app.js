@@ -29,12 +29,11 @@ https.createServer(options, app).listen(443);
 app.domains = domains;
 
 //Force https
-app.use(forceSsl);
+//app.use(forceSsl);
 
 
 app.use("/umsbrige", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
-
 
 //Serve our UI
 app.use(express.static('dist'));
