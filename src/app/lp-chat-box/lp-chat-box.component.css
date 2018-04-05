@@ -22,5 +22,5 @@
   height: calc(100% - 55px);
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #b0b0b0;
+  border-bottom: 1px solid lightgray;
 }
