@@ -2,7 +2,7 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../services/send-api.service";
-import {Conversation} from "../util/Conversation";
+import {ConversationManager} from "../util/ConversationManager";
 import {EventSourcePolyfill} from 'ng-event-source';
 
 @Component({
@@ -12,7 +12,7 @@ import {EventSourcePolyfill} from 'ng-event-source';
 })
 export class LpConversationComponent implements OnInit {
   public brandId: string;
-  public conversationHelper: Conversation;
+  public conversationManager: ConversationManager;
   public isConvStarted: boolean;
   public appKey: string;
   public appSecret: string;
@@ -25,14 +25,14 @@ export class LpConversationComponent implements OnInit {
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
-    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
-    this.conversationHelper.getAppJWT().then(resolve => {
-      this.conversationHelper.getAppConsumerJWS().then(resolve => {
-        this.conversationHelper.openConversation(initialMessage).then( resolve => {
+    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+    this.conversationManager.getAppJWT().then(resolve => {
+      this.conversationManager.getAppConsumerJWS().then(resolve => {
+        this.conversationManager.openConversation(initialMessage).then(resolve => {
           this.isConvStarted = true;
           this.subscribeToMessageNotifications();
         });
@@ -41,7 +41,7 @@ export class LpConversationComponent implements OnInit {
   }
 
   public closeConversation() {
-    this.conversationHelper.closeConversation();
+    this.conversationManager.closeConversation();
     this.unsubscribeToMessageNotifications();
     this.isConvStarted = false;
   }
@@ -49,7 +49,7 @@ export class LpConversationComponent implements OnInit {
   public sendMessage(messageText : string) {
     if(this.isConvStarted) {
       console.log(messageText);
-      this.conversationHelper.sendMessage(messageText);
+      this.conversationManager.sendMessage(messageText);
     }else{
       this.startConversation(messageText);
     }
@@ -80,7 +80,5 @@ export class LpConversationComponent implements OnInit {
       console.log("Error: There is not any instance of EventSourcePolyfill");
     }
   }
-
-
 
 }
