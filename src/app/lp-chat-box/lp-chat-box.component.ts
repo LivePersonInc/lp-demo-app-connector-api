@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChatMessage} from "./lp-chat-box-message/models/ChatMessage";
-import {Conversation} from "../util/Conversation";
+import {ConversationManager} from "../util/ConversationManager";
 
 @Component({
   selector: 'app-lp-chat-box',
@@ -10,7 +10,7 @@ import {Conversation} from "../util/Conversation";
 export class LpChatBoxComponent implements OnInit {
   public testMessage: ChatMessage;
   public testReceivedMessage: ChatMessage;
-  @Input()  conversationHelper: Conversation;
+  @Input()  conversationManager: ConversationManager;
   @Output() onSendMessage = new EventEmitter<string>();
 
   constructor() { }
