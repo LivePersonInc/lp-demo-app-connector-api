@@ -1,3 +1,8 @@
 <div class="message-container" [ngClass]="message.type">
-  {{message.message}}
+  <div class="message">
+    {{message.message}}
+  </div>
+  <div class="time">
+    {{message.timestamp | date:'h:mm a'}}
+  </div>
 </div>
