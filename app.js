@@ -8,6 +8,7 @@ const notifications = require("./server/notifications");
 const domains = require('./server/connector/CsdsProperties');
 const https = require('https');
 const forceSsl = require('express-force-ssl');
+const SSE = require('sse-nodejs');
 
 //  configuration from a designated file.
 nconf.file({file:"settings.json"});
@@ -33,6 +34,7 @@ app.use(forceSsl);
 
 app.use("/umsbrige", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
+
 
 //Serve our UI
 app.use(express.static('dist'));
