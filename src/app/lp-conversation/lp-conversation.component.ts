@@ -11,20 +11,52 @@ import {EventSourcePolyfill} from 'ng-event-source';
   styleUrls: ['./lp-conversation.component.css']
 })
 export class LpConversationComponent implements OnInit {
-  public brandId;
-  public conversationHelper : Conversation;
-  public isConvStarted:boolean;
-  public appKey;
-  public appSecret;
-  public eventSource = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe`,{});
-
+  public brandId: string;
+  public conversationHelper: Conversation;
+  public isConvStarted: boolean;
+  public appKey: string;
+  public appSecret: string;
+  public eventSource: EventSourcePolyfill;
+  public userName: string;
   constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone) { }
 
   ngOnInit() {
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
-    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
+    this.userName = "test user name";
+    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+  }
+
+  public startConversation(initialMessage: string) {
+    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+    this.conversationHelper.getAppJWT().then(resolve => {
+      this.conversationHelper.getAppConsumerJWS().then(resolve => {
+        this.conversationHelper.openConversation(initialMessage).then( resolve => {
+          this.isConvStarted = true;
+          this.subscribeToMessageNotifications();
+        });
+      });
+    });
+  }
+
+  public closeConversation() {
+    this.conversationHelper.closeConversation();
+    this.unsubscribeToMessageNotifications();
+    this.isConvStarted = false;
+  }
+
+  public sendMessage(messageText : string) {
+    if(this.isConvStarted) {
+      console.log(messageText);
+      this.conversationHelper.sendMessage(messageText);
+    }else{
+      this.startConversation(messageText);
+    }
+  }
+
+  public subscribeToMessageNotifications() {
+    this.eventSource  = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe`,{});
 
     this.eventSource.onmessage = (data => {
       console.log(data);
@@ -41,33 +73,14 @@ export class LpConversationComponent implements OnInit {
     }
   }
 
-  public startConversation(initialMessage: string) {
-    this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
-    this.conversationHelper.getAppJWT().then(resolve => {
-      this.conversationHelper.getAppConsumerJWS().then(resolve => {
-        this.conversationHelper.openConversation(initialMessage).then( resolve => {
-          this.isConvStarted = true;
-        });
-      });
-    });
-  }
-
-  public closeConversation() {
-    this.conversationHelper.closeConversation();
-    this.isConvStarted = false;
-  }
-
-  public sendMessage(messageText : string) {
-    if(this.isConvStarted) {
-      console.log(messageText);
-      this.conversationHelper.sendMessage(messageText);
-    }else{
-      this.startConversation(messageText);
+  public unsubscribeToMessageNotifications() {
+    if(this.eventSource instanceof EventSourcePolyfill) {
+      this.eventSource.close();
+    }else {
+      console.log("Error: There is not any instance of EventSourcePolyfill");
     }
   }
 
-  public subscribeToMessageNotifications() {
 
-  }
 
 }
