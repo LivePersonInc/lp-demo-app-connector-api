@@ -1,6 +1,20 @@
 .message-container{
   padding: 10PX;
   text-align: left;
+  width: calc(100% - 50px);
+  display: flex;
+}
+.message-container .message{
+  text-align: left;
+  width: 70%;
+  word-break: break-all;
+}
+.message-container .time{
+  text-align: right;
+  font-size: 10px;
+  line-height: 20px;
+  color: #b0b0b0;
+  width: 30%;
 }
 
 .sent{
@@ -10,4 +24,7 @@
 
 .received {
   margin-left: 50px;
+}
+.received .message-container{
+   background-color: #efe0ef;
 }
