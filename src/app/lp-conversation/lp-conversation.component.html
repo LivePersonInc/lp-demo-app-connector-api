@@ -20,6 +20,9 @@
             <mat-form-field class="full-width">
               <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
             </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Consumer Name" required [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
           </form>
           <button mat-raised-button
                   (click)="closeConversation()"
