@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../services/send-api.service";
 import {Conversation} from "../util/Conversation";
-import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
+import {EventSourcePolyfill} from 'ng-event-source';
 
 @Component({
   selector: 'app-lp-conversation',
@@ -16,13 +16,29 @@ export class LpConversationComponent implements OnInit {
   public isConvStarted:boolean;
   public appKey;
   public appSecret;
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService) { }
+  public eventSource = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe`,{});
+
+  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone) { }
 
   ngOnInit() {
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.conversationHelper = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret);
+
+    this.eventSource.onmessage = (data => {
+      console.log(data);
+      this.zone.run(() => {
+        console.log(data);
+      });
+    });
+    this.eventSource.onopen = (a) => {
+      console.log("OPEN");
+    };
+    this.eventSource.onerror = (e) => {
+      console.log(e);
+
+    }
   }
 
   public startConversation(initialMessage: string) {
@@ -48,6 +64,9 @@ export class LpConversationComponent implements OnInit {
     }else{
       this.startConversation(messageText);
     }
+  }
+
+  public subscribeToMessageNotifications() {
 
   }
 
