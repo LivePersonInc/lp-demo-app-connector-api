@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import {SendApiService} from "../services/send-api.service";
 import {environment} from '../../environments/environment';
 import {HttpHeaders} from "@angular/common/http";
@@ -15,7 +14,7 @@ import {PublishContentEvent} from "../models/PublishContentEvent";
 import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
 
 
-export class Conversation {
+export class ConversationManager {
   public isLoading = false;
   public appJWT: string;
   public consumerJWS: string;
@@ -119,7 +118,7 @@ export class Conversation {
       this.sendApiService.openConversation(this.branId, body, headers).subscribe(res => {
         console.log(res);
         this.conversationId = res["convId"];
-        this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
+        this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
         this.messages.push(new ChatMessage("sent", new Date, initialMessage, "Test user", "ok"));
         resolve(res);
       }, error => {
@@ -164,7 +163,7 @@ export class Conversation {
     };
     this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
       console.log(res);
-      this.handleSuccess("Conversation CLOSED successfully with id " + this.conversationId);
+      this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
     }),error => {
       this.sendApiService.stopLoading();
       this.handleError(error);

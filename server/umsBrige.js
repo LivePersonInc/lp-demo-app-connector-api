@@ -93,7 +93,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
     .then((resolve) => {
       console.log(resolve[0]);
       if (handleStatusCode(resolve[1].statusCode)) {
-        res.send({"message": "Conversation closed succesfully"});
+        res.send({"message": "ConversationManager closed succesfully"});
       } else {
         res.status(resolve[1].statusCode).send(resolve[1].message);
       }

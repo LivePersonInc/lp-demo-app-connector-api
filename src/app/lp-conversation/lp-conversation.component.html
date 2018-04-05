@@ -3,7 +3,7 @@
   <mat-card-content>
     <mat-grid-list cols="4" >
       <mat-grid-tile [colspan]="2"  [rowspan]="2" >
-        <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationHelper]="conversationHelper"></app-lp-chat-box>
+        <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2"  [rowspan]="1" >
         <div class="content-container">
