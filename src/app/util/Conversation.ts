@@ -28,16 +28,18 @@ export class Conversation {
   public setUserProfilePayload:Request;
   public sendMsgPayload:Request;
   public message: String;
+  public userName;
   public httpOptions = {};
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
   public messages: Array<ChatMessage>;
 
 
-  constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string ) {
+  constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;
     this.appKey = appKey;
     this.appSecret = appSecret;
+    this.userName = userName;
     this.messages = [];
 
     this.snackBarConfing = new MatSnackBarConfig();
@@ -113,7 +115,7 @@ export class Conversation {
           'x-lp-on-behalf': this.consumerJWS
         }
       };
-      let body = JSON.stringify(this.getOpenConvRequestBody(initialMessage));
+      let body = JSON.stringify(this.getOpenConvRequestBody(initialMessage, this.userName));
       this.sendApiService.openConversation(this.branId, body, headers).subscribe(res => {
         console.log(res);
         this.conversationId = res["convId"];
@@ -182,7 +184,7 @@ export class Conversation {
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfing);
   }
 
-  private getOpenConvRequestBody(initialMessage: string): any {
+  private getOpenConvRequestBody(initialMessage: string, userName: string): any {
     let body = [];
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
@@ -198,10 +200,10 @@ export class Conversation {
     let pushNotificationData = new PushNotificationData("Service", "CertName", "TOKEN");
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
     let setUserProfileBody = new SetUserProfile(
-      "WEB UI USER",
+      userName || "WEB UI USER",
       "Test",
       "http://avatarurl.com",
-      "X",
+      "consumer",
       "http://something.com",
       "Test Description",
       privateData
