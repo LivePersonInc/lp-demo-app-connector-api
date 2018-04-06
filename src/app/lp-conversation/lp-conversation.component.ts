@@ -56,7 +56,7 @@ export class LpConversationComponent implements OnInit {
   }
 
   public subscribeToMessageNotifications(conversationId: string) {
-    this.eventSource  = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe/${conversationId}`,{});
+    this.eventSource  = new EventSourcePolyfill(`http://${environment.umsDomain}/notifications/subscribe/${conversationId}`,{});
 
     this.eventSource.onmessage = (notification => {
       this.conversationManager.handleIncomingNotifications(notification);
