@@ -120,7 +120,7 @@ export class ConversationManager {
         this.conversationId = res["convId"];
         this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
         this.messages.push(new ChatMessage("sent", new Date, initialMessage, this.userName, "ok", this.getShowUserValue(this.userName)));
-        resolve(res);
+        resolve(this.conversationId);
       }, error => {
         this.sendApiService.stopLoading();
         this.handleError(error);
