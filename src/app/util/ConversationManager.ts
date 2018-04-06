@@ -55,6 +55,11 @@ export class ConversationManager {
     });
   }
 
+  public handleIncomingNotifications(notification) {
+    console.log("Notification in conv manager");
+    console.log(notification);
+
+  }
 
   public getAppJWT(): Promise<string> {
     return new Promise( (resolve, reject) => {
@@ -171,7 +176,6 @@ export class ConversationManager {
   }
 
   private handleError(error) {
-    console.log("XXX; "+error);
     this.sendApiService.stopLoading();
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
