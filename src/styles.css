@@ -2,7 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-  background-color: rgb(242, 242, 242);
+  background-color: rgb(242, 242, 242) !important;
   font-family: "Open Sans","myriad-pro-1","myriad-pro-2",sans-serif;
   margin: 0;
 

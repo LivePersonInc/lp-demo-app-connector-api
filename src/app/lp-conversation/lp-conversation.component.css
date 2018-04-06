@@ -1,6 +1,8 @@
+:host {
+  display: block;
+  height: 100%;
+}
 .basic-form {
-  /*min-width: 150px;
-  max-width: 500px;*/
   width: 100%;
   margin: 10px;
 }
@@ -14,11 +16,14 @@
   font-size: small;
   color: mediumblue;
 }
-
-mat-form-field.mat-form-field {
+.mat-form-field {
   font-size: 12px;
 }
 .content-container button{
   float: left;
   margin-left: 10px;
 }
+.lp-card{
+  padding-top: 66px;
+}
+

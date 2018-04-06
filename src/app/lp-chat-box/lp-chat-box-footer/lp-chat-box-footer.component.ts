@@ -19,8 +19,10 @@ export class LpChatBoxFooterComponent implements OnInit {
   }
 
   public sendMessage() {
-    this.onSendMessage.emit(this.messageText);
-    this.messageText = "";
+    if(this.messageText.length > 0) {
+      this.onSendMessage.emit(this.messageText);
+      this.messageText = "";
+    }
   }
 
 }
