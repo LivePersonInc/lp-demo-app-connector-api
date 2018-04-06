@@ -3,40 +3,51 @@ const router = express.Router();
 const nconf = require("nconf");
 const fetch = require("node-fetch");
 const SSE = require('sse-nodejs');
-const app  = require("../app.js");
 
 nconf.file({file: "./settings.json"});
 /* http://localhost:8000/testconnector/event */
 
-router.get("/subscribe", function (req, res, next) {
-  app.see =  SSE(res);
-  app.see.send({"Data":"dsgs"});
-  console.log("Client subscribed");
+const subscriptions = [];
+
+router.get("/subscribe/:convid", function (req, res, next) {
+  subscriptions[req.params.convid] = SSE(res);
+  console.log("Client subscribed width: " + req.params.convid);
 });
 
+router.get("/unsubcribe/:convId", function (req, res, next) {
+  subscriptions.splice(req.params.convid,1);
+  console.log("Client unsubscribed width: " + req.params.convid);
+});
+
+//webhooks notifications
 router.post("/event", function (req, res, next) {
   let body = "";
   req.on('data', function (chunk) {
     body += chunk;
   });
   req.on('end', function () {
-    let args = {};
-    args.data = {};
-    args.data = body;
-
-    console.log(body);
-    app.see.send({"message":"received"}); //TODO Add data
-    res.send("ok");
-  if(app.see){
-      console.log("send event");
-      app.see.sendEvent('time', function () {
-        return new Date
-      });
+    let convId = getNotificationConversationId(body);
+    if(subscriptions[convId]){
+      subscriptions[convId].send(body);
     }
+    res.send("ok");
   });
-
 });
 
+function getNotificationConversationId(notificationBody) {
+  let jsonBody;
+  let conversationId = null;
+  try {
+    jsonBody = JSON.parse(notificationBody);
 
+    if(jsonBody.body.changes[0].hasOwnProperty("dialogId") ){
+      conversationId = jsonBody.body.changes[0].dialogId;
+    }
+    console.log(jsonBody.body.changes[0]);
+  }catch(err) {
+    console.error("ERROR parsing json:", err);
+  }
+  return conversationId;
+}
 
 module.exports = router;
