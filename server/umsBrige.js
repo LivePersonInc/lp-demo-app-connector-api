@@ -24,7 +24,7 @@ router.post("/openconv/:id", function (req, res, next) {
     args.headers['authorization'] = req.header('authorization');
     args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
     args.data = body;
-    
+
     sendApiConnector
       .openConversation(brandID, args)
       .then((resolve) => {
@@ -58,8 +58,6 @@ router.post("/sendraw/:id/conv/:convId", function (req, res, next) {
     args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
     args.data = body;
 
-    console.log("ARGS; " + JSON.stringify(args));
-
     sendApiConnector
       .sendRaw(brandID, convID, args)
       .then((resolve) => {
@@ -90,7 +88,6 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
   sendApiConnector
     .closeConversation(brandID, convID, args)
     .then((resolve) => {
-      console.log(resolve[0]);
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send({"message": "ConversationManager closed succesfully"});
       } else {

@@ -56,6 +56,26 @@ export class ConversationManager {
   }
 
   public handleIncomingNotifications(notification) {
+    let data = JSON.parse(notification.data);
+    try{
+      if(data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT"){
+        console.log( data );
+        if(data.body.changes[0].event.message) {
+          this.messages.push(
+            new ChatMessage(
+              "received",
+              data.body.changes[0].serverTimestamp,
+              data.body.changes[0].event.message,
+              "AGENT",
+              "ok",
+              this.getShowUserValue(this.userName)
+            )
+          );
+        }
+      }
+    }catch(error) {
+      console.error("ERROR parsing notification", error);
+    }
     console.log("Notification in conv manager");
     console.log(notification);
 
