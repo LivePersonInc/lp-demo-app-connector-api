@@ -1,43 +1,40 @@
 
 <mat-card class="lp-card">
   <mat-card-content>
-    <mat-grid-list cols="4" >
-      <mat-grid-tile [colspan]="2"  [rowspan]="2" >
-        <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="2"  [rowspan]="1" >
-        <div class="content-container">
-          <form class="basic-form">
-            <mat-error>
-              <!--Required Fields have to be filled-->
-            </mat-error>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Brand ID" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Consumer Name" required [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </form>
-          <button mat-raised-button
-                  (click)="closeConversation()"
-                  color="primary"
-                  class="btn-left"
-                  [disabled]="!isConvStarted">
-            Close conversation
-          </button>
+  <div class="container-fluid">
+    <div class="row h-100">
+        <div class="col-sm text-center">
+          <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
         </div>
-      </mat-grid-tile>
-
-
-    </mat-grid-list>
+        <div class="col-sm text-center">
+          <div class="content-container">
+            <form class="basic-form">
+              <mat-error>
+                <!--Required Fields have to be filled-->
+              </mat-error>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Brand ID" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="App Secret" required [(ngModel)]="appSecret" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Consumer Name" required [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+            </form>
+            <button mat-raised-button
+                    (click)="closeConversation()"
+                    color="primary"
+                    class="btn-left"
+                    [disabled]="!isConvStarted">
+              Close conversation
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
   </mat-card-content>
-  <mat-card-actions>
-
-  </mat-card-actions>
 </mat-card>

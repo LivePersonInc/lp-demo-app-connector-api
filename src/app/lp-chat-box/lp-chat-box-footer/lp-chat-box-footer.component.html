@@ -2,3 +2,13 @@
   <textarea [(ngModel)]="messageText"></textarea>
   <button mat-button (click)="sendMessage()" [disabled]="messageText.length === 0"> <i class="material-icons">send</i></button>
 </div>
+<!--
+<div class="footer-container">
+  <form (ngSubmit)="sendMessage()" #textArea="ngForm">
+    <textarea type="text" [(ngModel)]="messageText" class="form-control" id="messageText" required></textarea>
+    <button type="submit" mat-button  [disabled]="!textArea.form.valid"> <i class="material-icons">send</i></button>
+  </form>
+
+</div>
+
+-->
