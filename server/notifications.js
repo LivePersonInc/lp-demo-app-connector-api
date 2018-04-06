@@ -28,6 +28,8 @@ router.post("/event", function (req, res, next) {
   req.on('end', function () {
     let convId = getNotificationConversationId(body);
     if(subscriptions[convId]){
+      console.log("BODY SEND");
+      console.log(body);
       subscriptions[convId].send(body);
     }
     res.send("ok");
@@ -43,7 +45,6 @@ function getNotificationConversationId(notificationBody) {
     if(jsonBody.body.changes[0].hasOwnProperty("dialogId") ){
       conversationId = jsonBody.body.changes[0].dialogId;
     }
-    console.log(jsonBody.body.changes[0]);
   }catch(err) {
     console.error("ERROR parsing json:", err);
   }
