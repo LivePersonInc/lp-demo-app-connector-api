@@ -32,9 +32,9 @@ export class LpConversationComponent implements OnInit {
     this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
     this.conversationManager.getAppJWT().then(resolve => {
       this.conversationManager.getAppConsumerJWS().then(resolve => {
-        this.conversationManager.openConversation(initialMessage).then(resolve => {
+        this.conversationManager.openConversation(initialMessage).then(conversationId => {
           this.isConvStarted = true;
-          this.subscribeToMessageNotifications();
+          this.subscribeToMessageNotifications(conversationId);
         });
       });
     });
@@ -55,8 +55,8 @@ export class LpConversationComponent implements OnInit {
     }
   }
 
-  public subscribeToMessageNotifications() {
-    this.eventSource  = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe`,{});
+  public subscribeToMessageNotifications(conversationId: string) {
+    this.eventSource  = new EventSourcePolyfill(`https://${environment.umsDomain}/notifications/subscribe/${conversationId}`,{});
 
     this.eventSource.onmessage = (data => {
       console.log(data);
