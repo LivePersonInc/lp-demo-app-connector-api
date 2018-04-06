@@ -12,6 +12,7 @@ const sendApiConnector = new SendApiConnector(nconf);
 router.post("/openconv/:id", function (req, res, next) {
   let brandID = req.params.id;
   let body = "";
+
   req.on('data', function (chunk) {
     body += chunk;
   });
@@ -23,9 +24,7 @@ router.post("/openconv/:id", function (req, res, next) {
     args.headers['authorization'] = req.header('authorization');
     args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
     args.data = body;
-
-    //console.log("ARGS; "+ JSON.stringify(args));
-
+    
     sendApiConnector
       .openConversation(brandID, args)
       .then((resolve) => {
