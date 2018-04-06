@@ -68,7 +68,7 @@ export class ConversationManager {
               data.body.changes[0].event.message,
               "AGENT",
               "ok",
-              this.getShowUserValue(this.userName)
+              false
             )
           );
         }
