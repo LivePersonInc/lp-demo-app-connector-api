@@ -1,0 +1,23 @@
+:host{
+  display: block;
+  height: 100%;
+  background-color: #b0b0b0;
+  overflow-y: auto;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+}
+:host .mat-expansion-panel-header-title {
+  color: #165496;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.pretty-json{
+  text-align: left;
+}
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+
+
+}
+
+

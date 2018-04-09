@@ -21,7 +21,7 @@ export class ConversationManager {
   public branId: string;
   public appKey: string;
   public appSecret: string;
-  public ext_consumer_id: string
+  public ext_consumer_id: string;
   public conversationId: string;
   public requestConversationPayload: Request;
   public setUserProfilePayload:Request;
@@ -32,7 +32,7 @@ export class ConversationManager {
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
   public messages: Array<ChatMessage>;
-
+  public serverNotifications: Array<string>;
 
   constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;
@@ -40,6 +40,7 @@ export class ConversationManager {
     this.appSecret = appSecret;
     this.userName = userName;
     this.messages = [];
+    this.serverNotifications = [];
 
     this.snackBarConfing = new MatSnackBarConfig();
     this.snackBarConfing.verticalPosition = 'top';
@@ -57,6 +58,8 @@ export class ConversationManager {
 
   public handleIncomingNotifications(notification) {
     let data = JSON.parse(notification.data);
+    this.serverNotifications.push(JSON.stringify(data, null, " "));
+
     try{
       if(data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT"){
         console.log( data );
