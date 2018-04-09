@@ -19,11 +19,16 @@
 .mat-form-field {
   font-size: 12px;
 }
-.content-container button{
+/*.content-container button{
   float: left;
   margin-left: 10px;
-}
+}*/
 .lp-card{
   padding-top: 66px;
 }
-
+.console-container{
+  margin-top: 50px;
+  height: 250px;
+  width: 600px;
+  display: block;
+}
