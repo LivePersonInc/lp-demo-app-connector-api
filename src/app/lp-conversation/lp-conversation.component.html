@@ -4,10 +4,10 @@
   <div class="container-fluid">
     <div class="row h-100">
         <div class="col-sm text-center">
-          <h6 *ngIf="conversationManager.conversationId">Conversation id: {{conversationManager.conversationId}}</h6>
+          <div *ngIf="conversationManager.conversationId"> <b>Conversation id:</b> {{conversationManager.conversationId}}</div>
           <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
         </div>
-        <div class="col-sm text-center">
+        <div class="col-sm text-left">
           <div class="container-fluid">
             <form class="basic-form">
               <mat-error>
@@ -35,7 +35,8 @@
             </button>
           </div>
 
-          <div class="container-fluid console-container">
+          <div class="container-fluid console-container text-right">
+            <h6>Notification console</h6>
             <app-lp-console [conversationManager]="conversationManager"></app-lp-console>
           </div>
         </div>
