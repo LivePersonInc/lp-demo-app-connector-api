@@ -6,7 +6,7 @@ export class ChatMessage {
   public status: string;
   public showUser: boolean;
 
-  constructor(type, timestamp, message, userName, status, showUser) {
+  constructor(type, timestamp, message, userName, status, showUser,) {
     this.type = type;
     this.timestamp = timestamp;
     this.message = message;

@@ -4,10 +4,11 @@
   <div class="container-fluid">
     <div class="row h-100">
         <div class="col-sm text-center">
+          <h6 *ngIf="conversationManager.conversationId">Conversation id: {{conversationManager.conversationId}}</h6>
           <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
         </div>
         <div class="col-sm text-center">
-          <div class="content-container">
+          <div class="container-fluid">
             <form class="basic-form">
               <mat-error>
                 <!--Required Fields have to be filled-->
@@ -32,6 +33,10 @@
                     [disabled]="!isConvStarted">
               Close conversation
             </button>
+          </div>
+
+          <div class="container-fluid console-container">
+            <app-lp-console [conversationManager]="conversationManager"></app-lp-console>
           </div>
         </div>
       </div>
