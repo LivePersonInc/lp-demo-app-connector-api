@@ -1,0 +1,13 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let n of conversationManager.serverNotifications">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+      {{n}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <pre class="pretty-json">
+      {{n}}
+    </pre>
+  </mat-expansion-panel>
+
+</mat-accordion>
