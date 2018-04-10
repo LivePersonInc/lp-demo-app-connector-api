@@ -5,19 +5,18 @@
   overflow-y: auto;
   border: 1px solid gainsboro;
   border-radius: 5px;
+
+  .mat-expansion-panel-header-title {
+    color: #165496;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .pretty-json{
+    text-align: left;
+  }
 }
-:host .mat-expansion-panel-header-title {
-  color: #165496;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.pretty-json{
-  text-align: left;
-}
-.mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
 
 
-}
 
 
