@@ -1,4 +1,7 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {ChatMessage} from "./lp-chat-box-message/models/ChatMessage";
 import {ConversationManager} from "../util/ConversationManager";
 
@@ -17,16 +20,21 @@ export class LpChatBoxComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewChecked(){
+    this.scrollToBottom();
+  }
+
   public sendMessage(message) {
     this.onSendMessage.emit(message);
   }
 
-  public  scrollToBottom() {
+  public scrollToBottom() {
     try {
       this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
     } catch(err) {
 
     }
   }
+
 
 }
