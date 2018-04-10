@@ -13,6 +13,7 @@ import { LpConversationComponent } from './lp-conversation/lp-conversation.compo
 import { LpChatBoxMessageComponent } from './lp-chat-box/lp-chat-box-message/lp-chat-box-message.component';
 import { LpChatBoxFooterComponent } from './lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component';
 import { LpConsoleComponent } from './lp-console/lp-console.component';
+import { LpHomeComponent } from './lp-home/lp-home.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LpConsoleComponent } from './lp-console/lp-console.component';
     LpConversationComponent,
     LpChatBoxMessageComponent,
     LpChatBoxFooterComponent,
-    LpConsoleComponent
+    LpConsoleComponent,
+    LpHomeComponent
   ],
   imports: [
     BrowserModule,
