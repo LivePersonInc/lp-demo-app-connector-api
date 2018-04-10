@@ -12,18 +12,20 @@
   max-height: 520px;
   display: inline-block;
   margin-bottom: 20px;
+
+  .messages-area{
+    width: 100%;
+    height: -webkit-calc(100%- 55px);
+    /* Firefox */
+    height: -moz-calc(100% - 55px);
+    /* WebKit */
+    height: -webkit-calc(100% - 55px);
+    /* Opera */
+    /* Standard */
+    height: calc(100% - 55px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-bottom: 1px solid lightgray;
+  }
 }
-.messages-area{
-  width: 100%;
-  height: -webkit-calc(100%- 55px);
-  /* Firefox */
-  height: -moz-calc(100% - 55px);
-  /* WebKit */
-  height: -webkit-calc(100% - 55px);
-  /* Opera */
-  /* Standard */
-  height: calc(100% - 55px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  border-bottom: 1px solid lightgray;
-}
+

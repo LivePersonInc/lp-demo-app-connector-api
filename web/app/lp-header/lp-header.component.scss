@@ -2,20 +2,22 @@
   display: block;
   background-color: white;
   min-height: 55px;
+
+  .logo {
+    padding-top: 15px;
+    left: 20px;
+    float: left;
+  }
+
+  img {
+    height:30px;
+  }
+
+  .title {
+    display: block;
+    color: #4c4d50;
+    padding-top: 15px;
+  }
+
 }
 
-.logo {
-  padding-top: 15px;
-  left: 20px;
-  float: left;
-}
-
-img {
-  height:30px;
-}
-
-.title {
-  display: block;
-  color: #4c4d50;
-  padding-top: 15px;
-}
