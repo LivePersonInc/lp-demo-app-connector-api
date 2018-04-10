@@ -12,11 +12,10 @@ const subscriptions = [];
 router.get("/subscribe/:convid", function (req, res, next) {
   subscriptions[req.params.convid] = SSE(res);
   console.log("Client subscribed width: " + req.params.convid);
-});
-
-router.get("/unsubcribe/:convId", function (req, res, next) {
-  subscriptions.splice(req.params.convid,1);
-  console.log("Client unsubscribed width: " + req.params.convid);
+  subscriptions[req.params.convid].disconnect(function () {
+    subscriptions.splice(req.params.convid,1);
+    console.log("Client unsubscribed width: " + req.params.convid);
+  });
 });
 
 //webhooks notifications
