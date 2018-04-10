@@ -15,7 +15,7 @@ import {PublishContentEvent} from "../models/PublishContentEvent";
 
 
 @Component({
-  selector: 'app-lp-test-services',
+  selector: 'lp-test-services',
   templateUrl: './lp-test-services.component.html',
   styleUrls: ['./lp-test-services.component.scss']
 })
