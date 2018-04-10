@@ -6,7 +6,7 @@ import {ConversationManager} from "../util/ConversationManager";
 import {EventSourcePolyfill} from 'ng-event-source';
 
 @Component({
-  selector: 'app-lp-conversation',
+  selector: 'lp-conversation',
   templateUrl: './lp-conversation.component.html',
   styleUrls: ['./lp-conversation.component.scss']
 })

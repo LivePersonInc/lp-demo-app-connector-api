@@ -1,19 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<lp-header></lp-header>
 
-<app-lp-header></app-lp-header>
-<div style="text-align:center" class="app-body">
-
+<div class="app-body">
   <mat-tab-group>
     <!--<mat-tab label="Home">
+      <lp-home></lp-home>
     </mat-tab>-->
     <mat-tab label="Demo Chat">
-      <app-lp-conversation></app-lp-conversation>
+      <lp-conversation></lp-conversation>
     </mat-tab>
     <mat-tab label="Test services">
-      <app-lp-test-services></app-lp-test-services>
+      <lp-test-services></lp-test-services>
     </mat-tab>
   </mat-tab-group>
-
 </div>
 
 <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
