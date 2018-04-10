@@ -1,11 +1,11 @@
 <div class="message-container" [ngClass]="message.type">
-  <div *ngIf="message.showUser" class="username">
-    {{message.userName}}
-  </div>
-  <div class="message">
-    {{message.message}}
+  <div class="username">
+    <div *ngIf="message.showUser">{{message.userName}}</div>
   </div>
   <div class="time">
     {{message.timestamp | date:'h:mm a'}}
+  </div>
+  <div class="message">
+    {{message.message}}
   </div>
 </div>
