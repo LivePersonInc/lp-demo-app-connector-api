@@ -8,7 +8,7 @@ import {EventSourcePolyfill} from 'ng-event-source';
 @Component({
   selector: 'app-lp-conversation',
   templateUrl: './lp-conversation.component.html',
-  styleUrls: ['./lp-conversation.component.css']
+  styleUrls: ['./lp-conversation.component.scss']
 })
 export class LpConversationComponent implements OnInit {
   public brandId: string;

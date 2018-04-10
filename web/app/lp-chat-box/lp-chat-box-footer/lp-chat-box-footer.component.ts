@@ -3,7 +3,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 @Component({
   selector: 'app-lp-chat-box-footer',
   templateUrl: './lp-chat-box-footer.component.html',
-  styleUrls: ['./lp-chat-box-footer.component.css']
+  styleUrls: ['./lp-chat-box-footer.component.scss']
 })
 export class LpChatBoxFooterComponent implements OnInit {
   @Output() onSendMessage = new EventEmitter<string>();
