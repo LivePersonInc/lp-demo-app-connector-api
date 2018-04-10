@@ -16,8 +16,6 @@ img {
 
 .title {
   display: block;
-  padding: 8px;
-
-  text-align: center;
   color: #162036;
+  padding: 20px;
 }
