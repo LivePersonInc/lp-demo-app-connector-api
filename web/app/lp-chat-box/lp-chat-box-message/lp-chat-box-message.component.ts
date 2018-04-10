@@ -4,7 +4,7 @@ import {ChatMessage} from "./models/ChatMessage";
 @Component({
   selector: 'app-lp-chat-box-message',
   templateUrl: './lp-chat-box-message.component.html',
-  styleUrls: ['./lp-chat-box-message.component.css']
+  styleUrls: ['./lp-chat-box-message.component.scss']
 })
 export class LpChatBoxMessageComponent implements OnInit {
 

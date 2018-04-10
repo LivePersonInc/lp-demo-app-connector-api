@@ -4,7 +4,7 @@ import {ConversationManager} from "../util/ConversationManager";
 @Component({
   selector: 'app-lp-console',
   templateUrl: './lp-console.component.html',
-  styleUrls: ['./lp-console.component.css']
+  styleUrls: ['./lp-console.component.scss']
 })
 export class LpConsoleComponent implements OnInit {
 
