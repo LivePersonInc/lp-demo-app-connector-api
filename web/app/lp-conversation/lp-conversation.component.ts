@@ -1,9 +1,10 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, ComponentRef, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../services/send-api.service";
 import {ConversationManager} from "../util/ConversationManager";
 import {EventSourcePolyfill} from 'ng-event-source';
+import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
 
 @Component({
   selector: 'lp-conversation',
@@ -18,6 +19,9 @@ export class LpConversationComponent implements OnInit {
   public appSecret: string;
   public eventSource: EventSourcePolyfill;
   public userName: string;
+
+  @ViewChild('chatbox') private chatBox: LpChatBoxComponent;
+
   constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone) { }
 
   ngOnInit() {
@@ -47,9 +51,14 @@ export class LpConversationComponent implements OnInit {
   }
 
   public sendMessage(messageText : string) {
+    console.log("Send message");
     if(this.isConvStarted) {
-      console.log(messageText);
-      this.conversationManager.sendMessage(messageText);
+
+
+      this.conversationManager.sendMessage(messageText).then(function () {
+        console.log("XXXXxXXXXXXXX");
+        //this.chatBox.scrollToBottom();
+      }.bind(this));
     }else{
       this.startConversation(messageText);
     }
