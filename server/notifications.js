@@ -34,13 +34,15 @@ router.post("/event", function (req, res, next) {
 });
 
 function getNotificationConversationId(notificationBody) {
+  console.log(notificationBody);
   let jsonBody;
   let conversationId = null;
   try {
     jsonBody = JSON.parse(notificationBody);
-
     if(jsonBody.body.changes[0].hasOwnProperty("dialogId") ){
       conversationId = jsonBody.body.changes[0].dialogId;
+    }else if(jsonBody.body.changes[0].hasOwnProperty("result") && jsonBody.body.changes[0].result.hasOwnProperty("convId")) {
+      conversationId = jsonBody.body.changes[0].result.convId;
     }
   }catch(err) {
     console.error("ERROR parsing json:", err);
