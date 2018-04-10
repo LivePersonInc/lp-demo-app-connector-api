@@ -6,12 +6,13 @@
   margin: 10px;
 }
 .message-container .username{
-  display: block;
+  display: inline-grid;
   font-weight: bold;
+  width: 70%;
 }
 .message-container .message{
   text-align: left;
-  width: 70%;
+  width: 100%;
   word-break: break-all;
   display: inline-block;
 }
@@ -21,14 +22,11 @@
   line-height: 20px;
   color: #b0b0b0;
   width: 28%;
-  display: inline-flex;
+  display: inline-grid;
 }
-
 .sent{
-  color: DARKSLATEGRAY;
-
+  color: darkslategray;
 }
-
 .received {
   margin-left: 50px;
 }

@@ -14,13 +14,13 @@ textarea, input{
   background-color: transparent;
   resize: none;
   outline: none;
-  width: -webkit-calc(100%- 102px);
+  width: -webkit-calc(100%- 88px);
   /* Firefox */
-  width: -moz-calc(100% - 102px);
+  width: -moz-calc(100% - 88px);
   /* WebKit */
-  width: -webkit-calc(100% - 102px);
+  width: -webkit-calc(100% - 88px);
   /* Standard */
-  width: calc(100% - 102px);
+  width: calc(100% - 88px);
   float: left;
   height: 45px;
   padding: 5px;
