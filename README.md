@@ -1,6 +1,5 @@
 # lp-demo-app-connector-api
 Demo conversation app  for connector Api 
-
 ### Introduction
 This project is a node js app integrated with an angular cli generated project, this means the default configuration has been changed in order to integrate Angular and Nodejs.
 ### Requerements. 

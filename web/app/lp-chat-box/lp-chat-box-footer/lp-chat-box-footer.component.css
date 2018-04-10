@@ -29,5 +29,7 @@ textarea, input{
 button{
   height:100%;
   float: right;
+  border-left: 1px solid  #d6d6d6;
+
 
 }
