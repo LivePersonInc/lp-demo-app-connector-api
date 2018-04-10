@@ -1,35 +1,39 @@
-.message-container{
-  padding: 10PX;
-  text-align: left;
-  width: calc(100% - 80px);
-  background-color: #f0f9ff;
-  margin: 10px;
+:host {
+  .message-container{
+    padding: 10PX;
+    text-align: left;
+    width: calc(100% - 80px);
+    background-color: #f0f9ff;
+    margin: 10px;
+
+    .username{
+      display: inline-grid;
+      font-weight: bold;
+      width: 70%;
+    }
+    .message{
+      text-align: left;
+      width: 100%;
+      word-break: break-all;
+      display: inline-block;
+    }
+    .time{
+      text-align: right;
+      font-size: 10px;
+      line-height: 20px;
+      color: #b0b0b0;
+      width: 28%;
+      display: inline-grid;
+    }
+  }
+
+  .sent{
+    color: darkslategray;
+  }
+  .received {
+    margin-left: 50px;
+    background-color: #efe0ef;
+
+  }
 }
-.message-container .username{
-  display: inline-grid;
-  font-weight: bold;
-  width: 70%;
-}
-.message-container .message{
-  text-align: left;
-  width: 100%;
-  word-break: break-all;
-  display: inline-block;
-}
-.message-container .time{
-  text-align: right;
-  font-size: 10px;
-  line-height: 20px;
-  color: #b0b0b0;
-  width: 28%;
-  display: inline-grid;
-}
-.sent{
-  color: darkslategray;
-}
-.received {
-  margin-left: 50px;
-}
-.received{
-   background-color: #efe0ef;
-}
+
