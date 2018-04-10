@@ -4,8 +4,7 @@ Demo conversation app  for connector Api
 This project is a node js app integrated with an angular cli generated project, this means the default configuration has been changed in order to integrate Angular and Nodejs.
 ### Requerements. 
 Angular cli 
-### Running
-
+### How to run
 1. ```npm install```
 2. ``` ng build --prod```  to build complie the projec
 3. ``sudo node app`` to run the server
