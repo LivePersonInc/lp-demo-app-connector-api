@@ -5,7 +5,7 @@ import {ConversationManager} from "../util/ConversationManager";
 @Component({
   selector: 'app-lp-chat-box',
   templateUrl: './lp-chat-box.component.html',
-  styleUrls: ['./lp-chat-box.component.css']
+  styleUrls: ['./lp-chat-box.component.scss']
 })
 export class LpChatBoxComponent implements OnInit {
   @Input()  conversationManager: ConversationManager;
