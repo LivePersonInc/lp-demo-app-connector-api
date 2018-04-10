@@ -28,8 +28,6 @@ router.post("/event", function (req, res, next) {
   req.on('end', function () {
     let convId = getNotificationConversationId(body);
     if(subscriptions[convId]){
-      console.log("BODY SEND");
-      console.log(body);
       subscriptions[convId].send(body);
     }
     res.send("ok");

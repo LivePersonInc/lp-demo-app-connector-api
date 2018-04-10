@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ChatMessage} from "./lp-chat-box-message/models/ChatMessage";
 import {ConversationManager} from "../util/ConversationManager";
 
@@ -10,6 +10,7 @@ import {ConversationManager} from "../util/ConversationManager";
 export class LpChatBoxComponent implements OnInit {
   @Input()  conversationManager: ConversationManager;
   @Output() onSendMessage = new EventEmitter<string>();
+  @ViewChild('messagearea') private messageArea: ElementRef;
 
   constructor() { }
 
@@ -18,6 +19,14 @@ export class LpChatBoxComponent implements OnInit {
 
   public sendMessage(message) {
     this.onSendMessage.emit(message);
+  }
+
+  public  scrollToBottom() {
+    try {
+      this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+    } catch(err) {
+
+    }
   }
 
 }
