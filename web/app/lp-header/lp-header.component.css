@@ -1,11 +1,11 @@
 :host {
   display: block;
   background-color: white;
-  min-height: 80px;
+  min-height: 55px;
 }
 
 .logo {
-  padding: 20px;
+  padding-top: 15px;
   left: 20px;
   float: left;
 }
@@ -16,6 +16,6 @@ img {
 
 .title {
   display: block;
-  color: #162036;
-  padding: 20px;
+  color: #4c4d50;
+  padding-top: 15px;
 }
