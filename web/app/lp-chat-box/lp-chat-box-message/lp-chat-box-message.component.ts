@@ -14,7 +14,8 @@ export class LpChatBoxMessageComponent implements OnInit {
 
   }
 
-    ngOnInit() {
+  ngOnInit() {
   }
+
 
 }
