@@ -83,8 +83,6 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
   args.headers['authorization'] = req.header('authorization');
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
 
-  console.log("ARG in close conv; " + JSON.stringify(args));
-
   sendApiConnector
     .closeConversation(brandID, convID, args)
     .then((resolve) => {
@@ -106,7 +104,6 @@ router.get("/alive", function (req, res, next) {
 
 function handleStatusCode(statusCode) {
   if (statusCode >= 200 && statusCode < 300) {
-    console.log("Status code: ", statusCode);
     return true;
   } else {
     console.error("ERROR: Status code: ", statusCode);
