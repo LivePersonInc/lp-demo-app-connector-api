@@ -3,11 +3,11 @@
   <mat-card-content>
   <div class="container-fluid">
     <div class="row h-100">
-        <div class="col-sm text-center">
+        <div class="col-sm-6 text-center">
           <div *ngIf="conversationManager.conversationId"> <b>Conversation id:</b> {{conversationManager.conversationId}}</div>
           <app-lp-chat-box (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
         </div>
-        <div class="col-sm text-left">
+        <div class="col-sm-6 text-left">
           <div class="container-fluid">
             <form class="basic-form">
               <mat-error>
