@@ -6,12 +6,16 @@
     </p>
 
     <p>
-    If you are new you can start here:
+    If you are new you can start here using your brand Id:
     </p>
-    <p>
+    <p class="brand-form">
+      <mat-form-field>
+        <input matInput placeholder="Brand ID" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
       <button mat-raised-button
               color="primary"
               routerLink="/home/start"
+              [disabled]="!brandId || brandId.length <= 0"
               class="btn-left">
         Smart starting
         <i class="material-icons">chevron_right</i>
@@ -20,6 +24,12 @@
     <p>
     In other case go to the Demo section.
     </p>
+    <h5>Important!:</h5>
+    <p>Dont forget to enable the propery Common.Async_Messaging for your brand Account</p>
+    <div class="image-container">
+      <img  src="../../assets/async_messaging_example.png"  alt="" title="">
+    </div>
+
   </mat-card>
 
 </div>
