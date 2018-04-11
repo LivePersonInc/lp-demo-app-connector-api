@@ -10,18 +10,12 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
   host: {'[@fadeInAnimation]': ''}
 })
 export class LpHomeComponent implements OnInit {
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  public  brandId: string;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+
   }
 
 }
