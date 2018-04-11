@@ -5,7 +5,7 @@
     <div class="row h-100">
         <div class="col-md-5 text-center">
           <div *ngIf="conversationManager.conversationId"> <b>Conversation id:</b> {{conversationManager.conversationId}}</div>
-          <app-lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></app-lp-chat-box>
+          <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversationManager]="conversationManager"></lp-chat-box>
         </div>
         <div class="col-md-7 text-left">
           <div class="container-fluid">
@@ -36,7 +36,7 @@
           <div class="container-fluid  text-right">
             <div class="row">
               <div class="col-sm-12 console-container">
-                  <app-lp-console [conversationManager]="conversationManager"></app-lp-console>
+                  <lp-console [conversationManager]="conversationManager"></lp-console>
               </div>
               <div class="col-sm-12">
                 <button mat-raised-button

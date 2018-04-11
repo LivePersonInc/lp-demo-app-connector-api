@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ConversationManager} from "../util/ConversationManager";
 
 @Component({
-  selector: 'app-lp-console',
+  selector: 'lp-console',
   templateUrl: './lp-console.component.html',
   styleUrls: ['./lp-console.component.scss']
 })
