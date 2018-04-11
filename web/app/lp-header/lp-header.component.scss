@@ -4,19 +4,21 @@
   min-height: 55px;
 
   .logo {
-    padding-top: 15px;
+    padding-top: 5px;
     left: 20px;
     float: left;
   }
 
   img {
-    height:30px;
+    height:20px;
   }
 
   .title {
-    display: block;
-    color: #4c4d50;
-    padding-top: 15px;
+    font-style: oblique;
+    font-size: 14px;
+    font-weight: bold;
+    padding-top: 3px;
+    color: dimgray;
   }
 
 }
