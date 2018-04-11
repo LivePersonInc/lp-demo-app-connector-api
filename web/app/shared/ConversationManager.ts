@@ -3,14 +3,14 @@ import {environment} from '../../environments/environment';
 import {HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs/Subscription";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {ConsumerRequestConversation} from "../models/ConsumerRequestConversation";
-import {CampaignInfo} from "../models/CampaignInfo";
-import {Request} from "../models/Request";
-import {PushNotificationData} from "../models/PushNotificationData";
-import {PrivateData} from "../models/PrivateData";
-import {SetUserProfile} from "../models/SetUserProfile";
-import {Event} from "../models/Event";
-import {PublishContentEvent} from "../models/PublishContentEvent";
+import {ConsumerRequestConversation} from "./models/ConsumerRequestConversation";
+import {CampaignInfo} from "./models/CampaignInfo";
+import {Request} from "./models/Request";
+import {PushNotificationData} from "./models/PushNotificationData";
+import {PrivateData} from "./models/PrivateData";
+import {SetUserProfile} from "./models/SetUserProfile";
+import {Event} from "./models/Event";
+import {PublishContentEvent} from "./models/PublishContentEvent";
 import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
 
 
