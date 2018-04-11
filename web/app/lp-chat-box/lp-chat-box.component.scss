@@ -1,13 +1,12 @@
 :host{
   border: 1px solid #d6d6d6;
   overflow: hidden;
-  /*width: calc(100% - 42px);*/
-  width: 70%;
+  width: 100%;
   height: -webkit-calc(100% - 42px);
   border-radius: 3px;
   background-color: #FFFFFF;
   max-width: 500px;
-  min-width: 300px;
+  min-width: 200px;
   min-height: 500px;
   max-height: 520px;
   display: inline-block;
