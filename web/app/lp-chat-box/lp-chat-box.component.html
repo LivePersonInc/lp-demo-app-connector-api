@@ -1,5 +1,5 @@
 <div class="messages-area" #messagearea>
-  <app-lp-chat-box-message  *ngFor="let message of conversationManager.messages" [message]="message"></app-lp-chat-box-message>
+  <lp-chat-box-message  *ngFor="let message of conversationManager.messages" [message]="message"></lp-chat-box-message>
 </div>
 
-<app-lp-chat-box-footer (onSendMessage)="sendMessage($event)"></app-lp-chat-box-footer>
+<lp-chat-box-footer (onSendMessage)="sendMessage($event)"></lp-chat-box-footer>
