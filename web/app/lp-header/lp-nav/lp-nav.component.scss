@@ -1,0 +1,21 @@
+:host{
+  padding: 20px;
+  display: inline-block;
+  a {
+    display: inline-block;
+    text-align: center;
+    min-width: 100px;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    text-decoration: none;
+  }
+  a:hover{
+    color: grey;
+    // border-bottom: 5px solid #ff710c;
+  }
+
+  .active-link{
+    border-bottom: 5px solid #ff710c;
+  }
+}
