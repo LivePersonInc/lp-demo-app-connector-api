@@ -4,12 +4,13 @@ import {LpHomeComponent} from "./lp-home/lp-home.component";
 import {LpConversationComponent} from "./lp-conversation/lp-conversation.component";
 import {LpTestServicesComponent} from "./lp-test-services/lp-test-services.component";
 import {LpDemoComponent} from "./lp-demo/lp-demo.component";
+import {LpStartTutotialComponent} from "./lp-start-tutotial/lp-start-tutotial.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: LpHomeComponent},
   {path: 'demo', component: LpDemoComponent},
-  {path: 'test-services', component: LpTestServicesComponent},
+  {path: 'home/start', component: LpStartTutotialComponent},
 ];
 
 
