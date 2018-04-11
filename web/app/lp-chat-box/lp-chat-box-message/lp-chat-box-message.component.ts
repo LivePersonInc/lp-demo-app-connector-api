@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ChatMessage} from "./models/ChatMessage";
 
 @Component({
-  selector: 'app-lp-chat-box-message',
+  selector: 'lp-chat-box-message',
   templateUrl: './lp-chat-box-message.component.html',
   styleUrls: ['./lp-chat-box-message.component.scss']
 })
