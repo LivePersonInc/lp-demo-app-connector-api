@@ -17,6 +17,7 @@ import { LpHomeComponent } from './lp-home/lp-home.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { LpNavComponent } from './lp-header/lp-nav/lp-nav.component';
 import { LpDemoComponent } from './lp-demo/lp-demo.component';
+import { LpNavMenuComponent } from './lp-header/lp-nav-menu/lp-nav-menu.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LpDemoComponent } from './lp-demo/lp-demo.component';
     LpConsoleComponent,
     LpHomeComponent,
     LpNavComponent,
-    LpDemoComponent
+    LpDemoComponent,
+    LpNavMenuComponent
   ],
   imports: [
     BrowserModule,
