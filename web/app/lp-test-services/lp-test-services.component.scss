@@ -1,4 +1,7 @@
 :host {
+  padding-top: 40px;
+  padding-bottom: 20x;
+  display: block;
   .basic-form {
     width: 100%;
   }
@@ -16,7 +19,7 @@
     margin-bottom: 10px;
   }
   .btn-left{
-    min-width: 300px;
+    min-width: 200px;
   }
 }
 
