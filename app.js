@@ -14,9 +14,9 @@ const SSE = require('sse-nodejs');
 nconf.file({file:"settings.json"});
 
 //load certificates
-const key = fs.readFileSync('dev.lpchatforconnectorapi.com.key');
-const cert = fs.readFileSync( 'dev.lpchatforconnectorapi.com.crt' );
-const ca = fs.readFileSync( 'dev.lpchatforconnectorapi.com.crt' );
+const key = fs.readFileSync('./server/certs/dev.lpchatforconnectorapi.com.key');
+const cert = fs.readFileSync( './server/certs/dev.lpchatforconnectorapi.com.crt');
+const ca = fs.readFileSync( './server/certs/dev.lpchatforconnectorapi.com.crt');
 
 const options = {
   key: key,
