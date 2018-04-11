@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ConversationManager} from "../util/ConversationManager";
+import {ConversationManager} from "../shared/ConversationManager";
 
 @Component({
   selector: 'lp-console',
