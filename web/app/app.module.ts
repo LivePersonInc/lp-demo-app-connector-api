@@ -14,6 +14,8 @@ import { LpChatBoxMessageComponent } from './lp-chat-box/lp-chat-box-message/lp-
 import { LpChatBoxFooterComponent } from './lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component';
 import { LpConsoleComponent } from './lp-console/lp-console.component';
 import { LpHomeComponent } from './lp-home/lp-home.component';
+import {AppRoutingModule} from "./app-routing.module";
+import { LpNavComponent } from './lp-header/lp-nav/lp-nav.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { LpHomeComponent } from './lp-home/lp-home.component';
     LpChatBoxMessageComponent,
     LpChatBoxFooterComponent,
     LpConsoleComponent,
-    LpHomeComponent
+    LpHomeComponent,
+    LpNavComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { LpHomeComponent } from './lp-home/lp-home.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [SendApiService],
   bootstrap: [AppComponent]
