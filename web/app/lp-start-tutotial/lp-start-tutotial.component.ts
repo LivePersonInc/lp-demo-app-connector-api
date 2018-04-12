@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
 
 @Component({
@@ -11,21 +11,21 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
 })
 export class LpStartTutotialComponent implements OnInit {
 
-  public firstFormGroup: FormGroup;
-  public secondFormGroup: FormGroup;
-  public thirdFormGroup: FormGroup;
+  public brandId: string;
+  private sub: any;
 
-  constructor(private _formBuilder: FormBuilder) { }
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.sub = this.route.params.subscribe(params => {
+      this.brandId = params['brandId'];
     });
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+
 }
