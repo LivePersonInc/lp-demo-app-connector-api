@@ -1,7 +1,7 @@
 # lp-demo-app-connector-api
-Demo conversation app  for connector Api 
+Demo conversation app for connector Api 
 ### Introduction
-This project is a node js app integrated with an angular cli generated project, this means the default configuration has been changed in order to integrate Angular and Nodejs.
+This project is a Nodejs app integrated with an angular cli generated project, this means the default configuration has been changed in order to integrate Angular and Nodejs.
 ### Requerements. 
 Angular cli 
 #### Project structure
@@ -9,9 +9,9 @@ Angular cli
 - web
 ### How to run
 1. ```npm install```
-2. ``` ng build --prod```  to build complie the projec
-3. ``sudo node app`` to run the server
-4. open ``` http://localhost:8282``` in your browser
+2. ```ng build --prod```  to build a compiled version.
+3. ``sudo node app`` to run the server.
+4. Open ``` http://localhost:8282``` in your browser.
 
 #### Development Mode:
 
@@ -21,4 +21,4 @@ To run the application using the dev server instead a built project:
 
 1. ```npm install```
 2. ``sudo node app`` to run the server
-4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflectec in inmediatly
+4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
