@@ -249,15 +249,7 @@ export class ConversationManager {
   }
 
   private getShowUserValue(userName:string): boolean {
-    if(this.messages && this.messages.length === 0){
-      return true;
-    }
-    // TODO: simplify the IFs!
-    if(this.messages && this.messages[this.messages.length - 1].userName !== userName) {
-       return true;
-     }
-
-    return false;
+    return this.messages && (this.messages.length === 0 || this.messages[this.messages.length - 1].userName !== userName);
   }
 
 }
