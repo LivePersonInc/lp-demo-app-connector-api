@@ -21,6 +21,7 @@ import { LpNavMenuComponent } from './lp-header/lp-nav-menu/lp-nav-menu.componen
 import { LpStartTutotialComponent } from './lp-start-tutotial/lp-start-tutotial.component';
 import { AppKeySecretComponent } from './lp-start-tutotial/app-key-secret/app-key-secret.component';
 import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/webhooks-config.component';
+import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/web
     LpNavMenuComponent,
     LpStartTutotialComponent,
     AppKeySecretComponent,
-    WebhooksConfigComponent
+    WebhooksConfigComponent,
+    EnableAsycComponent
   ],
   imports: [
     BrowserModule,
