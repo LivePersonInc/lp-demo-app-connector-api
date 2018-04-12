@@ -28,7 +28,6 @@ export class ConversationManager {
   public sendMsgPayload:Request;
   public message: String;
   public userName;
-  public httpOptions = {};
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
   public messages: Array<ChatMessage>;
@@ -192,10 +191,10 @@ export class ConversationManager {
     this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
       console.log(res);
       this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
-    }),error => {
+    }, error => {
       this.sendApiService.stopLoading();
       this.handleError(error);
-    };
+    });
   }
 
   private handleError(error) {
@@ -253,7 +252,7 @@ export class ConversationManager {
     if(this.messages && this.messages.length === 0){
       return true;
     }
-
+    // TODO: simplify the IFs!
     if(this.messages && this.messages[this.messages.length - 1].userName !== userName) {
        return true;
      }
