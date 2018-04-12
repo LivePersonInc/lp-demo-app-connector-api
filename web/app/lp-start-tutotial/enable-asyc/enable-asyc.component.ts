@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'lp-enable-asyc',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./enable-asyc.component.scss']
 })
 export class EnableAsycComponent implements OnInit {
+
+  @Input() brandId: string
 
   constructor() { }
 

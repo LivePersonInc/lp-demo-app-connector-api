@@ -14,7 +14,7 @@
     <p class="text-left">
       <button mat-raised-button
               color="primary"
-              routerLink="/home/start"
+              routerLink="/home/start/{{brandId}}"
               [disabled]="!brandId || brandId.length <= 0"
               class="btn-left">
         Smart Config
@@ -26,14 +26,6 @@
       In other case go to the <a routerLink="/demo"> Demo </a> section.
     </p>
     <br>
-    <h5>Important:</h5>
-    <p>
-      Dont forget to enable the propery Common.Async_Messaging for your brand Account
-    </p>
-    <!--<div class="image-container">
-      <img  src="../../assets/async_messaging_example.png"  alt="" title="">
-    </div>-->
-
   </mat-card>
 
 </div>
