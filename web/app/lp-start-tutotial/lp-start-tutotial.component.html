@@ -2,38 +2,20 @@
 <div class="container">
   <mat-card>
     <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper" >
-      <mat-step label="App key and Secret">
+      <mat-step label="Enable async properties">
+        <lp-enable-asyc></lp-enable-asyc>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="App instalation">
         <lp-app-key-secret></lp-app-key-secret>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
       </mat-step>
-      <mat-step label="Webhooks ">
+      <mat-step label="Webhooks setup">
           <lp-webhooks-config></lp-webhooks-config>
-      </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Authentication</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Address" formControlName="secondCtrl" required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Open Conversation</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Address" formControlName="secondCtrl" required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
