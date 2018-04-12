@@ -6,12 +6,12 @@
     </p>
 
     <p>
-    If you are new you can start here using your brand Id:
-    </p>
-    <p class="brand-form">
-      <mat-form-field>
-        <input matInput placeholder="Brand ID" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
+      If you are new you can start here using your brand Id:&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-form-field class="brand-form">
+        <input matInput placeholder="Type here your brand id" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
+    </p>
+    <p class="text-left">
       <button mat-raised-button
               color="primary"
               routerLink="/home/start"
@@ -21,14 +21,18 @@
         <i class="material-icons">chevron_right</i>
       </button>
     </p>
+    <br>
     <p>
-    In other case go to the Demo section.
+      In other case go to the <a routerLink="/demo"> Demo </a> section.
     </p>
-    <h5>Important!:</h5>
-    <p>Dont forget to enable the propery Common.Async_Messaging for your brand Account</p>
-    <div class="image-container">
+    <br>
+    <h5>Important:</h5>
+    <p>
+      Dont forget to enable the propery Common.Async_Messaging for your brand Account
+    </p>
+    <!--<div class="image-container">
       <img  src="../../assets/async_messaging_example.png"  alt="" title="">
-    </div>
+    </div>-->
 
   </mat-card>
 
