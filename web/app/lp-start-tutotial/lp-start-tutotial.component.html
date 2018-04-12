@@ -1,27 +1,15 @@
+
 <div class="container">
   <mat-card>
-    <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Add brand Id</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-          </mat-form-field>
+    <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper" >
+      <mat-step label="App key and Secret">
+        <lp-app-key-secret></lp-app-key-secret>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
-        </form>
       </mat-step>
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>App installation</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperNext>Next</button>
-          </div>
-        </form>
+      <mat-step label="Webhooks ">
+          <lp-webhooks-config></lp-webhooks-config>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
