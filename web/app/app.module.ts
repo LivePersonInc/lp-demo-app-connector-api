@@ -22,6 +22,7 @@ import { LpStartTutotialComponent } from './lp-start-tutotial/lp-start-tutotial.
 import { AppKeySecretComponent } from './lp-start-tutotial/app-key-secret/app-key-secret.component';
 import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/webhooks-config.component';
 import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc.component';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService],
+  providers: [SendApiService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
