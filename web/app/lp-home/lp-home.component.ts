@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
-import {AuthenticationService} from "../services/authentication.service";
+import {AuthenticationService} from "../core/services/authentication.service";
 import { Observable } from 'rxjs/Observable';
 import {Router} from "@angular/router";
 
