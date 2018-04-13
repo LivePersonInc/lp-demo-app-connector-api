@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: LpHomeComponent},
   {path: 'demo', component: LpDemoComponent},
-  {path: 'home/start/:brandId', component: LpStartTutotialComponent},
+  {path: 'home/start', component: LpStartTutotialComponent},
 ];
 
 
