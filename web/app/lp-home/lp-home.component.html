@@ -30,7 +30,7 @@
       </div>
       <button mat-raised-button
               color="primary"
-              routerLink="/home/start/{{brandId}}"
+              (click)="this.authenticate()"
               [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
               >
         Smart config
