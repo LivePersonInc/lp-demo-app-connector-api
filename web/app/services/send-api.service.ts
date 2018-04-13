@@ -26,6 +26,10 @@ export class SendApiService {
     this.loadingSubject.next(false);
   }
 
+  public startLoading() {
+    this.loadingSubject.next(true);
+  }
+
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
     this.loadingSubject.next(true);
     return this.http.post(`https://${environment.sentinel}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions)
@@ -40,10 +44,6 @@ export class SendApiService {
       .pipe(
         catchError(this.handleError)
       );
-  }
-
-  public getBearerTokenb(BrandId: string, usernamer: string, password: string) {
-
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
