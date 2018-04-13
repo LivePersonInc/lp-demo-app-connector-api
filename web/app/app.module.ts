@@ -23,6 +23,7 @@ import { AppKeySecretComponent } from './lp-start-tutotial/app-key-secret/app-ke
 import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/webhooks-config.component';
 import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc.component';
 import { AuthenticationService } from './services/authentication.service';
+import { AccountConfigService } from './services/account-config.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { AuthenticationService } from './services/authentication.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

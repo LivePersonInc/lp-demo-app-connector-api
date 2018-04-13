@@ -7,6 +7,7 @@ import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {catchError} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+import {LoggedUser} from "../shared/models/LoggedUser";
 
 @Injectable()
 export class AuthenticationService {
@@ -14,6 +15,7 @@ export class AuthenticationService {
   private token: string;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<boolean>();
+  private user: LoggedUser;
 
   constructor(private http: HttpClient, private sendApiService: SendApiService, private snackBar: MatSnackBar) {
     this.snackBarConfing = new MatSnackBarConfig();
@@ -23,9 +25,10 @@ export class AuthenticationService {
 
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
+    this.user = new LoggedUser();
     this.sendApiService.startLoading();
     console.log("LOGFIN");
-     return this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {Accept: "application/json", "Content-Type": "application/json"})
+     return this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password })
       .pipe(
         catchError(this.handleError)
       ).subscribe(res => {
@@ -34,6 +37,9 @@ export class AuthenticationService {
          this.userLoggedSubject.next(true);
          this.snackBarConfing.duration = 2000;
          this.snackBar.open('Authentication was successful ', null, this.snackBarConfing);
+
+         this.user.brandId = brandId;
+         this.user.loginName = res.config.loginName;
          this.sendApiService.stopLoading();
       },error => {
         this.sendApiService.stopLoading();
@@ -42,9 +48,8 @@ export class AuthenticationService {
       });
   }
 
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+  public getUser(): LoggedUser {
+    return this.user;
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -1,6 +1,8 @@
 export class LoggedUser {
   brandId: string;
-  username: string;
-  password: string;
+  loginName: string;
 
+  constructor() {
+
+  }
 }
