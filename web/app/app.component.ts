@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SendApiService} from "./services/send-api.service";
+import {SendApiService} from "./core/services/send-api.service";
 import {environment} from '../environments/environment';
 import {HttpParamsOptions} from "@angular/common/http/src/params";
 import {HttpHeaders} from "@angular/common/http";

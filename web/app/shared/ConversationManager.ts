@@ -1,4 +1,4 @@
-import {SendApiService} from "../services/send-api.service";
+import {SendApiService} from "../core/services/send-api.service";
 import {environment} from '../../environments/environment';
 import {HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs/Subscription";
