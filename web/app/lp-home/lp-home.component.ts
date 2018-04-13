@@ -10,7 +10,9 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
   host: {'[@fadeInAnimation]': ''}
 })
 export class LpHomeComponent implements OnInit {
-  public  brandId: string;
+  public brandId: string;
+  public userName: string;
+  public password: string;
 
   constructor() { }
 
