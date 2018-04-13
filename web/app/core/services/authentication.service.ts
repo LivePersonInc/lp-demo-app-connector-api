@@ -25,14 +25,14 @@ export class AuthenticationService {
 
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
-    this.user = new LoggedUser();
     this.sendApiService.startLoading();
     console.log("LOGFIN");
      return this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password })
       .pipe(
         catchError(this.handleError)
       ).subscribe(res => {
-        console.log(res);
+         this.user = new LoggedUser();
+         console.log(res);
         this.token = res.bearer;
          this.userLoggedSubject.next(true);
          this.snackBarConfing.duration = 2000;
