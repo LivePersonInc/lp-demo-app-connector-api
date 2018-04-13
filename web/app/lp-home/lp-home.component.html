@@ -7,20 +7,37 @@
 
     <p>
       If you are new you can start here using your brand Id:&nbsp;&nbsp;&nbsp;&nbsp;
-      <mat-form-field class="brand-form">
-        <input matInput placeholder="Type here your brand id" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
-      </mat-form-field>
+
+
     </p>
-    <p class="text-left">
+    <div class="form-container mx-auto ">
+      <div class="row">
+        <div class="col-sm-12">
+          <mat-form-field class="brand-form">
+            <input matInput placeholder="Account number" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </div>
+          <div class="col-sm-12">
+          <mat-form-field class="brand-form">
+            <input matInput placeholder="Login name" required [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-12">
+          <mat-form-field class="brand-form">
+            <input matInput type="Password" placeholder="password" required [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </div>
+      </div>
       <button mat-raised-button
               color="primary"
               routerLink="/home/start/{{brandId}}"
-              [disabled]="!brandId || brandId.length <= 0"
-              class="btn-left">
+              [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
+              >
         Smart config
         <i class="material-icons">settings</i>
       </button>
-    </p>
+    </div>
+
     <br>
     <p>
       In other case go to the <a routerLink="/demo"> Demo </a> section.
