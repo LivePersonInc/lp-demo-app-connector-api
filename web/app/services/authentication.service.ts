@@ -5,23 +5,28 @@ import 'rxjs/add/operator/map'
 import {SendApiService} from "./send-api.service";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {catchError} from "rxjs/operators";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class AuthenticationService {
-
+//le92127075
   private token: string;
+
+  public userLoggedSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient, private sendApiService: SendApiService) { }
 
   //Barer Token
-  public login(brandId: string, username: string, password: string) {
+  public login(brandId: string, username: string, password: string): any {
     this.sendApiService.startLoading();
     console.log("LOGFIN");
-    this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {Accept: "application/json", "Content-Type": "application/json"})
+     return this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {Accept: "application/json", "Content-Type": "application/json"})
       .pipe(
         catchError(this.handleError)
       ).subscribe(res => {
         console.log(res);
+        this.token = res.bearer;
+         this.userLoggedSubject.next(true);
          this.sendApiService.stopLoading();
       },error => {
         this.sendApiService.stopLoading();

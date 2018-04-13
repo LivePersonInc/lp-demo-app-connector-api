@@ -12,19 +12,13 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
 export class LpStartTutotialComponent implements OnInit {
 
   public brandId: string;
-  private sub: any;
+
 
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      this.brandId = params['brandId'];
-    });
-  }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
 
