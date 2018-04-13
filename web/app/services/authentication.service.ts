@@ -6,15 +6,20 @@ import {SendApiService} from "./send-api.service";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {catchError} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 
 @Injectable()
 export class AuthenticationService {
 //le92127075
   private token: string;
-
+  public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private sendApiService: SendApiService) { }
+  constructor(private http: HttpClient, private sendApiService: SendApiService, private snackBar: MatSnackBar) {
+    this.snackBarConfing = new MatSnackBarConfig();
+    this.snackBarConfing.verticalPosition = 'top';
+    this.snackBarConfing.horizontalPosition = 'right';
+  }
 
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
@@ -27,10 +32,13 @@ export class AuthenticationService {
         console.log(res);
         this.token = res.bearer;
          this.userLoggedSubject.next(true);
+         this.snackBarConfing.duration = 2000;
+         this.snackBar.open('Authentication was successful ', null, this.snackBarConfing);
          this.sendApiService.stopLoading();
       },error => {
         this.sendApiService.stopLoading();
-
+         this.snackBarConfing.panelClass = ['snack-error'];
+         this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
       });
   }
 
@@ -53,4 +61,8 @@ export class AuthenticationService {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable('Something bad happened; please try again later.');
   }
+
+
 }
+
+
