@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'lp-home',
@@ -14,10 +15,14 @@ export class LpHomeComponent implements OnInit {
   public userName: string;
   public password: string;
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
 
+  }
+
+  public authenticate() {
+    this.authenticationService.login(this.brandId,this.userName, this.password);
   }
 
 }
