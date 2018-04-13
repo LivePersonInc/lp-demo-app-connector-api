@@ -4,7 +4,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { SendApiService } from "./services/send-api.service";
+import { SendApiService } from "./core/services/send-api.service";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LpHeaderComponent } from './lp-header/lp-header.component';
 import { LpChatBoxComponent } from './lp-chat-box/lp-chat-box.component';
@@ -22,8 +22,9 @@ import { LpStartTutotialComponent } from './lp-start-tutotial/lp-start-tutotial.
 import { AppKeySecretComponent } from './lp-start-tutotial/app-key-secret/app-key-secret.component';
 import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/webhooks-config.component';
 import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc.component';
-import { AuthenticationService } from './services/authentication.service';
-import { AccountConfigService } from './services/account-config.service';
+import { AuthenticationService } from './core/services/authentication.service';
+import { AccountConfigService } from './core/services/account-config.service';
+import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { AccountConfigService } from './services/account-config.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService, AccountConfigService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
