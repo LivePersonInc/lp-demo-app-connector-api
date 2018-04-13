@@ -32,17 +32,18 @@ export class SendApiService {
       .pipe(
         catchError(this.handleError)
       );
-
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
-    console.log("wdw");
-    console.log(httpOptions);
     this.loadingSubject.next(true);
     return this.http.post(`https://${environment.idp}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  public getBearerTokenb(BrandId: string, usernamer: string, password: string) {
+
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {

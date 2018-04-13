@@ -3,15 +3,17 @@
   .container{
     margin-top: 50px;
   }
-  .brand-form{
-    button{
-      margin-left: 40px;
+
+  .form-container {
+    max-width: 300px;
+    display: block;
+    .brand-form{
+      width: 100%;
     }
-  }
-  .image-container{
-    img{
+    button{
       width: 100%;
     }
   }
+
 
 }
