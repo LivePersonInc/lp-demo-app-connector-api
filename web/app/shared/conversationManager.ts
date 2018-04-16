@@ -12,6 +12,7 @@ import {SetUserProfile} from "./models/SetUserProfile";
 import {Event} from "./models/Event";
 import {PublishContentEvent} from "./models/PublishContentEvent";
 import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
+import {LoadingService} from "../core/services/loading.service";
 
 
 export class ConversationManager {
@@ -33,7 +34,7 @@ export class ConversationManager {
   public messages: Array<ChatMessage>;
   public serverNotifications: Array<string>;
 
-  constructor( public  snackBar: MatSnackBar, public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string,  userName: string) {
+  constructor( public snackBar: MatSnackBar,public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string,  userName: string, public losadingSerive: LoadingService) {
     this.branId = brandId;
     this.appKey = appKey;
     this.appSecret = appSecret;
@@ -48,7 +49,7 @@ export class ConversationManager {
     this.ext_consumer_id = "ramdom_id" + Math.random();
     this.message = "HI There !";
 
-    this.subscription = this.sendApiService.getIsLoading().subscribe( isLoading => {
+    this.subscription = this.losadingSerive.isLoadingSubscription().subscribe( isLoading => {
       this.isLoading = isLoading;
     }, error => {
       console.log('SUBSCRIPTION ERROR: ' + error);
@@ -100,7 +101,7 @@ export class ConversationManager {
         },  error => {
           this.handleError(error);
           reject(error);
-          this.sendApiService.stopLoading();
+          this.losadingSerive.stopLoading();
         }
       );
     })
@@ -126,7 +127,7 @@ export class ConversationManager {
         },  error => {
           this.handleError(error);
           reject(error);
-          this.sendApiService.stopLoading();
+          this.losadingSerive.stopLoading();
         }
       );
     })
@@ -149,7 +150,7 @@ export class ConversationManager {
         this.messages.push(new ChatMessage("sent", new Date, initialMessage, this.userName, "ok", this.getShowUserValue(this.userName)));
         resolve(this.conversationId);
       }, error => {
-        this.sendApiService.stopLoading();
+        this.losadingSerive.stopLoading();
         this.handleError(error);
         reject(error);
       });
@@ -173,7 +174,7 @@ export class ConversationManager {
         resolve(res);
         this.handleSuccess("Message successfully sent to conversation with id " + this.conversationId);
       },error => {
-        this.sendApiService.stopLoading();
+        this.losadingSerive.stopLoading();
         this.handleError(error);
         reject(error);
       });
@@ -192,19 +193,19 @@ export class ConversationManager {
       console.log(res);
       this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
     }, error => {
-      this.sendApiService.stopLoading();
+      this.losadingSerive.stopLoading();
       this.handleError(error);
     });
   }
 
   private handleError(error) {
-    this.sendApiService.stopLoading();
+    this.losadingSerive.stopLoading();
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
   }
 
   private handleSuccess(message) {
-    this.sendApiService.stopLoading();
+    this.losadingSerive.stopLoading();
     this.snackBarConfing.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfing);
   }

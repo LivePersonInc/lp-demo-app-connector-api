@@ -5,6 +5,7 @@ import {SendApiService} from "../core/services/send-api.service";
 import {ConversationManager} from "../shared/conversationManager";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
+import {LoadingService} from "../core/services/loading.service";
 
 @Component({
   selector: 'lp-conversation',
@@ -22,18 +23,18 @@ export class LpConversationComponent implements OnInit {
 
   @ViewChild('chatbox') private chatBox: LpChatBoxComponent;
 
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone) { }
+  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone, private  loadingService: LoadingService) { }
 
   ngOnInit() {
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
-    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName);
+    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
     this.conversationManager.getAppJWT().then(resolve => {
       this.conversationManager.getAppConsumerJWS().then(resolve => {
         this.conversationManager.openConversation(initialMessage).then(conversationId => {

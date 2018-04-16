@@ -8,6 +8,7 @@ import {catchError} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {LoggedUser} from "../../shared/models/LoggedUser";
+import {LoadingService} from "./loading.service";
 
 @Injectable()
 export class AuthenticationService {
@@ -17,7 +18,7 @@ export class AuthenticationService {
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private sendApiService: SendApiService, private snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private sendApiService: SendApiService, private snackBar: MatSnackBar, private loadingService:LoadingService) {
     this.snackBarConfing = new MatSnackBarConfig();
     this.snackBarConfing.verticalPosition = 'top';
     this.snackBarConfing.horizontalPosition = 'right';
@@ -25,7 +26,7 @@ export class AuthenticationService {
 
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
-    this.sendApiService.startLoading();
+    this.loadingService.startLoading();
     console.log("LOGFIN");
      return this.http.post<any>(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password })
       .pipe(
@@ -40,9 +41,9 @@ export class AuthenticationService {
 
          this.user.brandId = brandId;
          this.user.loginName = res.config.loginName;
-         this.sendApiService.stopLoading();
+         this.loadingService.stopLoading();
       },error => {
-        this.sendApiService.stopLoading();
+        this.loadingService.stopLoading();
          this.snackBarConfing.panelClass = ['snack-error'];
          this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
       });
