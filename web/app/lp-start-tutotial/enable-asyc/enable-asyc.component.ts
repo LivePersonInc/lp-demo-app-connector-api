@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AccountConfigService} from "../../core/services/account-config.service";
 
 @Component({
   selector: 'lp-enable-asyc',
@@ -7,11 +8,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class EnableAsycComponent implements OnInit {
 
-  @Input() brandId: string
-
-  constructor() { }
+  constructor(private accountConfigService:AccountConfigService) { }
 
   ngOnInit() {
+    this.accountConfigService.getAccountConfigPropertiesList();
   }
 
 }

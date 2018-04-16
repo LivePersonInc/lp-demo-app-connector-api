@@ -12,15 +12,14 @@ const accountConfigService = new AccountConfigService(nconf);
 router.get("/properties/:id", function (req, res, next) {
   let brandId = req.params.id;
   let args = {};
-  args.headers['content-type'] = req.header('content-type');
+  args.headers = {};
   args.headers['authorization'] = req.header('authorization');
 
   accountConfigService
     .getAccountPropertyList(brandId, args)
     .then((resolve) => {
     if (handleStatusCode(resolve[1].statusCode)) {
-      let data= resolve[0][1].body;
-      res.send( data);
+      res.send(resolve[0]);
     } else {
       res.status(resolve[1].statusCode).send("Something wrong");
     }
