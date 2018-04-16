@@ -3,8 +3,9 @@ const app = express();
 const nconf = require("nconf");
 const fs = require('fs');
 const cors = require('cors');
-const umsBrigeServer = require("./server/umsBrige");
-const notifications = require("./server/notifications");
+const umsBrigeServer = require('./server/umsBrige');
+const accountConfBrige = require('./server/accountConfBrige');
+const notifications = require('./server/notifications');
 const domains = require('./server/connector/CsdsProperties');
 const https = require('https');
 const forceSsl = require('express-force-ssl');
@@ -31,7 +32,7 @@ app.domains = domains;
 //Force https
 //app.use(forceSsl);
 
-
+app.use("/account", accountConfBrige);
 app.use("/umsbrige", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
 
