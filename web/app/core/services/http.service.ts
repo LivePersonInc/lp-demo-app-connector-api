@@ -9,12 +9,13 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import * as Client from 'node-rest-client';
+import {LoadingService} from "./loading.service";
 @Injectable()
 export class HttpService {
 
-  constructor(public snackBar: MatSnackBar, private http: HttpClient) { }
+  constructor(protected snackBar: MatSnackBar, protected http: HttpClient, protected loadingService:LoadingService) { }
 
-  private handleError(error: HttpErrorResponse) {
+  protected handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -29,7 +30,7 @@ export class HttpService {
     return new ErrorObservable('Something bad happened; please try again later.');
   }
 
-  private handleResponse(response: Response, body: any, confirmShow: boolean): void {
+  protected handleResponse(response: Response, body: any, confirmShow: boolean): void {
     const config = new MatSnackBarConfig();
     config.verticalPosition = 'top';
     config.horizontalPosition = 'right';
