@@ -4,35 +4,35 @@ import {HttpService} from "./http.service";
 import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpClient} from "@angular/common/http";
+import {environment} from '../../../environments/environment';
 
 @Injectable()
-export class AccountConfigService extends HttpService{
+export class AccountConfigService extends HttpService {
 
   public accountConfigPropList:any;
   public headers = {};
-
+  public brandId = "";
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
-
-     this.headers = {'headers': {
-      'content-type':'application/json',
+    this.brandId = this.authenticationService.getUser().brandId;
+    this.headers = {'headers': {
       'Authorization': `Bearer ${this.authenticationService.getBearerToken()}`,
-
-    }
+      }
     };
   }
 
   public getAccountConfigPropertiesList() {
-      return this.doGet(`https://`, this.headers).subscribe(data => {
-        console.log(data);
-      });
-
+    this.doGet(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
+      console.log(data);
+      this.loadingService.stopLoading();
+    });
   }
 
   public updateAccountConfigProperties() {
-    return this.doPost(`https://`, this.accountConfigPropList,this.headers).subscribe(data => {
+    this.doPost(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.accountConfigPropList,this.headers).subscribe(data => {
       console.log(data);
+      this.loadingService.stopLoading();
     });
   }
 
