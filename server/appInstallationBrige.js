@@ -11,6 +11,11 @@ const appInstallationService = new AppInstallationService(nconf);
 
 router.get("/installations/:brandId", function (req, res, next) {
   let brandId = req.params.brandId;
+  let args = {};
+  args.data = {};
+  args.headers = {};
+  args.headers['content-type'] = req.header('content-type');
+  args.headers['authorization'] = req.header('authorization');
 
   appInstallationService
     .getAppsForBrandId(brandId, args)
