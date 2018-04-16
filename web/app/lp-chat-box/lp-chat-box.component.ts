@@ -3,7 +3,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {ChatMessage} from "./lp-chat-box-message/models/ChatMessage";
-import {ConversationManager} from "../shared/ConversationManager";
+import {ConversationManager} from "../shared/conversationManager";
 
 @Component({
   selector: 'lp-chat-box',

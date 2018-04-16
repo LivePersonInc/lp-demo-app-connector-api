@@ -13,9 +13,9 @@ import {LoggedUser} from "../../shared/models/LoggedUser";
 export class AuthenticationService {
 //le92127075
   private token: string;
+  private user: LoggedUser;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<boolean>();
-  private user: LoggedUser;
 
   constructor(private http: HttpClient, private sendApiService: SendApiService, private snackBar: MatSnackBar) {
     this.snackBarConfing = new MatSnackBarConfig();
