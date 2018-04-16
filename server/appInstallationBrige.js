@@ -2,37 +2,33 @@ const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
 const fetch = require("node-fetch");
-const AccountConfigService = require("./services/AccountConfigService");
+const AppInstallationService = require("./services/AppInstallationService");
 
 nconf.file({file: "./settings.json"});
 
-const accountConfigService = new AccountConfigService(nconf);
+const appInstallationService = new AppInstallationService(nconf);
 
 
-router.get("/properties/:id", function (req, res, next) {
-  let brandId = req.params.id;
-  let args = {};
-  args.headers['content-type'] = req.header('content-type');
-  args.headers['authorization'] = req.header('authorization');
+router.get("/installations/:brandId", function (req, res, next) {
+  let brandId = req.params.brandId;
 
-  accountConfigService
-    .getAccountPropertyList(brandId, args)
+  appInstallationService
+    .getAppsForBrandId(brandId, args)
     .then((resolve) => {
-    if (handleStatusCode(resolve[1].statusCode)) {
-      let data= resolve[0][1].body;
-      res.send( data);
-    } else {
-      res.status(resolve[1].statusCode).send("Something wrong");
-    }
+      if (handleStatusCode(resolve[1].statusCode)) {
+        let data= resolve[0][1].body;
+        res.send( data);
+      } else {
+        res.status(resolve[1].statusCode).send("Something wrong");
+      }
     }).catch((error) => {
     console.error("ERROR: Promise rejected", error);
     res.status(500).send("somthing wrong");
-    });
-
+  });
 });
 
-router.post("/properties/:id", function (req, res, next) {
-  let brandId = req.params.id;
+router.post("/installation/:brandId", function (req, res, next) {
+  let brandId = req.params.brandId;
   let body = "";
 
   req.on('data', function (chunk) {
@@ -46,8 +42,7 @@ router.post("/properties/:id", function (req, res, next) {
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
 
-    accountConfigService
-      .updateAccountPropertyList(brandId,args)
+    appInstallationService.installNewApp(brandId,args)
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
           res.send("OK");
@@ -59,6 +54,7 @@ router.post("/properties/:id", function (req, res, next) {
       res.status(500).send("somthing wrong");
     });
   });
+
 });
 
 function handleStatusCode(statusCode) {
