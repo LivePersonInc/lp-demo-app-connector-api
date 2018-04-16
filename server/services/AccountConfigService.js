@@ -10,11 +10,11 @@ class AccountConfigService {
         this.client = new Client();
     }
 
-    updateAccountPropertyList(args) {
+    updateAccountPropertyList(brandId,args) {
       return new Promise((resolve, reject) => {
         return this.client
           .post(
-            `https://${this.nconf.get("ACCOUNT_CONFIG_SERVER") || domains.getDomainByServiceName('accountConfigReadWrite')}/api/account/${this.nconf.get("BRAND_ID")}/api/account/${brandId}/configuration/provision/featureGrants?v=1.0&overrideAll=false&jsonProvider=gson`,
+            `https://${this.nconf.get("ACCOUNT_CONFIG_SERVER") || domains.getDomainByServiceName('accountConfigReadWrite')}/api/account/${brandId}}/api/account/${brandId}/configuration/provision/featureGrants?v=1.0&overrideAll=false&jsonProvider=gson`,
             args,
             function (data, response) {
               resolve([data, response]);
@@ -44,4 +44,4 @@ class AccountConfigService {
 
 }
 
-module.exports = AppInstallationService;
+module.exports = AccountConfigService;
