@@ -11,30 +11,18 @@ import {HttpService} from "./http.service";
 import {LoadingService} from "./loading.service";
 
 @Injectable()
-export class SendApiService  extends HttpService {
-  public appJWT: string;
-  private client = new (<any> Client).Client();
+export class SendApiService extends HttpService {
 
-  constructor(private snackBar: MatSnackBar,private http: HttpClient, private loadingService:LoadingService) {
+  constructor(protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
   }
 
-
-
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
-    this.loadingService.startLoading();
-    return this.http.post(`https://${environment.sentinel}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.doPost(`https://${environment.sentinel}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions);
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
-    this.loadingService.startLoading();
-    return this.http.post(`https://${environment.idp}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.doPost(`https://${environment.idp}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions);
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {

@@ -53,6 +53,10 @@ export class AuthenticationService {
     return this.user;
   }
 
+  public getBearerToken(): string {
+   return this.bearerToken;
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
