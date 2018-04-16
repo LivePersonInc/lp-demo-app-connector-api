@@ -2,7 +2,7 @@ import {Component, ComponentRef, ElementRef, NgZone, OnInit, ViewChild} from '@a
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../core/services/send-api.service";
-import {ConversationManager} from "../shared/ConversationManager";
+import {ConversationManager} from "../shared/conversationManager";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
 
