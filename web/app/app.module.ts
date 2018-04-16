@@ -25,6 +25,7 @@ import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc
 import { AuthenticationService } from './core/services/authentication.service';
 import { AccountConfigService } from './core/services/account-config.service';
 import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
+import { IstallationService } from './core/services/istallation.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, IstallationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
