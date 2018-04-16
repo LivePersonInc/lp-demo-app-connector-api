@@ -13,7 +13,7 @@ import {LoadingService} from "./loading.service";
 @Injectable()
 export class AuthenticationService {
 //le92127075
-  private token: string;
+  private bearerToken: string;
   private user: LoggedUser;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<boolean>();
@@ -34,7 +34,7 @@ export class AuthenticationService {
       ).subscribe(res => {
          this.user = new LoggedUser();
          console.log(res);
-        this.token = res.bearer;
+        this.bearerToken = res.bearer;
          this.userLoggedSubject.next(true);
          this.snackBarConfing.duration = 2000;
          this.snackBar.open('Authentication was successful ', null, this.snackBarConfing);
