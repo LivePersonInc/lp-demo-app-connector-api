@@ -27,6 +27,7 @@ import { AccountConfigService } from './core/services/account-config.service';
 import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
 import { IstallationService } from './core/services/istallation.service';
 import { LoadingService } from './core/services/loading.service';
+import { HttpService } from './core/services/http.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { LoadingService } from './core/services/loading.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, IstallationService, LoadingService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, IstallationService, LoadingService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

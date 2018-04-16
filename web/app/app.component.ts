@@ -13,6 +13,7 @@ import {PrivateData} from "./shared/models/PrivateData";
 import {SetUserProfile} from "./shared/models/SetUserProfile";
 import {Event} from "./shared/models/Event";
 import {PublishContentEvent} from "./shared/models/PublishContentEvent";
+import {LoadingService} from "./core/services/loading.service";
 
 @Component({
   selector: 'app-root',
@@ -23,12 +24,12 @@ export class AppComponent implements OnInit{
   public isLoading = false;
   private subscription: Subscription;
 
-  constructor(private sendApiService: SendApiService) {
+  constructor(private loadingService: LoadingService) {
 
   }
 
   ngOnInit() {
-    this.subscription = this.sendApiService.getIsLoading().subscribe( isLoading => {
+    this.subscription = this.loadingService.isLoadingSubscription().subscribe( isLoading => {
       this.isLoading = isLoading;
     }, error => {
       console.log('SUBSCRIPTION ERROR: ' + error);

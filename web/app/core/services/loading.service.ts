@@ -5,11 +5,11 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class LoadingService {
 
-  private loadingSubject = new Subject<any>();
+  private loadingSubject = new Subject<boolean>();
 
   constructor() { }
 
-  public getIsLoading(): Observable<any> {
+  public isLoadingSubscription(): Observable<boolean> {
     return this.loadingSubject.asObservable();
   }
 
