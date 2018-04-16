@@ -12,6 +12,7 @@ import {PrivateData} from "../shared/models/PrivateData";
 import {SetUserProfile} from "../shared/models/SetUserProfile";
 import {Event} from "../shared/models/Event";
 import {PublishContentEvent} from "../shared/models/PublishContentEvent";
+import {LoadingService} from "../core/services/loading.service";
 
 
 @Component({
@@ -37,7 +38,7 @@ private subscription: Subscription;
 public snackBarConfing : MatSnackBarConfig;
 
 
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService) {
+  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private loadingService:LoadingService) {
 
   }
 
@@ -52,7 +53,7 @@ public snackBarConfing : MatSnackBarConfig;
     this.ext_consumer_id = "ramdom_id" + Math.random();
     this.message = "HI There !";
 
-    this.subscription = this.sendApiService.getIsLoading().subscribe( isLoading => {
+    this.subscription = this.loadingService.isLoadingSubscription().subscribe( isLoading => {
       this.isLoading = isLoading;
     }, error => {
       console.log('SUBSCRIPTION ERROR: ' + error);
@@ -73,7 +74,7 @@ public getAppJWT(){
         this.appJWT = res['access_token'];
       },  error => {
         this.handleError(error);
-        this.sendApiService.stopLoading();
+        this.loadingService.stopLoading();
       }
     );
   }
@@ -94,7 +95,7 @@ public getAppConsumerJWS(){
         this.handleSuccess("Consumer JWS succesfully obtined");
       },  error => {
         this.handleError(error);
-        this.sendApiService.stopLoading();
+        this.loadingService.stopLoading();
       }
     );
   }
@@ -114,7 +115,7 @@ public openConversation() {
       this.conversationId = res["convId"];
       this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
     },error => {
-      this.sendApiService.stopLoading();
+      this.loadingService.stopLoading();
       this.handleError(error);
     });
   }
@@ -133,7 +134,7 @@ public sendMessage() {
       console.log(res);
       this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
     },error => {
-      this.sendApiService.stopLoading();
+      this.loadingService.stopLoading();
       this.handleError(error);
     });
   }
@@ -149,20 +150,20 @@ public closeConversation(){
       console.log(res);
       this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
     }),error => {
-      this.sendApiService.stopLoading();
+      this.loadingService.stopLoading();
       this.handleError(error);
     };
   }
 
 private handleError(error) {
     console.log("XXX; "+error);
-    this.sendApiService.stopLoading();
+    this.loadingService.stopLoading();
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
   }
 
 private handleSuccess(message) {
-    this.sendApiService.stopLoading();
+    this.loadingService.stopLoading();
     this.snackBarConfing.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfing);
   }
