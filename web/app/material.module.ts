@@ -13,7 +13,8 @@ import {
   MatTabsModule,
   MatGridListModule,
   MatDialogModule,
-  MatSnackBarModule, MatHorizontalStepper, MatStepperModule
+  MatSnackBarModule, MatHorizontalStepper, MatStepperModule, MatOptionModule, MatSelectModule, MatDivider,
+  MatDividerModule
 } from '@angular/material';
 
 @NgModule({
@@ -31,7 +32,10 @@ import {
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDividerModule
 
   ],
   exports: [
@@ -48,7 +52,10 @@ import {
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule {}
