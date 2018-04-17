@@ -4,6 +4,7 @@ const nconf = require("nconf");
 const fs = require('fs');
 const cors = require('cors');
 const umsBrigeServer = require('./server/umsBrige');
+const installationBrige = require('./server/appInstallationBrige');
 const accountConfBrige = require('./server/accountConfBrige');
 const notifications = require('./server/notifications');
 const domains = require('./server/connector/CsdsProperties');
@@ -32,6 +33,7 @@ app.domains = domains;
 //Force https
 //app.use(forceSsl);
 
+app.use("/installation", installationBrige);
 app.use("/account", accountConfBrige);
 app.use("/umsbrige", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
