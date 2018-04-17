@@ -25,7 +25,7 @@ import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc
 import { AuthenticationService } from './core/services/authentication.service';
 import { AccountConfigService } from './core/services/account-config.service';
 import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
-import { IstallationService } from './core/services/istallation.service';
+import { InstallationService } from './core/services/istallation.service';
 import { LoadingService } from './core/services/loading.service';
 import { HttpService } from './core/services/http.service';
 
@@ -57,7 +57,7 @@ import { HttpService } from './core/services/http.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, IstallationService, LoadingService, HttpService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
