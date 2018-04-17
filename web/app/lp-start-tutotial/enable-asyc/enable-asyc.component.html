@@ -1,7 +1,28 @@
-<diV>
-  The acount id: has the property async_messaging enabled
-</diV>
+<div class="container">
 
-<button (click)="enableAsyncMessaging()">Enable</button>
+  <div *ngIf="isAsyncMessaging; else no_enabled ">
+    <p class="icon-p">
+      <b>Async_Messging:</b>
+      <i class="material-icons icon-possitive">check_circle</i>
+    </p>
+    <p class="text-center">
+      Your account has Async_Messaging enabled. you can proceed with the next steps.
+    </p>
+  </div>
+
+   <ng-template #no_enabled >
+     <p class="icon-p">
+       <b>Async_Messging</b>:
+       <i class="material-icons icon-negative" >cancel</i>
+     </p>
+     <p class="text-center">
+       Please enable Async_Messaging property for your brand Id account before continue.
+     </p>
+     <!---<button (click)="enableAsyncMessaging()">Enable</button>-->
+   </ng-template >
+
+</div>
+
+
 
 

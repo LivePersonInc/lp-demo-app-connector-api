@@ -5,9 +5,12 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class AccountConfigService extends HttpService {
+
+  public acSubject = new Subject<any>();
 
   public accountConfigPropList:any;
   public headers = {};
@@ -26,8 +29,8 @@ export class AccountConfigService extends HttpService {
     this.doGet(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
       this.accountConfigPropList = data;
       this.loadingService.stopLoading();
+      this.acSubject.next('GET_LIST');
     }, error => {
-      this.loadingService.stopLoading();
       this.errorResponse(error);
     });
   }
@@ -35,8 +38,8 @@ export class AccountConfigService extends HttpService {
   public updateAccountConfigProperties() {
     this.doPost(`http://${environment.umsDomain}/account/properties/${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
+      this.acSubject.next('UPDATED');
     },error => {
-      this.loadingService.stopLoading();
       this.errorResponse(error);
     });
   }
