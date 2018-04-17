@@ -4,15 +4,15 @@
     <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper" >
       <mat-step label="Enable async properties">
         <lp-enable-asyc></lp-enable-asyc>
-        <div>
+        <div class="next-button">
           <button mat-button matStepperNext>Next</button>
         </div>
       </mat-step>
       <mat-step label="App instalation">
         <lp-app-key-secret></lp-app-key-secret>
-          <div>
-            <button mat-button matStepperNext>Next</button>
-          </div>
+        <div class="next-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
       </mat-step>
       <mat-step label="Webhooks setup">
           <lp-webhooks-config></lp-webhooks-config>
