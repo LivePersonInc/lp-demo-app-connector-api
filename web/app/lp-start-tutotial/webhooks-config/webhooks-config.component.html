@@ -1,7 +1,48 @@
-<p>
-  webhooks-config works!
-</p>
-<div>
-  <button mat-button matStepperPrevious>Back</button>
-  <button mat-button matStepperNext>Next</button>
+<div class="container-fluid" *ngIf="installationService.selectedApp; else no_app">
+  <b>{{installationService.selectedApp.client_name}}</b>
+  <mat-form-field class="w-100">
+    <input matInput placeholder="App id" disabled value="{{installationService.selectedApp.client_id}}">
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <input matInput placeholder="App Secret" disabled value="{{installationService.selectedApp.client_secret}}">
+  </mat-form-field>
+
+  Webhooks endpoints
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="ExConversationChangeNotification" >
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="AcceptStatusEvent" >
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="ChatStateEvent" >
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="ContentEvent" >
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="RichContentEvent" >
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+  </div>
 </div>
+
+<ng-template #no_app>
+  <p>
+    <b>There is not any app selected. Please select or install a new one.</b>
+  </p>
+</ng-template>

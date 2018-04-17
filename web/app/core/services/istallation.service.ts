@@ -11,7 +11,8 @@ import {Subject} from "rxjs/Subject";
 export class InstallationService extends HttpService {
 
   public istallationSubject = new Subject<any>();
-  public app_list;
+  public appList;
+  public selectedApp: Object;
   public headers = {};
   public brandId = "";
 
@@ -28,7 +29,7 @@ export class InstallationService extends HttpService {
   public getAppListList() {
     this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe(data => {
       console.log(data);
-      this.app_list = data;
+      this.appList = data;
       this.loadingService.stopLoading();
       this.istallationSubject.next('GET_APP_LIST');
     }, error => {
