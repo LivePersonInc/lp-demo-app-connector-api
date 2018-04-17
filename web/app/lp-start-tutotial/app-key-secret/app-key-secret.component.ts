@@ -19,13 +19,14 @@ export class AppKeySecretComponent implements OnInit {
 
     this.installationService.istallationSubject.subscribe( event => {
       if(event === 'GET_APP_LIST'){
-        this.appList = this.installationService.app_list;
-        console.log(this.installationService.app_list);
+        this.appList = this.installationService.appList;
+        console.log(this.installationService.appList);
       }
     });
   }
 
   public next(){
+    this.installationService.selectedApp = this.selectedApp;
     console.log(this.selectedApp);
   }
 
