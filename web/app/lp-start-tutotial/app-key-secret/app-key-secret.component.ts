@@ -12,7 +12,7 @@ export class AppKeySecretComponent implements OnInit {
   public selectedApp;
   public appList = [];
 
-  constructor(private  installationService:InstallationService) { }
+  constructor(private installationService:InstallationService) { }
 
   ngOnInit() {
     this.installationService.getAppListList();
@@ -23,6 +23,10 @@ export class AppKeySecretComponent implements OnInit {
         console.log(this.installationService.app_list);
       }
     });
+  }
+
+  public next(){
+    console.log(this.selectedApp);
   }
 
 }
