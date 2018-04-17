@@ -8,24 +8,32 @@ import {AccountConfigService} from "../../core/services/account-config.service";
 })
 export class EnableAsycComponent implements OnInit {
 
+  public isAsyncMessaging = false;
+
   constructor(private accountConfigService:AccountConfigService) { }
 
   ngOnInit() {
+
     this.accountConfigService.getAccountConfigPropertiesList();
+
+    this.accountConfigService.acSubject.subscribe( event => {
+      if(event === "GET_LIST"){
+        this.isAsyncMessaging = this.isAsyncMessagingEnabled();
+      }
+    });
   }
 
   public isAsyncMessagingEnabled(): boolean {
-    let feature = this.accountConfigService.accountConfigPropList.accountConfigResponse.acApp.accountList.account.grantedFeatures.grantedFeature
-      .filter( e => e.$.id == "Common.Async_Messaging");
-    console.log(feature);
-
-
-
-    return feature.value._;
+    let feature = this.accountConfigService.accountConfigPropList.appDataList[0].accountList.accountList[0].itemsCollection.data
+      .filter( e => e.compoundFeatureID == "Common.Async_Messaging");
+    //console.log(feature);
+    return feature[0].value.value;
   }
 
   public enableAsyncMessaging(): boolean {
-    this.accountConfigService.updateAccountConfigProperties();
+
+    //TODO:
+    // this.accountConfigService.updateAccountConfigProperties();
     return true;
   }
 
