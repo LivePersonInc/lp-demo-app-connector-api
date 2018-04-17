@@ -14,4 +14,19 @@ export class EnableAsycComponent implements OnInit {
     this.accountConfigService.getAccountConfigPropertiesList();
   }
 
+  public isAsyncMessagingEnabled(): boolean {
+    let feature = this.accountConfigService.accountConfigPropList.accountConfigResponse.acApp.accountList.account.grantedFeatures.grantedFeature
+      .filter( e => e.$.id == "Common.Async_Messaging");
+    console.log(feature);
+
+
+
+    return feature.value._;
+  }
+
+  public enableAsyncMessaging(): boolean {
+    this.accountConfigService.updateAccountConfigProperties();
+    return true;
+  }
+
 }

@@ -14,7 +14,7 @@ class AccountConfigService {
       return new Promise((resolve, reject) => {
         return this.client
           .post(
-            `https://${this.nconf.get("ACCOUNT_CONFIG_SERVER") || domains.getDomainByServiceName('accountConfigReadWrite')}/api/account/${brandId}}/api/account/${brandId}/configuration/provision/featureGrants?v=1.0&overrideAll=false&jsonProvider=gson`,
+            `https://${this.nconf.get("ACCOUNT_CONFIG_SERVER") || domains.getDomainByServiceName('accountConfigReadWrite')}/api/account/${brandId}/configuration/provision/featureGrants?v=1.0&overrideAll=false&jsonProvider=gson`,
             args,
             function (data, response) {
               resolve([data, response]);

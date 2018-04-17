@@ -24,15 +24,20 @@ export class AccountConfigService extends HttpService {
 
   public getAccountConfigPropertiesList() {
     this.doGet(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
-      console.log(data);
+      this.accountConfigPropList = data;
       this.loadingService.stopLoading();
+    }, error => {
+      this.loadingService.stopLoading();
+      this.errorResponse(error);
     });
   }
 
   public updateAccountConfigProperties() {
-    this.doPost(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.accountConfigPropList,this.headers).subscribe(data => {
-      console.log(data);
+    this.doPost(`http://${environment.umsDomain}/account/properties/${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
+    },error => {
+      this.loadingService.stopLoading();
+      this.errorResponse(error);
     });
   }
 
