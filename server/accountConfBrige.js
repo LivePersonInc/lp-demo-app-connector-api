@@ -14,6 +14,7 @@ router.get("/properties/:id", function (req, res, next) {
   let args = {};
   args.headers = {};
   args.headers['authorization'] = req.header('authorization');
+  args.headers['Accept'] = 'application/json';
 
   accountConfigService
     .getAccountPropertyList(brandId, args)
@@ -41,13 +42,16 @@ router.post("/properties/:id", function (req, res, next) {
     let args = {};
     args.data = {};
     args.headers = {};
-    args.headers['content-type'] = req.header('content-type');
+    args.headers['content-type'] = 'application/json';
+    args.headers['Accept'] = 'application/json';
+    args.headers['X-HTTP-Method-Override'] = 'PUT';
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
-
+    console.log(args.headers);
     accountConfigService
       .updateAccountPropertyList(brandId,args)
       .then((resolve) => {
+        console.log(resolve);
         if (handleStatusCode(resolve[1].statusCode)) {
           res.send("OK");
         } else {
