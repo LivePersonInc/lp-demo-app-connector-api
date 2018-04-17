@@ -9,20 +9,19 @@ nconf.file({file: "./settings.json"});
 const appInstallationService = new AppInstallationService(nconf);
 
 
-router.get("/installations/:brandId", function (req, res, next) {
+router.get("/:brandId", function (req, res, next) {
   let brandId = req.params.brandId;
   let args = {};
   args.data = {};
   args.headers = {};
-  args.headers['content-type'] = req.header('content-type');
+  args.headers['content-type'] = 'application/json';
   args.headers['authorization'] = req.header('authorization');
 
   appInstallationService
     .getAppsForBrandId(brandId, args)
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
-        let data= resolve[0][1].body;
-        res.send( data);
+        res.send(resolve[0]);
       } else {
         res.status(resolve[1].statusCode).send("Something wrong");
       }
@@ -32,7 +31,7 @@ router.get("/installations/:brandId", function (req, res, next) {
   });
 });
 
-router.post("/installation/:brandId", function (req, res, next) {
+router.post("/:brandId", function (req, res, next) {
   let brandId = req.params.brandId;
   let body = "";
 
@@ -43,7 +42,7 @@ router.post("/installation/:brandId", function (req, res, next) {
     let args = {};
     args.data = {};
     args.headers = {};
-    args.headers['content-type'] = req.header('content-type');
+    args.headers['content-type'] = 'application/json';
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
 
@@ -59,7 +58,37 @@ router.post("/installation/:brandId", function (req, res, next) {
       res.status(500).send("somthing wrong");
     });
   });
+});
 
+router.put("/:brandId/:appId", function (req, res, next) {
+  let brandId = req.params.brandId;
+  let appId = req.params.appId;
+  let body = "";
+
+  req.on('data', function (chunk) {
+    body += chunk;
+  });
+  req.on('end', function () {
+    let args = {};
+    args.data = {};
+    args.headers = {};
+    args.headers['X-HTTP-Method-Override'] = 'PUT';
+    args.headers['content-type'] = 'application/json';
+    args.headers['authorization'] = req.header('authorization');
+    args.data = body;
+
+    appInstallationService.update(appId,brandId,args)
+      .then((resolve) => {
+        if (handleStatusCode(resolve[1].statusCode)) {
+          res.send("OK");
+        } else {
+          res.status(resolve[1].statusCode).send("Something wrong");
+        }
+      }).catch((error) => {
+      console.error("ERROR: Promise rejected", error);
+      res.status(500).send("somthing wrong");
+    });
+  });
 });
 
 function handleStatusCode(statusCode) {

@@ -10,7 +10,7 @@ import {Subject} from "rxjs/Subject";
 @Injectable()
 export class AccountConfigService extends HttpService {
 
-  public acSubject = new Subject<any>();
+  public acSubject = new Subject<string>();
 
   public accountConfigPropList:any;
   public headers = {};

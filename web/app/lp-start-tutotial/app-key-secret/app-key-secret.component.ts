@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {InstallationService} from "../../core/services/istallation.service";
 
 @Component({
   selector: 'lp-app-key-secret',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppKeySecretComponent implements OnInit {
 
-  constructor() { }
+  constructor(private  installationService:InstallationService) { }
 
   ngOnInit() {
+    this.installationService.getAppListList();
+    this.installationService.istallationSubject.subscribe( event => {
+      if(event === 'GET_APP_LIST'){
+        console.log(this.installationService.app_list);
+      }
+    });
   }
 
 }
