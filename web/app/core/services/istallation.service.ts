@@ -12,7 +12,7 @@ export class InstallationService extends HttpService {
 
   public istallationSubject = new Subject<any>();
   public appList;
-  public selectedApp: Object;
+  public selectedApp: any;
   public headers = {};
   public brandId = "";
 
@@ -24,6 +24,21 @@ export class InstallationService extends HttpService {
       'Authorization': `Bearer ${this.authenticationService.getBearerToken()}`,
       }
     };
+  }
+
+  public addWebhooksPropToSelectedApp() {
+    if(!this.selectedApp.capabilites){
+      this.selectedApp.capabilities = {};
+    }
+    if(!this.selectedApp.capabilites.webhooks){
+      this.selectedApp.capabilites.webhooks = {}
+    }
+
+    if(!this.selectedApp.capabilites.webhooks){
+      this.selectedApp.capabilites.webhooks = {}
+    }
+
+
   }
 
   public getAppListList() {
