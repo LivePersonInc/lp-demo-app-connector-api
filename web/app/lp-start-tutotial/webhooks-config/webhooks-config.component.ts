@@ -6,14 +6,14 @@ import {InstallationService} from "../../core/services/istallation.service";
   templateUrl: './webhooks-config.component.html',
   styleUrls: ['./webhooks-config.component.scss']
 })
-export class WebhooksConfigComponent implements OnInit, OnChanges {
+export class WebhooksConfigComponent implements OnInit {
 
   constructor(private installationService:InstallationService) { }
 
   ngOnInit() {
   }
 
-  ngOnChanges() {
+  public updateWebhooks() {
 
   }
 
