@@ -10,11 +10,11 @@ export class Webhooks implements Deserializable<Webhooks>{
 
   deserialize(input: any): Webhooks{
     Object.assign(this, input);
-    input['ms.MessagingEventNotification.ContentEvent'] ? this['ms.MessagingEventNotification.ContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ContentEvent']): null;
-    input['ms.MessagingEventNotification.RichContentEvent']? this['ms.MessagingEventNotification.RichContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.RichContentEvent']): null;
-    input['ms.MessagingEventNotification.AcceptStatusEvent'] ? this['ms.MessagingEventNotification.AcceptStatusEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.AcceptStatusEvent']): null;
-    input['ms.MessagingEventNotification.ChatStateEvent'] ? this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ChatStateEvent']): null;
-    input['ms.MessagingEventNotification.ExConversationChangeNotification']? this['ms.MessagingEventNotification.ExConversationChangeNotification'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ExConversationChangeNotification']): null;
+    input['ms.MessagingEventNotification.ContentEvent'] ? this['ms.MessagingEventNotification.ContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ContentEvent']): '';
+    input['ms.MessagingEventNotification.RichContentEvent']? this['ms.MessagingEventNotification.RichContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.RichContentEvent']): '';
+    input['ms.MessagingEventNotification.AcceptStatusEvent'] ? this['ms.MessagingEventNotification.AcceptStatusEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.AcceptStatusEvent']): '';
+    input['ms.MessagingEventNotification.ChatStateEvent'] ? this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ChatStateEvent']): '';
+    input['ms.MessagingEventNotification.ExConversationChangeNotification']? this['ms.MessagingEventNotification.ExConversationChangeNotification'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ExConversationChangeNotification']): '';
     return this;
   }
 
