@@ -27,6 +27,14 @@ export class HttpService {
       );
   }
 
+  public doPut(url:string, body:any, httpOptions: any ):  Observable<any> {
+    this.loadingService.startLoading();
+    return this.http.put(url, body, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public doGet(url:string, httpOptions: any ):  Observable<any> {
     this.loadingService.startLoading();
     return this.http.get(url, httpOptions)
@@ -45,6 +53,7 @@ export class HttpService {
       console.error(
         `Backend returned code ${JSON.stringify(error.status)}, ` +
         `body was: ${error.error}`);
+      console.log(error);
     }
     // return an ErrorObservable with a user-facing error message
 
