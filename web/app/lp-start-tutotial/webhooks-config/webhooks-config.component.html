@@ -11,27 +11,27 @@
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ExConversationChangeNotification" >
+        <input matInput placeholder="ExConversationChangeNotification" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="AcceptStatusEvent" >
+        <input matInput placeholder="AcceptStatusEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint}}">
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ChatStateEvent" >
+        <input matInput placeholder="ChatStateEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint}}" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ContentEvent" >
+        <input matInput placeholder="ContentEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="RichContentEvent" >
+        <input matInput placeholder="RichContentEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint}}">
       </mat-form-field>
     </div>
   </div>

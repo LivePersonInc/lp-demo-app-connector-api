@@ -34,7 +34,6 @@ export class InstallationService extends HttpService {
   public getAppListList() {
     this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
-      console.log("CCC");
       console.log(this.appList);
       this.loadingService.stopLoading();
       this.istallationSubject.next('GET_APP_LIST');
