@@ -52,8 +52,8 @@ export class InstallationService extends HttpService {
   }
 
 
-  public updateApp(appId: string) {
-    this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}/${appId}`, this.headers).subscribe(data => {
+  public updateApp(app: AppInstall) {
+    this.doPut(`http://${environment.umsDomain}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.istallationSubject.next('UPDATE_APP');
     }, error => {
