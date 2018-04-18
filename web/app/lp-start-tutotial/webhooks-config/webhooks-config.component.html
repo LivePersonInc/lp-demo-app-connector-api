@@ -9,29 +9,30 @@
 
   Webhooks endpoints
   <div class="row">
+
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ExConversationChangeNotification" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}" >
+        <input matInput placeholder="AcceptStatusEvent" [(ngModel)]="installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint">
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="AcceptStatusEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint}}">
+        <input matInput placeholder="ChatStateEvent" [(ngModel)]="installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ChatStateEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint}}" >
+        <input matInput placeholder="ContentEvent" [(ngModel)]="installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="ContentEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}" >
+        <input matInput placeholder="RichContentEvent" [(ngModel)]="installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint">
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="w-100">
-        <input matInput placeholder="RichContentEvent" value="{{installationService.selectedApp.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint}}">
+        <input matInput placeholder="ExConversationChangeNotification" [(ngModel)]="installationService.selectedApp.capabilities.webhooks['cqm.ExConversationChangeNotification'].endpoint" >
       </mat-form-field>
     </div>
   </div>
