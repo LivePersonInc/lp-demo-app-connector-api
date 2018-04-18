@@ -14,7 +14,8 @@ export class WebhooksConfigComponent implements OnInit {
   }
 
   public updateWebhooks() {
-
+    console.log("UPDATE");
+      this.installationService.updateApp(this.installationService.selectedApp);
   }
 
 }

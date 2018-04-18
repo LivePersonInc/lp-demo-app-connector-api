@@ -72,19 +72,26 @@ router.put("/:brandId/:appId", function (req, res, next) {
     let args = {};
     args.data = {};
     args.headers = {};
-    args.headers['X-HTTP-Method-Override'] = 'PUT';
-    args.headers['content-type'] = 'application/json';
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
 
-    appInstallationService.update(appId,brandId,args)
-      .then((resolve) => {
-        if (handleStatusCode(resolve[1].statusCode)) {
-          res.send("OK");
-        } else {
-          res.status(resolve[1].statusCode).send("Something wrong");
-        }
-      }).catch((error) => {
+    appInstallationService.getAppById(appId,brandId,args).then((data) => {
+
+      console.log(data[1].headers['ac-revision']);
+      args.headers['If-Match'] = data[1].headers['ac-revision'];
+      args.headers['X-HTTP-Method-Override'] = 'PUT';
+      args.headers['content-type'] = 'application/json';
+
+      return appInstallationService.update(appId, brandId, args)
+        .then((resolve) => {
+          if (handleStatusCode(resolve[1].statusCode)) {
+            res.status(200).send();
+          } else {
+            res.status(resolve[1].statusCode).send("Something wrong");
+          }
+        })
+
+    }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
       res.status(500).send("somthing wrong");
     });
