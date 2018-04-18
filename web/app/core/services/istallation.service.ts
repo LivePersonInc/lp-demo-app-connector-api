@@ -27,9 +27,6 @@ export class InstallationService extends HttpService {
     };
   }
 
-  public addWebhooksPropToSelectedApp() {
-
-  }
 
   public getAppListList() {
     this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
@@ -42,8 +39,8 @@ export class InstallationService extends HttpService {
     });
   }
 
-  public installApp() {
-    this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe(data => {
+  public installApp(app: AppInstall) {
+    this.doPost(`http://${environment.umsDomain}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.istallationSubject.next('INSTALL_APP');
     }, error => {
