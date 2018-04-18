@@ -7,7 +7,7 @@ import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {catchError} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {LoggedUser} from "../../shared/models/LoggedUser";
+import {LoggedUser} from "../../shared/models/send-api/LoggedUser.model";
 import {LoadingService} from "./loading.service";
 
 @Injectable()
