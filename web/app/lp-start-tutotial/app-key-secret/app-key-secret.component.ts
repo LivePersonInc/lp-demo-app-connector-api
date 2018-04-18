@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {InstallationService} from "../../core/services/istallation.service";
 import {FormControl, Validators} from '@angular/forms';
+import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
+import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
+import {Capabilities} from "../../shared/models/app-installation/capabilities.model";
+import {Endpoint} from "../../shared/models/app-installation/endpoint.model";
 
 @Component({
   selector: 'lp-app-key-secret',
@@ -9,7 +13,7 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class AppKeySecretComponent implements OnInit {
   public selectControl = new FormControl('', [Validators.required]);
-  public selectedApp;
+  public selectedApp: AppInstall;
   public appList = [];
 
   constructor(private installationService:InstallationService) { }
@@ -26,8 +30,33 @@ export class AppKeySecretComponent implements OnInit {
   }
 
   public next(){
-    this.installationService.selectedApp = this.selectedApp;
+
+    this.installationService.selectedApp = this.addWebhooksObject(this.selectedApp);
+
     console.log(this.selectedApp);
+  }
+
+  private hasWebhooksProp(app: AppInstall): boolean {
+    if(app.capabilities && app.capabilities.webhooks){
+      return true;
+    }
+    return false;
+  }
+  private addWebhooksObject(app: AppInstall): AppInstall {
+    if(!this.hasWebhooksProp(app)){
+       if(app.capabilities){
+         app.capabilities.webhooks = new Webhooks();
+       }else{
+         app.capabilities = new Capabilities();
+         app.capabilities.webhooks = new Webhooks();
+         app.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'] = new Endpoint();
+         app.capabilities.webhooks['ms.MessagingEventNotification.ExConversationChangeNotification'] = new Endpoint();
+         app.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'] = new Endpoint();
+         app.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'] = new Endpoint();
+         app.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'] = new Endpoint();
+       }
+    }
+    return app;
   }
 
 }
