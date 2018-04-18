@@ -1,6 +1,6 @@
 import {Deserializable} from "../deserializable.model";
 
-export class Capabilities implements Deserializable{
+export class Capabilities implements Deserializable<Capabilities>{
   engagement: object;
   webhooks: object;
 

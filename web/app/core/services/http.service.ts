@@ -19,7 +19,7 @@ export class HttpService {
   }
 
 
-  public doPost(url:string, body:any, httpOptions: any ):  Observable<ArrayBuffer> {
+  public doPost(url:string, body:any, httpOptions: any ):  Observable<any> {
     this.loadingService.startLoading();
     return this.http.post(url, body, httpOptions)
       .pipe(
@@ -27,7 +27,7 @@ export class HttpService {
       );
   }
 
-  public doGet(url:string, httpOptions: any ):  Observable<ArrayBuffer> {
+  public doGet(url:string, httpOptions: any ):  Observable<any> {
     this.loadingService.startLoading();
     return this.http.get(url, httpOptions)
       .pipe(

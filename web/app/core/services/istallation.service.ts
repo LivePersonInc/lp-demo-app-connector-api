@@ -6,13 +6,14 @@ import {LoadingService} from "./loading.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
+import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 
 @Injectable()
 export class InstallationService extends HttpService {
 
   public istallationSubject = new Subject<any>();
-  public appList;
-  public selectedApp: any;
+  public appList: Array<AppInstall>;
+  public selectedApp: AppInstall;
   public headers = {};
   public brandId = "";
 
@@ -27,24 +28,14 @@ export class InstallationService extends HttpService {
   }
 
   public addWebhooksPropToSelectedApp() {
-    if(!this.selectedApp.capabilites){
-      this.selectedApp.capabilities = {};
-    }
-    if(!this.selectedApp.capabilites.webhooks){
-      this.selectedApp.capabilites.webhooks = {}
-    }
-
-    if(!this.selectedApp.capabilites.webhooks){
-      this.selectedApp.capabilites.webhooks = {}
-    }
-
 
   }
 
   public getAppListList() {
-    this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe(data => {
-      console.log(data);
-      this.appList = data;
+    this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
+      this.appList = data.map( app => new AppInstall().deserialize(app));
+      console.log("CCC");
+      console.log(this.appList);
       this.loadingService.stopLoading();
       this.istallationSubject.next('GET_APP_LIST');
     }, error => {
