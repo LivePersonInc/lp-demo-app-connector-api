@@ -18,7 +18,7 @@ export class AppInstall implements Deserializable<AppInstall>{
 
   deserialize(input: any): AppInstall {
     Object.assign(this, input);
-    this.capabilities = new Capabilities().deserialize(input.capabilities);
+    input.capabilities ? this.capabilities = new Capabilities().deserialize(input.capabilities): null;
     return this;
   }
 
