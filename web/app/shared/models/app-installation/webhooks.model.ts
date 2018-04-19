@@ -8,6 +8,9 @@ export class Webhooks implements Deserializable<Webhooks>{
   'ms.MessagingEventNotification.ChatStateEvent': Endpoint;
   'ms.MessagingEventNotification.ExConversationChangeNotification': Endpoint;
 
+  constructor(){
+    this.initEndpoints();
+  }
 
   deserialize(input: any): Webhooks{
     Object.assign(this, input);
@@ -17,6 +20,14 @@ export class Webhooks implements Deserializable<Webhooks>{
     input['ms.MessagingEventNotification.ChatStateEvent'] ? this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ChatStateEvent']): '';
     input['cqm.ExConversationChangeNotification']? this['cqm.ExConversationChangeNotification'] =  new Endpoint().deserialize(input['cqm.ExConversationChangeNotification']): '';
     return this;
+  }
+
+  initEndpoints() {
+    this['ms.MessagingEventNotification.ContentEvent'] =  new Endpoint();
+    this['ms.MessagingEventNotification.RichContentEvent'] =  new Endpoint();
+    this['ms.MessagingEventNotification.AcceptStatusEvent'] =  new Endpoint();
+    this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint();
+    this['cqm.ExConversationChangeNotification'] =  new Endpoint();
   }
 
 }
