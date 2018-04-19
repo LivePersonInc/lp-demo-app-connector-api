@@ -6,7 +6,7 @@ export class Endpoint implements Deserializable<Endpoint>
   headers: Array<any>;
   max_retries: number;
   constructor(){
-    this.endpoint = "https://";
+    this.endpoint = "";
   }
   deserialize(input: any): Endpoint {
     Object.assign(this, input);
