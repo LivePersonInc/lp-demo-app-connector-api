@@ -29,6 +29,7 @@ import { InstallationService } from './core/services/istallation.service';
 import { LoadingService } from './core/services/loading.service';
 import { HttpService } from './core/services/http.service';
 import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-config-check.component';
+import { ConversationService } from './core/services/conversation.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-c
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
