@@ -18,16 +18,17 @@ import {AppRoutingModule} from "./app-routing.module";
 import { LpNavComponent } from './lp-header/lp-nav/lp-nav.component';
 import { LpDemoComponent } from './lp-demo/lp-demo.component';
 import { LpNavMenuComponent } from './lp-header/lp-nav-menu/lp-nav-menu.component';
-import { LpStartTutotialComponent } from './lp-start-tutotial/lp-start-tutotial.component';
-import { AppKeySecretComponent } from './lp-start-tutotial/app-key-secret/app-key-secret.component';
-import { WebhooksConfigComponent } from './lp-start-tutotial/webhooks-config/webhooks-config.component';
-import { EnableAsycComponent } from './lp-start-tutotial/enable-asyc/enable-asyc.component';
+import { LpStartTutotialComponent } from './lp-start-tutorial/lp-start-tutotial.component';
+import { AppKeySecretComponent } from './lp-start-tutorial/app-key-secret/app-key-secret.component';
+import { WebhooksConfigComponent } from './lp-start-tutorial/webhooks-config/webhooks-config.component';
+import { EnableAsycComponent } from './lp-start-tutorial/enable-asyc/enable-asyc.component';
 import { AuthenticationService } from './core/services/authentication.service';
 import { AccountConfigService } from './core/services/account-config.service';
 import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
 import { InstallationService } from './core/services/istallation.service';
 import { LoadingService } from './core/services/loading.service';
 import { HttpService } from './core/services/http.service';
+import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-config-check.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { HttpService } from './core/services/http.service';
     LpStartTutotialComponent,
     AppKeySecretComponent,
     WebhooksConfigComponent,
-    EnableAsycComponent
+    EnableAsycComponent,
+    LpConfigCheckComponent
   ],
   imports: [
     BrowserModule,
