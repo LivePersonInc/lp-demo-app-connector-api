@@ -22,7 +22,7 @@ export class InstallationService extends HttpService {
     this.brandId = this.authenticationService.getUser().brandId;
     this.headers = {'headers':
       {
-      'Authorization': `Bearer ${this.authenticationService.getBearerToken()}`,
+      'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
       }
     };
   }

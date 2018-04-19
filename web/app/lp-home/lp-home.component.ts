@@ -21,12 +21,16 @@ export class LpHomeComponent implements OnInit {
 
   ngOnInit() {
     this.brandId = "le92127075"; //TODO: remove in future
+    this.authenticationService.userLoggedSubject.subscribe( event => {
+      if(event === 'LOGGED-IN' ) {
+        this.router.navigateByUrl('home/start');
+        console.log("logged In");
+        console.log(this.authenticationService.getUser());
+      }
+    });
   }
 
   public authenticate() {
-    this.authenticationService.userLoggedSubject.subscribe( res => {
-       this.router.navigateByUrl('home/start');
-    });
     this.authenticationService.login(this.brandId,this.userName, this.password);
   }
 
