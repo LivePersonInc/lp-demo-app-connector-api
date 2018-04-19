@@ -13,9 +13,9 @@ export class InstallationService extends HttpService {
 
   public istallationSubject = new Subject<any>();
   public appList: Array<AppInstall>;
-  public selectedApp: AppInstall;
-  public headers = {};
-  public brandId = "";
+  private _selectedApp: AppInstall;
+  private headers = {};
+  private brandId = "";
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
@@ -25,6 +25,16 @@ export class InstallationService extends HttpService {
       'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
       }
     };
+  }
+
+
+  get selectedApp(): AppInstall {
+    return this._selectedApp;
+  }
+
+  set selectedApp(app: AppInstall) {
+    this._selectedApp = app;
+    this.istallationSubject.next('APP_SELECTED');
   }
 
 
