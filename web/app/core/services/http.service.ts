@@ -46,20 +46,18 @@ export class HttpService {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
+      return new ErrorObservable('An error occurred:', error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       console.error(
         `Backend returned code ${JSON.stringify(error.status)}, ` +
         `body was: ${error.error}`);
       console.log(error);
+      return new ErrorObservable(
+        `Backend returned code ${JSON.stringify(error.status)}, ` +
+        `body was: ${error.error}`
+      );
     }
-    // return an ErrorObservable with a user-facing error message
-
-    return new ErrorObservable(
-      `Backend returned code ${JSON.stringify(error.status)}, ` +
-      `body was: ${error.error}`
-    );
   }
 
   protected handleResponse(response: Response, body: any, confirmShow: boolean): void {
