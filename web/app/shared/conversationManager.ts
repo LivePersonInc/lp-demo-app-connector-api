@@ -61,6 +61,7 @@ export class ConversationManager {
     this.serverNotifications.push(JSON.stringify(data, null, " "));
 
     try{
+      //TODO: fix when there is not originatiorMeatadata property
       if(data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT"){
         console.log( data );
         if(data.body.changes[0].event.message) {
