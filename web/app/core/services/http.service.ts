@@ -15,7 +15,6 @@ export class HttpService {
   constructor(protected snackBar: MatSnackBar, protected http: HttpClient, protected loadingService:LoadingService) {
     this.snackBarConfig.verticalPosition = 'top';
     this.snackBarConfig.horizontalPosition = 'right';
-    this.snackBarConfig.duration = 2000;
   }
 
 
@@ -57,7 +56,10 @@ export class HttpService {
     }
     // return an ErrorObservable with a user-facing error message
 
-    return new ErrorObservable('Something bad happened; please try again later.');
+    return new ErrorObservable(
+      `Backend returned code ${JSON.stringify(error.status)}, ` +
+      `body was: ${error.error}`
+    );
   }
 
   protected handleResponse(response: Response, body: any, confirmShow: boolean): void {
@@ -81,12 +83,13 @@ export class HttpService {
   protected errorResponse(error) {
     this.loadingService.stopLoading();
     this.snackBarConfig.panelClass = ['snack-error'];
+    this.snackBarConfig.duration = null;
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfig);
   }
 
   protected successResponse(message) {
     this.loadingService.stopLoading();
-    // this.snackBarConfig.duration = 2000;
+    this.snackBarConfig.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfig);
   }
 
