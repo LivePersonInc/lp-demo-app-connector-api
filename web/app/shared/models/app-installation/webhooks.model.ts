@@ -8,6 +8,7 @@ export class Webhooks implements Deserializable<Webhooks>{
   'ms.MessagingEventNotification.ChatStateEvent': Endpoint;
   'ms.MessagingEventNotification.ExConversationChangeNotification': Endpoint;
 
+
   deserialize(input: any): Webhooks{
     Object.assign(this, input);
     input['ms.MessagingEventNotification.ContentEvent'] ? this['ms.MessagingEventNotification.ContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ContentEvent']): '';
