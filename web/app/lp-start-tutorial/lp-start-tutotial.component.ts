@@ -21,10 +21,8 @@ export class LpStartTutotialComponent implements OnInit {
      this.stepsCompleted = new Array(4);
   }
 
-  public onCompleted(compleated: boolean, step: number){
-    if(compleated){
-      this.stepsCompleted[step] = true;
-    }
+  public onCompleted(completed: boolean, step: number){
+    this.stepsCompleted[step] = completed;
   }
 
 
