@@ -16,11 +16,11 @@ export class AccountConfigService extends HttpService {
   public brandId = "";
   private headers = {};
 
-  constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
+  constructor(protected authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
     this.brandId = this.authenticationService.getUser().brandId;
     this.headers = {'headers': {
-      'Authorization': `Bearer ${this.authenticationService.getBearerToken()}`,
+      'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
       }
     };
   }
