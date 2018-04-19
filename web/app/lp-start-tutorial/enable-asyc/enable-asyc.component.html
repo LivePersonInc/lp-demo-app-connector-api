@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div *ngIf="isAsyncMessaging; else no_enabled ">
+  <div *ngIf="accountConfigService.isAsyncMessagingActive; else no_enabled ">
     <p class="icon-p">
       <b>Async_Messaging:</b>
       <i class="material-icons icon-possitive">check_circle</i>
