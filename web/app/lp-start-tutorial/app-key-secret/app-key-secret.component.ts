@@ -19,8 +19,6 @@ export class AppKeySecretComponent implements OnInit {
   constructor(private installationService:InstallationService) { }
 
   ngOnInit() {
-    this.installationService.getAppListList();
-
     this.installationService.istallationSubject.subscribe( event => {
       if(event === 'GET_APP_LIST'){
         this.appList = this.installationService.appList;

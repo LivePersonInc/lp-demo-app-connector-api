@@ -19,3 +19,11 @@ body {
   background-color: #ff700c !important;
   color: #fff !important;
 }
+
+button {
+  outline: none !important;
+}
+
+button:focus {
+  outline: none !important;
+}

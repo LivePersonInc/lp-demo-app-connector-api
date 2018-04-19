@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AccountConfigService} from "../../core/services/account-config.service";
+import {InstallationService} from "../../core/services/istallation.service";
 
 @Component({
   selector: 'lp-enable-asyc',
@@ -8,15 +9,25 @@ import {AccountConfigService} from "../../core/services/account-config.service";
 })
 export class EnableAsycComponent implements OnInit {
 
-  constructor(private accountConfigService:AccountConfigService) { }
+  @Output()
+  public completed = new EventEmitter();
+
+  constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
 
   ngOnInit() {
+    this.accountConfigService.acSubject.subscribe( event => {
+      if(event === 'GET_LIST'){
+        this.getInstalledApps();
+        this.completed.emit(true);
+      }
+    });
     this.accountConfigService.getAccountConfigPropertiesList();
   }
 
-  public enableAsyncMessaging(): boolean {
-    //TODO:
-    return true;
-  }
+  private getInstalledApps() {
+    if(!this.installationService.appList){
+      this.installationService.getAppListList();
+    }
 
+  }
 }
