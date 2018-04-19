@@ -32,24 +32,21 @@ export class AppKeySecretComponent implements OnInit {
   }
 
   public next(){
-    if(this.selectedApp){
-      this.installationService.selectedApp = this.addWebhooksObject(this.selectedApp);
-      this.isCompleted = true;
-    }
+
   }
 
   public onSelectionChange(event: MatSelectChange) {
     console.log(event.value);
     if(event.value instanceof AppInstall){
+      this.installationService.selectedApp = this.selectedApp;
       this.completed.emit(true);
 
     }else{
-      console.log("XXXXX");
       this.completed.emit(false);
     }
   }
 
-  private hasWebhooksProp(app: AppInstall): boolean {
+ /* private hasWebhooksProp(app: AppInstall): boolean {
     if(app.capabilities && app.capabilities.webhooks){
       return true;
     }
@@ -88,6 +85,6 @@ export class AppKeySecretComponent implements OnInit {
 
     }
     return app;
-  }
+  }*/
 
 }
