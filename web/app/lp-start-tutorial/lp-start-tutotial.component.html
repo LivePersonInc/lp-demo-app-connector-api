@@ -2,20 +2,16 @@
 <div class="container">
   <mat-card>
     <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper" >
-      <mat-step label="Enable async properties">
-        <lp-enable-asyc></lp-enable-asyc>
-        <div class="next-button">
-          <button mat-button matStepperNext>Next</button>
-        </div>
+      <mat-step [completed]="stepsCompleted[0]" label="Enable async properties">
+        <lp-enable-asyc (completed)="onCompleted($event, 0)"> </lp-enable-asyc>
       </mat-step>
-      <mat-step label="App instalation">
+      <mat-step label="App instalation"  [completed]="stepsCompleted[1]">
         <lp-app-key-secret></lp-app-key-secret>
       </mat-step>
-      <mat-step label="Webhooks setup">
+      <mat-step label="Webhooks setup" [completed]="stepsCompleted[2]">
           <lp-webhooks-config></lp-webhooks-config>
       </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
+      <mat-step [completed]="stepsCompleted[3]" label="Done">
         <lp-config-check></lp-config-check>
         <div>
           <button mat-button matStepperPrevious>Back</button>
