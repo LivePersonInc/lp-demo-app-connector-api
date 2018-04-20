@@ -32,7 +32,6 @@ export class LpConversationComponent implements OnInit {
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
-    this.conversation = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
 
     this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
        if(event.conversationId === this.conversation.conversationId){
