@@ -13,9 +13,11 @@ import {Event} from "../send-api/Event.model";
 import {PublishContentEvent} from "../send-api/PublishContentEvent.model";
 import {ChatMessage} from "./chatMessage.model";
 import {LoadingService} from "../../../core/services/loading.service";
+import {EventSourcePolyfill} from 'ng-event-source';
 
 
 export class Conversation {
+  public isConvStarted: boolean;
   public isLoading = false;
   public appJWT: string;
   public consumerJWS: string;
@@ -29,6 +31,7 @@ export class Conversation {
   public sendMsgPayload:Request;
   public message: String;
   public userName;
+  public eventSource: EventSourcePolyfill;
   private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
   public messages: Array<ChatMessage>;
@@ -252,6 +255,33 @@ export class Conversation {
 
   private getShowUserValue(userName:string): boolean {
     return this.messages && (this.messages.length === 0 || this.messages[this.messages.length - 1].userName !== userName);
+  }
+
+  public subscribeToMessageNotifications(conversationId: string) {
+    this.eventSource  = new EventSourcePolyfill(`http://${environment.umsDomain}/notifications/subscribe/${conversationId}`,{});
+
+    this.eventSource.onmessage = (notification => {
+      this.handleIncomingNotifications(notification);
+      /*this.zone.run(() => {
+        //console.log(notification);
+      });*/
+    });
+
+    this.eventSource.onopen = (a) => {
+      console.log("OPEN");
+    };
+    this.eventSource.onerror = (e) => {
+      console.log(e);
+
+    }
+  }
+
+  public unsubscribeToMessageNotifications() {
+    if(this.eventSource instanceof EventSourcePolyfill) {
+      this.eventSource.close();
+    }else {
+      console.log("Error: There is not any instance of EventSourcePolyfill");
+    }
   }
 
 }
