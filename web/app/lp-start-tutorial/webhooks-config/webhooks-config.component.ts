@@ -25,6 +25,8 @@ export class WebhooksConfigComponent implements OnInit {
         if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
           this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
         }
+      }else if(event === 'UPDATE_APP') {
+        this.completed.emit(true);
       }
     });
   }
@@ -34,8 +36,7 @@ export class WebhooksConfigComponent implements OnInit {
     if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
 
       for(let prop in this.installationService.selectedApp.capabilities.webhooks){
-        if(this.installationService.selectedApp.capabilities.webhooks[prop].endpoint
-          && this.installationService.selectedApp.capabilities.webhooks[prop].endpoint.length === 0){
+        if(!this.installationService.selectedApp.capabilities.webhooks[prop].hasOwnProperty('length')){
           delete  this.installationService.selectedApp.capabilities.webhooks[prop];
         }
       }
@@ -43,7 +44,7 @@ export class WebhooksConfigComponent implements OnInit {
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks);
       this.installationService.updateApp(this.installationService.selectedApp);
     }
-    this.completed.emit(true);
+
 
   }
 
