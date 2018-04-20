@@ -113,7 +113,7 @@ public openConversation() {
     this.sendApiService.openConversation(this.branId,body, headers).subscribe(res => {
       console.log(res);
       this.conversationId = res["convId"];
-      this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
+      this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
     },error => {
       this.loadingService.stopLoading();
       this.handleError(error);
@@ -132,7 +132,7 @@ public sendMessage() {
     console.log(body);
     this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
       console.log(res);
-      this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
+      this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
     },error => {
       this.loadingService.stopLoading();
       this.handleError(error);
@@ -148,7 +148,7 @@ public closeConversation(){
     };
     this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
       console.log(res);
-      this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
+      this.handleSuccess("Conversation CLOSED successfully with id " + this.conversationId);
     }),error => {
       this.loadingService.stopLoading();
       this.handleError(error);

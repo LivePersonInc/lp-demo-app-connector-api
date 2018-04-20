@@ -2,7 +2,7 @@ import {Component, ComponentRef, ElementRef, NgZone, OnInit, ViewChild} from '@a
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../core/services/send-api.service";
-import {ConversationManager} from "../shared/models/conversation/conversationManager";
+import {Conversation} from "../shared/models/conversation/conversation";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
 import {LoadingService} from "../core/services/loading.service";
@@ -14,7 +14,7 @@ import {LoadingService} from "../core/services/loading.service";
 })
 export class LpConversationComponent implements OnInit {
   public brandId: string;
-  public conversationManager: ConversationManager;
+  public conversationManager: Conversation;
   public isConvStarted: boolean;
   public appKey: string;
   public appSecret: string;
@@ -30,11 +30,11 @@ export class LpConversationComponent implements OnInit {
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
-    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
+    this.conversationManager = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationManager = new ConversationManager(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
+    this.conversationManager = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
     this.conversationManager.getAppJWT().then(resolve => {
       this.conversationManager.getAppConsumerJWS().then(resolve => {
         this.conversationManager.openConversation(initialMessage).then(conversationId => {

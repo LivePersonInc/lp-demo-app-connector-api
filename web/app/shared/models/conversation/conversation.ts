@@ -15,7 +15,7 @@ import {ChatMessage} from "./chatMessage.model";
 import {LoadingService} from "../../../core/services/loading.service";
 
 
-export class ConversationManager {
+export class Conversation {
   public isLoading = false;
   public appJWT: string;
   public consumerJWS: string;
@@ -147,7 +147,7 @@ export class ConversationManager {
       this.sendApiService.openConversation(this.branId, body, headers).subscribe(res => {
         console.log(res);
         this.conversationId = res["convId"];
-        this.handleSuccess("ConversationManager OPEN successfully with id " + this.conversationId);
+        this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
         this.messages.push(new ChatMessage("sent", new Date, initialMessage, this.userName, "ok", this.getShowUserValue(this.userName)));
         resolve(this.conversationId);
       }, error => {
@@ -192,7 +192,7 @@ export class ConversationManager {
     };
     this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
       console.log(res);
-      this.handleSuccess("ConversationManager CLOSED successfully with id " + this.conversationId);
+      this.handleSuccess("Conversation CLOSED successfully with id " + this.conversationId);
     }, error => {
       this.losadingSerive.stopLoading();
       this.handleError(error);
