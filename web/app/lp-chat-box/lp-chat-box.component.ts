@@ -3,7 +3,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {ChatMessage} from "../shared/models/conversation/chatMessage.model";
-import {ConversationManager} from "../shared/models/conversation/conversationManager";
+import {Conversation} from "../shared/models/conversation/conversation";
 
 @Component({
   selector: 'lp-chat-box',
@@ -11,7 +11,7 @@ import {ConversationManager} from "../shared/models/conversation/conversationMan
   styleUrls: ['./lp-chat-box.component.scss']
 })
 export class LpChatBoxComponent implements OnInit {
-  @Input()  conversationManager: ConversationManager;
+  @Input()  conversationManager: Conversation;
   @Output() onSendMessage = new EventEmitter<string>();
   @ViewChild('messagearea') private messageArea: ElementRef;
 

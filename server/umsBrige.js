@@ -87,7 +87,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
     .closeConversation(brandID, convID, args)
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
-        res.send({"message": "ConversationManager closed succesfully"});
+        res.send({"message": "Conversation closed succesfully"});
       } else {
         res.status(resolve[1].statusCode).send(resolve[1].message);
       }

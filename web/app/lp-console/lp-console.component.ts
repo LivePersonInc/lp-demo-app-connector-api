@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ConversationManager} from "../shared/models/conversation/conversationManager";
+import {Conversation} from "../shared/models/conversation/conversation";
 
 @Component({
   selector: 'lp-console',
@@ -9,7 +9,7 @@ import {ConversationManager} from "../shared/models/conversation/conversationMan
 export class LpConsoleComponent implements OnInit {
 
   @Input()
-  public conversationManager: ConversationManager;
+  public conversationManager: Conversation;
 
   constructor() { }
 
