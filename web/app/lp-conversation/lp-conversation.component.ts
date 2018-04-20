@@ -6,6 +6,8 @@ import {Conversation} from "../shared/models/conversation/conversation";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
 import {LoadingService} from "../core/services/loading.service";
+import {ConversationService} from "../core/services/conversation.service";
+import {ConversationEvent} from "../shared/models/conversation/conversationEvent.model";
 
 @Component({
   selector: 'lp-conversation',
@@ -14,7 +16,7 @@ import {LoadingService} from "../core/services/loading.service";
 })
 export class LpConversationComponent implements OnInit {
   public brandId: string;
-  public conversationManager: Conversation;
+  public conversation: Conversation;
   public isConvStarted: boolean;
   public appKey: string;
   public appSecret: string;
@@ -23,73 +25,42 @@ export class LpConversationComponent implements OnInit {
 
   @ViewChild('chatbox') private chatBox: LpChatBoxComponent;
 
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone, private  loadingService: LoadingService) { }
+  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone, private  loadingService: LoadingService, private  conversationService: ConversationService) { }
 
   ngOnInit() {
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
-    this.conversationManager = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
+    this.conversation = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
+
+    this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
+       if(event.conversationId === this.conversation.conversationId){
+         console.log(event.event);
+         //TODO:
+       }
+    })
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationManager = new Conversation(this.snackBar, this.sendApiService, this.brandId, this.appKey, this.appSecret, this.userName, this.loadingService);
-    this.conversationManager.getAppJWT().then(resolve => {
-      this.conversationManager.getAppConsumerJWS().then(resolve => {
-        this.conversationManager.openConversation(initialMessage).then(conversationId => {
-          this.isConvStarted = true;
-          this.subscribeToMessageNotifications(conversationId);
-        });
-      });
-    });
+
+    this.conversation = this.conversationService.openConversation(this.userName, this.brandId, this.appKey, this.appSecret, initialMessage);
+
   }
 
   public closeConversation() {
-    this.conversationManager.closeConversation();
-    this.unsubscribeToMessageNotifications();
-    this.isConvStarted = false;
+
+    this.conversationService.closeConversation(this.conversation.conversationId);
   }
 
   public sendMessage(messageText : string) {
-    console.log("Send message");
-    if(this.isConvStarted) {
-
-
-      this.conversationManager.sendMessage(messageText).then(function () {
-        console.log("XXXXxXXXXXXXX");
-        //this.chatBox.scrollToBottom();
-      }.bind(this));
+    if(this.conversation &&  this.conversation.isConvStarted){
+      this.conversationService.sendMessage(messageText, this.conversation.conversationId);
     }else{
       this.startConversation(messageText);
     }
+
   }
 
-  public subscribeToMessageNotifications(conversationId: string) {
-    this.eventSource  = new EventSourcePolyfill(`http://${environment.umsDomain}/notifications/subscribe/${conversationId}`,{});
-
-    this.eventSource.onmessage = (notification => {
-      this.conversationManager.handleIncomingNotifications(notification);
-      this.zone.run(() => {
-        //console.log(notification);
-      });
-    });
-
-    this.eventSource.onopen = (a) => {
-      console.log("OPEN");
-    };
-    this.eventSource.onerror = (e) => {
-      console.log(e);
-
-    }
-  }
-
-  public unsubscribeToMessageNotifications() {
-    if(this.eventSource instanceof EventSourcePolyfill) {
-      this.eventSource.close();
-    }else {
-      console.log("Error: There is not any instance of EventSourcePolyfill");
-    }
-  }
 
 }
