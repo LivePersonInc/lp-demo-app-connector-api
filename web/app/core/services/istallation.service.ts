@@ -58,7 +58,6 @@ export class InstallationService extends HttpService {
     });
   }
 
-
   public updateApp(app: AppInstall) {
     this.doPut(`http://${environment.umsDomain}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
