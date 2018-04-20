@@ -37,7 +37,6 @@ export class LpConversationComponent implements OnInit {
     this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
        if(event.conversationId === this.conversation.conversationId){
          console.log(event.event);
-         //TODO:
        }
     })
   }
