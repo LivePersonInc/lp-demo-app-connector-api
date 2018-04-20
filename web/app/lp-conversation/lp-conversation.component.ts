@@ -29,6 +29,7 @@ export class LpConversationComponent implements OnInit {
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
     this.userName = "test user name";
+
     if(this.conversationService.conversation){
       this.conversation = this.conversationService.conversation;
     }
