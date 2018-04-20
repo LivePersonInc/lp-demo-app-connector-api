@@ -21,10 +21,9 @@ export class LpConversationComponent implements OnInit {
   public appSecret: string;
   public userName: string;
 
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private zone: NgZone, private  loadingService: LoadingService, private  conversationService: ConversationService) { }
+  constructor(private  conversationService: ConversationService) { }
 
   ngOnInit() {
-    console.log("ON INIT");
     this.brandId = environment.brandId;
     this.appKey = environment.appKey;
     this.appSecret = environment.appSecret;
@@ -40,21 +39,15 @@ export class LpConversationComponent implements OnInit {
          if(event.event === ConvEvent.OPEN ){
            this.conversation = this.conversationService.conversation;
          }
-
        }
     });
-
-
   }
 
   public startConversation(initialMessage: string) {
-
     this.conversationService.openConversation(this.userName, this.brandId, this.appKey, this.appSecret, initialMessage);
-
   }
 
   public closeConversation() {
-
     this.conversationService.closeConversation(this.conversation.conversationId);
   }
 
@@ -64,7 +57,6 @@ export class LpConversationComponent implements OnInit {
     }else{
       this.startConversation(messageText);
     }
-
   }
 
 
