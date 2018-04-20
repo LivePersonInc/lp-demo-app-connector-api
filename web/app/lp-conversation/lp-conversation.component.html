@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row h-100">
         <div class="col-md-5 text-center">
-          <div *ngIf="conversation.conversationId"> <b>Conversation id:</b> {{conversation.conversationId}}</div>
+          <div *ngIf="conversation && conversation.conversationId"> <b>Conversation id:</b> {{conversation.conversationId}}</div>
           <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversationManager]="conversation"></lp-chat-box>
         </div>
         <div class="col-md-7 text-left">
@@ -42,7 +42,7 @@
                         (click)="closeConversation()"
                         color="primary"
                         class="btn-left"
-                        [disabled]="!conversation.isConvStarted">
+                        [disabled]="conversation && !conversation.isConvStarted">
                   Close conversation
                 </button>
               </div>
