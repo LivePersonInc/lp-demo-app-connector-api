@@ -2,8 +2,8 @@ import {
   Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {ChatMessage} from "./lp-chat-box-message/models/ChatMessage";
-import {ConversationManager} from "../shared/conversationManager";
+import {ChatMessage} from "../shared/models/conversation/chatMessage.model";
+import {ConversationManager} from "../shared/models/conversation/conversationManager";
 
 @Component({
   selector: 'lp-chat-box',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChatMessage} from "./models/ChatMessage";
+import {ChatMessage} from "../../shared/models/conversation/chatMessage.model";
 
 @Component({
   selector: 'lp-chat-box-message',
