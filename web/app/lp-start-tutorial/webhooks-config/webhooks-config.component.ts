@@ -30,16 +30,17 @@ export class WebhooksConfigComponent implements OnInit {
   }
 
   public updateWebhooks() {
-    /*
-    console.log("UPDATE");
-    for(let prop in this.installationService.selectedApp.capabilities.webhooks){
-      if(this.installationService.selectedApp.capabilities.webhooks[prop].endpoint.length === 0){
-        delete  this.installationService.selectedApp.capabilities.webhooks[prop];
-      }
-    }*/
-
     console.log(this.installationService.selectedApp);
     if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
+
+      for(let prop in this.installationService.selectedApp.capabilities.webhooks){
+        console.log(prop);
+        if( this.installationService.selectedApp.capabilities.webhooks[prop] != 'deserialize' &&
+            this.installationService.selectedApp.capabilities.webhooks[prop].endpoint.length === 0){
+          delete  this.installationService.selectedApp.capabilities.webhooks[prop];
+        }
+      }
+
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks);
       this.installationService.updateApp(this.installationService.selectedApp);
     }
