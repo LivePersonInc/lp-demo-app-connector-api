@@ -32,10 +32,11 @@ export class Conversation {
   public message: String;
   public userName;
   public eventSource: EventSourcePolyfill;
-  private subscription: Subscription;
   public snackBarConfing : MatSnackBarConfig;
   public messages: Array<ChatMessage>;
   public serverNotifications: Array<string>;
+
+  private subscription: Subscription;
 
   constructor( public snackBar: MatSnackBar,public sendApiService: SendApiService, brandId:string, appKey: string, appSecret: string,  userName: string, public losadingSerive: LoadingService) {
     this.branId = brandId;
@@ -50,7 +51,7 @@ export class Conversation {
     this.snackBarConfing.horizontalPosition = 'right';
 
     this.ext_consumer_id = "ramdom_id" + Math.random();
-    this.message = "HI There !";
+    this.message = "Default message";
 
     this.subscription = this.losadingSerive.isLoadingSubscription().subscribe( isLoading => {
       this.isLoading = isLoading;
@@ -64,8 +65,8 @@ export class Conversation {
     this.serverNotifications.push(JSON.stringify(data, null, " "));
 
     try{
-      //TODO: fix when there is not originatiorMeatadata property
-      if(data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT"){
+      if(data.body.changes[0].originatorMetadata &&
+        data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT"){
         console.log( data );
         if(data.body.changes[0].event.message) {
           this.messages.push(
@@ -148,7 +149,6 @@ export class Conversation {
       };
       let body = JSON.stringify(this.getOpenConvRequestBody(initialMessage, this.userName));
       this.sendApiService.openConversation(this.branId, body, headers).subscribe(res => {
-        console.log(res);
         this.conversationId = res["convId"];
         this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
         this.messages.push(new ChatMessage("sent", new Date, initialMessage, this.userName, "ok", this.getShowUserValue(this.userName)));
@@ -171,7 +171,6 @@ export class Conversation {
       };
       let body;
       body = JSON.stringify(this.getMessageRequestBody(message));
-      console.log(body);
       this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
         console.log(res);
         this.messages.push(new ChatMessage("sent", new Date, message, this.userName, "ok", this.getShowUserValue(this.userName)));
@@ -194,7 +193,6 @@ export class Conversation {
     }
     };
     this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
-      console.log(res);
       this.handleSuccess("Conversation CLOSED successfully with id " + this.conversationId);
     }, error => {
       this.losadingSerive.stopLoading();
