@@ -1,10 +1,10 @@
 export class ChatMessage {
-  public type: MessageType;
-  public timestamp: string;
-  public message: string;
-  public userName: string;
-  public status: string;
-  public showUser: boolean;
+  type: MessageType;
+  timestamp: string;
+  message: string;
+  userName: string;
+  status: string;
+  showUser: boolean;
 
   constructor(type, timestamp, message, userName, status, showUser,) {
     this.type = type;
