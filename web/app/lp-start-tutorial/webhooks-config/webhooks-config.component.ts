@@ -34,9 +34,8 @@ export class WebhooksConfigComponent implements OnInit {
     if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
 
       for(let prop in this.installationService.selectedApp.capabilities.webhooks){
-        console.log(prop);
-        if( this.installationService.selectedApp.capabilities.webhooks[prop] != 'deserialize' &&
-            this.installationService.selectedApp.capabilities.webhooks[prop].endpoint.length === 0){
+        if(this.installationService.selectedApp.capabilities.webhooks[prop].endpoint
+          && this.installationService.selectedApp.capabilities.webhooks[prop].endpoint.length === 0){
           delete  this.installationService.selectedApp.capabilities.webhooks[prop];
         }
       }
