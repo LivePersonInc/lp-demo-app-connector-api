@@ -1,18 +1,18 @@
-import {SendApiService} from "../core/services/send-api.service";
-import {environment} from '../../environments/environment';
+import {SendApiService} from "../../../core/services/send-api.service";
+import {environment} from '../../../../environments/environment';
 import {HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs/Subscription";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
-import {ConsumerRequestConversation} from "./models/send-api/ConsumerRequestConversation.model";
-import {CampaignInfo} from "./models/send-api/CampaignInfo.model";
-import {Request} from "./models/send-api/Request.model";
-import {PushNotificationData} from "./models/send-api/PushNotificationData.model";
-import {PrivateData} from "./models/send-api/PrivateData.model";
-import {SetUserProfile} from "./models/send-api/SetUserProfile.model";
-import {Event} from "./models/send-api/Event.model";
-import {PublishContentEvent} from "./models/send-api/PublishContentEvent.model";
-import {ChatMessage} from "../lp-chat-box/lp-chat-box-message/models/ChatMessage";
-import {LoadingService} from "../core/services/loading.service";
+import {ConsumerRequestConversation} from "../send-api/ConsumerRequestConversation.model";
+import {CampaignInfo} from "../send-api/CampaignInfo.model";
+import {Request} from "../send-api/Request.model";
+import {PushNotificationData} from "../send-api/PushNotificationData.model";
+import {PrivateData} from "../send-api/PrivateData.model";
+import {SetUserProfile} from "../send-api/SetUserProfile.model";
+import {Event} from "../send-api/Event.model";
+import {PublishContentEvent} from "../send-api/PublishContentEvent.model";
+import {ChatMessage} from "./chatMessage.model";
+import {LoadingService} from "../../../core/services/loading.service";
 
 
 export class ConversationManager {
