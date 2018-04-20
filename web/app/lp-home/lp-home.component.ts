@@ -20,7 +20,7 @@ export class LpHomeComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   ngOnInit() {
-    this.brandId = "le92127075"; //TODO: remove in future
+    this.brandId = ""; //TODO: remove in future
     this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event === 'LOGGED-IN' ) {
         this.router.navigateByUrl('home/start');
