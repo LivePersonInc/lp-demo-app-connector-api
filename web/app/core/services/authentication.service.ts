@@ -31,7 +31,6 @@ export class AuthenticationService extends HttpService {
          this.user.userName = username;
          this.user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
-         console.log("XXXXXXXX");
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {
@@ -40,12 +39,6 @@ export class AuthenticationService extends HttpService {
   }
 
   public getUser(): User {
-  /*  if(!this.user){
-      let storedUser = sessionStorage.getItem("lp-logged-in-user");
-      if(storedUser){
-        this.user =  JSON.parse(storedUser);
-      }
-    }*/
     return this.user ;
   }
 
