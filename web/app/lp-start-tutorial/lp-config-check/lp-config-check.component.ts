@@ -24,7 +24,7 @@ export class LpConfigCheckComponent implements OnInit {
     console.log("ON INIT");
     this.currentAppInstallation = this.installationService.selectedApp;
     //this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
-    //this.initWebhooks();
+    //
     this.installationService.istallationSubject.subscribe( event => {
       console.log("XXXXXXX LpConfigCheckComponent");
       if( event === 'APP_SELECTED'){
@@ -41,7 +41,7 @@ export class LpConfigCheckComponent implements OnInit {
       }
     });
 
-
+    this.initWebhooks();
   }
 
   private initWebhooks() {

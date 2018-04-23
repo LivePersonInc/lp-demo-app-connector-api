@@ -13,7 +13,7 @@ import {User} from "../../shared/models/user.model";
 @Injectable()
 export class AuthenticationService extends HttpService {
   //le92127075
-  private user: User;
+  public user: User;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<string>();
 
@@ -26,7 +26,7 @@ export class AuthenticationService extends HttpService {
     this.loadingService.startLoading();
      return this.doPost(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {})
        .subscribe(res => {
-         this.user = new User;
+         this.user = new User();
          this.user.token = res.bearer;
          this.user.userName = username;
          this.user.brandId = brandId;

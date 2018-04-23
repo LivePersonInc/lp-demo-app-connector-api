@@ -42,7 +42,7 @@
                         (click)="closeConversation()"
                         color="primary"
                         class="btn-left"
-                        [disabled]="conversation && !conversation.isConvStarted">
+                        [disabled]="conversation && !conversation.isConvStarted || !conversation">
                   Close conversation
                 </button>
               </div>
