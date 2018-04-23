@@ -47,7 +47,7 @@ export class LpConfigCheckComponent implements OnInit {
   private initWebhooks() {
     this.webhooks = new Webhooks();
     this.webhooks.initEndpoints();
-    if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
+    if(this.installationService.selectedApp && this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
       this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
     }
   }

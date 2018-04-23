@@ -13,8 +13,11 @@ export class WebhooksConfigComponent implements OnInit {
   @Output()
   public completed = new EventEmitter();
   public webhooks: Webhooks;
+  public installationService:InstallationService;
 
-  constructor(private installationService:InstallationService) { }
+  constructor(private _installationService:InstallationService) {
+    this.installationService = _installationService;
+  }
 
   ngOnInit() {
     this.installationService.istallationSubject.subscribe(event => {
