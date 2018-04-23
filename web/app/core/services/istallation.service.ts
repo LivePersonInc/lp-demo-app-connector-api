@@ -19,14 +19,17 @@ export class InstallationService extends HttpService {
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
-    this.brandId = this.authenticationService.getUser().brandId;
-    this.headers = {'headers':
-      {
-      'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+    this.authenticationService.userLoggedSubject.subscribe( event =>  {
+      if(event === 'LOGGED-IN'){
+        this.brandId = this.authenticationService.user.brandId;
+        this.headers = {'headers':
+          {
+            'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+          }
+        };
       }
-    };
+    });
   }
-
 
   get selectedApp(): AppInstall {
     return this._selectedApp;
