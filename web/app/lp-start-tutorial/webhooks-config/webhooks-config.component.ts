@@ -18,10 +18,10 @@ export class WebhooksConfigComponent implements OnInit {
   constructor(private installationService:InstallationService) { }
 
   ngOnInit() {
-    this.webhooks = new Webhooks();
-    this.webhooks.initEndpoints();
     this.installationService.istallationSubject.subscribe( event => {
       if(event === 'APP_SELECTED') {
+        this.webhooks = new Webhooks();
+        this.webhooks.initEndpoints();
         if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
           this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
         }

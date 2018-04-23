@@ -21,6 +21,5 @@ export class AppInstall implements Deserializable<AppInstall>{
     input.capabilities ? this.capabilities = new Capabilities().deserialize(input.capabilities): null;
     return this;
   }
-  
 
 }
