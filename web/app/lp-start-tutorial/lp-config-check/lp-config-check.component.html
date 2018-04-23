@@ -1,6 +1,5 @@
 <div class="container">
-  <div class="container-fluid" *ngIf="currentAppInstallation">
-
+  <div class="container-fluid">
     <h3>Settings properties</h3>
     <div *ngIf="accountConfigService.isAsyncMessagingActive; else no_enabled ">
       <p class="icon-p">
@@ -15,7 +14,9 @@
         <i class="material-icons icon-negative" >cancel</i>
       </p>
     </ng-template >
+  </div>
 
+  <div class="container-fluid" *ngIf="currentAppInstallation">
     <b>App name:</b> <span>{{currentAppInstallation.client_name}}</span>
     <mat-form-field class="w-100">
       <input matInput placeholder="App id" disabled value="{{currentAppInstallation.client_id}}">

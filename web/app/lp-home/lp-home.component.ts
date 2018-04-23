@@ -27,9 +27,7 @@ export class LpHomeComponent implements OnInit {
     this.brandId = ""; //TODO: remove in future
     this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event === 'LOGGED-IN' ) {
-        this.router.navigateByUrl('home/start');
-        console.log("logged In");
-        console.log(this.authenticationService.getUser());
+        this.startConfig();
         this.installationService.init();
       }
     });
@@ -37,6 +35,9 @@ export class LpHomeComponent implements OnInit {
 
   public authenticate() {
     this.authenticationService.login(this.brandId,this.userName, this.password);
+  }
+  public startConfig(){
+    this.router.navigateByUrl('home/start');
   }
 
 }
