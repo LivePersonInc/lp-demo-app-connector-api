@@ -18,7 +18,7 @@ export class LpConfigCheckComponent implements OnInit {
   public currentAppInstallation:AppInstall;
   public webhooks: Webhooks;
 
-  constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService, private router: Router) { }
+  constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
 
   ngOnInit() {
     console.log("ON INIT");
@@ -52,8 +52,6 @@ export class LpConfigCheckComponent implements OnInit {
     }
   }
 
-  public done() {
-    this.router.navigateByUrl('/demo');
-  }
+
 
 }

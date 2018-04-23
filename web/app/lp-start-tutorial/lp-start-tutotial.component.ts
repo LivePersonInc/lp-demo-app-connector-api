@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
 
 @Component({
@@ -15,7 +15,7 @@ export class LpStartTutotialComponent implements OnInit {
   public stepsCompleted: Array<boolean>
 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
      this.stepsCompleted = new Array(4);
@@ -28,5 +28,8 @@ export class LpStartTutotialComponent implements OnInit {
     }
   }
 
+  public done() {
+    this.router.navigateByUrl('/demo');
+  }
 
 }
