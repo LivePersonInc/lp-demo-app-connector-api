@@ -35,7 +35,7 @@ export class Webhooks implements Deserializable<Webhooks>{
     return res;
   }
 
-  private filterForNonEmptyEndpoints(): Array {
+  private filterForNonEmptyEndpoints(): any[] {
     const eventPrefix = "ms.";
     const notificationPrefix = "cqm.";
     const forEventsAndNotifications = key => key.startsWith(eventPrefix) || key.startsWith(notificationPrefix);
