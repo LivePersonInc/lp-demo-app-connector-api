@@ -11,8 +11,11 @@ export class EnableAsycComponent implements OnInit {
 
   @Output()
   public completed = new EventEmitter();
+  public accountConfigService:AccountConfigService;
 
-  constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
+  constructor(private _accountConfigService:AccountConfigService, private  installationService: InstallationService) {
+    this.accountConfigService = _accountConfigService;
+  }
 
   ngOnInit() {
     this.accountConfigService.acSubject.subscribe( event => {
@@ -25,7 +28,8 @@ export class EnableAsycComponent implements OnInit {
   }
 
   private getInstalledApps() {
-    if(!this.installationService.appList){
+    if(!this.installationService.appList && this.installationService.brandId){
+      console.log("OSAHFOIASHIOFHASIOHFOAISH");
       this.installationService.getAppListList();
     }
 

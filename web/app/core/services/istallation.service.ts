@@ -15,20 +15,34 @@ export class InstallationService extends HttpService {
   public appList: Array<AppInstall>;
   private _selectedApp: AppInstall;
   private headers = {};
-  private brandId = "";
+  public brandId;
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
-    this.authenticationService.userLoggedSubject.subscribe( event =>  {
+  }
+
+  public init() {
+   /* this.authenticationService.userLoggedSubject.subscribe( event =>  {
       if(event === 'LOGGED-IN'){
+        console.log("LOGGDE_IN");
         this.brandId = this.authenticationService.user.brandId;
         this.headers = {'headers':
           {
             'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
           }
         };
+        this.getAppListList();
       }
-    });
+    });*/
+
+    console.log("LOGGDE_IN");
+    this.brandId = this.authenticationService.user.brandId;
+    this.headers = {'headers':
+      {
+        'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+      }
+    };
+    this.getAppListList();
   }
 
   get selectedApp(): AppInstall {
@@ -42,6 +56,7 @@ export class InstallationService extends HttpService {
 
 
   public getAppListList() {
+
     this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
       console.log(this.appList);

@@ -4,6 +4,7 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
 import {AuthenticationService} from "../core/services/authentication.service";
 import { Observable } from 'rxjs/Observable';
 import {Router} from "@angular/router";
+import {InstallationService} from "../core/services/istallation.service";
 
 @Component({
   selector: 'lp-home',
@@ -16,8 +17,11 @@ export class LpHomeComponent implements OnInit {
   public brandId: string;
   public userName: string;
   public password: string;
+  public authenticationService: AuthenticationService;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor(private _authenticationService: AuthenticationService, private installationService:InstallationService, private router: Router) {
+    this.authenticationService = _authenticationService;
+  }
 
   ngOnInit() {
     this.brandId = ""; //TODO: remove in future
@@ -26,6 +30,7 @@ export class LpHomeComponent implements OnInit {
         this.router.navigateByUrl('home/start');
         console.log("logged In");
         console.log(this.authenticationService.getUser());
+        this.installationService.init();
       }
     });
   }
