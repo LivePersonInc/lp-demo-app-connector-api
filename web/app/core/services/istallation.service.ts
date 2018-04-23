@@ -22,20 +22,6 @@ export class InstallationService extends HttpService {
   }
 
   public init() {
-   /* this.authenticationService.userLoggedSubject.subscribe( event =>  {
-      if(event === 'LOGGED-IN'){
-        console.log("LOGGDE_IN");
-        this.brandId = this.authenticationService.user.brandId;
-        this.headers = {'headers':
-          {
-            'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
-          }
-        };
-        this.getAppListList();
-      }
-    });*/
-
-    console.log("LOGGDE_IN");
     this.brandId = this.authenticationService.user.brandId;
     this.headers = {'headers':
       {
