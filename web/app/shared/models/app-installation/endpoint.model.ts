@@ -12,4 +12,8 @@ export class Endpoint implements Deserializable<Endpoint>
     Object.assign(this, input);
     return this;
   }
+
+  isEndpointEmpty(): boolean{
+    return (!this.endpoint || this.endpoint == undefined || this.endpoint == "" || this.endpoint.length == 0);
+  }
 }

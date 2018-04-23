@@ -2,11 +2,12 @@ import {Endpoint} from "./endpoint.model";
 import {Deserializable} from "../deserializable.model";
 
 export class Webhooks implements Deserializable<Webhooks>{
+
   'ms.MessagingEventNotification.ContentEvent': Endpoint;
   'ms.MessagingEventNotification.RichContentEvent': Endpoint;
   'ms.MessagingEventNotification.AcceptStatusEvent': Endpoint;
   'ms.MessagingEventNotification.ChatStateEvent': Endpoint;
-  'ms.MessagingEventNotification.ExConversationChangeNotification': Endpoint;
+  'cqm.ExConversationChangeNotification': Endpoint;
 
   deserialize(input: any): Webhooks{
     Object.assign(this, input);
@@ -26,5 +27,23 @@ export class Webhooks implements Deserializable<Webhooks>{
     this['cqm.ExConversationChangeNotification'] =  new Endpoint();
   }
 
+  serialize(): object {
+    const res = {};
+    this.filterForNonEmptyEndpoints().forEach( key => {
+        res[key] = this[key];
+    });
+    return res;
+  }
+
+  private filterForNonEmptyEndpoints(): Array {
+    const eventPrefix = "ms.";
+    const notificationPrefix = "cqm.";
+    const forEventsAndNotifications = key => key.startsWith(eventPrefix) || key.startsWith(notificationPrefix);
+    const nonEmptyEndpoints = notificationKey => !this[notificationKey].isEndpointEmpty();
+
+    return Object.keys(this)
+      .filter(forEventsAndNotifications)
+      .filter(nonEmptyEndpoints)
+  }
 }
 
