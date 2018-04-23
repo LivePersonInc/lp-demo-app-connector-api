@@ -36,9 +36,18 @@
       </mat-form-field>
     </div>
   </div>
+  <button mat-raised-button
+          (click)="updateWebhooks()"
+          color="primary"
+          class="btn-left">
+   Update
+  </button>
+
+  <mat-divider class="lp-divider"></mat-divider>
+
   <div class="">
     <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext (click)="updateWebhooks()">Next</button>
+    <button mat-button matStepperNext>Next</button>
   </div>
 </div>
 
