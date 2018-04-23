@@ -8,6 +8,8 @@ import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
 import {LoadingService} from "../core/services/loading.service";
 import {ConversationService} from "../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../shared/models/conversation/conversationEvent.model";
+import {AuthenticationService} from "../core/services/authentication.service";
+import {InstallationService} from "../core/services/istallation.service";
 
 @Component({
   selector: 'lp-conversation',
@@ -21,13 +23,20 @@ export class LpConversationComponent implements OnInit {
   public appSecret: string;
   public userName: string;
 
-  constructor(private  conversationService: ConversationService) { }
+  constructor(private conversationService: ConversationService,
+              private authenticationService: AuthenticationService,
+              private appInstallationServie: InstallationService) { }
 
   ngOnInit() {
-    this.brandId = environment.brandId;
-    this.appKey = environment.appKey;
-    this.appSecret = environment.appSecret;
-    this.userName = "test user name";
+    if(this.authenticationService.user) {
+      this.brandId = this.authenticationService.user.brandId || "";
+    }
+    if(this.appInstallationServie.selectedApp){
+      this.appKey = this.appInstallationServie.selectedApp.client_id || "";
+      this.appSecret = this.appInstallationServie.selectedApp.client_secret || "";
+    }
+
+    this.userName = "Consumer Name";
 
     if(this.conversationService.conversation){
       this.conversation = this.conversationService.conversation;

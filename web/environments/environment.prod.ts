@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  webhookServer: "https://17ddc37d.ngrok.io/notifications/event",
   umsDomain: "192.168.98.82:8282",
   sentinel: "lp-sentinel-web-qa.dev.lprnd.net",
   idp:"qtvr-wng113.dev.lprnd.net",
