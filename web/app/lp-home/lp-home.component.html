@@ -1,4 +1,4 @@
-<div class="container">
+< class="container">
   <mat-card *ngIf="!authenticationService.getUser()">
     <p class="introduction">
     Welcome to demo connector App. This app was created for developers, here you can test the send Api services,
@@ -33,7 +33,7 @@
               (click)="this.authenticate()"
               [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
               >
-        Smart config
+        Start config
         <i class="material-icons">settings</i>
       </button>
     </div>
@@ -47,6 +47,18 @@
 
   <mat-card *ngIf="authenticationService.getUser()">
     <lp-config-check></lp-config-check>
+      <button mat-raised-button
+              class="text-right"
+              color="primary"
+              class="start-config-btn"
+              (click)="startConfig()"
+
+      >
+        Start config
+        <i class="material-icons">settings</i>
+      </button>
+    </>
+
   </mat-card>
 
 </div>

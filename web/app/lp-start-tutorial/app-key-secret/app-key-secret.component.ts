@@ -23,20 +23,17 @@ export class AppKeySecretComponent implements OnInit {
   constructor(private installationService:InstallationService) { }
 
   ngOnInit() {
+    if(this.installationService.appList) {
+      this.appList = this.installationService.appList;
+    }
     this.installationService.istallationSubject.subscribe( event => {
       if(event === 'GET_APP_LIST'){
         this.appList = this.installationService.appList;
-        console.log(this.installationService.appList);
       }
     });
   }
 
-  public next(){
-
-  }
-
   public onSelectionChange(event: MatSelectChange) {
-    console.log(event.value);
     if(event.value instanceof AppInstall){
       this.installationService.selectedApp = this.selectedApp;
       this.completed.emit(true);
@@ -45,6 +42,5 @@ export class AppKeySecretComponent implements OnInit {
       this.completed.emit(false);
     }
   }
-
 
 }
