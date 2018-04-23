@@ -31,6 +31,7 @@ export class AuthenticationService extends HttpService {
          this.user.userName = username;
          this.user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
+         console.log("XXXXXXXX");
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {

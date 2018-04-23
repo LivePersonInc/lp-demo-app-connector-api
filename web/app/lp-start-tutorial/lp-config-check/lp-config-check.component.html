@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="container-fluid" *ngIf="currentAppInstallation; else no_app">
+  <div class="container-fluid" *ngIf="currentAppInstallation">
 
     <h3>Settings properties</h3>
     <div *ngIf="accountConfigService.isAsyncMessagingActive; else no_enabled ">
