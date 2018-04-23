@@ -9,8 +9,6 @@ import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
   styleUrls: ['./webhooks-config.component.scss']
 })
 export class WebhooksConfigComponent implements OnInit {
-
-
   @Output()
   public completed = new EventEmitter();
   public webhooks: Webhooks;
@@ -32,13 +30,10 @@ export class WebhooksConfigComponent implements OnInit {
   }
 
   public updateWebhooks() {
-    console.log(this.webhooks);
     if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks){
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
       this.installationService.updateApp(this.installationService.selectedApp);
     }
-
-
   }
 
 }
