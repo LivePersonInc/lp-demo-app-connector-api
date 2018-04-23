@@ -46,45 +46,5 @@ export class AppKeySecretComponent implements OnInit {
     }
   }
 
- /* private hasWebhooksProp(app: AppInstall): boolean {
-    if(app.capabilities && app.capabilities.webhooks){
-      return true;
-    }
-    return false;
-  }
-  private addWebhooksObject(app: AppInstall): AppInstall {
-    if(!this.hasWebhooksProp(app)) {
-       if(app.capabilities){
-         app.capabilities.webhooks = new Webhooks();
-       }else{
-         app.capabilities = new Capabilities();
-         app.capabilities.webhooks = new Webhooks();
-         app.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'] = new Endpoint();
-         app.capabilities.webhooks['cqm.ExConversationChangeNotification'] = new Endpoint();
-         app.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'] = new Endpoint();
-         app.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'] = new Endpoint();
-         app.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'] = new Endpoint();
-       }
-    }else {
-      if(!app.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent']) {
-        app.capabilities.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'] = new Endpoint();
-      }
-      if(!app.capabilities.webhooks['cqm.ExConversationChangeNotification']) {
-        app.capabilities.webhooks['cqm.ExConversationChangeNotification'] = new Endpoint();
-      }
-      if(!app.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent']) {
-        app.capabilities.webhooks['ms.MessagingEventNotification.ChatStateEvent'] = new Endpoint();
-      }
-
-      if(!app.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent']) {
-        app.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'] = new Endpoint();
-      }
-      if(!app.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent']) {
-        app.capabilities.webhooks['ms.MessagingEventNotification.RichContentEvent'] = new Endpoint();
-      }
-
-    }
-    return app;
-  }*/
 
 }
