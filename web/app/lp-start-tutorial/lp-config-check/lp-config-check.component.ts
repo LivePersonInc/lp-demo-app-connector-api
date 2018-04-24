@@ -21,12 +21,10 @@ export class LpConfigCheckComponent implements OnInit {
   constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
 
   ngOnInit() {
-    console.log("ON INIT");
     this.currentAppInstallation = this.installationService.selectedApp;
     //this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
-    //
+
     this.installationService.istallationSubject.subscribe( event => {
-      console.log("XXXXXXX LpConfigCheckComponent");
       if( event === 'APP_SELECTED'){
         this.currentAppInstallation = this.installationService.selectedApp;
         this.initWebhooks();
@@ -35,8 +33,6 @@ export class LpConfigCheckComponent implements OnInit {
 
     this.accountConfigService.acSubject.subscribe( event => {
       if( event === 'GET_LIST'){
-        console.log("accountConfigService LpConfigCheckComponent GET_LIST");
-
         this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
       }
     });

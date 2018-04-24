@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/lp-mat-theme.scss";
 body {
   background-color: rgb(242, 242, 242) !important;
   font-family: "Open Sans","myriad-pro-1","myriad-pro-2",sans-serif;
@@ -8,7 +8,7 @@ body {
 
 }
 /**TODO: Change primary color propertly**/
-.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary{
+/*.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary{
   background-color: #ff720b;
 }
 .mat-input-element {
@@ -18,7 +18,7 @@ body {
 .mat-step-header .mat-step-icon {
   background-color: #ff700c !important;
   color: #fff !important;
-}
+}*/
 
 button {
   outline: none !important;
