@@ -29,7 +29,6 @@ export class EnableAsycComponent implements OnInit {
 
   private getInstalledApps() {
     if(!this.installationService.appList && this.installationService.brandId){
-      console.log("OSAHFOIASHIOFHASIOHFOAISH");
       this.installationService.getAppListList();
     }
 
