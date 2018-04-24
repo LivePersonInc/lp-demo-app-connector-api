@@ -12,7 +12,6 @@ import {User} from "../../shared/models/user.model";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
-  //le92127075
   public user: User;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<string>();
@@ -28,6 +27,7 @@ export class AuthenticationService extends HttpService {
        .subscribe(res => {
          this.user = new User();
          this.user.token = res.bearer;
+         console.log(res.bearer)
          this.user.userName = username;
          this.user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
@@ -45,6 +45,12 @@ export class AuthenticationService extends HttpService {
   public logOut() {
     //sessionStorage.removeItem("lp-logged-in-user");
   }
+
+  private  parseJwt (token): any {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  };
 
 }
 
