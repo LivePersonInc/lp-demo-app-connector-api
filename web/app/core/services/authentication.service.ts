@@ -34,7 +34,7 @@ export class AuthenticationService extends HttpService {
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {
-         this.errorResponse(error);
+         this.errorResponse("Problem with Authentication");
        });
   }
 
@@ -45,12 +45,6 @@ export class AuthenticationService extends HttpService {
   public logOut() {
     //sessionStorage.removeItem("lp-logged-in-user");
   }
-
-  private  parseJwt (token): any {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-  };
 
 }
 
