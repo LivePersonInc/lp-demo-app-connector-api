@@ -48,18 +48,15 @@
   <mat-card *ngIf="authenticationService.getUser()">
     <lp-config-check></lp-config-check>
       <button mat-raised-button
-              class="text-right"
+              class=" start-config-btn"
               color="primary"
-              class="start-config-btn"
-              (click)="startConfig()"
 
       >
         Start config
         <i class="material-icons">settings</i>
       </button>
 
-    <button mat-raised-button
-            class="text-right"
+   <!-- <button mat-raised-button
             color="primary"
             class="start-config-btn"
             (click)="startConfig()"
@@ -67,7 +64,7 @@
     >
       Add different account
       <i class="material-icons">account_circle</i>
-    </button>
+    </button>-->
 
   </mat-card>
 
