@@ -42,6 +42,7 @@ export class ConversationService extends HttpService{
     this.conversation.closeConversation();
     this.conversation.unsubscribeToMessageNotifications();
     this.conversation.isConvStarted = false;
+    this.conversationEventSubject.next(new ConversationEvent(conversationId, ConvEvent.CLOSE));
   }
 
   public sendMessage(message:string, conversationId: string) {
@@ -56,8 +57,8 @@ export class ConversationService extends HttpService{
     }
   }
 
-
-
-
+  public reset(){
+    this.conversation = null;
+  }
 
 }
