@@ -71,4 +71,12 @@ export class InstallationService extends HttpService {
     });
   }
 
+  public reset() {
+    this.appList = null;
+    this._selectedApp = null;
+    this.headers = {};
+    this.brandId = null;
+    this.istallationSubject.next('RESET');
+  }
+
 }

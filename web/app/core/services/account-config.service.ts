@@ -18,11 +18,17 @@ export class AccountConfigService extends HttpService {
 
   constructor(protected authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
-    this.brandId = this.authenticationService.getUser().brandId;
-    this.headers = {'headers': {
-      'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+
+    this.authenticationService.userLoggedSubject.subscribe( event => {
+      if(event ===  'LOGGED-IN'){
+        this.brandId = this.authenticationService.getUser().brandId;
+        this.headers = {
+          'headers': {
+            'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+          }
+        };
       }
-    };
+    })
   }
 
   public getAccountConfigPropertiesList() {
@@ -43,6 +49,13 @@ export class AccountConfigService extends HttpService {
     },error => {
       this.errorResponse(error);
     });
+  }
+
+  public reset(){
+    this.accountConfigPropList = null;
+    this.isAsyncMessagingActive = false;
+    this.brandId = "";
+    this.headers = {};
   }
 
   private checkIsAsyncMessagingActive(): boolean {
