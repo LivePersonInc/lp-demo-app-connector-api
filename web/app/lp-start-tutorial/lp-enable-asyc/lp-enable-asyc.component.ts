@@ -4,8 +4,8 @@ import {InstallationService} from "../../core/services/istallation.service";
 
 @Component({
   selector: 'lp-enable-asyc',
-  templateUrl: './enable-asyc.component.html',
-  styleUrls: ['./enable-asyc.component.scss']
+  templateUrl: './lp-enable-asyc.component.html',
+  styleUrls: ['./lp-enable-asyc.component.scss']
 })
 export class EnableAsycComponent implements OnInit {
 
