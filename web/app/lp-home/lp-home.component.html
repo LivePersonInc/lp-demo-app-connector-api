@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card *ngIf="!authenticationService.getUser()">
+  <mat-card *ngIf="!authenticationService.getUser()" [@fadeInAnimation]>
     <mat-card-title>
       Welcome to demo connector App
     </mat-card-title>
@@ -70,7 +70,7 @@
       <button mat-raised-button
                color="primary"
                class="start-config-btn"
-               (click)="loggin()"
+               (click)="openConfirmationDialog()"
 
        >
          Add different account
