@@ -16,7 +16,7 @@
     </ng-template>
   </div>
 
-  <div class="container-fluid" *ngIf="currentAppInstallation">
+  <div class="container-fluid" *ngIf="currentAppInstallation; else no_app">
     <div class="subtitle">
       <b>App name:</b> <span>{{currentAppInstallation.client_name}}</span>
     </div>
@@ -61,8 +61,16 @@
         </mat-form-field>
       </div>
     </div>
-
   </div>
+
+  <ng-template #no_app>
+    <div class="container-fluid">
+      <p class="icon-p">
+        <b>App selected</b>:
+        <i class="material-icons icon-negative">cancel</i>
+      </p>
+    </div>
+  </ng-template>
 </div>
 
 

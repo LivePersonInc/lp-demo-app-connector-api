@@ -30,6 +30,7 @@ import { LoadingService } from './core/services/loading.service';
 import { HttpService } from './core/services/http.service';
 import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-config-check.component';
 import { ConversationService } from './core/services/conversation.service';
+import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ConversationService } from './core/services/conversation.service';
     AppKeySecretComponent,
     WebhooksConfigComponent,
     EnableAsycComponent,
-    LpConfigCheckComponent
+    LpConfigCheckComponent,
+    LpConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
