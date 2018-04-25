@@ -62,6 +62,7 @@ import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confi
     HttpClientModule,
     AppRoutingModule
   ],
+  entryComponents: [LpConfirmationDialogComponent],
   providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService],
   bootstrap: [AppComponent]
 })

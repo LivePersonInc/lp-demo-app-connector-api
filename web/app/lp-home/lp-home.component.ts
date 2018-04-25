@@ -5,6 +5,8 @@ import {AuthenticationService} from "../core/services/authentication.service";
 import { Observable } from 'rxjs/Observable';
 import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
+import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'lp-home',
@@ -19,7 +21,10 @@ export class LpHomeComponent implements OnInit {
   public password: string;
   public authenticationService: AuthenticationService;
 
-  constructor(private _authenticationService: AuthenticationService, private installationService:InstallationService, private router: Router) {
+  constructor(private _authenticationService: AuthenticationService,
+              private installationService:InstallationService,
+              private router: Router,
+              public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
   }
 
@@ -38,6 +43,19 @@ export class LpHomeComponent implements OnInit {
   }
   public startConfig(){
     this.router.navigateByUrl('home/start');
+  }
+
+  public openConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(LpConfirmationDialogComponent);
+
+    dialogRef.componentInstance.title = "Logout";
+    dialogRef.componentInstance.message = "This will clear all your changes. Are you sure?";
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+          this.authenticationService.logOut();
+      }
+    });
   }
 
 }
