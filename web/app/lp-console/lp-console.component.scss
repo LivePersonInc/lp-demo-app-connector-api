@@ -5,6 +5,10 @@
   overflow-y: auto;
   border: 1px solid gainsboro;
   border-radius: 2px;
+  .container-custom{
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
   .mat-expansion-panel-header-title {
     color: #165496;
     text-overflow: ellipsis;
