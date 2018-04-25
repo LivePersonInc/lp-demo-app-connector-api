@@ -7,18 +7,6 @@ body {
   margin: 0;
 
 }
-/**TODO: Change primary color propertly**/
-/*.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary{
-  background-color: #ff720b;
-}
-.mat-input-element {
-  caret-color: #ff720b;
-}
-
-.mat-step-header .mat-step-icon {
-  background-color: #ff700c !important;
-  color: #fff !important;
-}*/
 
 button {
   outline: none !important;
@@ -26,4 +14,8 @@ button {
 
 button:focus {
   outline: none !important;
+}
+
+a:hover{
+  text-decoration: none !important;
 }
