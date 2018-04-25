@@ -1,9 +1,9 @@
 <div class="container-fluid" *ngIf="installationService.selectedApp; else no_app">
   <b>{{installationService.selectedApp.client_name}}</b>
-  <mat-form-field class="w-100">
+  <mat-form-field class="w-100" color="accent">
     <input matInput placeholder="App id" disabled value="{{installationService.selectedApp.client_id}}">
   </mat-form-field>
-  <mat-form-field class="w-100">
+  <mat-form-field class="w-100" color="accent">
     <input matInput placeholder="App Secret" disabled value="{{installationService.selectedApp.client_secret}}">
   </mat-form-field>
 
@@ -11,27 +11,27 @@
   <div class="row" *ngIf="webhooks">
 
     <div class="col-md-6">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" color="accent">
         <input matInput placeholder="AcceptStatusEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint">
       </mat-form-field>
     </div>
     <div class="col-md-6">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" color="accent">
         <input matInput placeholder="ChatStateEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint" >
       </mat-form-field>
     </div>
     <div class="col-md-6">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" color="accent">
         <input matInput placeholder="ContentEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint" >
       </mat-form-field>
     </div>
    <div class="col-md-6">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" color="accent">
         <input matInput placeholder="RichContentEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint">
       </mat-form-field>
     </div>
     <div class="col-md-6">
-      <mat-form-field class="w-100">
+      <mat-form-field class="w-100" color="accent">
         <input matInput placeholder="ExConversationChangeNotification" [(ngModel)]="webhooks['cqm.ExConversationChangeNotification'].endpoint" >
       </mat-form-field>
     </div>
