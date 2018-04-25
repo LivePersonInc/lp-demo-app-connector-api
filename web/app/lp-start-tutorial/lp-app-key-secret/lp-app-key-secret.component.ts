@@ -6,6 +6,7 @@ import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
 import {Capabilities} from "../../shared/models/app-installation/capabilities.model";
 import {Endpoint} from "../../shared/models/app-installation/endpoint.model";
 import {MatSelectChange} from "@angular/material";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'lp-app-key-secret',
@@ -20,7 +21,7 @@ export class AppKeySecretComponent implements OnInit {
   public selectedApp: AppInstall;
   public appList = [];
 
-  constructor(private installationService:InstallationService) { }
+  constructor(private installationService:InstallationService,private router: Router) { }
 
   ngOnInit() {
     if(this.installationService.appList) {
@@ -41,6 +42,10 @@ export class AppKeySecretComponent implements OnInit {
     }else{
       this.completed.emit(false);
     }
+  }
+
+  public redirectToHome(){
+    this.router.navigateByUrl('/home');
   }
 
 }
