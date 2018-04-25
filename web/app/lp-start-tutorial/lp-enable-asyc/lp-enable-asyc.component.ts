@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AccountConfigService} from "../../core/services/account-config.service";
 import {InstallationService} from "../../core/services/istallation.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'lp-enable-asyc',
@@ -13,7 +14,9 @@ export class EnableAsycComponent implements OnInit {
   public completed = new EventEmitter();
   public accountConfigService:AccountConfigService;
 
-  constructor(private _accountConfigService:AccountConfigService, private  installationService: InstallationService) {
+  constructor(private _accountConfigService: AccountConfigService,
+              private  installationService: InstallationService,
+              private router: Router) {
     this.accountConfigService = _accountConfigService;
   }
 
@@ -27,10 +30,13 @@ export class EnableAsycComponent implements OnInit {
     this.accountConfigService.getAccountConfigPropertiesList();
   }
 
+  public redirectToHome(){
+    this.router.navigateByUrl('/home');
+  }
   private getInstalledApps() {
     if(!this.installationService.appList && this.installationService.brandId){
       this.installationService.getAppListList();
     }
-
   }
+
 }
