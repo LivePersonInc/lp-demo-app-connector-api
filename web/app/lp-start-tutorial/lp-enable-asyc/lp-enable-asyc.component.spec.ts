@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WebhooksConfigComponent } from './webhooks-config.component';
+import { EnableAsycComponent } from './lp-enable-asyc.component';
 
-describe('WebhooksConfigComponent', () => {
-  let component: WebhooksConfigComponent;
-  let fixture: ComponentFixture<WebhooksConfigComponent>;
+describe('EnableAsycComponent', () => {
+  let component: EnableAsycComponent;
+  let fixture: ComponentFixture<EnableAsycComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WebhooksConfigComponent ]
+      declarations: [ EnableAsycComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WebhooksConfigComponent);
+    fixture = TestBed.createComponent(EnableAsycComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

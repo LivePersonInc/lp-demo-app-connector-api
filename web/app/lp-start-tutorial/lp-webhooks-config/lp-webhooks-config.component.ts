@@ -6,8 +6,8 @@ import {Capabilities} from "../../shared/models/app-installation/capabilities.mo
 
 @Component({
   selector: 'lp-webhooks-config',
-  templateUrl: './webhooks-config.component.html',
-  styleUrls: ['./webhooks-config.component.scss']
+  templateUrl: './lp-webhooks-config.component.html',
+  styleUrls: ['./lp-webhooks-config.component.scss']
 })
 export class WebhooksConfigComponent implements OnInit {
   @Output()
