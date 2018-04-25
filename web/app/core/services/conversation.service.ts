@@ -10,6 +10,7 @@ import {Subscription} from "rxjs/Subscription";
 import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation";
+import {InstallationService} from "./istallation.service";
 
 @Injectable()
 export class ConversationService extends HttpService{
@@ -18,13 +19,15 @@ export class ConversationService extends HttpService{
   public conversation: Conversation;
   //public conversationList; // Hash table of Conversation accesed by convID
 
-  constructor(protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected  sendApiService: SendApiService){
+  constructor(protected snackBar: MatSnackBar,
+              protected http: HttpClient,
+              protected loadingService:LoadingService,
+              protected sendApiService: SendApiService
+  ){
     super(snackBar,http, loadingService);
-
   }
 
   public openConversation(userName: string, brandId: string, appKey: string, appSecret,initialMessage: string) {
-
     this.conversation = new Conversation(this.snackBar, this.sendApiService, brandId, appKey, appSecret, userName, this.loadingService);
     this.conversation.getAppJWT().then(resolve => {
       this.conversation.getAppConsumerJWS().then(resolve => {
@@ -35,7 +38,6 @@ export class ConversationService extends HttpService{
         });
       });
     });
-
   }
 
   public closeConversation(conversationId: string) {
@@ -59,6 +61,7 @@ export class ConversationService extends HttpService{
 
   public reset(){
     this.conversation = null;
+    this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
 
 }
