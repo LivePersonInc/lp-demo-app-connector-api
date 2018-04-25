@@ -76,7 +76,7 @@ $lp-orange: (
 );
 
 $lp-app-primary: mat-palette($lp-orange);
-$lp-app-accent:  mat-palette($lp-dark-indigo); //500
+$lp-app-accent:  mat-palette($lp-dark-indigo);
 // The warn palette is optional (defaults to red).
 $lp-app-warn:  mat-palette($mat-red);
 

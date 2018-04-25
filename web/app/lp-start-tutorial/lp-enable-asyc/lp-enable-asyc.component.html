@@ -10,7 +10,7 @@
     </p>
   </div>
 
-   <ng-template #no_enabled >
+   <ng-template #no_enabled>
      <p class="icon-p">
        <b>Async_Messaging</b>:
        <i class="material-icons icon-negative" >cancel</i>
@@ -18,12 +18,12 @@
      <p class="text-center">
        Please enable Async_Messaging property for your brand Id account before continue.
      </p>
-     <!---<button (click)="enableAsyncMessaging()">Enable</button>-->
+      <button mat-raised-button (click)="redirectToHome()" class="home-button">Home</button>
    </ng-template >
 
 </div>
 
 <div class="next-button">
-  <button mat-button matStepperNext>Next</button>
+  <button mat-button matStepperNext [disabled]="!accountConfigService.isAsyncMessagingActive">Next</button>
 </div>
 
