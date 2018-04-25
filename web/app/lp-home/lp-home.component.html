@@ -1,15 +1,20 @@
 <div class="container">
   <mat-card *ngIf="!authenticationService.getUser()">
+    <mat-card-title>
+      Welcome to demo connector App
+    </mat-card-title>
     <mat-card-content>
       <p class="introduction">
-        Welcome to demo connector App. This app was created for developers, here you can test the send Api services,
+        This app was created for developers, here you can test the send Api services,
         create a new conversation , chat with your live engage account as a consumer and much more..
       </p>
 
       <p>
-        If you are new you can start here using your brand Id:&nbsp;&nbsp;&nbsp;&nbsp;
+        If you are new you can start here using your brand Id or go directly to the <a routerLink="/demo"> Demo </a> section.
       </p>
-      <div class="form-container mx-auto ">
+
+      <mat-card class="form-container mx-auto ">
+      <div>
         <div class="row">
           <div class="col-sm-12">
             <mat-form-field class="brand-form" color="accent">
@@ -39,11 +44,10 @@
           <i class="material-icons">settings</i>
         </button>
       </div>
+        </mat-card>
 
       <br>
-      <p>
-        In other case go to the <a routerLink="/demo"> Demo </a> section.
-      </p>
+
       <br>
     </mat-card-content>
   </mat-card>
