@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppKeySecretComponent } from './app-key-secret.component';
+import { AppKeySecretComponent } from './lp-app-key-secret.component';
 
 describe('AppKeySecretComponent', () => {
   let component: AppKeySecretComponent;
