@@ -9,15 +9,82 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
-$candy-app-primary: mat-palette($mat-orange);
-$candy-app-accent:  mat-palette($mat-indigo,900); //900
+$lp-dark-indigo: (
+  50: #E3E4E7,
+  100: #B9BCC3,
+  200: #8B909B,
+  300: #5D6472,
+  400: #3A4254,
+  500: #172136,
+  600: #141D30,
+  700: #111829,
+  800: #0D1422,
+  900: #070B16,
+  A100: #587DFF,
+  A200: #2555FF,
+  A400: #0035F1,
+  A700: #0030D7,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+/*
+$lp-orange: (
+   50: #ffeee2,
+   100: #ffd4b6,
+   200: #ffb886,
+   300: #ff9c55,
+   400: #ff8630,
+   500: #ff710c,
+   600: #ff690a,
+   700: #ff5e08,
+   800: #ff5406,
+   900: #ff4203,
+   A100: #ffffff,
+   A200: #fff5f2,
+   A400: #ffccbf,
+   A700: #ffb7a6,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black,
+  )
+);
+*/
+
+$lp-app-primary: mat-palette($mat-orange);
+$lp-app-accent:  mat-palette($lp-dark-indigo); //500
 // The warn palette is optional (defaults to red).
-$candy-app-warn:  mat-palette($mat-red);
+$lp-app-warn:  mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+$lp-app-theme: mat-light-theme($lp-app-primary, $lp-app-accent, $lp-app-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($candy-app-theme);
+@include angular-material-theme($lp-app-theme);
