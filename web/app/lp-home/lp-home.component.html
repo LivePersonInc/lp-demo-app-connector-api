@@ -40,7 +40,7 @@
                 (click)="this.authenticate()"
                 [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
         >
-          Start config
+          Configuration
           <i class="material-icons">settings</i>
         </button>
       </div>
@@ -63,11 +63,11 @@
               color="primary"
               (click)="startConfig()"
       >
-        Start config
+        Configuration
         <i class="material-icons">settings</i>
       </button>
 
-      <!--<button mat-raised-button
+      <button mat-raised-button
                color="primary"
                class="start-config-btn"
                (click)="loggin()"
@@ -75,7 +75,7 @@
        >
          Add different account
          <i class="material-icons">account_circle</i>
-       </button>-->
+       </button>
     </mat-card-content>
   </mat-card>
 

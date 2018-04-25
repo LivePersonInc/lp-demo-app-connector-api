@@ -9,6 +9,7 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
+import {ConversationService} from "./conversation.service";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -16,7 +17,11 @@ export class AuthenticationService extends HttpService {
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<string>();
 
-  constructor(protected http: HttpClient, protected sendApiService: SendApiService, protected snackBar: MatSnackBar, protected loadingService:LoadingService) {
+  constructor(protected http: HttpClient,
+              protected sendApiService: SendApiService,
+              protected snackBar: MatSnackBar,
+              protected loadingService:LoadingService,
+              protected conversationService: ConversationService) {
     super( snackBar,  http,loadingService);
   }
 
@@ -27,7 +32,6 @@ export class AuthenticationService extends HttpService {
        .subscribe(res => {
          this.user = new User();
          this.user.token = res.bearer;
-         console.log(res.bearer)
          this.user.userName = username;
          this.user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
@@ -44,6 +48,10 @@ export class AuthenticationService extends HttpService {
 
   public logOut() {
     //sessionStorage.removeItem("lp-logged-in-user");
+    this.user = null;
+    this.conversationService.reset();
+    this.userLoggedSubject.next('LOGGED-OUT');
+
   }
 
 }
