@@ -2,30 +2,31 @@
   <mat-card *ngIf="!authenticationService.getUser()">
     <mat-card-content>
       <p class="introduction">
-      Welcome to demo connector App. This app was created for developers, here you can test the send Api services,
-      create a new conversation , chat with your live engage account as a consumer and much more..
+        Welcome to demo connector App. This app was created for developers, here you can test the send Api services,
+        create a new conversation , chat with your live engage account as a consumer and much more..
       </p>
 
       <p>
         If you are new you can start here using your brand Id:&nbsp;&nbsp;&nbsp;&nbsp;
-
-
       </p>
       <div class="form-container mx-auto ">
         <div class="row">
           <div class="col-sm-12">
             <mat-form-field class="brand-form" color="accent">
-              <input matInput placeholder="Account number" required [(ngModel)]="brandId" [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-            <div class="col-sm-12">
-            <mat-form-field class="brand-form" color="accent">
-              <input matInput placeholder="Login name" required [(ngModel)]="userName" [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="Account number" required [(ngModel)]="brandId"
+                     [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>
           <div class="col-sm-12">
-            <mat-form-field class="brand-form"  color="accent">
-              <input matInput type="Password" placeholder="password" required [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+            <mat-form-field class="brand-form" color="accent">
+              <input matInput placeholder="Login name" required [(ngModel)]="userName"
+                     [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field class="brand-form" color="accent">
+              <input matInput type="Password" placeholder="password" required [(ngModel)]="password"
+                     [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>
         </div>
@@ -33,7 +34,7 @@
                 color="primary"
                 (click)="this.authenticate()"
                 [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
-                >
+        >
           Start config
           <i class="material-icons">settings</i>
         </button>
@@ -48,29 +49,29 @@
   </mat-card>
 
   <mat-card *ngIf="authenticationService.getUser()">
-    <mat-card-title>
+    <mat-card-title class="m-0">
       Settings properties
     </mat-card-title>
     <mat-card-content>
       <lp-config-check></lp-config-check>
-        <button mat-raised-button
-                class=" start-config-btn"
-                color="primary"
-                (click)="startConfig()"
-        >
-          Start config
-          <i class="material-icons">settings</i>
-        </button>
-
-     <!--<button mat-raised-button
+      <button mat-raised-button
+              class=" start-config-btn"
               color="primary"
-              class="start-config-btn"
-              (click)="loggin()"
-
+              (click)="startConfig()"
       >
-        Add different account
-        <i class="material-icons">account_circle</i>
-      </button>-->
+        Start config
+        <i class="material-icons">settings</i>
+      </button>
+
+      <!--<button mat-raised-button
+               color="primary"
+               class="start-config-btn"
+               (click)="loggin()"
+
+       >
+         Add different account
+         <i class="material-icons">account_circle</i>
+       </button>-->
     </mat-card-content>
   </mat-card>
 

@@ -17,7 +17,9 @@
   </div>
 
   <div class="container-fluid" *ngIf="currentAppInstallation">
-    <b>App name:</b> <span>{{currentAppInstallation.client_name}}</span>
+    <div class="subtitle">
+      <b>App name:</b> <span>{{currentAppInstallation.client_name}}</span>
+    </div>
     <mat-form-field class="w-100" color="accent">
       <input matInput placeholder="App id" disabled value="{{currentAppInstallation.client_id}}">
     </mat-form-field>
@@ -25,7 +27,7 @@
       <input matInput placeholder="App Secret" disabled value="{{currentAppInstallation.client_secret}}">
     </mat-form-field>
 
-    <b>Webhooks endpoints</b>
+    <b class="subtitle">Webhooks endpoints</b>
     <div class="row" *ngIf="webhooks">
 
       <div class="col-md-6">
