@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {MatDialog} from "@angular/material";
+import {ConversationService} from "../core/services/conversation.service";
+import {AccountConfigService} from "../core/services/account-config.service";
 
 @Component({
   selector: 'lp-home',
@@ -23,6 +25,8 @@ export class LpHomeComponent implements OnInit {
 
   constructor(private _authenticationService: AuthenticationService,
               private installationService:InstallationService,
+              private conversationService:ConversationService,
+              private accountConfigService: AccountConfigService,
               private router: Router,
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
@@ -54,6 +58,9 @@ export class LpHomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
           this.authenticationService.logOut();
+          this.installationService.reset();
+          this.conversationService.reset();
+          this.accountConfigService.reset();
       }
     });
   }

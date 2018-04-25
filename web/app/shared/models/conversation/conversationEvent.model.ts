@@ -11,5 +11,6 @@ export class ConversationEvent {
 export enum ConvEvent{
   OPEN,
   CLOSE,
-  MESSAGE_SENT
+  MESSAGE_SENT,
+  RESET
 }
