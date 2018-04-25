@@ -10,6 +10,7 @@ import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
 import {ConversationService} from "./conversation.service";
+import {InstallationService} from "./istallation.service";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -20,9 +21,10 @@ export class AuthenticationService extends HttpService {
   constructor(protected http: HttpClient,
               protected sendApiService: SendApiService,
               protected snackBar: MatSnackBar,
-              protected loadingService:LoadingService,
-              protected conversationService: ConversationService) {
+              protected loadingService:LoadingService)
+  {
     super( snackBar,  http,loadingService);
+    //this.user = new User();
   }
 
   //Barer Token
@@ -49,7 +51,6 @@ export class AuthenticationService extends HttpService {
   public logOut() {
     //sessionStorage.removeItem("lp-logged-in-user");
     this.user = null;
-    this.conversationService.reset();
     this.userLoggedSubject.next('LOGGED-OUT');
 
   }
