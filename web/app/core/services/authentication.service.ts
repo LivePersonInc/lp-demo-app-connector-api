@@ -14,7 +14,7 @@ import {InstallationService} from "./istallation.service";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
-  public user: User;
+  private _user: User;
   public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<string>();
 
@@ -32,10 +32,10 @@ export class AuthenticationService extends HttpService {
     this.loadingService.startLoading();
      return this.doPost(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {})
        .subscribe(res => {
-         this.user = new User();
-         this.user.token = res.bearer;
-         this.user.userName = username;
-         this.user.brandId = brandId;
+         this._user = new User();
+         this._user.token = res.bearer;
+         this._user.userName = username;
+         this._user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
@@ -44,13 +44,13 @@ export class AuthenticationService extends HttpService {
        });
   }
 
-  public getUser(): User {
-    return this.user ;
+  get user(): User {
+    return this._user ;
   }
 
   public logOut() {
     //sessionStorage.removeItem("lp-logged-in-user");
-    this.user = null;
+    this._user = null;
     this.userLoggedSubject.next('LOGGED-OUT');
 
   }
