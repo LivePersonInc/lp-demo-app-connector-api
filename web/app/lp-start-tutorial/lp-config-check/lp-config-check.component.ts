@@ -22,7 +22,7 @@ export class LpConfigCheckComponent implements OnInit {
 
   ngOnInit() {
     this.currentAppInstallation = this.installationService.selectedApp;
-    //this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
+    this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
 
     this.installationService.istallationSubject.subscribe( event => {
       if( event === 'APP_SELECTED'){
