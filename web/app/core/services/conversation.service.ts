@@ -60,8 +60,11 @@ export class ConversationService extends HttpService{
   }
 
   public reset(){
+    if(this.conversation.isConvStarted) {
+      this.conversation.closeConversation();
+      this.conversation.unSubscribeToMessageNotifications();
+    }
     this.conversation = null;
-    this.conversation.unSubscribeToMessageNotifications();
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
 
