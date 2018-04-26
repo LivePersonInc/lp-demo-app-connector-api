@@ -21,10 +21,10 @@ export class AccountConfigService extends HttpService {
 
     this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event ===  'LOGGED-IN'){
-        this.brandId = this.authenticationService.getUser().brandId;
+        this.brandId = this.authenticationService.user.brandId;
         this.headers = {
           'headers': {
-            'Authorization': `Bearer ${this.authenticationService.getUser().token}`,
+            'Authorization': `Bearer ${this.authenticationService.user.token}`,
           }
         };
       }
