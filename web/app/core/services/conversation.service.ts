@@ -42,7 +42,7 @@ export class ConversationService extends HttpService{
 
   public closeConversation(conversationId: string) {
     this.conversation.closeConversation();
-    this.conversation.unsubscribeToMessageNotifications();
+    this.conversation.unSubscribeToMessageNotifications();
     this.conversation.isConvStarted = false;
     this.conversationEventSubject.next(new ConversationEvent(conversationId, ConvEvent.CLOSE));
   }
@@ -61,6 +61,7 @@ export class ConversationService extends HttpService{
 
   public reset(){
     this.conversation = null;
+    this.conversation.unSubscribeToMessageNotifications();
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
 

@@ -274,7 +274,7 @@ export class Conversation {
     }
   }
 
-  public unsubscribeToMessageNotifications() {
+  public unSubscribeToMessageNotifications() {
     if(this.eventSource instanceof EventSourcePolyfill) {
       this.eventSource.close();
     }else {
