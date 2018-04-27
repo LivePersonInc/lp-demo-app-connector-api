@@ -8,8 +8,8 @@ const csdService = new CsdService(nconf);
 
 let domains = []; //Hash table accessed by serviceName
 
-csdsProperties.init = (() => {
-    return csdService.getDomainList().then((data, reject) => {
+csdsProperties.init = ((brandId) => {
+    return csdService.getDomainList(brandId).then((data, reject) => {
         let length = data[0].baseURIs.length;
         for(let i=0; i < length; i++) {
             domains[data[0].baseURIs[i].service] = data[0].baseURIs[i].baseURI;

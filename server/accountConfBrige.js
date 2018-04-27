@@ -8,7 +8,6 @@ nconf.file({file: "./settings.json"});
 
 const accountConfigService = new AccountConfigService(nconf);
 
-
 router.get("/properties/:id", function (req, res, next) {
   let brandId = req.params.id;
   let args = {};
