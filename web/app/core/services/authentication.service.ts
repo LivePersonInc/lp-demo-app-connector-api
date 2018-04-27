@@ -12,6 +12,7 @@ import {User} from "../../shared/models/user.model";
 import {ConversationService} from "./conversation.service";
 import {InstallationService} from "./istallation.service";
 import {environment} from '../../../environments/environment';
+import {DomainsService} from "./domains.service";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -22,6 +23,7 @@ export class AuthenticationService extends HttpService {
   constructor(protected http: HttpClient,
               protected sendApiService: SendApiService,
               protected snackBar: MatSnackBar,
+              protected domainsService: DomainsService,
               protected loadingService:LoadingService)
   {
     super( snackBar,  http,loadingService);
@@ -31,13 +33,14 @@ export class AuthenticationService extends HttpService {
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
-     return this.doPost(`http://${environment.umsDomain}/authentication/login/${brandId}`, { username: username, password: password }, {})
+     return this.doPost(`http://${environment.server}/authentication/login/${brandId}`, { username: username, password: password }, {})
        .subscribe(res => {
          this._user = new User();
          this._user.token = res.bearer;
          this._user.userName = username;
          this._user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
+         this.domainsService.getDomainList(brandId);
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {

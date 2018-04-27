@@ -9,6 +9,8 @@ const accountConfBrige = require('./server/accountConfBrige');
 const notifications = require('./server/notifications');
 const domains = require('./server/connector/CsdsProperties');
 const authenticationBrige = require('./server/authenticationBrige');
+const csdsBrige = require('./server/csdsBrige');
+
 const https = require('https');
 const forceSsl = require('express-force-ssl');
 const SSE = require('sse-nodejs');
@@ -40,7 +42,7 @@ app.use("/account", accountConfBrige);
 app.use("/umsbrige", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
 app.use("/authentication", authenticationBrige); //receive webhooks notifications
-
+app.use("/domains", csdsBrige); //receive webhooks notifications
 //Serve our UI
 app.use(express.static('dist'));
 
