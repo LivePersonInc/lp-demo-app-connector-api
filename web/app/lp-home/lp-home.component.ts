@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
 import {AuthenticationService} from "../core/services/authentication.service";
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
@@ -22,30 +22,38 @@ export class LpHomeComponent implements OnInit {
   public userName: string;
   public password: string;
   public authenticationService: AuthenticationService;
+  public loginForm: FormGroup;
 
   constructor(private _authenticationService: AuthenticationService,
-              private installationService:InstallationService,
-              private conversationService:ConversationService,
+              private installationService: InstallationService,
+              private conversationService: ConversationService,
               private accountConfigService: AccountConfigService,
               private router: Router,
+              private fb: FormBuilder,
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
   }
 
   ngOnInit() {
-    this.brandId = ""; //TODO: remove in future
-    this.authenticationService.userLoggedSubject.subscribe( event => {
-      if(event === 'LOGGED-IN' ) {
+    this.authenticationService.userLoggedSubject.subscribe(event => {
+      if (event === 'LOGGED-IN') {
         this.startConfig();
         this.installationService.init();
       }
     });
+
+    this.loginForm = this.fb.group({
+      'brand': new FormControl('', [Validators.required],),
+      'email': new FormControl('', [Validators.email, Validators.required],),
+      'password': new FormControl('', [Validators.required],)
+    });
   }
 
   public authenticate() {
-    this.authenticationService.login(this.brandId,this.userName, this.password);
+    this.authenticationService.login(this.brandId, this.userName, this.password);
   }
-  public startConfig(){
+
+  public startConfig() {
     this.router.navigateByUrl('home/start');
   }
 
@@ -57,10 +65,10 @@ export class LpHomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-          this.authenticationService.logOut();
-          this.installationService.reset();
-          this.conversationService.reset();
-          this.accountConfigService.reset();
+        this.authenticationService.logOut();
+        this.installationService.reset();
+        this.conversationService.reset();
+        this.accountConfigService.reset();
       }
     });
   }
