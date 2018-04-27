@@ -1,4 +1,3 @@
-
 <div class="container">
   <mat-card>
     <mat-card-content>
@@ -15,8 +14,8 @@
         <mat-step [completed]="stepsCompleted[3]" label="Done">
           <lp-config-check (completed)="onCompleted($event, 3)"></lp-config-check>
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="done()">Done</button>
+            <button type="button" mat-button matStepperPrevious>Back</button>
+            <button mat-button type="button" (click)="done()">Done</button>
           </div>
         </mat-step>
       </mat-horizontal-stepper>
