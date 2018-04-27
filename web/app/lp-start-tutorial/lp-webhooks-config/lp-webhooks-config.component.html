@@ -8,47 +8,53 @@
   </mat-form-field>
   Webhooks endpoints
   <form [formGroup]="webhooksForm" (ngSubmit)="updateWebhooks()">
-    <mat-error *ngIf="webhooksForm.invalid">
-      Webhooks endpoints should start by https://
-    </mat-error>
+    <div class="error-message-box">
+      <mat-error *ngIf="webhooksForm.invalid">
+        Webhooks endpoints should start by https://
+      </mat-error>
+    </div>
     <div class="row" *ngIf="webhooks">
       <div class="col-md-6">
         <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="AcceptStatusEvent" formControlName="AcceptStatusEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint">
+          <input matInput placeholder="AcceptStatusEvent" formControlName="AcceptStatusEvent"
+                 [(ngModel)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ChatStateEvent" formControlName="ChatStateEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint" >
+          <input matInput placeholder="ChatStateEvent" formControlName="ChatStateEvent"
+                 [(ngModel)]="webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ContentEvent" formControlName="ContentEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint" >
+          <input matInput placeholder="ContentEvent" formControlName="ContentEvent"
+                 [(ngModel)]="webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="RichContentEvent" formControlName="RichContentEvent" [(ngModel)]="webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint">
+          <input matInput placeholder="RichContentEvent" formControlName="RichContentEvent"
+                 [(ngModel)]="webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ExConversationChangeNotification"formControlName="ExConversationChangeNotification" [(ngModel)]="webhooks['cqm.ExConversationChangeNotification'].endpoint" >
+          <input matInput placeholder="ExConversationChangeNotification"
+                 formControlName="ExConversationChangeNotification"
+                 [(ngModel)]="webhooks['cqm.ExConversationChangeNotification'].endpoint">
         </mat-form-field>
       </div>
     </div>
     <button mat-raised-button
             color="primary"
             type="submit"
+            [disabled]="webhooksForm.invalid"
             class="update-btn">
       Update
     </button>
   </form>
-
-
-
-  <div class="">
+  <div>
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button matStepperNext>Next</button>
   </div>

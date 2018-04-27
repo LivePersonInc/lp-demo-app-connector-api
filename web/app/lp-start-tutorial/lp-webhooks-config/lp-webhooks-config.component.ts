@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output} from '@angular/core';
-import {InstallationService} from "../../core/services/istallation.service";
-import {FormArray, FormBuilder, FormGroup, PatternValidator} from '@angular/forms';
-import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
-import {Capabilities} from "../../shared/models/app-installation/capabilities.model";
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {InstallationService} from '../../core/services/istallation.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Webhooks} from '../../shared/models/app-installation/webhooks.model';
+import {Capabilities} from '../../shared/models/app-installation/capabilities.model';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'lp-webhooks-config',
@@ -15,10 +15,10 @@ export class WebhooksConfigComponent implements OnInit {
   @Output()
   public completed = new EventEmitter();
   public webhooks: Webhooks;
-  public installationService:InstallationService;
+  public installationService: InstallationService;
   public webhooksForm: FormGroup;
 
-  constructor(private _installationService:InstallationService, private fb:FormBuilder) {
+  constructor(private _installationService: InstallationService, private fb: FormBuilder) {
     this.installationService = _installationService;
   }
 
@@ -28,7 +28,7 @@ export class WebhooksConfigComponent implements OnInit {
         case 'APP_SELECTED': {
           this.webhooks = new Webhooks();
           this.webhooks.initEndpoints();
-          if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
+          if (this.installationService.selectedApp.capabilities && this.installationService.selectedApp.capabilities.webhooks) {
             this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
           }
           break;
@@ -40,34 +40,28 @@ export class WebhooksConfigComponent implements OnInit {
       }
     });
 
-   this.webhooksForm = this.fb.group({
-     'AcceptStatusEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-     'ChatStateEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-     'ContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-     'RichContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-     'ExConversationChangeNotification': new FormControl('', [Validators.pattern(this.pattern),])
-   });
+    this.webhooksForm = this.fb.group({
+      'AcceptStatusEvent': new FormControl('', [Validators.pattern(this.pattern),]),
+      'ChatStateEvent': new FormControl('', [Validators.pattern(this.pattern),]),
+      'ContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
+      'RichContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
+      'ExConversationChangeNotification': new FormControl('', [Validators.pattern(this.pattern),])
+    });
 
   }
 
   public updateWebhooks() {
-    if(this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
+    if (this.installationService.selectedApp.capabilities && this.installationService.selectedApp.capabilities.webhooks) {
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
-    }else if(!this.installationService.selectedApp.capabilities) {
+    } else if (!this.installationService.selectedApp.capabilities) {
       this.installationService.selectedApp.capabilities = new Capabilities();
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
-    }else if(this.installationService.selectedApp.capabilities && !this.installationService.selectedApp.capabilities.webhooks) {
+    } else if (this.installationService.selectedApp.capabilities && !this.installationService.selectedApp.capabilities.webhooks) {
 
     }
 
     this.installationService.updateApp(this.installationService.selectedApp);
 
-  }
-
-  private createForm() {
-    /*this.webhooksForm = this.fb.group({
-      AcceptStatusEvent:
-    });*/
   }
 
 }
