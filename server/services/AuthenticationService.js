@@ -40,15 +40,11 @@ class AuthenticationService {
      * This is used for APP Installation
      * @returns {Promise}
      */
-    getBearerAuthorization() {
-        const args = {};
-        args.headers = {Accept: "application/json", "Content-Type": "application/json"};
-        args.data = JSON.stringify({"username": this.nconf.get("USERNAME"), "password": this.nconf.get("PASSWORD")});
-
+    getBearerAuthorization(brandId, args) {
         return new Promise((resolve, reject) => {
             return this.client
                 .post(
-                    `https://${this.nconf.get("AGENT_VEP") || domains.getDomainByServiceName('agentVep')}/api/account/${this.nconf.get("BRAND_ID")}/login`,
+                    `https://${this.nconf.get("AGENT_VEP") || domains.getDomainByServiceName('agentVep')}/api/account/${brandId}/login`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
