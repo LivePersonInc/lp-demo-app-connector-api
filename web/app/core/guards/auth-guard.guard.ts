@@ -7,6 +7,7 @@ import {AuthenticationService} from "../services/authentication.service";
 export class AuthGuardGuard implements CanActivate {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
+
   canActivate()  {
     if(this.authenticationService.user && this.authenticationService.user.token) {
 
