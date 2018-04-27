@@ -41,7 +41,10 @@ class AuthenticationService {
      * @returns {Promise}
      */
     getBearerAuthorization(brandId, args) {
-        return new Promise((resolve, reject) => {
+       console.log(domains.getDomainByServiceName('agentVep'));
+      console.log(domains.getDomainByServiceName('asyncMessaging'));
+
+      return new Promise((resolve, reject) => {
             return this.client
                 .post(
                     `https://${this.nconf.get("AGENT_VEP") || domains.getDomainByServiceName('agentVep')}/api/account/${brandId}/login`,
