@@ -32,7 +32,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public getAccountConfigPropertiesList() {
-    this.doGet(`http://${environment.umsDomain}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
+    this.doGet(`http://${environment.server}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
       this.accountConfigPropList = data;
       this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
       this.loadingService.stopLoading();
@@ -43,7 +43,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public updateAccountConfigProperties() {
-    this.doPost(`http://${environment.umsDomain}/account/properties/${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
+    this.doPost(`http://${environment.server}/account/properties/${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.acSubject.next('UPDATED');
     },error => {

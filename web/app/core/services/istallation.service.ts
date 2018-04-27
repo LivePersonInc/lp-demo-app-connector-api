@@ -43,7 +43,7 @@ export class InstallationService extends HttpService {
 
   public getAppListList() {
 
-    this.doGet(`http://${environment.umsDomain}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
+    this.doGet(`http://${environment.server}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
       console.log(this.appList);
       this.loadingService.stopLoading();
@@ -54,7 +54,7 @@ export class InstallationService extends HttpService {
   }
 
   public installApp(app: AppInstall) {
-    this.doPost(`http://${environment.umsDomain}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
+    this.doPost(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.istallationSubject.next('INSTALL_APP');
     }, error => {
@@ -63,7 +63,7 @@ export class InstallationService extends HttpService {
   }
 
   public updateApp(app: AppInstall) {
-    this.doPut(`http://${environment.umsDomain}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
+    this.doPut(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.istallationSubject.next('UPDATE_APP');
     }, error => {
