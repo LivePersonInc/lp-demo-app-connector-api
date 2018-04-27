@@ -11,6 +11,7 @@ import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
 import {ConversationService} from "./conversation.service";
 import {InstallationService} from "./istallation.service";
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -30,7 +31,7 @@ export class AuthenticationService extends HttpService {
   //Barer Token
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
-     return this.doPost(`https://ctvr-ano041.dev.lprnd.net/api/account/${brandId}/login`, { username: username, password: password }, {})
+     return this.doPost(`http://${environment.umsDomain}/authentication/login/${brandId}`, { username: username, password: password }, {})
        .subscribe(res => {
          this._user = new User();
          this._user.token = res.bearer;

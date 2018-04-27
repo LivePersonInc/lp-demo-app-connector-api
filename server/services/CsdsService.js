@@ -10,10 +10,10 @@ class CsdsService {
         this.client = new Client();
     }
 
-    getDomainList() {
+    getDomainList(brandId) {
         return new Promise((resolve, reject) => {
             return this.client
-                .get(`http://${this.nconf.get('CSDS_DOMAIN')}/api/account/${this.nconf.get('BRAND_ID')}/service/baseURI.json?version=1.0`,
+                .get(`http://${this.nconf.get('CSDS_DOMAIN')}/api/account/${brandId}/service/baseURI.json?version=1.0`,
                     {},
                     function (data, response) {
                         resolve([data, response]);
