@@ -10,41 +10,44 @@
       </p>
 
       <p>
-        If you are new you can start here using your brand Id or go directly to the <a routerLink="/demo"> Demo </a> section.
+        If you are new you can start here using your brand Id or go directly to the <a routerLink="/demo"> Demo </a>
+        section.
       </p>
 
       <mat-card class="form-container mx-auto ">
-      <div>
-        <div class="row">
-          <div class="col-sm-12">
-            <mat-form-field class="brand-form" color="accent">
-              <input matInput placeholder="Account number" required [(ngModel)]="brandId"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-12">
-            <mat-form-field class="brand-form" color="accent">
-              <input matInput placeholder="Login name" required [(ngModel)]="userName"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-12">
-            <mat-form-field class="brand-form" color="accent">
-              <input matInput type="Password" placeholder="password" required [(ngModel)]="password"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
+        <div class="error-message-box">
+          <!--<mat-error *ngIf="loginForm.invalid && loginForm.touched">
+            The form is not valid
+          </mat-error>-->
         </div>
-        <button mat-raised-button
-                color="primary"
-                (click)="this.authenticate()"
-                [disabled]="(!brandId || brandId.length <= 0) || (!userName || userName.length <= 0) || (!password || password.length <= 0)"
-        >
-          Configuration
-          <i class="material-icons">settings</i>
-        </button>
-      </div>
-        </mat-card>
+        <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field class="brand-form" color="accent">
+                <input matInput placeholder="Account number" formControlName="brand" [(ngModel)]="brandId">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field class="brand-form" color="accent">
+                <input matInput placeholder="Login name" formControlName="email" [(ngModel)]="userName">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field class="brand-form" color="accent">
+                <input matInput type="Password" placeholder="password" formControlName="password"
+                       [(ngModel)]="password">
+              </mat-form-field>
+            </div>
+          </div>
+          <button mat-raised-button
+                  type="submit"
+                  color="primary"
+                  [disabled]="loginForm.invalid">
+            Configuration
+            <i class="material-icons">settings</i>
+          </button>
+        </form>
+      </mat-card>
 
       <br>
 
@@ -68,14 +71,14 @@
       </button>
 
       <button mat-raised-button
-               color="primary"
-               class="start-config-btn"
-               (click)="openConfirmationDialog()"
+              color="primary"
+              class="start-config-btn"
+              (click)="openConfirmationDialog()"
 
-       >
-         Add different account
-         <i class="material-icons">account_circle</i>
-       </button>
+      >
+        Add different account
+        <i class="material-icons">account_circle</i>
+      </button>
     </mat-card-content>
   </mat-card>
 
