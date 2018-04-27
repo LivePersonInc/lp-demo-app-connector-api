@@ -31,6 +31,7 @@ import { HttpService } from './core/services/http.service';
 import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-config-check.component';
 import { ConversationService } from './core/services/conversation.service';
 import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confirmation-dialog.component';
+import { DomainsService } from './core/services/domains.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confi
     AppRoutingModule
   ],
   entryComponents: [LpConfirmationDialogComponent],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService, DomainsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
