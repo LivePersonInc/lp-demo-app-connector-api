@@ -2,5 +2,6 @@
   "CSDS_DOMAIN": "hc1n.dev.lprnd.net",
   "WEBHOOK_PORT": "8080",
   "VERSION": "3",
-  "ACCOUNT_CONFIG_SERVER": "qtvr-wap05.dev.lprnd.net"
+  "ACCOUNT_CONFIG_SERVER": "qtvr-wap05.dev.lprnd.net",
+  "ASYNC_MESSAGING": "qatrunk.dev.lprnd.net"
 }

@@ -11,9 +11,7 @@ class SendApiConnectorService {
     }
 
     openConversation(brandId, args) {
-      console.log(domains.domains);
-
-      console.log(`${this.baseUri}/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`);
+      console.log(`${this.baseUri}/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`); //XXX
         return new Promise((resolve, reject) => {
             this.client
                 .post(
