@@ -17,7 +17,6 @@ import {DomainsService} from "./domains.service";
 @Injectable()
 export class AuthenticationService extends HttpService {
   private _user: User;
-  public snackBarConfing : MatSnackBarConfig;
   public userLoggedSubject = new Subject<string>();
 
   constructor(protected http: HttpClient,
@@ -27,7 +26,6 @@ export class AuthenticationService extends HttpService {
               protected loadingService:LoadingService)
   {
     super( snackBar,  http,loadingService);
-    //this.user = new User();
   }
 
   //Barer Token

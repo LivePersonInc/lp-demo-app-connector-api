@@ -32,6 +32,8 @@ import { LpConfigCheckComponent } from './lp-start-tutorial/lp-config-check/lp-c
 import { ConversationService } from './core/services/conversation.service';
 import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confirmation-dialog.component';
 import { DomainsService } from './core/services/domains.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {DomainHeaderInterceptor} from "./core/interceptors/domain-header.interceptor";
 
 @NgModule({
   declarations: [
@@ -64,7 +66,11 @@ import { DomainsService } from './core/services/domains.service';
     AppRoutingModule
   ],
   entryComponents: [LpConfirmationDialogComponent],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService, DomainsService],
+  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService, DomainsService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: DomainHeaderInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
