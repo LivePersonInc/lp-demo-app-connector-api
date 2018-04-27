@@ -16,11 +16,9 @@ export class DomainsService extends HttpService{
 
   public getDomainList(brandId: string) {
     this.doGet(`http://${environment.server}/domains/csds/${brandId}`, {}).subscribe((data) => {
-      console.log(data);
-      //this.domains = data;
-      let length = data[0].baseURIs.length;
+      let length = data.baseURIs.length;
       for(let i=0; i < length; i++) {
-        this.domains[data[0].baseURIs[i].service] = data[0].baseURIs[i].baseURI;
+        this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
       }
       this.domainsSubject.next('READY');
       this.loadingService.stopLoading();
