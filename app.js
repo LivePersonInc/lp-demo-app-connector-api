@@ -29,8 +29,8 @@ const options = {
 app.use(cors());
 
 https.createServer(options, app).listen(443);
-app.domains = domains;
-app.domains.init("le92127075");
+
+domains.init("le92127075"); //TODO: THE DOMAINS HAS TO BE PASSED FROM THE  CLIENT!!
 
 //Force https
 //app.use(forceSsl);
