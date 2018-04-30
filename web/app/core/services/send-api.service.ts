@@ -26,15 +26,15 @@ export class SendApiService extends HttpService {
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/umsbrige/openconv/${brandId}`, body, headers);
+    return this.doPost(`http://${environment.server}/ums/openconv/${brandId}`, body, headers);
   }
 
   public sendMessage(brandId: string, convId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/umsbrige/sendraw/${brandId}/conv/${convId}`, body, headers);
+    return this.doPost(`http://${environment.server}/ums/sendraw/${brandId}/conv/${convId}`, body, headers);
   }
 
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/umsbrige/close/${brandId}/conv/${convId}`, null, headers);
+    return this.doPost(`http://${environment.server}/ums/close/${brandId}/conv/${convId}`, null, headers);
   }
 
 }
