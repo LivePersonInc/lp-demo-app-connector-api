@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppKeySecretComponent } from './lp-app-key-secret.component';
+import { LpAppKeySecretComponent } from './lp-app-key-secret.component';
 
-describe('AppKeySecretComponent', () => {
-  let component: AppKeySecretComponent;
-  let fixture: ComponentFixture<AppKeySecretComponent>;
+describe('LpAppKeySecretComponent', () => {
+  let component: LpAppKeySecretComponent;
+  let fixture: ComponentFixture<LpAppKeySecretComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppKeySecretComponent ]
+      declarations: [ LpAppKeySecretComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppKeySecretComponent);
+    fixture = TestBed.createComponent(LpAppKeySecretComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

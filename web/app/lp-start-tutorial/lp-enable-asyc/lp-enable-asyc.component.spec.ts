@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EnableAsycComponent } from './lp-enable-asyc.component';
+import { LpEnableAsycComponent } from './lp-enable-asyc.component';
 
-describe('EnableAsycComponent', () => {
-  let component: EnableAsycComponent;
-  let fixture: ComponentFixture<EnableAsycComponent>;
+describe('LpEnableAsycComponent', () => {
+  let component: LpEnableAsycComponent;
+  let fixture: ComponentFixture<LpEnableAsycComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnableAsycComponent ]
+      declarations: [ LpEnableAsycComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EnableAsycComponent);
+    fixture = TestBed.createComponent(LpEnableAsycComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

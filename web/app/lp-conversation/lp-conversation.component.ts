@@ -4,7 +4,7 @@ import {MatSnackBar} from "@angular/material";
 import {SendApiService} from "../core/services/send-api.service";
 import {Conversation} from "../shared/models/conversation/conversation";
 import {EventSourcePolyfill} from 'ng-event-source';
-import {LpChatBoxComponent} from "../lp-chat-box/lp-chat-box.component";
+import {LpChatBoxComponent} from "./lp-chat-box/lp-chat-box.component";
 import {LoadingService} from "../core/services/loading.service";
 import {ConversationService} from "../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../shared/models/conversation/conversationEvent.model";
