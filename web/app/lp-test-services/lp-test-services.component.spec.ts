@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpTestServicesComponent } from './lp-test-services.component';
 
@@ -23,3 +23,4 @@ describe('LpTestServicesComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/
