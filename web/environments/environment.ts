@@ -7,7 +7,6 @@ export const environment = {
   production: false,
   webhookServer: "https://17ddc37d.ngrok.io/notifications/event",
   server: "localhost:8282",
-  sentinel: "lp-sentinel-web-qa.dev.lprnd.net",
   idp:"qtvr-wng113.dev.lprnd.net",
   brandId: "le92127075",
   username:"epbot@liveperson.com",
@@ -17,6 +16,7 @@ export const environment = {
   authentication: "agentVep",
   installation:"accountConfigReadWrite",
   ums:"asyncMessaging",
-  account: "accountConfigReadWrite"
+  account: "accountConfigReadWrite",
+
 
 };
