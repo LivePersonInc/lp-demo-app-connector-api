@@ -6,13 +6,7 @@ import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class DomainHeaderInterceptor implements HttpInterceptor {
-  /*
-  Services names to get the domain with the CSDS
-  authentication: "agentVep",
-  installation:"accountConfigReadWrite",
-  ums:"asyncMessaging",
-  account: "accountConfigReadWrite"
-  */
+
   constructor(private domainsService: DomainsService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
