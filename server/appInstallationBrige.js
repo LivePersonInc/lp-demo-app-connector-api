@@ -18,7 +18,7 @@ router.get("/:brandId", function (req, res, next) {
   args.headers['authorization'] = req.header('authorization');
 
   appInstallationService
-    .getAppsForBrandId(brandId, args)
+    .getAppsForBrandId(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
@@ -46,7 +46,7 @@ router.post("/:brandId", function (req, res, next) {
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
 
-    appInstallationService.installNewApp(brandId,args)
+    appInstallationService.installNewApp(brandId,args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
           res.send("OK");
@@ -75,14 +75,14 @@ router.put("/:brandId/:appId", function (req, res, next) {
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
 
-    appInstallationService.getAppById(appId,brandId,args).then((data) => {
+    appInstallationService.getAppById(appId, brandId, args, req.header('LP-DOMAIN')).then((data) => {
 
       console.log(data[1].headers['ac-revision']);
       args.headers['If-Match'] = data[1].headers['ac-revision'];
       args.headers['X-HTTP-Method-Override'] = 'PUT';
       args.headers['content-type'] = 'application/json';
 
-      return appInstallationService.update(appId, brandId, args)
+      return appInstallationService.update(appId, brandId, args, req.header('LP-DOMAIN'))
         .then((resolve) => {
           if (handleStatusCode(resolve[1].statusCode)) {
             res.status(200).send();
