@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
   templateUrl: './lp-app-key-secret.component.html',
   styleUrls: ['./lp-app-key-secret.component.scss']
 })
-export class AppKeySecretComponent implements OnInit {
+export class LpAppKeySecretComponent implements OnInit {
 
   @Output()
   public completed = new EventEmitter();
