@@ -7,5 +7,10 @@ export const environment = {
   brandId: "le92127075",
   username:"epbot@liveperson.com",
   appKey: "7791627d-ce48-4363-8943-ac9c8fa7ca3b",
-  appSecret: "c79p3jifp73ohupjkvirjkfj9e"
+  appSecret: "c79p3jifp73ohupjkvirjkfj9e",
+  //Services names to get the domain with the CSDS
+  authentication: "agentVep",
+  installation:"accountConfigReadWrite",
+  ums:"asyncMessaging",
+  account: "accountConfigReadWrite"
 };
