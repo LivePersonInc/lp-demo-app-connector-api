@@ -1,21 +1,20 @@
 "use strict";
 const Client = require("node-rest-client").Client;
-const domains = require('../connector/CsdsProperties');
 
 class SendApiConnectorService {
     constructor(nconf) {
         // nconf object
         this.nconf = nconf;
         this.client = new Client();
-        this.baseUri = `http://${this.nconf.get("ASYNC_MESSAGING") || domains.getDomainByServiceName('asyncMessaging')}/api/send`;
+        this.baseUri = ``;
     }
 
-    openConversation(brandId, args) {
-      console.log(`${this.baseUri}/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`); //XXX
+    openConversation(brandId, args, domain) {
+      console.log(`http://${domain}/api/send/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`); //XXX
         return new Promise((resolve, reject) => {
             this.client
                 .post(
-                    `${this.baseUri}/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`,
+                    `http://${domain}/api/send/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -27,10 +26,10 @@ class SendApiConnectorService {
         });
     }
 
-    sendRaw(brandId, conversationId, args) {
+    sendRaw(brandId, conversationId, args, domain) {
         return new Promise((resolve, reject) => {
             this.client
-                .post(`${this.baseUri}/account/${brandId}/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/send/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -42,10 +41,10 @@ class SendApiConnectorService {
         });
     }
 
-    closeConversation(brandId, conversationId, args) {
+    closeConversation(brandId, conversationId, args, domain) {
         return new Promise((resolve, reject) => {
             this.client
-                .post(`${this.baseUri}/account/${brandId}/conversation/${conversationId}/close?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/close?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);

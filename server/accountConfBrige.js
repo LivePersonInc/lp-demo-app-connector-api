@@ -16,7 +16,7 @@ router.get("/properties/:id", function (req, res, next) {
   args.headers['Accept'] = 'application/json';
 
   accountConfigService
-    .getAccountPropertyList(brandId, args)
+    .getAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
     if (handleStatusCode(resolve[1].statusCode)) {
       res.send(resolve[0]);
@@ -48,7 +48,7 @@ router.post("/properties/:id", function (req, res, next) {
     args.data = body;
     console.log(args.headers);
     accountConfigService
-      .updateAccountPropertyList(brandId,args)
+      .updateAccountPropertyList(brandId,args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         console.log(resolve);
         if (handleStatusCode(resolve[1].statusCode)) {

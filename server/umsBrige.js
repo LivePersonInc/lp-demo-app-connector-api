@@ -26,7 +26,7 @@ router.post("/openconv/:id", function (req, res, next) {
     args.data = body;
 
     sendApiConnector
-      .openConversation(brandID, args)
+      .openConversation(brandID, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
           let conversationId = resolve[0][1].body.conversationId;
@@ -59,7 +59,7 @@ router.post("/sendraw/:id/conv/:convId", function (req, res, next) {
     args.data = body;
 
     sendApiConnector
-      .sendRaw(brandID, convID, args)
+      .sendRaw(brandID, convID, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
           res.send({"message": "Message successfully sent"});
@@ -84,7 +84,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
 
   sendApiConnector
-    .closeConversation(brandID, convID, args)
+    .closeConversation(brandID, convID, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send({"message": "Conversation closed succesfully"});
