@@ -20,7 +20,6 @@ export class AuthenticationService extends HttpService {
   public userLoggedSubject = new Subject<string>();
 
   constructor(protected http: HttpClient,
-              protected sendApiService: SendApiService,
               protected snackBar: MatSnackBar,
               protected domainsService: DomainsService,
               protected loadingService:LoadingService)
