@@ -3,7 +3,6 @@ const router = express.Router();
 const nconf = require("nconf");
 const fetch = require("node-fetch");
 const CsdsService = require("./services/CsdsService");
-const domains = require('./connector/CsdsProperties');
 
 nconf.file({file: "./settings.json"});
 
