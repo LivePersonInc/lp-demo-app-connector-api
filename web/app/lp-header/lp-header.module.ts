@@ -4,11 +4,13 @@ import {LpNavMenuComponent} from './lp-nav-menu/lp-nav-menu.component';
 import {LpNavComponent} from './lp-nav/lp-nav.component';
 import {LpHeaderComponent} from "./lp-header.component";
 import {MaterialModule} from "../material.module";
+import {AppRoutingModule} from "../app-routing.module";
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
   declarations: [
     LpNavMenuComponent,
