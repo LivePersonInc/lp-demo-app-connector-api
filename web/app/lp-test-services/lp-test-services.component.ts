@@ -27,7 +27,7 @@ public consumerJWS: string;
 public branId: string;
 public appKey: string;
 public appSecret: string;
-public ext_consumer_id: string
+public ext_consumer_id: string;
 public conversationId: string;
 public requestConversationPayload: Request;
 public setUserProfilePayload:Request;
