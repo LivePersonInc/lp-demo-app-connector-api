@@ -16,11 +16,12 @@ export class DomainHeaderInterceptor implements HttpInterceptor {
     return next.handle(changedReq);
   }
 
-  private getServiceNameByUrl(url: string): string{
-    const _url = new URL(url);
-    console.log(_url.pathname.split('/'));
+  getServiceNameByUrl(stringUrl: string): string{
+    const url = new URL(stringUrl);
+    let res = "";
+    res = url.pathname.split('/')[1];
 
-    return "";
+    return res;
 
   }
 }
