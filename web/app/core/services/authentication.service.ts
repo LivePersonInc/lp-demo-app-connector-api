@@ -22,7 +22,7 @@ export class AuthenticationService extends HttpService {
   constructor(protected http: HttpClient,
               protected sendApiService: SendApiService,
               protected snackBar: MatSnackBar,
-              protected domainsService: DomainsService,
+              //protected domainsService: DomainsService,
               protected loadingService:LoadingService)
   {
     super( snackBar,  http,loadingService);
@@ -38,7 +38,7 @@ export class AuthenticationService extends HttpService {
          this._user.userName = username;
          this._user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
-         this.domainsService.getDomainList(brandId);
+         //this.domainsService.getDomainList(brandId);
          //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {

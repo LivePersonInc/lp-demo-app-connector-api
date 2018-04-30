@@ -9,6 +9,7 @@ import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confir
 import {MatDialog} from "@angular/material";
 import {ConversationService} from "../core/services/conversation.service";
 import {AccountConfigService} from "../core/services/account-config.service";
+import {DomainsService} from "../core/services/domains.service";
 
 @Component({
   selector: 'lp-home',
@@ -28,6 +29,7 @@ export class LpHomeComponent implements OnInit {
               private installationService: InstallationService,
               private conversationService: ConversationService,
               private accountConfigService: AccountConfigService,
+              private domainsService: DomainsService,
               private router: Router,
               private fb: FormBuilder,
               public dialog: MatDialog) {
@@ -37,7 +39,7 @@ export class LpHomeComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
-        this.startConfig();
+        this.goToStartConfigPage();
         this.installationService.init();
       }
     });
@@ -50,10 +52,16 @@ export class LpHomeComponent implements OnInit {
   }
 
   public authenticate() {
-    this.authenticationService.login(this.brandId, this.userName, this.password);
+    this.domainsService.domainsSubject.subscribe( event => {
+      if(event === 'READY') {
+        this.authenticationService.login(this.brandId, this.userName, this.password);
+      }
+    });
+    //First of all we need to know the domains
+    this.domainsService.getDomainList(this.brandId);
   }
 
-  public startConfig() {
+  public goToStartConfigPage() {
     this.router.navigateByUrl('home/start');
   }
 
