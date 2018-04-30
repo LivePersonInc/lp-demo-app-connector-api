@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './lp-enable-asyc.component.html',
   styleUrls: ['./lp-enable-asyc.component.scss']
 })
-export class EnableAsycComponent implements OnInit {
+export class LpEnableAsycComponent implements OnInit {
 
   @Output()
   public completed = new EventEmitter();
