@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SendApiService } from "./core/services/send-api.service";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LpHeaderComponent } from './lp-header/lp-header.component';
 import { LpChatBoxComponent } from './lp-chat-box/lp-chat-box.component';
 import { LpTestServicesComponent } from './lp-test-services/lp-test-services.component';
 import { LpConversationComponent } from './lp-conversation/lp-conversation.component';
@@ -15,9 +14,7 @@ import { LpChatBoxFooterComponent } from './lp-chat-box/lp-chat-box-footer/lp-ch
 import { LpConsoleComponent } from './lp-console/lp-console.component';
 import { LpHomeComponent } from './lp-home/lp-home.component';
 import {AppRoutingModule} from "./app-routing.module";
-import { LpNavComponent } from './lp-header/lp-nav/lp-nav.component';
 import { LpDemoComponent } from './lp-demo/lp-demo.component';
-import { LpNavMenuComponent } from './lp-header/lp-nav-menu/lp-nav-menu.component';
 import { LpStartTutotialComponent } from './lp-start-tutorial/lp-start-tutotial.component';
 import { AppKeySecretComponent } from './lp-start-tutorial/lp-app-key-secret/lp-app-key-secret.component';
 import { WebhooksConfigComponent } from './lp-start-tutorial/lp-webhooks-config/lp-webhooks-config.component';
@@ -34,11 +31,11 @@ import { LpConfirmationDialogComponent } from './lp-confirmation-dialog/lp-confi
 import { DomainsService } from './core/services/domains.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {DomainHeaderInterceptor} from "./core/interceptors/domain-header.interceptor";
+import {LpHeaderModule} from "./lp-header/lp-header.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LpHeaderComponent,
     LpChatBoxComponent,
     LpTestServicesComponent,
     LpConversationComponent,
@@ -46,9 +43,7 @@ import {DomainHeaderInterceptor} from "./core/interceptors/domain-header.interce
     LpChatBoxFooterComponent,
     LpConsoleComponent,
     LpHomeComponent,
-    LpNavComponent,
     LpDemoComponent,
-    LpNavMenuComponent,
     LpStartTutotialComponent,
     AppKeySecretComponent,
     WebhooksConfigComponent,
@@ -57,6 +52,7 @@ import {DomainHeaderInterceptor} from "./core/interceptors/domain-header.interce
     LpConfirmationDialogComponent
   ],
   imports: [
+    LpHeaderModule,
     BrowserModule,
     MaterialModule,
     BrowserAnimationsModule,
