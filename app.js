@@ -39,7 +39,7 @@ domains.init("le92127075"); //TODO: THE DOMAINS HAS TO BE PASSED FROM THE  CLIEN
 
 app.use("/installation", installationBrige);
 app.use("/account", accountConfBrige);
-app.use("/umsbrige", umsBrigeServer);
+app.use("/ums", umsBrigeServer);
 app.use("/notifications", notifications); //receive webhooks notifications
 app.use("/authentication", authenticationBrige); //receive webhooks notifications
 app.use("/domains", csdsBrige); //receive webhooks notifications
