@@ -1,4 +1,7 @@
 "use strict";
+const Request = require( "../models/Request");
+const UpdateConversationField = require( "../models/UpdateConversationField");
+
 const Client = require("node-rest-client").Client;
 
 class SendApiConnectorService {
@@ -7,6 +10,10 @@ class SendApiConnectorService {
         this.nconf = nconf;
         this.client = new Client();
         this.baseUri = ``;
+        this.closeConversationField = {
+          "field": "ConversationStateField",
+          "conversationState": "CLOSE"
+        }
     }
 
     openConversation(brandId, args, domain) {
@@ -27,9 +34,9 @@ class SendApiConnectorService {
     }
 
     sendRaw(brandId, conversationId, args, domain) {
-        return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
             this.client
-                .post(`http://${domain}/api/send/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -42,9 +49,10 @@ class SendApiConnectorService {
     }
 
     closeConversation(brandId, conversationId, args, domain) {
-        return new Promise((resolve, reject) => {
+      args.data = JSON.stringify(this.createCloseConversationPayload(conversationId));
+      return new Promise((resolve, reject) => {
             this.client
-                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/close?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -55,6 +63,11 @@ class SendApiConnectorService {
                 });
         });
     }
+
+  createCloseConversationPayload(conversationId) {
+    const update = new UpdateConversationField(conversationId, this.closeConversationField)
+    return new Request("req", "1,", "cm.UpdateConversationField", update);
+  }
 }
 
 module.exports = SendApiConnectorService;
