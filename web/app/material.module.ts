@@ -35,7 +35,7 @@ import {
     MatStepperModule,
     MatOptionModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
 
   ],
   exports: [
@@ -55,7 +55,8 @@ import {
     MatStepperModule,
     MatOptionModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatHorizontalStepper
   ]
 })
 export class MaterialModule {}
