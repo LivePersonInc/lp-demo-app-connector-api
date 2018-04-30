@@ -22,24 +22,24 @@ export class AuthenticationService extends HttpService {
   constructor(protected http: HttpClient,
               protected sendApiService: SendApiService,
               protected snackBar: MatSnackBar,
-              //protected domainsService: DomainsService,
+              protected domainsService: DomainsService,
               protected loadingService:LoadingService)
   {
     super( snackBar,  http,loadingService);
   }
 
-  //Barer Token
+  //Bearer Token
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
-     return this.doPost(`http://${environment.server}/authentication/login/${brandId}`, { username: username, password: password }, {})
+     return this.
+        doPost(`https://${this.domainsService.getDomainByServiceName('agentVep')}/api/account/${brandId}/login`,
+       { username: username, password: password }, {})
        .subscribe(res => {
          this._user = new User();
          this._user.token = res.bearer;
          this._user.userName = username;
          this._user.brandId = brandId;
          this.userLoggedSubject.next('LOGGED-IN');
-         //this.domainsService.getDomainList(brandId);
-         //sessionStorage.setItem("lp-logged-in-user", JSON.stringify(this.user));
          this.successResponse('Authentication was successful ');
       }, error => {
          this.errorResponse("Problem with Authentication");
