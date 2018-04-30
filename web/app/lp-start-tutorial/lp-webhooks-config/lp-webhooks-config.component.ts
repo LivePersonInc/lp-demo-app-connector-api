@@ -10,7 +10,7 @@ import {FormControl, Validators} from '@angular/forms';
   templateUrl: './lp-webhooks-config.component.html',
   styleUrls: ['./lp-webhooks-config.component.scss']
 })
-export class WebhooksConfigComponent implements OnInit {
+export class LpWebhooksConfigComponent implements OnInit {
   private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
   @Output()
   public completed = new EventEmitter();
