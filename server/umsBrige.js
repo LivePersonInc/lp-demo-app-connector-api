@@ -32,7 +32,7 @@ router.post("/openconv/:id", function (req, res, next) {
           let conversationId = resolve[0][1].body.conversationId;
           res.send({"convId": conversationId});
         } else {
-          res.status(resolve[1].statusCode).send("Something wrong");
+          res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
@@ -61,10 +61,11 @@ router.post("/sendraw/:id/conv/:convId", function (req, res, next) {
     sendApiConnector
       .sendRaw(brandID, convID, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
+        console.log(resolve[1]);
         if (handleStatusCode(resolve[1].statusCode)) {
           res.send({"message": "Message successfully sent"});
         } else {
-          res.status(resolve[1].statusCode).send(resolve[1].message);
+          res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
@@ -89,7 +90,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send({"message": "Conversation closed succesfully"});
       } else {
-        res.status(resolve[1].statusCode).send(resolve[1].message);
+        res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected");
