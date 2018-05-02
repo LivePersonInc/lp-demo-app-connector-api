@@ -27,7 +27,7 @@ export class LpAppKeySecretComponent implements OnInit {
     if(this.installationService.appList) {
       this.appList = this.installationService.appList;
     }
-    this.installationService.istallationSubject.subscribe( event => {
+    this.installationService.installationSubject.subscribe(event => {
       if(event === 'GET_APP_LIST'){
         this.appList = this.installationService.appList;
       }

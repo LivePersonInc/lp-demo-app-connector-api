@@ -12,7 +12,7 @@ import {fadeInAnimation} from "../shared/animations/lp-animations";
 export class LpStartTutotialComponent implements OnInit {
 
   public brandId: string;
-  public stepsCompleted: Array<boolean>
+  public stepsCompleted: Array<boolean>;
 
 
   constructor(private route: ActivatedRoute, private router: Router) { }
