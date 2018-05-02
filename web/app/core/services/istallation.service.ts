@@ -11,7 +11,7 @@ import {AppInstall} from "../../shared/models/app-installation/appInstall.model"
 @Injectable()
 export class InstallationService extends HttpService {
 
-  public istallationSubject = new Subject<any>();
+  public installationSubject = new Subject<any>();
   public appList: Array<AppInstall>;
   private _selectedApp: AppInstall;
   private headers = {};
@@ -37,7 +37,7 @@ export class InstallationService extends HttpService {
 
   set selectedApp(app: AppInstall) {
     this._selectedApp = app;
-    this.istallationSubject.next('APP_SELECTED');
+    this.installationSubject.next('APP_SELECTED');
   }
 
 
@@ -47,7 +47,7 @@ export class InstallationService extends HttpService {
       this.appList = data.map( app => new AppInstall().deserialize(app));
       console.log(this.appList);
       this.loadingService.stopLoading();
-      this.istallationSubject.next('GET_APP_LIST');
+      this.installationSubject.next('GET_APP_LIST');
     }, error => {
       this.errorResponse(error);
     });
@@ -56,7 +56,7 @@ export class InstallationService extends HttpService {
   public installApp(app: AppInstall) {
     this.doPost(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
-      this.istallationSubject.next('INSTALL_APP');
+      this.installationSubject.next('INSTALL_APP');
     }, error => {
       this.errorResponse(error);
     });
@@ -65,7 +65,7 @@ export class InstallationService extends HttpService {
   public updateApp(app: AppInstall) {
     this.doPut(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
-      this.istallationSubject.next('UPDATE_APP');
+      this.installationSubject.next('UPDATE_APP');
     }, error => {
       this.errorResponse(error);
     });
@@ -76,7 +76,7 @@ export class InstallationService extends HttpService {
     this._selectedApp = null;
     this.headers = {};
     this.brandId = null;
-    this.istallationSubject.next('RESET');
+    this.installationSubject.next('RESET');
   }
 
 }

@@ -6,7 +6,7 @@
           <lp-enable-asyc (completed)="onCompleted($event, 0)"> </lp-enable-asyc>
         </mat-step>
         <mat-step label="App instalation"  [completed]="stepsCompleted[1]">
-          <lp-app-key-secret (completed)="onCompleted($event, 1)" ></lp-app-key-secret>
+          <lp-app-key-secret (completed)="onCompleted($event, 1)"></lp-app-key-secret>
         </mat-step>
         <mat-step label="Webhooks setup" [completed]="stepsCompleted[2]">
           <lp-webhooks-config (completed)="onCompleted($event, 2)"></lp-webhooks-config>

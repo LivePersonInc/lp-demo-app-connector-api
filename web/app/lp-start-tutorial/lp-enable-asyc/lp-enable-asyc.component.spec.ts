@@ -12,7 +12,12 @@ describe('LpEnableAsycComponent', () => {
   let fixture: ComponentFixture<LpEnableAsycComponent>;
 
   beforeEach(async(() => {
-    const accountConfigService = jasmine.createSpy('AccountConfigService');
+    const accountConfigService = {
+      acSubject: {
+        subscribe: () => {}
+      },
+      getAccountConfigPropertiesList: () => {}
+    };
     const installationService = jasmine.createSpy( 'InstallationService');
     const router = jasmine.createSpy( 'Router');
     const matStepper = jasmine.createSpy( 'MatStepper');

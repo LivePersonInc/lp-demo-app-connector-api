@@ -23,7 +23,7 @@ export class LpWebhooksConfigComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.installationService.istallationSubject.subscribe(event => {
+    this.installationService.installationSubject.subscribe(event => {
       switch (event) {
         case 'APP_SELECTED': {
           this.webhooks = new Webhooks();

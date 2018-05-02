@@ -37,7 +37,6 @@ describe('LpConversationComponent', () => {
     };
 
     TestBed.configureTestingModule({
-
       imports: [MaterialModule, FormsModule, BrowserAnimationsModule],
       declarations: [
         LpConversationComponent,
