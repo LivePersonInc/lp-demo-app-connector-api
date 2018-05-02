@@ -20,5 +20,6 @@ Angular CLI provides a fast develoment server. Every change is automatically ref
 To run the application using the dev server instead a built project:
 
 1. ```npm install```
-2. ``sudo node app`` to run the server
+2. ```sudo node app``` to run the server
+2. ```ng serve``` to run web develpment server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
