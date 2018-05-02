@@ -66,6 +66,7 @@ export class InstallationService extends HttpService {
     this.doPut(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.installationSubject.next('UPDATE_APP');
+      this.successResponse('This app was successfully updated');
     }, error => {
       this.errorResponse(error);
     });
