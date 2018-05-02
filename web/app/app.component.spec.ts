@@ -13,8 +13,11 @@ import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog/lp-confirm
 import {LpConversationModule} from "./lp-conversation/lp-conversation.module";
 import {Router} from "@angular/router";
 import {APP_BASE_HREF} from "@angular/common";
+import {AuthenticationService} from "./core/services/authentication.service";
 describe('AppComponent', () => {
   beforeEach(async(() => {
+    const authenticationService = jasmine.createSpy('AuthenticationService');
+
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -30,7 +33,8 @@ describe('AppComponent', () => {
       ],
       providers: [
         LoadingService,
-        {provide: APP_BASE_HREF, useValue : '/' }
+        {provide: APP_BASE_HREF, useValue : '/' },
+        {provide: AuthenticationService, useValue : 'authenticationService' },
       ]
     }).compileComponents();
   }));
