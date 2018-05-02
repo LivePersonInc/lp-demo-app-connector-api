@@ -19,15 +19,15 @@ export class LpConversationComponent implements OnInit {
 
   constructor(private conversationService: ConversationService,
               private authenticationService: AuthenticationService,
-              private appInstallationServie: InstallationService) { }
+              private installationService: InstallationService) { }
 
   ngOnInit() {
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
     }
-    if(this.appInstallationServie.selectedApp){
-      this.appKey = this.appInstallationServie.selectedApp.client_id || "";
-      this.appSecret = this.appInstallationServie.selectedApp.client_secret || "";
+    if(this.installationService .selectedApp){
+      this.appKey = this.installationService.selectedApp.client_id || "";
+      this.appSecret = this.installationService.selectedApp.client_secret || "";
     }
 
     this.userName = "Consumer Name";

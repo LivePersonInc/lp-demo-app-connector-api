@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpNavMenuComponent } from './lp-nav-menu.component';
+import {MaterialModule} from "../../material.module";
 
 describe('LpNavMenuComponent', () => {
   let component: LpNavMenuComponent;
@@ -8,6 +9,7 @@ describe('LpNavMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [ LpNavMenuComponent ]
     })
     .compileComponents();

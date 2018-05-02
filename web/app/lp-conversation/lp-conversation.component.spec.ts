@@ -11,6 +11,7 @@ import {LpChatBoxFooterComponent} from "./lp-chat-box/lp-chat-box-footer/lp-chat
 import {AuthenticationService} from "../core/services/authentication.service";
 import {ConversationService} from "../core/services/conversation.service";
 import {InstallationService} from "../core/services/istallation.service";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('LpConversationComponent', () => {
   let component: LpConversationComponent;
@@ -22,11 +23,22 @@ describe('LpConversationComponent', () => {
         subscribe: () => {}
       }
     };
-    const conversationService = jasmine.createSpy( 'ConversationService');
-    const installationService = jasmine.createSpy( 'InstallationService');
+    const conversationService = {
+      conversation: {},
+      conversationEventSubject:{
+        subscribe: () => {}
+      }
+    };
+    const installationService = {
+      selectedApp:{
+        client_id: "XXX",
+        client_secret: "XXXX"
+      }
+    };
 
     TestBed.configureTestingModule({
-      imports: [MaterialModule, FormsModule],
+
+      imports: [MaterialModule, FormsModule, BrowserAnimationsModule],
       declarations: [
         LpConversationComponent,
         LpChatBoxComponent,

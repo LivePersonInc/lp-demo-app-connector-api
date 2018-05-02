@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LpAppKeySecretComponent } from './lp-app-key-secret.component';
+import {MaterialModule} from "../../material.module";
+import {InstallationService} from "../../core/services/istallation.service";
+import {Router} from "@angular/router";
 
 describe('LpAppKeySecretComponent', () => {
   let component: LpAppKeySecretComponent;
@@ -8,7 +10,9 @@ describe('LpAppKeySecretComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LpAppKeySecretComponent ]
+      imports: [MaterialModule],
+      declarations: [ LpAppKeySecretComponent],
+      providers: [Router, InstallationService]
     })
     .compileComponents();
   }));
