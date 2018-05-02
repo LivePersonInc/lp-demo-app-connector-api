@@ -156,7 +156,7 @@ public closeConversation(){
   }
 
 private handleError(error) {
-    console.log("XXX; "+error);
+    this.snackBarConfing.duration = 2000;
     this.loadingService.stopLoading();
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
