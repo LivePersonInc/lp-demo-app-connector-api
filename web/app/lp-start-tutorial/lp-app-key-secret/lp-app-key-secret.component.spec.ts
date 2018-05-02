@@ -7,12 +7,12 @@ import {MatStepper} from "@angular/material";
 import {ChangeDetectorRef} from "@angular/core";
 
 describe('LpAppKeySecretComponent', () => {
-  /*let component: LpAppKeySecretComponent;
+  let component: LpAppKeySecretComponent;
   let fixture: ComponentFixture<LpAppKeySecretComponent>;
 
 
   const installationService = {
-    istallationSubject: {
+    installationSubject: {
       subscribe: () => {}
     }
   };
@@ -43,5 +43,5 @@ describe('LpAppKeySecretComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });*/
+  });
 });
