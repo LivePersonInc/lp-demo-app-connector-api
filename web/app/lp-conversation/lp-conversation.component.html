@@ -3,7 +3,7 @@
     <div class="col-md-5 text-center">
       <div *ngIf="conversation && conversation.conversationId"><b>Conversation id:</b> {{conversation.conversationId}}
       </div>
-      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversationManager]="conversation"></lp-chat-box>
+      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"></lp-chat-box>
     </div>
     <div class="col-md-7 text-left">
       <div class="container-fluid">
