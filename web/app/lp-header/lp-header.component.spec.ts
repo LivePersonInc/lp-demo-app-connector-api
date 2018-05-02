@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpHeaderComponent } from './lp-header.component';
 import {LpNavComponent} from "./lp-nav/lp-nav.component";
 import {LpNavMenuComponent} from "./lp-nav-menu/lp-nav-menu.component";
+import {MaterialModule} from "../material.module";
 
 describe('LpHeaderComponent', () => {
   let component: LpHeaderComponent;
@@ -10,6 +11,7 @@ describe('LpHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [ LpHeaderComponent, LpNavComponent, LpNavMenuComponent ]
     })
     .compileComponents();
