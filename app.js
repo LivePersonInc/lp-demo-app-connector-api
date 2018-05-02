@@ -3,11 +3,11 @@ const app = express();
 const nconf = require("nconf");
 const fs = require('fs');
 const cors = require('cors');
-const umsBrigeServer = require('./server/umsBrige');
-const installationBrige = require('./server/appInstallationBrige');
-const accountConfBrige = require('./server/accountConfBrige');
+const umsBridge = require('./server/umsBridge');
+const installationBridge = require('./server/appInstallationBridge');
+const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
-const csdsBrige = require('./server/csdsBrige');
+const csdsBridge = require('./server/csdsBrigde');
 
 const https = require('https');
 const forceSsl = require('express-force-ssl');
@@ -33,11 +33,11 @@ https.createServer(options, app).listen(443);
 //Force https
 //app.use(forceSsl);
 
-app.use("/installation", installationBrige);
-app.use("/account", accountConfBrige);
-app.use("/ums", umsBrigeServer);
+app.use("/installation", installationBridge);
+app.use("/account", accountConfBridge);
+app.use("/ums", umsBridge);
 app.use("/notifications", notifications); //receive webhooks notifications
-app.use("/domains", csdsBrige); //receive webhooks notifications
+app.use("/domains", csdsBridge); //receive webhooks notifications
 //Serve our UI
 app.use(express.static('dist'));
 
