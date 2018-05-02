@@ -1,11 +1,22 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { HttpService } from './http.service';
+import {MatSnackBar} from "@angular/material";
+import {HttpClient} from "@angular/common/http";
+import {LoadingService} from "./loading.service";
 
 describe('HttpService', () => {
   beforeEach(() => {
+    const snackBar = jasmine.createSpy('MatSnackBar');
+    const http = jasmine.createSpy('HttpClient');
+    const loadingService = jasmine.createSpy('LoadingService');
     TestBed.configureTestingModule({
-      providers: [HttpService]
+      providers: [
+        HttpService,
+        {provide: MatSnackBar, useValue: snackBar},
+        {provide: HttpClient, useValue: http},
+        {provide: LoadingService, useValue: loadingService}
+      ]
     });
   });
 
