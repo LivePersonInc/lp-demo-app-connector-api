@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpNavComponent } from './lp-nav.component';
+import {MaterialModule} from "../../material.module";
 
 describe('LpNavComponent', () => {
   let component: LpNavComponent;
@@ -8,6 +9,7 @@ describe('LpNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [ LpNavComponent ]
     })
     .compileComponents();
