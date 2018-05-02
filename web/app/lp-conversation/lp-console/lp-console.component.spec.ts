@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpConsoleComponent } from './lp-console.component';
+import {MaterialModule} from "../../material.module";
 
 describe('LpConsoleComponent', () => {
   let component: LpConsoleComponent;
@@ -8,6 +9,7 @@ describe('LpConsoleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [ LpConsoleComponent ]
     })
     .compileComponents();

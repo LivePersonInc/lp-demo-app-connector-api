@@ -1,11 +1,5 @@
-import {Component, ComponentRef, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {MatSnackBar} from "@angular/material";
-import {SendApiService} from "../core/services/send-api.service";
+import {Component, OnInit} from '@angular/core';
 import {Conversation} from "../shared/models/conversation/conversation";
-import {EventSourcePolyfill} from 'ng-event-source';
-import {LpChatBoxComponent} from "./lp-chat-box/lp-chat-box.component";
-import {LoadingService} from "../core/services/loading.service";
 import {ConversationService} from "../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../shared/models/conversation/conversationEvent.model";
 import {AuthenticationService} from "../core/services/authentication.service";

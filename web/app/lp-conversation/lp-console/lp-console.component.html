@@ -1,6 +1,6 @@
 <div class="container-custom">
-<mat-accordion *ngIf="conversationManager">
-  <mat-expansion-panel *ngFor="let n of conversationManager.serverNotifications">
+<mat-accordion *ngIf="conversation">
+  <mat-expansion-panel *ngFor="let n of conversation.serverNotifications">
     <mat-expansion-panel-header>
       <mat-panel-title>
       {{n}}
