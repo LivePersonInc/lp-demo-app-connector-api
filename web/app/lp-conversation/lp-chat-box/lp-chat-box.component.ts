@@ -11,7 +11,7 @@ import {Conversation} from "../../shared/models/conversation/conversation";
   styleUrls: ['./lp-chat-box.component.scss']
 })
 export class LpChatBoxComponent implements OnInit {
-  @Input()  conversationManager: Conversation;
+  @Input()  conversation: Conversation;
   @Output() onSendMessage = new EventEmitter<string>();
   @ViewChild('messagearea') private messageArea: ElementRef;
 

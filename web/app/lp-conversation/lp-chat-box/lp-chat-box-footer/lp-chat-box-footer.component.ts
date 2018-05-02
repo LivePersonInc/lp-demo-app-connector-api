@@ -10,12 +10,10 @@ export class LpChatBoxFooterComponent implements OnInit {
 
   public messageText: string;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
     this.messageText = "";
-
   }
 
   public sendMessage() {
@@ -27,7 +25,6 @@ export class LpChatBoxFooterComponent implements OnInit {
 
   public keyDownFunction(event) {
     if(event.keyCode == 13) {
-      console.log(this.messageText.length);
       if(this.messageText.length > 0) {
         this.onSendMessage.emit(this.messageText);
         this.messageText = "";

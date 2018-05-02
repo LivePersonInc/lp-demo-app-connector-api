@@ -1,6 +1,6 @@
 <div class="messages-area" #messagearea>
-  <div *ngIf="conversationManager">
-    <lp-chat-box-message  *ngFor="let message of conversationManager.messages" [message]="message"></lp-chat-box-message>
+  <div *ngIf="conversation">
+    <lp-chat-box-message *ngFor="let message of conversation.messages" [message]="message"></lp-chat-box-message>
   </div>
 </div>
 
