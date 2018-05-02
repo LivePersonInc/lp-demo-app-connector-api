@@ -24,7 +24,7 @@ export class LpConfigCheckComponent implements OnInit {
     this.currentAppInstallation = this.installationService.selectedApp;
     this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
 
-    this.installationService.istallationSubject.subscribe( event => {
+    this.installationService.installationSubject.subscribe(event => {
       if( event === 'APP_SELECTED'){
         this.currentAppInstallation = this.installationService.selectedApp;
         this.initWebhooks();
