@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpChatBoxComponent } from './lp-chat-box.component';
+import {LpChatBoxFooterComponent} from "./lp-chat-box-footer/lp-chat-box-footer.component";
+import {LpChatBoxMessageComponent} from "./lp-chat-box-message/lp-chat-box-message.component";
+import {FormsModule} from "@angular/forms";
+import {MaterialModule} from "../../material.module";
 
 describe('LpChatBoxComponent', () => {
   let component: LpChatBoxComponent;
@@ -8,7 +12,8 @@ describe('LpChatBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LpChatBoxComponent ]
+      imports: [FormsModule],
+      declarations: [ LpChatBoxComponent, LpChatBoxFooterComponent, LpChatBoxMessageComponent ]
     })
     .compileComponents();
   }));
