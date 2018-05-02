@@ -10,7 +10,7 @@ import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: LpHomeComponent},
-  {path: 'demo', component: LpDemoComponent},
+  {path: 'demo', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
   {path: 'home/start', component: LpStartTutotialComponent,   canActivate: [AuthGuardGuard]}
 ];
 

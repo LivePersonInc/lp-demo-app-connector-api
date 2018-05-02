@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
   selector: 'lp-nav-menu',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LpNavMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }

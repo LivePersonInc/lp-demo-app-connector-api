@@ -3,6 +3,6 @@
 </button>
 <mat-menu #menu="matMenu">
   <a mat-menu-item  routerLink="/home" >Home</a>
-  <a mat-menu-item  routerLink="/demo">Demo</a>
+  <a mat-menu-item  routerLink="/demo" *ngIf="(authenticationService.user && authenticationService.user.token)">Demo</a>
   <!--<a mat-menu-item  routerLink="/demo"><i class="material-icons">settings</i></a>-->
 </mat-menu>
