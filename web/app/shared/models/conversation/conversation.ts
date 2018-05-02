@@ -202,6 +202,7 @@ export class Conversation {
 
   private handleError(error) {
     this.losadingSerive.stopLoading();
+    this.snackBarConfing.duration = null;
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
   }
