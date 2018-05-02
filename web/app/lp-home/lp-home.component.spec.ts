@@ -7,7 +7,7 @@ import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angul
 import {AuthenticationService} from "../core/services/authentication.service";
 import {InstallationService} from "../core/services/istallation.service";
 import {ConversationService} from "../core/services/conversation.service";
-import {MatDialog, MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";
 import {DomainsService} from "../core/services/domains.service";
 import {AccountConfigService} from "../core/services/account-config.service";
