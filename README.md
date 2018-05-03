@@ -29,8 +29,8 @@ Before running or deployment it is neccesary to care about some configuration pa
   https, if u are using https the port cant be chaged (443).
 - web/enviroments/enviromment.prod.ts and web/enviroments/enviromment.ts: 
 Here we have the the [server] property.
- 1. Development Mode (enviromment.ts): server: localhost:8282
- 1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and port 8282. (e.g: 192.168.98.82:8282)
+  1. Development Mode (enviromment.ts): server: localhost:8282
+  1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and port 8282. (e.g: 192.168.98.82:8282)
  
 ## Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 
