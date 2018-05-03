@@ -1,12 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {environment} from '../../../environments/environment';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
-import {ErrorObservable} from "rxjs/observable/ErrorObservable";
-import * as Client from 'node-rest-client';
+import {HttpClient} from "@angular/common/http";
 import {HttpService} from "./http.service";
 import {LoadingService} from "./loading.service";
 import {DomainsService} from "./domains.service";
