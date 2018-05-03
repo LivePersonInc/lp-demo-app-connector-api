@@ -11,6 +11,7 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 * [Project structure](#Project structure)
 * [Settings](#Settings)
+* [Webhooks Setup](#Webhooks Setup)
 * [Development Mode](#Development Mode)
 * [Production Mode](#Production Mode)
 
@@ -32,7 +33,8 @@ Here we have the the [server] property.
  1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and port 8282. (e.g: 192.168.98.82:8282)
  
 ## Webhooks Setup 
-In your app installation you need to add this webhook listener server url: 
+In your app installation you need to add this webhook listener server url:<br/> 
+
 ``https://{your server domain or ip}/notifications/event``
 
 ### Development Mode:
