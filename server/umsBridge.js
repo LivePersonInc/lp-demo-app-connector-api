@@ -42,9 +42,8 @@ router.post("/openconv/:id", function (req, res, next) {
 
 });
 
-router.post("/sendraw/:id/conv/:convId", function (req, res, next) {
+router.post("/sendraw/:id", function (req, res, next) {
   let brandID = req.params.id;
-  let convID = req.params.convId;
   let body = "";
   req.on('data', function (chunk) {
     body += chunk;
@@ -59,7 +58,7 @@ router.post("/sendraw/:id/conv/:convId", function (req, res, next) {
     args.data = body;
 
     sendApiConnector
-      .sendRaw(brandID, convID, args, req.header('LP-DOMAIN'))
+      .sendRaw(brandID, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         console.log(resolve[1]);
         if (handleStatusCode(resolve[1].statusCode)) {
