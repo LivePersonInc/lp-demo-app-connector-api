@@ -17,11 +17,10 @@ class SendApiConnectorService {
     }
 
     openConversation(brandId, args, domain) {
-      console.log(`http://${domain}/api/send/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`); //XXX
         return new Promise((resolve, reject) => {
             this.client
                 .post(
-                    `http://${domain}/api/send/account/${brandId}/conversation?v=${this.nconf.get("VERSION")}`,
+                    `http://${domain}/api/account/${brandId}/messaging/consumer/conversation?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -36,7 +35,7 @@ class SendApiConnectorService {
     sendRaw(brandId, conversationId, args, domain) {
       return new Promise((resolve, reject) => {
             this.client
-                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/account/${brandId}/messaging/consumer/conversation/send?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
@@ -52,7 +51,7 @@ class SendApiConnectorService {
       args.data = JSON.stringify(this.createCloseConversationPayload(conversationId));
       return new Promise((resolve, reject) => {
             this.client
-                .post(`http://${domain}/api/send/account/${brandId}/conversation/${conversationId}/send?v=${this.nconf.get("VERSION")}`,
+                .post(`http://${domain}/api/account/${brandId}/messaging/consumer/conversation/send?v=${this.nconf.get("VERSION")}`,
                     args,
                     function (data, response) {
                         resolve([data, response]);
