@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LpHeaderComponent } from './lp-header.component';
 import {LpNavComponent} from "./lp-nav/lp-nav.component";
 import {LpNavMenuComponent} from "./lp-nav-menu/lp-nav-menu.component";
