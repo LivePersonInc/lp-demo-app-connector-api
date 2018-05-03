@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
-const fetch = require("node-fetch");
 const CsdsService = require("./services/CsdsService");
 
 nconf.file({file: "./settings.json"});
