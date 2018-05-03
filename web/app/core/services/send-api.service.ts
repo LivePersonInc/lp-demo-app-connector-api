@@ -34,7 +34,7 @@ export class SendApiService extends HttpService {
   }
 
   public sendMessage(brandId: string, convId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/ums/sendraw/${brandId}/conv/${convId}`, body, headers);
+    return this.doPost(`http://${environment.server}/ums/sendraw/${brandId}`, body, headers);
   }
 
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
