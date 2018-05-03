@@ -1,17 +1,11 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map'
-import {SendApiService} from "./send-api.service";
-import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {Subject} from "rxjs/Subject";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
-import {ConversationService} from "./conversation.service";
-import {InstallationService} from "./istallation.service";
-import {environment} from '../../../environments/environment';
 import {DomainsService} from "./domains.service";
 
 @Injectable()

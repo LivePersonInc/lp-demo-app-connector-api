@@ -1,6 +1,5 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { AuthenticationService } from './authentication.service';
+import {inject, TestBed} from '@angular/core/testing';
+import {AuthenticationService} from './authentication.service';
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
