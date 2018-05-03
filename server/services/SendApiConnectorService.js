@@ -32,7 +32,7 @@ class SendApiConnectorService {
         });
     }
 
-    sendRaw(brandId, conversationId, args, domain) {
+    sendRaw(brandId, args, domain) {
       return new Promise((resolve, reject) => {
             this.client
                 .post(`http://${domain}/api/account/${brandId}/messaging/consumer/conversation/send?v=${this.nconf.get("VERSION")}`,
