@@ -1,6 +1,5 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { ConversationService } from './conversation.service';
+import {inject, TestBed} from '@angular/core/testing';
+import {ConversationService} from './conversation.service';
 import {SendApiService} from "./send-api.service";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
