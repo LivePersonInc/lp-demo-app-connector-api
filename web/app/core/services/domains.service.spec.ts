@@ -1,5 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { DomainsService } from './domains.service';
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";

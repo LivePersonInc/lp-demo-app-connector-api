@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
-import {environment} from '../../../environments/environment';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, finalize} from "rxjs/operators";
+import {catchError} from "rxjs/operators";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
-import * as Client from 'node-rest-client';
 import {LoadingService} from "./loading.service";
+
 @Injectable()
 export class HttpService {
   protected snackBarConfig = new MatSnackBarConfig();
@@ -91,8 +89,5 @@ export class HttpService {
     this.snackBarConfig.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfig);
   }
-
-
-
 
 }
