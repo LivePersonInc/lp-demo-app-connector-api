@@ -18,11 +18,11 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 ## Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
-The serves is also used as a brige to avoid CORS problems in the browser.
-- Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using ur brand credentials).
+The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
+- Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using your brand credentials).
 
 ## Settings
-Before running or deployment it is neccesary to care about some configuration parameters:
+Before running or deployment it is necessary to setup some configuration parameters:
 - settings.json:
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (QA csds domain by default)
   1. [WEBHOOK_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
