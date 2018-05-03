@@ -9,11 +9,11 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 ## Table of Contents
 
-* [Project structure](#Project structure)
-* [Settings](#Settings)
-* [Webhooks Setup](#Webhooks Setup)
-* [Development Mode](#Development Mode)
-* [Production Mode](#Production Mode)
+* Project structure
+* Settings
+* Webhooks Setup
+* Development Mode
+* Production Mode
 
 ## Project structure
 
