@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SendApiService} from "../core/services/send-api.service";
-import {environment} from '../../environments/environment';
 import {HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs/Subscription";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
@@ -13,6 +12,8 @@ import {SetUserProfile} from "../shared/models/send-api/SetUserProfile.model";
 import {Event} from "../shared/models/send-api/Event.model";
 import {PublishContentEvent} from "../shared/models/send-api/PublishContentEvent.model";
 import {LoadingService} from "../core/services/loading.service";
+import {AuthenticationService} from "../core/services/authentication.service";
+import {InstallationService} from "../core/services/istallation.service";
 
 
 @Component({
@@ -20,162 +21,170 @@ import {LoadingService} from "../core/services/loading.service";
   templateUrl: './lp-test-services.component.html',
   styleUrls: ['./lp-test-services.component.scss']
 })
-export class LpTestServicesComponent implements OnInit{
-public isLoading = false;
-public appJWT: string;
-public consumerJWS: string;
-public branId: string;
-public appKey: string;
-public appSecret: string;
-public ext_consumer_id: string;
-public conversationId: string;
-public requestConversationPayload: Request;
-public setUserProfilePayload:Request;
-public sendMsgPayload:Request;
-public message: String;
-public httpOptions = {};
-private subscription: Subscription;
-public snackBarConfing : MatSnackBarConfig;
+export class LpTestServicesComponent implements OnInit {
+  public isLoading = false;
+  public appJWT: string;
+  public consumerJWS: string;
+  public brandId: string;
+  public appKey: string;
+  public appSecret: string;
+  public ext_consumer_id: string;
+  public conversationId: string;
+  public requestConversationPayload: Request;
+  public setUserProfilePayload: Request;
+  public sendMsgPayload: Request;
+  public message: String;
+  private subscription: Subscription;
+  public snackBarConfing: MatSnackBarConfig;
 
-
-  constructor(public snackBar: MatSnackBar,public sendApiService: SendApiService, private loadingService:LoadingService) {
-
-  }
+  constructor(public snackBar: MatSnackBar,
+              public sendApiService: SendApiService,
+              private loadingService: LoadingService,
+              private authenticationService: AuthenticationService,
+              private installationService: InstallationService) { }
 
   ngOnInit() {
     this.snackBarConfing = new MatSnackBarConfig();
     this.snackBarConfing.verticalPosition = 'top';
     this.snackBarConfing.horizontalPosition = 'right';
 
-    this.branId = environment.brandId;
-    this.appKey = environment.appKey;
-    this.appSecret = environment.appSecret;
+    if (this.authenticationService.user) {
+      this.brandId = this.authenticationService.user.brandId || "";
+    }
+    if (this.installationService.selectedApp) {
+      this.appKey = this.installationService.selectedApp.client_id || "";
+      this.appSecret = this.installationService.selectedApp.client_secret || "";
+    }
+
     this.ext_consumer_id = "ramdom_id" + Math.random();
     this.message = "HI There !";
 
-    this.subscription = this.loadingService.isLoadingSubscription().subscribe( isLoading => {
+    this.subscription = this.loadingService.isLoadingSubscription().subscribe(isLoading => {
       this.isLoading = isLoading;
     }, error => {
       console.log('SUBSCRIPTION ERROR: ' + error);
     });
   }
 
-public getAppJWT(){
+  public getAppJWT() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'content-type':'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded'
       })
     };
 
-    this.sendApiService.getAppJWT(this.branId,this.appKey,this.appSecret,httpOptions).subscribe(
-      res =>{
+    this.sendApiService.getAppJWT(this.brandId, this.appKey, this.appSecret, httpOptions).subscribe(
+      res => {
         console.log(res);
         this.handleSuccess("App JWT succesfully obtined");
         this.appJWT = res['access_token'];
-      },  error => {
+      }, error => {
         this.handleError(error);
         this.loadingService.stopLoading();
       }
     );
   }
 
-public getAppConsumerJWS(){
+  public getAppConsumerJWS() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'content-type':'application/json',
+        'content-type': 'application/json',
         'Authorization': this.appJWT
       })
     };
     console.log(httpOptions.headers);
     const body = {"ext_consumer_id": this.ext_consumer_id};
-    this.sendApiService.getConsumerJWS(this.branId, body, httpOptions).subscribe(
-      res =>{
+    this.sendApiService.getConsumerJWS(this.brandId, body, httpOptions).subscribe(
+      res => {
         console.log(res);
         this.consumerJWS = res['token'];
         this.handleSuccess("Consumer JWS succesfully obtined");
-      },  error => {
+      }, error => {
         this.handleError(error);
         this.loadingService.stopLoading();
       }
     );
   }
 
-public openConversation() {
-    const headers = {'headers': {
-      'content-type':'application/json',
-      'Authorization': this.appJWT,
-      'x-lp-on-behalf':this.consumerJWS
-    }
+  public openConversation() {
+    const headers = {
+      'headers': {
+        'content-type': 'application/json',
+        'Authorization': this.appJWT,
+        'x-lp-on-behalf': this.consumerJWS
+      }
     };
     let body;
     body = JSON.stringify(this.getOpenConvRequestBody());
 
-    this.sendApiService.openConversation(this.branId,body, headers).subscribe(res => {
+    this.sendApiService.openConversation(this.brandId, body, headers).subscribe(res => {
       console.log(res);
       this.conversationId = res["convId"];
       this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
-    },error => {
+    }, error => {
       this.loadingService.stopLoading();
       this.handleError(error);
     });
   }
 
-public sendMessage() {
-    const headers = {'headers': {
-      'content-type':'application/json',
-      'Authorization': this.appJWT,
-      'x-lp-on-behalf':this.consumerJWS
-    }
+  public sendMessage() {
+    const headers = {
+      'headers': {
+        'content-type': 'application/json',
+        'Authorization': this.appJWT,
+        'x-lp-on-behalf': this.consumerJWS
+      }
     };
     let body;
     body = JSON.stringify(this.getMessageRequestBody());
     console.log(body);
-    this.sendApiService.sendMessage(this.branId,this.conversationId,body, headers).subscribe(res => {
+    this.sendApiService.sendMessage(this.brandId, this.conversationId, body, headers).subscribe(res => {
       console.log(res);
       this.handleSuccess("Conversation OPEN successfully with id " + this.conversationId);
-    },error => {
+    }, error => {
       this.loadingService.stopLoading();
       this.handleError(error);
     });
   }
 
-public closeConversation(){
-    const headers = {'headers': {
-      'content-type':'application/json',
-      'Authorization': this.appJWT,
-      'x-lp-on-behalf':this.consumerJWS
-    }
+  public closeConversation() {
+    const headers = {
+      'headers': {
+        'content-type': 'application/json',
+        'Authorization': this.appJWT,
+        'x-lp-on-behalf': this.consumerJWS
+      }
     };
-    this.sendApiService.closeConversation(this.branId,this.conversationId, headers).subscribe(res => {
+    this.sendApiService.closeConversation(this.brandId, this.conversationId, headers).subscribe(res => {
       console.log(res);
       this.handleSuccess("Conversation CLOSED successfully with id " + this.conversationId);
-    }),error => {
+    }, error => {
       this.loadingService.stopLoading();
       this.handleError(error);
-    };
+    });
   }
 
-private handleError(error) {
+  private handleError(error) {
     this.snackBarConfing.duration = 2000;
+    this.snackBarConfing.duration = null;
     this.loadingService.stopLoading();
     this.snackBarConfing.panelClass = ['snack-error'];
     this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
   }
 
-private handleSuccess(message) {
+  private handleSuccess(message) {
     this.loadingService.stopLoading();
     this.snackBarConfing.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfing);
   }
 
-private getOpenConvRequestBody(): any {
-    let body = [];
+  private getOpenConvRequestBody(): any {
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
       "CUSTOM",
       campaignInfo,
       "MESSAGING",
-      this.branId,
+      this.brandId,
       "-1"
     );
     this.requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
@@ -199,7 +208,7 @@ private getOpenConvRequestBody(): any {
     this.sendMsgPayload = new Request("req", "3", "ms.PublishEvent", publishContentEvent);
 
 
-    return body = [this.setUserProfilePayload, this.requestConversationPayload, this.sendMsgPayload];
+    return [this.setUserProfilePayload, this.requestConversationPayload, this.sendMsgPayload];
   }
 
   private getMessageRequestBody() {
