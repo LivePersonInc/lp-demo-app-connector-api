@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
-const fetch = require("node-fetch");
 const AppInstallationService = require("./services/AppInstallationService");
 
 nconf.file({file: "./settings.json"});
 
 const appInstallationService = new AppInstallationService(nconf);
-
 
 router.get("/:brandId", function (req, res, next) {
   let brandId = req.params.brandId;
@@ -76,8 +74,6 @@ router.put("/:brandId/:appId", function (req, res, next) {
     args.data = body;
 
     appInstallationService.getAppById(appId, brandId, args, req.header('LP-DOMAIN')).then((data) => {
-
-      console.log(data[1].headers['ac-revision']);
       args.headers['If-Match'] = data[1].headers['ac-revision'];
       args.headers['X-HTTP-Method-Override'] = 'PUT';
       args.headers['content-type'] = 'application/json';
