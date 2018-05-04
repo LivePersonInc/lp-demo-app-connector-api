@@ -17,7 +17,7 @@ describe('DomainHeaderInterceptor', () => {
     expect(intercptor).toBeTruthy();
   }));
 
-  it('Should return the first first url element after the domain', inject([DomainHeaderInterceptor], (intercptor: DomainHeaderInterceptor) => {
+  it('Should return the first url element after the domain', inject([DomainHeaderInterceptor], (intercptor: DomainHeaderInterceptor) => {
     const url = 'http://localhost:8282/account/properties/le92127075';
     expect(intercptor.getServiceNameByUrl(url)).toBe('account');
   }));
