@@ -52,6 +52,7 @@ export class LpWebhooksConfigComponent implements OnInit {
 
   public updateWebhooks() {
     if (this.installationService.selectedApp.capabilities && this.installationService.selectedApp.capabilities.webhooks) {
+      this.installationService.selectedApp.capabilities.webhooks = new Webhooks();
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
     } else if (!this.installationService.selectedApp.capabilities) {
       this.installationService.selectedApp.capabilities = new Capabilities();
@@ -61,7 +62,7 @@ export class LpWebhooksConfigComponent implements OnInit {
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
 
     }
-
+    console.log(this.installationService.selectedApp.capabilities.webhooks);
     this.installationService.updateApp(this.installationService.selectedApp);
 
   }

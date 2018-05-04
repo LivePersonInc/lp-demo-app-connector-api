@@ -42,7 +42,6 @@ export class InstallationService extends HttpService {
 
 
   public getAppListList() {
-
     this.doGet(`http://${environment.server}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
       console.log(this.appList);
@@ -64,9 +63,10 @@ export class InstallationService extends HttpService {
 
   public updateApp(app: AppInstall) {
     this.doPut(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
-      this.loadingService.stopLoading();
+      //this.loadingService.stopLoading();
       this.installationSubject.next('UPDATE_APP');
       this.successResponse('This app was successfully updated');
+      this.getAppListList();
     }, error => {
       this.errorResponse(error);
     });
