@@ -27,10 +27,11 @@ export class LpConfigCheckComponent implements OnInit {
     this.installationService.installationSubject.subscribe(event => {
       if( event === 'APP_SELECTED'){
         this.currentAppInstallation = this.installationService.selectedApp;
+        this.initWebhooks();
       }
       if( event === 'UPDATE_APP'){
-        console.log("UPSRARFSFSF");
         this.currentAppInstallation = this.installationService.selectedApp;
+        this.initWebhooks();
       }
 
     });
@@ -48,7 +49,10 @@ export class LpConfigCheckComponent implements OnInit {
     this.webhooks = new Webhooks();
     this.webhooks.initEndpoints();
     if(this.installationService.selectedApp && this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
+      console.log(this.installationService.selectedApp.capabilities.webhooks);
       this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
+
+      //TODO: Bug fix with deserialize of emty elements
     }
   }
 
