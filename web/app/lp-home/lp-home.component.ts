@@ -38,6 +38,8 @@ export class LpHomeComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.userLoggedSubject.subscribe(event => {
+      console.log("authenticationService");
+      console.log(event);
       if (event === 'LOGGED-IN') {
         this.goToStartConfigPage();
         this.installationService.init();
