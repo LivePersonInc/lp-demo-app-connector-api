@@ -27,8 +27,12 @@ export class LpConfigCheckComponent implements OnInit {
     this.installationService.installationSubject.subscribe(event => {
       if( event === 'APP_SELECTED'){
         this.currentAppInstallation = this.installationService.selectedApp;
-        this.initWebhooks();
       }
+      if( event === 'UPDATE_APP'){
+        console.log("UPSRARFSFSF");
+        this.currentAppInstallation = this.installationService.selectedApp;
+      }
+
     });
 
     this.accountConfigService.acSubject.subscribe( event => {

@@ -57,6 +57,8 @@ export class LpWebhooksConfigComponent implements OnInit {
       this.installationService.selectedApp.capabilities = new Capabilities();
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
     } else if (this.installationService.selectedApp.capabilities && !this.installationService.selectedApp.capabilities.webhooks) {
+      this.installationService.selectedApp.capabilities.webhooks = new Webhooks();
+      this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
 
     }
 
