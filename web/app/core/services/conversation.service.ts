@@ -60,7 +60,7 @@ export class ConversationService extends HttpService{
   }
 
   public reset(){
-    if(this.conversation.isConvStarted) {
+    if(this.conversation && this.conversation.isConvStarted) {
       this.conversation.closeConversation();
       this.conversation.unSubscribeToMessageNotifications();
     }
