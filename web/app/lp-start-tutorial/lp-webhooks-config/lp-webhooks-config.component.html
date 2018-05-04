@@ -10,7 +10,7 @@
   <form [formGroup]="webhooksForm" (ngSubmit)="updateWebhooks()">
     <div class="error-message-box">
       <mat-error *ngIf="webhooksForm.invalid">
-        Webhooks endpoints should start by https://
+        URl incorrect Webhooks endpoints should start by https:// and cannot contains special characters.
       </mat-error>
     </div>
     <div class="row" *ngIf="webhooks">
