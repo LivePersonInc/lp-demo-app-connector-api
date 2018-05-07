@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
 import {AuthenticationService} from "../core/services/authentication.service";
-import {Observable} from 'rxjs/Observable';
+import { ISubscription } from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
@@ -18,12 +18,16 @@ import {DomainsService} from "../core/services/domains.service";
   animations: [fadeInAnimation],
   host: {'[@fadeInAnimation]': ''}
 })
-export class LpHomeComponent implements OnInit {
+export class LpHomeComponent implements OnInit, OnDestroy {
   public brandId: string;
   public userName: string;
   public password: string;
   public authenticationService: AuthenticationService;
   public loginForm: FormGroup;
+
+  private loginSubscription: ISubscription;
+  private domainSubscription: ISubscription;
+  private dialogRefSubscription: ISubscription;
 
   constructor(private _authenticationService: AuthenticationService,
               private installationService: InstallationService,
@@ -37,12 +41,17 @@ export class LpHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.userLoggedSubject.subscribe(event => {
+    this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       console.log("authenticationService");
       console.log(event);
       if (event === 'LOGGED-IN') {
         this.goToStartConfigPage();
         this.installationService.init();
+      }
+    });
+    this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
+      if(event === 'READY') {
+        this.authenticationService.login(this.brandId, this.userName, this.password);
       }
     });
 
@@ -53,12 +62,15 @@ export class LpHomeComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
+    this.domainSubscription.unsubscribe();
+    if(this.dialogRefSubscription){
+      this.dialogRefSubscription.unsubscribe();
+    }
+  }
+
   public authenticate() {
-    this.domainsService.domainsSubject.subscribe( event => {
-      if(event === 'READY') {
-        this.authenticationService.login(this.brandId, this.userName, this.password);
-      }
-    });
     //First of all we need to know the domains
     this.domainsService.getDomainList(this.brandId);
   }
@@ -73,7 +85,7 @@ export class LpHomeComponent implements OnInit {
     dialogRef.componentInstance.title = "Logout";
     dialogRef.componentInstance.message = "This will clear all your changes. Are you sure?";
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.authenticationService.logOut();
         this.installationService.reset();

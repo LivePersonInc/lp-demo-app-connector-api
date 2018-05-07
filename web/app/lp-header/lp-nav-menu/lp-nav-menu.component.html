@@ -1,8 +1,10 @@
-<button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon class="white-icon">more_vert</mat-icon>
-</button>
-<mat-menu #menu="matMenu"  *ngIf="(authenticationService.user && authenticationService.user.token)">
-  <a mat-menu-item  routerLink="/home" >Home</a>
-  <a mat-menu-item  routerLink="/demo">Demo</a>
-  <!--<a mat-menu-item  routerLink="/demo"><i class="material-icons">settings</i></a>-->
-</mat-menu>
+<div *ngIf="(authenticationService.user && authenticationService.user.token)">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon class="white-icon">more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" >
+    <a mat-menu-item  routerLink="/home" >Home</a>
+    <a mat-menu-item  routerLink="/demo">Demo</a>
+    <!--<a mat-menu-item  routerLink="/demo"><i class="material-icons">settings</i></a>-->
+  </mat-menu>
+</div>
