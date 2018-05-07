@@ -44,7 +44,6 @@ export class InstallationService extends HttpService {
   public getAppListList() {
     this.doGet(`http://${environment.server}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
-      console.log(this.appList);
       this.loadingService.stopLoading();
       this.installationSubject.next('GET_APP_LIST');
     }, error => {
