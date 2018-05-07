@@ -47,7 +47,6 @@ export class LpWebhooksConfigComponent implements OnInit {
       'RichContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
       'ExConversationChangeNotification': new FormControl('', [Validators.pattern(this.pattern),])
     });
-
   }
 
   public updateWebhooks() {
@@ -60,7 +59,6 @@ export class LpWebhooksConfigComponent implements OnInit {
     } else if (this.installationService.selectedApp.capabilities && !this.installationService.selectedApp.capabilities.webhooks) {
       this.installationService.selectedApp.capabilities.webhooks = new Webhooks();
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
-
     }
     console.log(this.installationService.selectedApp.capabilities.webhooks);
     this.installationService.updateApp(this.installationService.selectedApp);
