@@ -1,29 +1,33 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {InstallationService} from '../../core/services/istallation.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Webhooks} from '../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../shared/models/app-installation/capabilities.model';
 import {FormControl, Validators} from '@angular/forms';
+import {ISubscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'lp-webhooks-config',
   templateUrl: './lp-webhooks-config.component.html',
   styleUrls: ['./lp-webhooks-config.component.scss']
 })
-export class LpWebhooksConfigComponent implements OnInit {
-  private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
+export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
+
   @Output()
   public completed = new EventEmitter();
   public webhooks: Webhooks;
   public installationService: InstallationService;
   public webhooksForm: FormGroup;
 
+  private installationSubscription: ISubscription;
+  private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
+
   constructor(private _installationService: InstallationService, private fb: FormBuilder) {
     this.installationService = _installationService;
   }
 
   ngOnInit() {
-    this.installationService.installationSubject.subscribe(event => {
+    this.installationSubscription = this.installationService.installationSubject.subscribe(event => {
       switch (event) {
         case 'APP_SELECTED': {
           this.webhooks = new Webhooks();
@@ -49,6 +53,10 @@ export class LpWebhooksConfigComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if(this.installationSubscription) this.installationSubscription.unsubscribe();
+  }
+
   public updateWebhooks() {
     if (this.installationService.selectedApp.capabilities && this.installationService.selectedApp.capabilities.webhooks) {
       this.installationService.selectedApp.capabilities.webhooks = new Webhooks();
@@ -60,9 +68,7 @@ export class LpWebhooksConfigComponent implements OnInit {
       this.installationService.selectedApp.capabilities.webhooks = new Webhooks();
       this.installationService.selectedApp.capabilities.webhooks.deserialize(this.webhooks.serialize());
     }
-    console.log(this.installationService.selectedApp.capabilities.webhooks);
     this.installationService.updateApp(this.installationService.selectedApp);
-
   }
 
 }
