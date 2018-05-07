@@ -1,21 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Conversation} from "../shared/models/conversation/conversation";
 import {ConversationService} from "../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../shared/models/conversation/conversationEvent.model";
 import {AuthenticationService} from "../core/services/authentication.service";
 import {InstallationService} from "../core/services/istallation.service";
+import {ISubscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'lp-conversation',
   templateUrl: './lp-conversation.component.html',
   styleUrls: ['./lp-conversation.component.scss']
 })
-export class LpConversationComponent implements OnInit {
+export class LpConversationComponent implements OnInit, OnDestroy {
   public brandId: string;
   public conversation: Conversation;
   public appKey: string;
   public appSecret: string;
   public userName: string;
+  private conversationSubscription: ISubscription;
 
   constructor(private conversationService: ConversationService,
               private authenticationService: AuthenticationService,
@@ -36,7 +38,7 @@ export class LpConversationComponent implements OnInit {
       this.conversation = this.conversationService.conversation;
     }
 
-    this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
+    this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
        if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId){
          console.log(event.event);
          if(event.event === ConvEvent.OPEN ){
@@ -44,6 +46,10 @@ export class LpConversationComponent implements OnInit {
          }
        }
     });
+  }
+
+  ngOnDestroy(){
+   if(this.conversationSubscription) this.conversationSubscription.unsubscribe();
   }
 
   public startConversation(initialMessage: string) {

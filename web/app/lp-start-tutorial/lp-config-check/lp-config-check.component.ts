@@ -1,16 +1,16 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AccountConfigService} from "../../core/services/account-config.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
-import {Router} from "@angular/router";
+import {ISubscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'lp-config-check',
   templateUrl: './lp-config-check.component.html',
   styleUrls: ['./lp-config-check.component.scss']
 })
-export class LpConfigCheckComponent implements OnInit {
+export class LpConfigCheckComponent implements OnInit, OnDestroy {
 
   @Output()
   public completed = new EventEmitter();
@@ -18,13 +18,16 @@ export class LpConfigCheckComponent implements OnInit {
   public currentAppInstallation:AppInstall;
   public webhooks: Webhooks;
 
+  private installationSubscription:ISubscription;
+  private acSubscription:ISubscription;
+
   constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
 
   ngOnInit() {
     this.currentAppInstallation = this.installationService.selectedApp;
     this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
 
-    this.installationService.installationSubject.subscribe(event => {
+    this.installationSubscription = this.installationService.installationSubject.subscribe(event => {
       if( event === 'APP_SELECTED'){
         this.currentAppInstallation = this.installationService.selectedApp;
         this.initWebhooks();
@@ -36,7 +39,7 @@ export class LpConfigCheckComponent implements OnInit {
 
     });
 
-    this.accountConfigService.acSubject.subscribe( event => {
+    this.acSubscription = this.accountConfigService.acSubject.subscribe( event => {
       if( event === 'GET_LIST'){
         this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
       }
@@ -45,14 +48,16 @@ export class LpConfigCheckComponent implements OnInit {
     this.initWebhooks();
   }
 
+  ngOnDestroy() {
+    if(this.installationSubscription) this.installationSubscription.unsubscribe();
+    if(this.acSubscription) this.acSubscription.unsubscribe();
+  }
+
   private initWebhooks() {
     this.webhooks = new Webhooks();
     this.webhooks.initEndpoints();
     if(this.installationService.selectedApp && this.installationService.selectedApp.capabilities &&  this.installationService.selectedApp.capabilities.webhooks) {
-      console.log(this.installationService.selectedApp.capabilities.webhooks);
       this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
-
-      //TODO: Bug fix with deserialize of emty elements
     }
   }
 

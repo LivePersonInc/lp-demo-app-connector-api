@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../shared/animations/lp-animations";
 import {AuthenticationService} from "../core/services/authentication.service";
-import { ISubscription } from "rxjs/Subscription";
+import {ISubscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
@@ -63,11 +63,10 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loginSubscription.unsubscribe();
-    this.domainSubscription.unsubscribe();
-    if(this.dialogRefSubscription){
-      this.dialogRefSubscription.unsubscribe();
-    }
+    if(this.loginSubscription) this.loginSubscription.unsubscribe();
+    if(this.domainSubscription) this.domainSubscription.unsubscribe();
+    if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
+
   }
 
   public authenticate() {

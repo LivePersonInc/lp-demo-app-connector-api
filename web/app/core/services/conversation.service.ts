@@ -53,7 +53,7 @@ export class ConversationService extends HttpService{
         this.conversationEventSubject.next(new ConversationEvent(conversationId, ConvEvent.MESSAGE_SENT));
       }.bind(this));
     }else{
-      let msg = "A Conversation hast to be intialized before sende a message";
+      let msg = "A Conversation has to be intialized before sende a message";
       this.errorResponse(msg);
       console.error(msg);
     }
