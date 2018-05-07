@@ -1,5 +1,6 @@
-<nav *ngIf="(authenticationService.user && authenticationService.user.token)">
-  <a mat-menu-item routerLink="/home"  routerLinkActive="active-link">Home</a>
-  <a mat-menu-item routerLink="/demo"  routerLinkActive="active-link">Demo</a>
-</nav>
-
+<div *ngIf="(authenticationService.user && authenticationService.user.token)">
+  <nav>
+    <a mat-menu-item routerLink="/home"  routerLinkActive="active-link">Home</a>
+    <a mat-menu-item routerLink="/demo"  routerLinkActive="active-link">Demo</a>
+  </nav>
+</div>
