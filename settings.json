@@ -1,5 +1,5 @@
 {
   "CSDS_DOMAIN": "hc1n.dev.lprnd.net",
-  "WEBHOOK_PORT": "8080",
+  "SERVER_HTTP_PORT": "8282",
   "VERSION": "3"
 }

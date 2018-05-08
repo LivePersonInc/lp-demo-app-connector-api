@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const nconf = require("nconf");
-const fetch = require("node-fetch");
 const SSE = require('sse-nodejs');
 
-nconf.file({file: "./settings.json"});
-/* http://localhost:8000/testconnector/event */
 
 const subscriptions = [];
 

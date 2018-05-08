@@ -3,9 +3,7 @@ const Client = require("node-rest-client").Client;
 
 
 class AppInstallationService {
-  constructor(nconf) {
-    // nconf object
-    this.nconf = nconf;
+  constructor() {
     this.client = new Client();
   }
 

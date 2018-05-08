@@ -5,7 +5,6 @@ const fetch = require("node-fetch");
 const SendApiConnector = require("./services/SendApiConnectorService");
 
 nconf.file({file: "./settings.json"});
-/* http://localhost:8000/testconnector/event */
 
 const sendApiConnector = new SendApiConnector(nconf);
 
