@@ -25,7 +25,7 @@ The server is also used as a bridge to avoid Cross-Domain restrictions in the br
 Before running or deployment it is necessary to setup some configuration parameters:
 - settings.json:
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (QA csds domain by default)
-  1. [WEBHOOK_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
+  1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
   https, if u are using https the port cant be chaged (443).
 - web/enviroments/enviromment.prod.ts and web/enviroments/enviromment.ts: 
 Here we have the the [server] property.
