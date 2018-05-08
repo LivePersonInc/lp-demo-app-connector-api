@@ -30,9 +30,9 @@ Before running or deployment it is necessary to setup some configuration paramet
 - **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:** 
 Here we have the the [server] property and [server_port].
   1. Development Mode (enviromment.ts): ``server: localhost, server_port: 8282``
-  1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and port 8282. (e.g: 192.168.98.82:8282)
+  1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and server_port 8282. (e.g: 192.168.98.82:8282)
   
-  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to ad the same port in **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:**  (server_port prop).
+  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:**  (server_port prop).
  
 ## Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 
