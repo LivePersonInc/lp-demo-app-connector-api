@@ -2,6 +2,10 @@
   "name": "lp-demo-app-connector-api",
   "version": "0.0.1",
   "license": "MIT",
+  "author": {
+    "name": "Enrique Plaza",
+    "email": "eplaza@liveperson.com"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve ",
