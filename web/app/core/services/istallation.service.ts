@@ -13,9 +13,11 @@ export class InstallationService extends HttpService {
 
   public installationSubject = new Subject<any>();
   public appList: Array<AppInstall>;
+  public brandId;
   private _selectedApp: AppInstall;
   private headers = {};
-  public brandId;
+  private baseURI = `http://${environment.server}:${environment.server_port}/installation/`;
+
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
@@ -42,7 +44,7 @@ export class InstallationService extends HttpService {
 
 
   public getAppListList() {
-    this.doGet(`http://${environment.server}/installation/${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app));
       this.loadingService.stopLoading();
       this.installationSubject.next('GET_APP_LIST');
@@ -52,7 +54,7 @@ export class InstallationService extends HttpService {
   }
 
   public installApp(app: AppInstall) {
-    this.doPost(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
+    this.doPost(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.installationSubject.next('INSTALL_APP');
     }, error => {
@@ -61,7 +63,7 @@ export class InstallationService extends HttpService {
   }
 
   public updateApp(app: AppInstall) {
-    this.doPut(`http://${environment.server}/installation/${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
+    this.doPut(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
       //this.loadingService.stopLoading();
       this.installationSubject.next('UPDATE_APP');
       this.successResponse('This app was successfully updated');
