@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const nconf = require("nconf");
 const AppInstallationService = require("./services/AppInstallationService");
 
-nconf.file({file: "./settings.json"});
-
-const appInstallationService = new AppInstallationService(nconf);
+const appInstallationService = new AppInstallationService();
 
 router.get("/:brandId", function (req, res, next) {
   let brandId = req.params.brandId;
