@@ -10,6 +10,9 @@ import {DomainsService} from "./domains.service";
 @Injectable()
 export class SendApiService extends HttpService {
 
+  private baseURI = `http://${environment.server}:${environment.server_port}/ums/`;
+
+
   constructor(protected snackBar: MatSnackBar,
               protected http: HttpClient,
               protected loadingService:LoadingService,
@@ -26,15 +29,15 @@ export class SendApiService extends HttpService {
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/ums/openconv/${brandId}`, body, headers);
+    return this.doPost(`${this.baseURI}openconv/${brandId}`, body, headers);
   }
 
   public sendMessage(brandId: string, convId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/ums/sendraw/${brandId}`, body, headers);
+    return this.doPost(`${this.baseURI}sendraw/${brandId}`, body, headers);
   }
 
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
-    return this.doPost(`http://${environment.server}/ums/close/${brandId}/conv/${convId}`, null, headers);
+    return this.doPost(`${this.baseURI}close/${brandId}/conv/${convId}`, null, headers);
   }
 
 }

@@ -15,7 +15,7 @@ export class DomainsService extends HttpService{
   }
 
   public getDomainList(brandId: string) {
-    this.doGet(`http://${environment.server}/domains/csds/${brandId}`, {}).subscribe((data) => {
+    this.doGet(`http://${environment.server}:${environment.server_port}/domains/csds/${brandId}`, {}).subscribe((data) => {
       let length = data.baseURIs.length;
       for(let i=0; i < length; i++) {
         this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
