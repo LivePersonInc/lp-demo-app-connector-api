@@ -42,7 +42,7 @@ app.use("/domains", csdsBridge); //receive webhooks notifications
 app.use(express.static('dist'));
 
 //http server
-app.listen("8282", function () {
+app.listen(nconf.get("SERVER_HTTP_PORT"), function () {
   console.log("listening");
   app.isReady = true;
   app.emit("ready", true);
