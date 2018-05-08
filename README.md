@@ -27,10 +27,12 @@ Before running or deployment it is necessary to setup some configuration paramet
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (QA csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
   https, if u are using https the port cant be chaged (443).
-- web/enviroments/enviromment.prod.ts and web/enviroments/enviromment.ts: 
-Here we have the the [server] property.
-  1. Development Mode (enviromment.ts): server: localhost:8282
+- **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:** 
+Here we have the the [server] property and [server_port].
+  1. Development Mode (enviromment.ts): ``server: localhost, server_port: 8282``
   1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and port 8282. (e.g: 192.168.98.82:8282)
+  
+  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to ad the same port in **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:**  (server_port prop).
  
 ## Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 
