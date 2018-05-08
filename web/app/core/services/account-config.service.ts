@@ -16,6 +16,9 @@ export class AccountConfigService extends HttpService {
   public brandId = "";
   private headers = {};
 
+  private baseURI = `http://${environment.server}:${environment.server_port}/account/properties/`;
+
+
   constructor(protected authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
     super(snackBar,http, loadingService);
 
@@ -32,7 +35,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public getAccountConfigPropertiesList() {
-    this.doGet(`http://${environment.server}/account/properties/${this.brandId}`, this.headers).subscribe(data => {
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe(data => {
       this.accountConfigPropList = data;
       this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
       this.loadingService.stopLoading();
@@ -43,7 +46,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public updateAccountConfigProperties() {
-    this.doPost(`http://${environment.server}/account/properties/${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
+    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
       this.loadingService.stopLoading();
       this.acSubject.next('UPDATED');
     },error => {
