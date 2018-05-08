@@ -64,7 +64,7 @@ class SendApiConnectorService {
     }
 
   createCloseConversationPayload(conversationId) {
-    const update = new UpdateConversationField(conversationId, this.closeConversationField)
+    const update = new UpdateConversationField(conversationId, this.closeConversationField);
     return new Request("req", "1,", "cm.UpdateConversationField", update);
   }
 }
