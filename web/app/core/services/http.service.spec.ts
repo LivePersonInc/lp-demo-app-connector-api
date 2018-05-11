@@ -3,6 +3,7 @@ import { HttpService } from './http.service';
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
+import {Router} from "@angular/router";
 
 describe('HttpService', () => {
   beforeEach(() => {
@@ -14,7 +15,11 @@ describe('HttpService', () => {
         HttpService,
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
-        {provide: LoadingService, useValue: loadingService}
+        {provide: LoadingService, useValue: loadingService},
+        {
+          provide: Router,
+          useClass: class { navigate = jasmine.createSpy("navigate"); }
+        },
       ]
     });
   });

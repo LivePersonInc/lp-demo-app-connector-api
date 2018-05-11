@@ -1,4 +1,4 @@
-<div *ngIf="(authenticationService.user && authenticationService.user.token)">
+<div *ngIf="isUserAuthenticated()">
   <nav>
     <a mat-menu-item routerLink="/home"  routerLinkActive="active-link">Home</a>
     <a mat-menu-item routerLink="/demo"  routerLinkActive="active-link">Demo</a>

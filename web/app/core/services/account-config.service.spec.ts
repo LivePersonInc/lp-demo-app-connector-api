@@ -5,6 +5,7 @@ import {LoadingService} from "./loading.service";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
+import {Router} from "@angular/router";
 
 describe('AccountConfigService', () => {
 
@@ -22,6 +23,10 @@ describe('AccountConfigService', () => {
       providers: [
         AccountConfigService,
         {provide: AuthenticationService, useValue: authenticationService},
+        {
+          provide: Router,
+          useClass: class { navigate = jasmine.createSpy("navigate"); }
+        },
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
         {provide: LoadingService, useValue: loadingService}]
