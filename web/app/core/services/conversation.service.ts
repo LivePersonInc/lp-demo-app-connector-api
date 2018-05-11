@@ -11,6 +11,7 @@ import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation";
 import {InstallationService} from "./istallation.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class ConversationService extends HttpService{
@@ -22,9 +23,10 @@ export class ConversationService extends HttpService{
   constructor(protected snackBar: MatSnackBar,
               protected http: HttpClient,
               protected loadingService:LoadingService,
-              protected sendApiService: SendApiService
+              protected sendApiService: SendApiService,
+              protected router: Router,
   ){
-    super(snackBar,http, loadingService);
+    super(snackBar,http, loadingService, router);
   }
 
   public openConversation(userName: string, brandId: string, appKey: string, appSecret,initialMessage: string) {

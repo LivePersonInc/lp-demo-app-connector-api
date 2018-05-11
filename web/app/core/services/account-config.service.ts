@@ -6,6 +6,7 @@ import {LoadingService} from "./loading.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AccountConfigService extends HttpService {
@@ -19,15 +20,15 @@ export class AccountConfigService extends HttpService {
   private baseURI = `http://${environment.server}:${environment.server_port}/account/properties/`;
 
 
-  constructor(protected authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
-    super(snackBar,http, loadingService);
+  constructor(protected authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected router: Router) {
+    super(snackBar,http, loadingService,router);
 
     this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event ===  'LOGGED-IN'){
         this.brandId = this.authenticationService.user.brandId;
         this.headers = {
           'headers': {
-            'Authorization': `Bearer ${this.authenticationService.user.token}XXX`,
+            'Authorization': `Bearer ${this.authenticationService.user.token}`,
           }
         };
       }

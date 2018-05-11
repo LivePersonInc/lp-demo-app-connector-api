@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {HttpService} from "./http.service";
 import {LoadingService} from "./loading.service";
 import {DomainsService} from "./domains.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class SendApiService extends HttpService {
@@ -16,8 +17,10 @@ export class SendApiService extends HttpService {
   constructor(protected snackBar: MatSnackBar,
               protected http: HttpClient,
               protected loadingService:LoadingService,
-              protected domainsService: DomainsService) {
-    super(snackBar,http, loadingService);
+              protected domainsService: DomainsService,
+              protected router: Router)
+  {
+    super(snackBar,http, loadingService, router);
   }
 
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
