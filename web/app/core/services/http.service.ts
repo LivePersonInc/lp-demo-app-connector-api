@@ -53,9 +53,8 @@ export class HttpService {
       console.log(error);
     }
     // return an ErrorObservable with a user-facing error message
-
     return new ErrorObservable(
-      'Something bad happenned, please try again later'
+      error || 'An error occurred, please try again later'
     );
   }
 
@@ -78,10 +77,14 @@ export class HttpService {
   }
 
   protected errorResponse(error) {
-    this.loadingService.stopLoading();
-    this.snackBarConfig.panelClass = ['snack-error'];
     this.snackBarConfig.duration = null;
-    this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfig);
+    this.snackBarConfig.panelClass = ['snack-error'];
+    console.log(error);
+    if (error instanceof HttpErrorResponse) {
+      this.snackBar.open('[ERROR]: ' + error.status + " " + error.error.message, 'Close', this.snackBarConfig);
+    }else {
+      this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
+    }
   }
 
   protected successResponse(message) {
