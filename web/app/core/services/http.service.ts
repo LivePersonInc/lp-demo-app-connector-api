@@ -80,11 +80,10 @@ export class HttpService {
   protected errorResponse(error) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
-    console.log(error);
     if (error instanceof HttpErrorResponse) {
       this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
       if(error.status === 401) {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/logout');
 
       }
     }else {
