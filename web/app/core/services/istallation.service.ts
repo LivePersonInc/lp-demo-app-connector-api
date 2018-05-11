@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class InstallationService extends HttpService {
@@ -19,8 +20,8 @@ export class InstallationService extends HttpService {
   private baseURI = `http://${environment.server}:${environment.server_port}/installation/`;
 
 
-  constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService) {
-    super(snackBar,http, loadingService);
+  constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected  router: Router) {
+    super(snackBar,http, loadingService, router);
   }
 
   public init() {
