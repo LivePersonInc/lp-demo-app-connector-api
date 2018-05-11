@@ -24,6 +24,6 @@
 </div>
 
 <div class="next-button">
-  <button type="button" mat-button matStepperNext [disabled]="!accountConfigService.isAsyncMessagingActive">Next</button>
+  <button type="button" mat-button matStepperNext [disabled]="!accountConfigService.isAsyncMessagingActive" (click)="getInstalledApps()">Next</button>
 </div>
 
