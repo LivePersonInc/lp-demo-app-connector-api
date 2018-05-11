@@ -3,6 +3,7 @@ import { DomainsService } from './domains.service';
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
+import {Router} from "@angular/router";
 
 describe('DomainsService', () => {
   beforeEach(() => {
@@ -14,6 +15,10 @@ describe('DomainsService', () => {
         DomainsService,
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
+        {
+          provide: Router,
+          useClass: class { navigate = jasmine.createSpy("navigate"); }
+        },
         {provide: LoadingService, useValue: loadingService}
       ]
     });

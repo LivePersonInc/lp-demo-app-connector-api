@@ -13,4 +13,8 @@ export class LpNavComponent implements OnInit {
   ngOnInit() {
   }
 
+  isUserAuthenticated() {
+    return this.authenticationService.user && this.authenticationService.user.token;
+  }
+
 }

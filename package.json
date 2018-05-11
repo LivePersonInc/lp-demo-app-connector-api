@@ -29,6 +29,7 @@
     "@angular/router": "^5.2.0",
     "angular2-notifications": "^0.9.7",
     "body-parser": "^1.18.2",
+    "bootstrap": "^4.0.0",
     "consolidate": "^0.15.1",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",

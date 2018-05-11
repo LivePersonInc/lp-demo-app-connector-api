@@ -5,6 +5,7 @@ import {InstallationService} from "../../core/services/istallation.service";
 import {Router} from "@angular/router";
 import {MatStepper} from "@angular/material";
 import {ChangeDetectorRef} from "@angular/core";
+import {LoadingService} from "../../core/services/loading.service";
 
 describe('LpAppKeySecretComponent', () => {
   let component: LpAppKeySecretComponent;
@@ -18,6 +19,7 @@ describe('LpAppKeySecretComponent', () => {
   };
   const router = jasmine.createSpy( 'Router');
   const changeDetectorRef = jasmine.createSpy( 'ChangeDetectorRef');
+  const loadingService = jasmine.createSpy('LoadingService');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,9 +29,8 @@ describe('LpAppKeySecretComponent', () => {
         MatStepper,
         {provide: InstallationService, useValue: installationService},
         {provide: Router, useValue: router},
-        {provide: ChangeDetectorRef, useValue: changeDetectorRef},
-
-
+        {provide: LoadingService, useValue: loadingService},
+        {provide: ChangeDetectorRef, useValue: changeDetectorRef}
       ]
     })
     .compileComponents();

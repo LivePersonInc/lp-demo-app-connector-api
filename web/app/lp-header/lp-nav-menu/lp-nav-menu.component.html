@@ -1,4 +1,4 @@
-<div *ngIf="(authenticationService.user && authenticationService.user.token)">
+<div *ngIf="isUserAuthenticated()">
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon class="white-icon">more_vert</mat-icon>
   </button>

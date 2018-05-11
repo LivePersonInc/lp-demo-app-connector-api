@@ -4,6 +4,7 @@ import {SendApiService} from "./send-api.service";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
+import {Router} from "@angular/router";
 
 describe('ConversationService', () => {
   beforeEach(() => {
@@ -17,7 +18,11 @@ describe('ConversationService', () => {
         {provide: SendApiService, useValue: sendApiService},
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
-        {provide: LoadingService, useValue: loadingService}
+        {provide: LoadingService, useValue: loadingService},
+        {
+          provide: Router,
+          useClass: class { navigate = jasmine.createSpy("navigate"); }
+        }
       ]
     });
 
