@@ -6,10 +6,12 @@ import {LpTestServicesComponent} from "./lp-test-services/lp-test-services.compo
 import {LpDemoComponent} from "./lp-demo/lp-demo.component";
 import {LpStartTutotialComponent} from "./lp-start-tutorial/lp-start-tutotial.component";
 import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
+import {LogoutGuard} from "./core/guards/logout.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: LpHomeComponent},
+  {path: 'logout', component: LpHomeComponent, canActivate: [LogoutGuard]},
   {path: 'demo', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
   {path: 'home/start', component: LpStartTutotialComponent,   canActivate: [AuthGuardGuard]}
 ];
