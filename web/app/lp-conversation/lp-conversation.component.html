@@ -11,23 +11,28 @@
           <div class="col-sm-6">
             <mat-form-field class="full-width" color="accent">
               <input matInput placeholder="Brand ID" required [(ngModel)]="brandId"
+                     [disabled]="conversation && conversation.isConvStarted"
                      [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>
           <div class="col-sm-6">
             <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="App Key" required [(ngModel)]="appKey" [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="Installation id" required [(ngModel)]="appKey"
+                     [disabled]="conversation && conversation.isConvStarted"
+                     [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>
           <div class="col-sm-6">
             <mat-form-field class="full-width" color="accent">
               <input matInput placeholder="Consumer Name" required [(ngModel)]="userName"
+                     [disabled]="conversation && conversation.isConvStarted"
                      [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>
           <div class="col-sm-6">
             <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="App Secret" required [(ngModel)]="appSecret"
+              <input matInput placeholder="Secret" required [(ngModel)]="appSecret"
+                     [disabled]="conversation && conversation.isConvStarted"
                      [ngModelOptions]="{standalone: true}">
             </mat-form-field>
           </div>

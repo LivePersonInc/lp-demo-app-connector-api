@@ -46,7 +46,9 @@ export class InstallationService extends HttpService {
 
   public getAppListList() {
     this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
-      this.appList = data.map( app => new AppInstall().deserialize(app));
+      this.appList = data.map( app => new AppInstall().deserialize(app)).filter( app => this.isValid(app));
+      console.log(this.appList);
+
       this.loadingService.stopLoading();
       this.installationSubject.next('GET_APP_LIST');
     }, error => {
@@ -80,6 +82,10 @@ export class InstallationService extends HttpService {
     this.headers = {};
     this.brandId = null;
     this.installationSubject.next('RESET');
+  }
+
+  private isValid(app: AppInstall): boolean{
+    return !(!app.enabled || (!app.scope || app.scope !== 'msg.consumer'));
   }
 
 }
