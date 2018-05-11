@@ -27,7 +27,7 @@ export class AccountConfigService extends HttpService {
         this.brandId = this.authenticationService.user.brandId;
         this.headers = {
           'headers': {
-            'Authorization': `Bearer ${this.authenticationService.user.token}`,
+            'Authorization': `Bearer ${this.authenticationService.user.token}XXX`,
           }
         };
       }

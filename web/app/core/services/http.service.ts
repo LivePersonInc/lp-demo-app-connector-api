@@ -81,10 +81,12 @@ export class HttpService {
     this.snackBarConfig.panelClass = ['snack-error'];
     console.log(error);
     if (error instanceof HttpErrorResponse) {
-      this.snackBar.open('[ERROR]: ' + error.status + " " + error.error.message, 'Close', this.snackBarConfig);
+      this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText), 'Close', this.snackBarConfig);
     }else {
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
     }
+    this.loadingService.stopLoading();
+
   }
 
   protected successResponse(message) {
