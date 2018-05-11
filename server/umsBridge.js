@@ -35,7 +35,7 @@ router.post("/openconv/:id", function (req, res, next) {
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send("somthing wrong");
+      res.status(500).send("Something was wrong");
     });
   });
 
@@ -67,7 +67,7 @@ router.post("/sendraw/:id", function (req, res, next) {
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send('Something broke!');
+      res.status(500).send('Something was wrong!');
     });
   });
 
@@ -92,7 +92,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected");
-    res.status(500).send('Something broke!')
+    res.status(500).send('Something was wrong!')
   });
 
 });
