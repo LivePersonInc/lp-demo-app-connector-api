@@ -7,6 +7,11 @@ import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
 import {DomainsService} from "./domains.service";
+import {InstallationService} from "./istallation.service";
+import {ConversationEvent} from "../../shared/models/conversation/conversationEvent.model";
+import {AccountConfigService} from "./account-config.service";
+import {ConversationService} from "./conversation.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -16,9 +21,11 @@ export class AuthenticationService extends HttpService {
   constructor(protected http: HttpClient,
               protected snackBar: MatSnackBar,
               protected domainsService: DomainsService,
-              protected loadingService:LoadingService)
+              protected loadingService:LoadingService,
+              protected router: Router,
+  )
   {
-    super( snackBar,  http,loadingService);
+    super( snackBar, http,loadingService, router);
   }
 
   //Bearer Token
@@ -47,7 +54,6 @@ export class AuthenticationService extends HttpService {
     //sessionStorage.removeItem("lp-logged-in-user");
     this._user = null;
     this.userLoggedSubject.next('LOGGED-OUT');
-
   }
 
 }
