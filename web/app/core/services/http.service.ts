@@ -5,12 +5,13 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {LoadingService} from "./loading.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class HttpService {
   protected snackBarConfig = new MatSnackBarConfig();
 
-  constructor(protected snackBar: MatSnackBar, protected http: HttpClient, protected loadingService:LoadingService) {
+  constructor(protected snackBar: MatSnackBar, protected http: HttpClient, protected loadingService:LoadingService, protected router: Router) {
     this.snackBarConfig.verticalPosition = 'top';
     this.snackBarConfig.horizontalPosition = 'right';
   }
@@ -81,7 +82,11 @@ export class HttpService {
     this.snackBarConfig.panelClass = ['snack-error'];
     console.log(error);
     if (error instanceof HttpErrorResponse) {
-      this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText), 'Close', this.snackBarConfig);
+      this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
+      if(error.status === 401) {
+        this.router.navigateByUrl('/home');
+
+      }
     }else {
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
     }
