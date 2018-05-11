@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SendApiService} from "../core/services/send-api.service";
-import {HttpHeaders} from "@angular/common/http";
+import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Subscription} from "rxjs/Subscription";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material";
 import {ConsumerRequestConversation} from "../shared/models/send-api/ConsumerRequestConversation.model";
@@ -165,11 +165,15 @@ export class LpTestServicesComponent implements OnInit {
   }
 
   private handleError(error) {
-    this.snackBarConfing.duration = 2000;
-    this.snackBarConfing.duration = null;
     this.loadingService.stopLoading();
+    this.snackBarConfing.duration = null;
     this.snackBarConfing.panelClass = ['snack-error'];
-    this.snackBar.open('[ERROR] Response code: ' + error, 'Close', this.snackBarConfing);
+    console.log(error);
+    if (error instanceof HttpErrorResponse) {
+      this.snackBar.open('[ERROR]: ' + error.status + " " + error.error.message, 'Close', this.snackBarConfing);
+    }else {
+      this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfing);
+    }
   }
 
   private handleSuccess(message) {
