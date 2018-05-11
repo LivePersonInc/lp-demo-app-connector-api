@@ -25,7 +25,6 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountConfigService.acSubject.subscribe( event => {
       if(event === 'GET_LIST'){
-        this.getInstalledApps();
         this.completed.emit(true);
       }
     });
@@ -39,10 +38,8 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   public redirectToHome(){
     this.router.navigateByUrl('/home');
   }
-  private getInstalledApps() {
-    if(!this.installationService.appList && this.installationService.brandId){
-      this.installationService.getAppListList();
-    }
+  public getInstalledApps() {
+    this.installationService.getAppListList();
   }
 
 }

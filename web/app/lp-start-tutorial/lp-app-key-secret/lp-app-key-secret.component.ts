@@ -4,6 +4,7 @@ import {AppInstall} from "../../shared/models/app-installation/appInstall.model"
 import {MatSelectChange} from "@angular/material";
 import {Router} from "@angular/router";
 import {ISubscription} from "rxjs/Subscription";
+import {LoadingService} from "../../core/services/loading.service";
 
 @Component({
   selector: 'lp-app-key-secret',
@@ -17,10 +18,14 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   public isCompleted: boolean;
   public selectedApp: AppInstall;
   public appList = [];
+  public isLoading: boolean;
 
   private installationSubscription:ISubscription;
 
-  constructor(private installationService:InstallationService,private router: Router) { }
+  constructor(
+    private installationService:InstallationService,
+    private router: Router,
+    private loadingService: LoadingService) { }
 
   ngOnInit() {
     if(this.installationService.appList) {
@@ -31,6 +36,10 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
         this.appList = this.installationService.appList;
       }
     });
+
+    this.loadingService.isLoadingSubscription().subscribe( event => {
+      this.isLoading = event;
+    })
   }
 
   ngOnDestroy(){

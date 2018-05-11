@@ -30,7 +30,7 @@ export class InstallationService extends HttpService {
         'Authorization': `Bearer ${this.authenticationService.user.token}`,
       }
     };
-    this.getAppListList();
+    //this.getAppListList();
   }
 
   get selectedApp(): AppInstall {
