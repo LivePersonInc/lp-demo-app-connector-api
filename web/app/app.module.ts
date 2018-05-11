@@ -24,6 +24,7 @@ import {DomainHeaderInterceptor} from "./core/interceptors/domain-header.interce
 import {LpHeaderModule} from "./lp-header/lp-header.module";
 import {LpConversationModule} from "./lp-conversation/lp-conversation.module";
 import {LpStartTutorialModule} from "./lp-start-tutorial/lp-start-tutorial.module";
+import {LogoutGuard} from "./core/guards/logout.guard";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,18 @@ import {LpStartTutorialModule} from "./lp-start-tutorial/lp-start-tutorial.modul
     AppRoutingModule
   ],
   entryComponents: [LpConfirmationDialogComponent],
-  providers: [SendApiService, AuthenticationService, AccountConfigService, AuthGuardGuard, InstallationService, LoadingService, HttpService, ConversationService, DomainsService,{
+  providers: [
+    SendApiService,
+    AuthenticationService,
+    AccountConfigService,
+    AuthGuardGuard,
+    LogoutGuard,
+    InstallationService,
+    LoadingService,
+    HttpService,
+    ConversationService,
+    DomainsService,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: DomainHeaderInterceptor,
     multi: true,

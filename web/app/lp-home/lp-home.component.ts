@@ -71,7 +71,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
   public authenticate() {
     //First of all we need to know the domains
-    this.resetState(); //XXX
     this.domainsService.getDomainList(this.brandId);
   }
 
@@ -87,16 +86,11 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.authenticationService.logOut();
-        this.resetState();
+        this.router.navigateByUrl('/logout');
       }
     });
   }
 
-  public resetState() {
-    this.installationService.reset();
-    this.conversationService.reset();
-    this.accountConfigService.reset();
-  }
+
 
 }
