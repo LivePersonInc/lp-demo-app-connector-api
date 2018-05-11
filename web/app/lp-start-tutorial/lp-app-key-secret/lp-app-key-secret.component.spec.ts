@@ -19,7 +19,13 @@ describe('LpAppKeySecretComponent', () => {
   };
   const router = jasmine.createSpy( 'Router');
   const changeDetectorRef = jasmine.createSpy( 'ChangeDetectorRef');
-  const loadingService = jasmine.createSpy('LoadingService');
+  const loadingService = {
+    isLoadingSubscription: () => {
+      return  {
+        subscribe: () => {}
+      };
+    }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,8 +35,8 @@ describe('LpAppKeySecretComponent', () => {
         MatStepper,
         {provide: InstallationService, useValue: installationService},
         {provide: Router, useValue: router},
-        {provide: LoadingService, useValue: loadingService},
-        {provide: ChangeDetectorRef, useValue: changeDetectorRef}
+        {provide: ChangeDetectorRef, useValue: changeDetectorRef},
+        {provide: LoadingService, useValue: loadingService}
       ]
     })
     .compileComponents();
