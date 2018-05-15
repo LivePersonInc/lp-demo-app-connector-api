@@ -22,7 +22,7 @@ export class DomainsService extends HttpService{
         this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
       }
       this.domainsSubject.next('READY');
-      this.loadingService.stopLoading();
+      //this.loadingService.stopLoading();
     }, error => {
       console.log(error);
       this.errorResponse(error);
