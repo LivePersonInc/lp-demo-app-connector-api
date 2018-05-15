@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Conversation} from "../shared/models/conversation/conversation";
+import {Conversation} from "../shared/models/conversation/conversation.model";
 import {ConversationService} from "../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../shared/models/conversation/conversationEvent.model";
 import {AuthenticationService} from "../core/services/authentication.service";
