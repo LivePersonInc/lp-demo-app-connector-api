@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card *ngIf="!authenticationService.user" [@fadeInAnimation]>
+  <mat-card *ngIf="!isAuthenticated" [@fadeInAnimation]>
     <mat-card-title>
       Welcome to demo connector App
     </mat-card-title>
@@ -54,7 +54,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="authenticationService.user">
+  <mat-card *ngIf="isAuthenticated">
     <mat-card-title class="m-0">
       Settings properties
     </mat-card-title>
