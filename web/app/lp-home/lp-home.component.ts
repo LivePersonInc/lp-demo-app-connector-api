@@ -42,6 +42,9 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if(this.authenticationService.user){
+      this.isAuthenticated = true;
+    }
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
         this.goToStartConfigPage();
@@ -54,7 +57,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.authenticationService.login(this.brandId, this.userName, this.password);
       }
     });
-
     this.loginForm = this.fb.group({
       'brand': new FormControl('', [Validators.required],),
       'email': new FormControl('', [Validators.email, Validators.required],),
