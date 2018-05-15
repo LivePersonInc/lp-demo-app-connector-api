@@ -53,7 +53,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationService.openConversation(this.userName, this.brandId, this.appKey, this.appSecret, initialMessage);
+    this.conversationService.openConversation(this.brandId, this.appKey, this.appSecret, this.userName, initialMessage);
   }
 
   public closeConversation() {
