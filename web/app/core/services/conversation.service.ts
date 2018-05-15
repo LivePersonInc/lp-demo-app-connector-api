@@ -8,7 +8,7 @@ import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
-import {Conversation} from "../../shared/models/conversation/conversation";
+import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {Router} from "@angular/router";
 import {ChatMessage} from "../../shared/models/conversation/chatMessage.model";
