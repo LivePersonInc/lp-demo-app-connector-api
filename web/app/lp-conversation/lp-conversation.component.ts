@@ -57,12 +57,12 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public closeConversation() {
-    this.conversationService.closeConversation(this.conversation.conversationId);
+    this.conversationService.closeConversation();
   }
 
   public sendMessage(messageText : string) {
     if(this.conversation &&  this.conversation.isConvStarted){
-      this.conversationService.sendMessage(messageText, this.conversation.conversationId);
+      this.conversationService.sendMessage(messageText);
     }else{
       this.startConversation(messageText);
     }

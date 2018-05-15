@@ -50,7 +50,7 @@ export class ConversationService extends HttpService {
             return this.openConversationRequest(initialMessage).map((res: any) => {
               this.conversation.conversationId = res["convId"];
               this.conversation.isConvStarted = true;
-              this.subscribeToMessageNotifications(this.conversation.conversationId);
+              this.subscribeToMessageNotifications(this.conversation);
               this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
               this.conversation.messages.push(new ChatMessage("sent", new Date, initialMessage, this.conversation.userName, "ok", this.getShowUserValue(this.conversation.userName)));
               this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
@@ -65,31 +65,14 @@ export class ConversationService extends HttpService {
     });
   }
 
-  public closeConversation(conversationId: string) {
-    const headers = {
-      'headers': {
-        'content-type': 'application/json',
-        'Authorization': this.conversation.appJWT,
-        'x-lp-on-behalf': this.conversation.consumerJWS
-      }
-    };
-    this.sendApiService.closeConversation(this.conversation.branId, this.conversation.conversationId, headers).subscribe(res => {
-      this.unSubscribeToMessageNotifications();
-      this.conversation.isConvStarted = false;
-      this.conversationEventSubject.next(new ConversationEvent(conversationId, ConvEvent.CLOSE));
-      this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
-    }, error => {
-      this.errorResponse(error);
-    });
-  }
 
-  public sendMessage(message: string, conversationId: string) {
+  public sendMessage(message: string) {
     if (this.conversation.isConvStarted) {
       this.sendMessageRequest(message).subscribe(res => {
         console.log(res);
         this.conversation.messages.push(new ChatMessage("sent", new Date, message, this.conversation.userName, "ok", this.getShowUserValue(this.conversation.userName)));
         this.successResponse("Message successfully sent to conversation with id " + this.conversation.conversationId);
-        this.conversationEventSubject.next(new ConversationEvent(conversationId, ConvEvent.MESSAGE_SENT));
+        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
       }, error => {
         this.loadingService.stopLoading();
         this.handleError(error);
@@ -101,10 +84,28 @@ export class ConversationService extends HttpService {
     }
   }
 
+  public closeConversation() {
+    const headers = {
+      'headers': {
+        'content-type': 'application/json',
+        'Authorization': this.conversation.appJWT,
+        'x-lp-on-behalf': this.conversation.consumerJWS
+      }
+    };
+    this.sendApiService.closeConversation(this.conversation.branId, this.conversation.conversationId, headers).subscribe(res => {
+      this.unSubscribeToMessageNotifications(this.conversation);
+      this.conversation.isConvStarted = false;
+      this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
+      this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
+    }, error => {
+      this.errorResponse(error);
+    });
+  }
+
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
-      //this.closeConversation();
-      this.unSubscribeToMessageNotifications();
+      this.closeConversation();
+      this.unSubscribeToMessageNotifications(this.conversation);
     }
     this.conversation = null;
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
@@ -225,25 +226,24 @@ export class ConversationService extends HttpService {
     return this.conversation.messages && (this.conversation.messages.length === 0 || this.conversation.messages[this.conversation.messages.length - 1].userName !== userName);
   }
 
-  private subscribeToMessageNotifications(conversationId: string) {
-    this.conversation.eventSource = new EventSourcePolyfill(`http://${environment.server}:${environment.server_port}/notifications/subscribe/${conversationId}`, {});
+  private subscribeToMessageNotifications(conversation: Conversation) {
+    conversation.eventSource = new EventSourcePolyfill(`http://${environment.server}:${environment.server_port}/notifications/subscribe/${conversation.conversationId}`, {});
 
-    this.conversation.eventSource.onmessage = (notification => {
+    conversation.eventSource.onmessage = (notification => {
       this.handleIncomingNotifications(notification);
     });
-
-    this.conversation.eventSource.onopen = (a) => {
+    conversation.eventSource.onopen = (a) => {
       console.log("OPEN");
     };
-    this.conversation.eventSource.onerror = (e) => {
+    conversation.eventSource.onerror = (e) => {
       console.log(e);
 
     }
   }
 
-  private unSubscribeToMessageNotifications() {
-    if (this.conversation.eventSource instanceof EventSourcePolyfill) {
-      this.conversation.eventSource.close();
+  private unSubscribeToMessageNotifications(conversation: Conversation) {
+    if (conversation.eventSource instanceof EventSourcePolyfill) {
+      conversation.eventSource.close();
     } else {
       console.log("Error: There is not any instance of EventSourcePolyfill");
     }
