@@ -39,8 +39,11 @@ export class AuthenticationService extends HttpService {
          this._user.token = res.bearer;
          this._user.userName = username;
          this._user.brandId = brandId;
-         this.userLoggedSubject.next('LOGGED-IN');
          this.successResponse('Authentication was successful ');
+         setTimeout(()=>{
+           this.userLoggedSubject.next('LOGGED-IN');
+         }, 1500);
+
       }, error => {
          this.errorResponse("Problem with Authentication");
        });

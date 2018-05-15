@@ -20,6 +20,7 @@ import {DomainsService} from "../core/services/domains.service";
 })
 export class LpHomeComponent implements OnInit, OnDestroy {
   public brandId: string;
+  public isAuthenticated: boolean;
   public userName: string;
   public password: string;
   public authenticationService: AuthenticationService;
@@ -42,10 +43,9 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
-      console.log("authenticationService");
-      console.log(event);
       if (event === 'LOGGED-IN') {
         this.goToStartConfigPage();
+        this.isAuthenticated = true;
         this.installationService.init();
       }
     });
