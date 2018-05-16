@@ -59,14 +59,13 @@ export class HttpService {
     );
   }
 
-  protected errorResponse(error) {
+  public errorResponse(error) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
     if (error instanceof HttpErrorResponse) {
       this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
       if(error.status === 401) {
         this.router.navigateByUrl('/logout');
-
       }
     }else {
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
@@ -75,7 +74,7 @@ export class HttpService {
 
   }
 
-  protected successResponse(message) {
+  public successResponse(message) {
     this.loadingService.stopLoading();
     this.snackBarConfig.duration = 2000;
     this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfig);
