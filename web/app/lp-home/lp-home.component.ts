@@ -51,6 +51,9 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.isAuthenticated = true;
         this.installationService.init();
       }
+      if (event === 'LOGGED-OUT') {
+        this.isAuthenticated = false;
+      }
     });
     this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
       if(event === 'READY') {
@@ -88,6 +91,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
+        console.log("FSF");
         this.router.navigateByUrl('/logout');
       }
     });
