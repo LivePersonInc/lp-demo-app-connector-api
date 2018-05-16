@@ -24,7 +24,6 @@ export class ConversationService extends HttpService {
               protected conversationManager: ConversationManager,
               protected http: HttpClient,
               protected loadingService: LoadingService,
-              protected sendApiService: SendApiService,
               protected router: Router,) {
     super(snackBar, http, loadingService, router);
   }
