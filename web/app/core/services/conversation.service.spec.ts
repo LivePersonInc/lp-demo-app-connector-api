@@ -1,21 +1,21 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {ConversationService} from './conversation.service';
-import {SendApiService} from "./send-api.service";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
+import {ConversationManager} from "../helpers/conversation-manager";
 
 describe('ConversationService', () => {
   beforeEach(() => {
     const snackBar = jasmine.createSpy('MatSnackBar');
     const http = jasmine.createSpy('HttpClient');
     const loadingService = jasmine.createSpy('LoadingService');
-    const sendApiService = jasmine.createSpy('SendApiService');
+    const conversationManager = jasmine.createSpy('ConversationManager');
     TestBed.configureTestingModule({
       providers: [
         ConversationService,
-        {provide: SendApiService, useValue: sendApiService},
+        {provide: ConversationManager, useValue: conversationManager},
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
         {provide: LoadingService, useValue: loadingService},
