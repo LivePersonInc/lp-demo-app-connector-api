@@ -35,7 +35,6 @@ export class ConversationManager {
               conversation.isConvStarted = true;
               this.subscribeToMessageNotifications(conversation);
               conversation.messages.push(new ChatMessage("sent", new Date, initialMessage, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation)));
-              //conversation.messages.push(new ChatMessage("sent", new Date, initialMessage, conversation.userName, "ok", false));
             });
           })
       });
@@ -85,7 +84,6 @@ export class ConversationManager {
       console.log("Error: There is not any instance of EventSourcePolyfill");
     }
   }
-
 
   private getAppJWT(conversation: Conversation): Observable<any> {
     const httpOptions = {
@@ -165,7 +163,6 @@ export class ConversationManager {
   }
 
   private getShowUserValue(userName: string, conversation: Conversation): boolean {
-    //TODO: DOes not show the angen maybe it should be removed
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
