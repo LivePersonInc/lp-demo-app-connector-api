@@ -73,7 +73,6 @@
               color="primary"
               class="start-config-btn"
               (click)="openConfirmationDialog()"
-
       >
         Log out
         <i class="material-icons">account_circle</i>
@@ -83,7 +82,9 @@
 
 </div>
 
-<footer class="footer text-center">
+<footer class="footer text-center" *ngIf="!isAuthenticated">
   <span>&copy; 2018 LivePerson, Inc. All rights reserved.</span>
 </footer>
+
+
 
