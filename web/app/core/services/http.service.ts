@@ -59,24 +59,6 @@ export class HttpService {
     );
   }
 
-  protected handleResponse(response: Response, body: any, confirmShow: boolean): void {
-    let jsonBody: any;
-
-    if (body) {
-      jsonBody = JSON.parse(body);
-    }
-
-    if (confirmShow) {
-      if (response.status < 300 && response.status >= 200) {
-        this.snackBar.open('Request successfully sent: ' + response.status + ' ' + response.statusText, null, this.snackBarConfig);
-
-      } else {
-        this.snackBarConfig.panelClass = ['snack-error'];
-        this.snackBar.open('[ERROR] Response code: ' + response.status + ' ' + jsonBody.message, 'Close', this.snackBarConfig);
-      }
-    }
-  }
-
   protected errorResponse(error) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
