@@ -37,11 +37,11 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
+      "project": "web/tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json",
+      "project": "web/tsconfig.spec.json",
       "exclude": "**/node_modules/**"
     },
     {
