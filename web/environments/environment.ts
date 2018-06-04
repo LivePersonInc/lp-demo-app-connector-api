@@ -5,6 +5,6 @@ export const environment = {
   //Services names to get the domain with the CSDS
   authentication: "agentVep",
   installation:"accountConfigReadWrite",
-  ums:"asyncMessaging",
+  ums:"asyncMessagingEnt",
   account: "accountConfigReadWrite",
 };
