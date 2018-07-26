@@ -24,7 +24,7 @@ export class SendApiService extends HttpService {
   }
 
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
-    return this.doPost(`https://${this.domainsService.getDomainByServiceName('sentinel')}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions);
+    return this.doPost(`https://${this.domainsService.getDomainByServiceName('sentinel') || 'ca-a.sentinel.liveperson.net'}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions);
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
