@@ -33,5 +33,4 @@ export class DomainsService extends HttpService{
     return this.domains[serviceName];
   }
 
-
 }
