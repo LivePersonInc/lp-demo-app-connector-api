@@ -1,11 +1,16 @@
 {
   "name": "lp-demo-app-connector-api",
+  "description": "Demo connector web app that allows to stablish a conversation as consumer with UMS agents",
   "version": "0.0.1",
   "license": "MIT",
   "author": {
-    "name": "Enrique Plaza",
-    "email": "eplaza@liveperson.com"
+    "name": "LivePersonInc",
+    "email": "messaging-ext-lp@liveperson.com"
   },
+  "contributors": [{
+    "name": "Enrique Plaza Soria",
+    "email": "eplaza@liveperson.com"
+  }],
   "scripts": {
     "ng": "ng",
     "start": "ng serve ",
