@@ -1,6 +1,6 @@
 {
   "name": "lp-demo-app-connector-api",
-  "description": "Demo connector web app that allows to stablish a conversation as consumer with UMS agents",
+  "description": "Web app that allows to stablish a conversation as consumer with UMS trouthg the SendAPI",
   "version": "0.0.1",
   "license": "MIT",
   "author": {
