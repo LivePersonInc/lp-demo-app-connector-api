@@ -26,13 +26,13 @@ Before running or deployment it is necessary to setup some configuration paramet
 - settings.json:
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (QA csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
-  https, if u are using https the port cant be chaged (443).
-- **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:** 
+  https, if u are using https the port cant be changed (443).
+- **web/environments/environment.prod.ts** and **web/environments/environment.ts:** 
 Here we have the the [server] property and [server_port].
-  1. Development Mode (enviromment.ts): ``server: localhost, server_port: 8282``
-  1. Production Mode (enviromment.prod.ts): server: The ip or ur sever domain (where this app is running) and server_port 8282. (e.g: 192.168.98.82:8282)
+  1. Development Mode (environment.ts): ``server: localhost, server_port: 8282``
+  1. Production Mode (environment.prod.ts): server: The ip or ur sever domain (where this app is running) and server_port 8282. (e.g: 192.168.98.82:8282)
   
-  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/enviroments/enviromment.prod.ts** and **web/enviroments/enviromment.ts:**  (server_port prop).
+  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/environments/environment.prod.ts** and **web/environments/environment.ts:**  (server_port prop).
  
 ## Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 
@@ -47,7 +47,7 @@ To run the application using the dev server instead a built project:
 
 1. ```npm install```
 2. ```sudo node app``` to run the server
-2. ```ng serve``` to run web develpment server
+2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
 ### Production Mode:
