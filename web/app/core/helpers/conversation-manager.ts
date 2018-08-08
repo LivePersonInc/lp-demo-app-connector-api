@@ -23,18 +23,17 @@ export class ConversationManager {
 
   constructor(private sendApiService:SendApiService){}
 
-  public openConversation(conversation: Conversation, initialMessage: string): Observable<any> {
+  public openConversation(conversation: Conversation): Observable<any> {
     return this.getAppJWT(conversation)
       .flatMap((res: any) => {
         conversation.appJWT = res['access_token'];
         return this.getConsumerJWS(conversation)
           .flatMap((res: any) => {
             conversation.consumerJWS = res['token'];
-            return this.openConversationRequest(initialMessage, conversation).map((res: any) => {
+            return this.openConversationRequest(conversation).map((res: any) => {
               conversation.conversationId = res["convId"];
               conversation.isConvStarted = true;
               this.subscribeToMessageNotifications(conversation);
-              conversation.messages.push(new ChatMessage("sent", new Date, initialMessage, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation)));
             });
           })
       });
@@ -117,7 +116,7 @@ export class ConversationManager {
     return this.sendApiService.sendMessage(conversation.branId, conversation.conversationId, body, headers);
   };
 
-  private openConversationRequest(initialMessage: string, conversation: Conversation): Observable<any> {
+  private openConversationRequest(conversation: Conversation): Observable<any> {
     const headers = {
       'headers': {
         'content-type': 'application/json',
@@ -125,7 +124,7 @@ export class ConversationManager {
         'x-lp-on-behalf': conversation.consumerJWS
       }
     };
-    const body = JSON.stringify(this.getOpenConvRequestBody(initialMessage, conversation.userName, conversation));
+    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
@@ -166,7 +165,7 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getOpenConvRequestBody(initialMessage: string, userName: string, conversation: Conversation): any {
+  private getOpenConvRequestBody(userName: string, conversation: Conversation): any {
     let body = [];
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
@@ -177,7 +176,6 @@ export class ConversationManager {
       "-1"
     );
     conversation.requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
-
 
     let pushNotificationData = new PushNotificationData("Service", "CertName", "TOKEN");
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
@@ -192,14 +190,7 @@ export class ConversationManager {
     );
     conversation.setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
 
-    let event = new Event("ContentEvent", "text/plain", initialMessage);
-    let publishContentEvent = new PublishContentEvent(conversation.conversationId, event);
-    conversation.sendMsgPayload = new Request("req", "3", "ms.PublishEvent", publishContentEvent);
-
-
-    return body = [conversation.setUserProfilePayload, conversation.requestConversationPayload, conversation.sendMsgPayload];
+    return body = [conversation.setUserProfilePayload, conversation.requestConversationPayload];
   }
-
-
 
 }
