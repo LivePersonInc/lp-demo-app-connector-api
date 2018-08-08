@@ -30,9 +30,10 @@ export class ConversationService extends HttpService {
 
   public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string) {
     this.conversation = new Conversation(brandId, appKey, appSecret, userName);
-    this.conversationManager.openConversation(this.conversation, initialMessage).subscribe(res => {
+    this.conversationManager.openConversation(this.conversation).subscribe(res => {
       this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
+      this.sendMessage(initialMessage);
     }, error => {
       this.errorResponse(error);
     });
