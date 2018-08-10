@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && sudo node app --unsafe-perm",
+    "start": "ng build --prod && node app --unsafe-perm",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -51,9 +51,7 @@
     "node-rest-client": "^3.1.0",
     "rxjs": "^5.5.6",
     "sse-nodejs": "^0.1.0",
-    "zone.js": "^0.8.19"
-  },
-  "devDependencies": {
+    "zone.js": "^0.8.19",
     "@angular/cli": "~1.7.0",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
