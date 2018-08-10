@@ -13,6 +13,12 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 3. Open ``` http://localhost:8282``` in your browser. 
 4. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
 
+## Run with docker:
+
+1. Create the image ```docker build -t demo-connector-app .```
+2. Create the image ```docker run -p 443:443 -d demo-connector-app ```
+3. Open ``` https://localhost``` in your browser.
+
 ## Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
