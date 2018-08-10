@@ -7,6 +7,11 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 - Node 6.9.0 or higher, together with NPM 3 or higher.
 - Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
 
+## Run:
+
+1. ```npm start```
+2. Open ``` http://localhost:8282``` in your browser. 
+
 ## Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
@@ -16,7 +21,7 @@ The server is also used as a bridge to avoid Cross-Domain restrictions in the br
 ## Settings
 Before running or deployment it is necessary to setup some configuration parameters:
 - settings.json:
-  1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (QA csds domain by default)
+  1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (Production csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
   https, if u are using https the port cant be changed (443).
 - **web/environments/environment.prod.ts** and **web/environments/environment.ts:** 
@@ -25,11 +30,6 @@ Here we have the the [server] property and [server_port].
   1. Production Mode (environment.prod.ts): server: The ip or ur sever domain (where this app is running) and server_port 8282. (e.g: 192.168.98.82:8282)
   
   ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/environments/environment.prod.ts** and **web/environments/environment.ts:**  (server_port prop).
- 
-## Run:
-
-1. ```npm start```
-2. Open ``` http://localhost:8282``` in your browser. 
 
 
 ### Webhooks Setup 
