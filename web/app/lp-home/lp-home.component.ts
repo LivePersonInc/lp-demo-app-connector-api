@@ -62,7 +62,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     });
     this.loginForm = this.fb.group({
       'brand': new FormControl('', [Validators.required],),
-      'email': new FormControl('', [Validators.email, Validators.required],),
+      'email': new FormControl('', [Validators.required],),
       'password': new FormControl('', [Validators.required],)
     });
   }
