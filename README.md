@@ -8,10 +8,10 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 - Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
 
 ## Run:
-
-1. ```npm start```
-2. Open ``` http://localhost:8282``` in your browser. 
-3. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
+1. ```npm install``` 
+2. ```npm start```
+3. Open ``` http://localhost:8282``` in your browser. 
+4. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
 
 ## Project structure
 
