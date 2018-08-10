@@ -31,7 +31,6 @@ export class InstallationService extends HttpService {
         'Authorization': `Bearer ${this.authenticationService.user.token}`,
       }
     };
-    //this.getAppListList();
   }
 
   get selectedApp(): AppInstall {
@@ -43,12 +42,9 @@ export class InstallationService extends HttpService {
     this.installationSubject.next('APP_SELECTED');
   }
 
-
   public getAppListList() {
     this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app)).filter( app => this.isValid(app));
-      console.log(this.appList);
-
       this.loadingService.stopLoading();
       this.installationSubject.next('GET_APP_LIST');
     }, error => {
