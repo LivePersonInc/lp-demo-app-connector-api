@@ -9,7 +9,7 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 ## Run:
 1. ```npm install``` 
-2. ```npm start```
+2. ```sudo npm start```
 3. Open ``` http://localhost:8282``` in your browser. 
 4. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
 
@@ -25,13 +25,6 @@ Before running or deployment it is necessary to setup some configuration paramet
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (Production csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
   https, if u are using https the port cant be changed (443).
-- **web/environments/environment.prod.ts** and **web/environments/environment.ts:** 
-Here we have the the [server] property and [server_port].
-  1. Development Mode (environment.ts): ``server: localhost, server_port: 8282``
-  1. Production Mode (environment.prod.ts): server: The ip or ur sever domain (where this app is running) and server_port 8282. (e.g: 192.168.98.82:8282)
-  
-  ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/environments/environment.prod.ts** and **web/environments/environment.ts:**  (server_port prop).
-
 
 ### Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 

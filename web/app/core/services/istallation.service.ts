@@ -17,7 +17,7 @@ export class InstallationService extends HttpService {
   public brandId;
   private _selectedApp: AppInstall;
   private headers = {};
-  private baseURI = `http://${environment.server}:${environment.server_port}/installation/`;
+  private baseURI = `https://${environment.server}/installation/`;
 
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected  router: Router) {
