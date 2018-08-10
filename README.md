@@ -7,14 +7,6 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 - Node 6.9.0 or higher, together with NPM 3 or higher.
 - Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
 
-## Table of Contents
-
-* Project structure
-* Settings
-* Webhooks Setup
-* Development Mode
-* Production Mode
-
 ## Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
@@ -34,7 +26,13 @@ Here we have the the [server] property and [server_port].
   
   ***NOTE:*** If id you change **[SERVER_HTTP_PORT]** you have to add the same port in **web/environments/environment.prod.ts** and **web/environments/environment.ts:**  (server_port prop).
  
-## Webhooks Setup 
+## Run:
+
+1. ```npm start```
+2. Open ``` http://localhost:8282``` in your browser. 
+
+
+### Webhooks Setup 
 In your app installation you need to add this webhook listener server url:<br/> 
 
 ``https://{your server domain or ip}/notifications/event``
@@ -50,9 +48,3 @@ To run the application using the dev server instead a built project:
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
-### Production Mode:
-
-1. ```npm install```
-2. ```ng build --prod```  to build a compiled version.
-3. ``sudo node app`` to run the server.
-4. Open ``` http://localhost:8282``` in your browser.

@@ -7,13 +7,15 @@
     "name": "LivePersonInc",
     "email": "messaging-ext-lp@liveperson.com"
   },
-  "contributors": [{
-    "name": "Enrique Plaza Soria",
-    "email": "eplaza@liveperson.com"
-  }],
+  "contributors": [
+    {
+      "name": "Enrique Plaza Soria",
+      "email": "eplaza@liveperson.com"
+    }
+  ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve ",
+    "start": "ng build --prod && sudo node app --unsafe-perm",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -59,6 +61,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+    "concurrently": "^3.6.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
