@@ -11,6 +11,7 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 1. ```npm start```
 2. Open ``` http://localhost:8282``` in your browser. 
+3. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
 
 ## Project structure
 
