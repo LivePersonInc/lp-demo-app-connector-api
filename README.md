@@ -6,12 +6,14 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 - Node 6.9.0 or higher, together with NPM 3 or higher.
 - Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
+- Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the notifications from outside to your internal network.
 
 ## Run:
 1. ```npm install``` 
 2. ```sudo npm start```
 3. Open ``` http://localhost:8282``` in your browser. 
-4. Login with your account ** By default it does not work with QA accounts, you need to change the CSDS domain property **
+4. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property)
+
 
 ## Run with docker:
 
@@ -31,11 +33,11 @@ Before running or deployment it is necessary to setup some configuration paramet
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (Production csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
   https, if u are using https the port cant be changed (443).
-
 ### Webhooks Setup 
-In your app installation you need to add this webhook listener server url:<br/> 
+In your app installation you need to add this webhook listener server url:<br/>  You can add this after login in the configuration webhooks page.
 
 ``https://{your server domain or ip}/notifications/event``
+
 
 ### Development Mode:
 
