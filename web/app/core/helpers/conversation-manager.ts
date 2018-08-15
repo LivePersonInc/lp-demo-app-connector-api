@@ -62,7 +62,7 @@ export class ConversationManager {
   }
 
   public subscribeToMessageNotifications(conversation: Conversation) {
-    conversation.eventSource = new EventSourcePolyfill(`http://${environment.server}:${environment.server_port}/notifications/subscribe/${conversation.conversationId}`, {});
+    conversation.eventSource = new EventSourcePolyfill(`https://${environment.server}/notifications/subscribe/${conversation.conversationId}`, {});
 
     conversation.eventSource.onmessage = (notification => {
       this.handleIncomingNotifications(notification, conversation);
