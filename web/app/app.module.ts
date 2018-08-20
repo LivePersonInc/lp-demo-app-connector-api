@@ -26,6 +26,7 @@ import {LpConversationModule} from "./lp-conversation/lp-conversation.module";
 import {LpStartTutorialModule} from "./lp-start-tutorial/lp-start-tutorial.module";
 import {LogoutGuard} from "./core/guards/logout.guard";
 import {ConversationManager} from "./core/helpers/conversation-manager";
+import {StateManager} from "./core/helpers/state-manager";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {ConversationManager} from "./core/helpers/conversation-manager";
     ConversationService,
     DomainsService,
     ConversationManager,
+    StateManager,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: DomainHeaderInterceptor,
