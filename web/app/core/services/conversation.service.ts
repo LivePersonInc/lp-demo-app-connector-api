@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {ConversationManager} from "../helpers/conversation-manager";
+import {StateManager} from "../helpers/state-manager";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -24,7 +25,8 @@ export class ConversationService extends HttpService {
               protected conversationManager: ConversationManager,
               protected http: HttpClient,
               protected loadingService: LoadingService,
-              protected router: Router,) {
+              protected router: Router,
+              protected stateManager: StateManager) {
     super(snackBar, http, loadingService, router);
   }
 
@@ -45,12 +47,14 @@ export class ConversationService extends HttpService {
         console.log(res);
         this.successResponse("Message successfully sent to conversation with id " + this.conversation.conversationId);
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
+
+        this.stateManager.storeLastConversationInLocalStorage(this.conversation)
       }, error => {
         this.loadingService.stopLoading();
         this.handleError(error);
       });
     } else {
-      const msg = "A Conversation has to be intialized before sende a message";
+      const msg = "A Conversation has to be intialized before send a message";
       this.errorResponse(msg);
       console.error(msg);
     }
@@ -60,6 +64,7 @@ export class ConversationService extends HttpService {
     this.conversationManager.closeConversation(this.conversation).subscribe(res => {
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
       this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
+      this.stateManager.storeLastConversationInLocalStorage(this.conversation)
     }, error => {
       this.errorResponse(error);
     });

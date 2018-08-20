@@ -24,17 +24,22 @@ export class ConversationManager {
   constructor(private sendApiService:SendApiService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
+    return this.authenticate(conversation).flatMap((res: any) => {
+      return this.openConversationRequest(conversation).map((res: any) => {
+        conversation.conversationId = res["convId"];
+        conversation.isConvStarted = true;
+        this.subscribeToMessageNotifications(conversation);
+      });
+    })
+  }
+
+  private authenticate(conversation: Conversation): Observable<any> {
     return this.getAppJWT(conversation)
       .flatMap((res: any) => {
         conversation.appJWT = res['access_token'];
         return this.getConsumerJWS(conversation)
-          .flatMap((res: any) => {
+          .map((res: any) => {
             conversation.consumerJWS = res['token'];
-            return this.openConversationRequest(conversation).map((res: any) => {
-              conversation.conversationId = res["convId"];
-              conversation.isConvStarted = true;
-              this.subscribeToMessageNotifications(conversation);
-            });
           })
       });
   }

@@ -85,7 +85,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
     .closeConversation(brandID, convID, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
-        res.send({"message": "Conversation closed succesfully"});
+        res.send({"message": "Conversation closed sucesfully"});
       } else {
         res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
       }

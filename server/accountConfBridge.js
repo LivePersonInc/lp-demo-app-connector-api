@@ -18,15 +18,15 @@ router.get("/properties/:id", function (req, res, next) {
   accountConfigService
     .getAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
-    if (handleStatusCode(resolve[1].statusCode)) {
-      res.send(resolve[0]);
-    } else {
-      res.status(resolve[1].statusCode).send("Something wrong");
-    }
+      if (handleStatusCode(resolve[1].statusCode)) {
+        res.send(resolve[0]);
+      } else {
+        res.status(resolve[1].statusCode).send("Something wrong");
+      }
     }).catch((error) => {
     console.error("ERROR: Promise rejected", error);
     res.status(500).send("somthing wrong");
-    });
+  });
 
 });
 
@@ -48,7 +48,7 @@ router.post("/properties/:id", function (req, res, next) {
     args.data = body;
     console.log(args.headers);
     accountConfigService
-      .updateAccountPropertyList(brandId,args, req.header('LP-DOMAIN'))
+      .updateAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         console.log(resolve);
         if (handleStatusCode(resolve[1].statusCode)) {
