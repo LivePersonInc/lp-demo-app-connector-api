@@ -1,6 +1,5 @@
-import {Deserializable} from "../deserializable.model";
 
-export class ChatMessage implements Deserializable<ChatMessage>{
+export class ChatMessage {
   type: MessageType;
   timestamp: string;
   message: string;
@@ -17,10 +16,6 @@ export class ChatMessage implements Deserializable<ChatMessage>{
     this.showUser = showUser;
   }
 
-  deserialize(input: any): ChatMessage {
-    Object.assign(this, input);
-    return this;
-  }
 
 }
 

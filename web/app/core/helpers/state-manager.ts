@@ -7,19 +7,16 @@ import {Conversation} from "../../shared/models/conversation/conversation.model"
 export class StateManager {
 
   public storeLastConversationInLocalStorage(conversation: Conversation) {
-    /*let serializedConversation  = JSON.stringify(conversation);
-    console.log(serializedConversation);
-    localStorage.setItem(conversation.branId, serializedConversation);*/
-
-    //TODO:
+    let serializedConversation  = JSON.stringify(conversation);
+    localStorage.setItem(conversation.branId, serializedConversation);
   }
 
   public getLastStoredConversation(brandId: string): Conversation {
-   /* let serializedConversation = localStorage.getItem(brandId);
-    console.log(serializedConversation);*/
-    // TODO:
+    let serializedConversation = localStorage.getItem(brandId);
+    let conversation = new Conversation(null,null,null,null);
+    conversation.deserialize(serializedConversation);
 
-    return null;
+    return conversation;
   }
 
 
