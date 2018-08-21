@@ -117,7 +117,7 @@ export class ConversationManager {
         'x-lp-on-behalf': conversation.consumerJWS
       }
     };
-    const body = JSON.stringify(this.getMessageRequestBody(message,conversation));
+    const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, conversation.conversationId, body, headers);
   };
 
@@ -129,7 +129,7 @@ export class ConversationManager {
         'x-lp-on-behalf': conversation.consumerJWS
       }
     };
-    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation));
+    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
@@ -161,8 +161,8 @@ export class ConversationManager {
     console.log(notification);
   }
 
-  private getMessageRequestBody(message: string, conversation: Conversation) {
-    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversation.conversationId,
+  private getMessageRequestBody(message: string, conversationId: string) {
+    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
       new Event("ContentEvent", "text/plain", message)));
   }
 
@@ -170,17 +170,17 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getOpenConvRequestBody(userName: string, conversation: Conversation): any {
+  private getOpenConvRequestBody(userName: string, brandId: string): any {
     let body = [];
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
       "CUSTOM",
       campaignInfo,
       "MESSAGING",
-      conversation.branId,
+       brandId,
       "-1"
     );
-    conversation.requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
+    let requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
 
     let pushNotificationData = new PushNotificationData("Service", "CertName", "TOKEN");
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
@@ -193,9 +193,9 @@ export class ConversationManager {
       "Test Description",
       privateData
     );
-    conversation.setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
+    let setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
 
-    return body = [conversation.setUserProfilePayload, conversation.requestConversationPayload];
+    return body = [setUserProfilePayload,requestConversationPayload];
   }
 
 }

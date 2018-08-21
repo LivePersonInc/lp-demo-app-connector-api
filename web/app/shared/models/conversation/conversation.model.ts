@@ -1,10 +1,8 @@
-import {Request} from "../send-api/Request.model";
 import {ChatMessage} from "./chatMessage.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 
 export class Conversation {
   isConvStarted: boolean;
-  isLoading: boolean;
   appJWT: string;
   consumerJWS: string;
   branId: string;
@@ -12,10 +10,7 @@ export class Conversation {
   appSecret: string;
   ext_consumer_id: string;
   conversationId: string;
-  requestConversationPayload: Request;
-  setUserProfilePayload:Request;
-  sendMsgPayload:Request;
-  userName;
+  userName: string;
   eventSource: EventSourcePolyfill;
   messages: Array<ChatMessage>;
   serverNotifications: Array<string>;

@@ -19,8 +19,6 @@ export class ConversationService extends HttpService {
   public conversationEventSubject = new Subject<ConversationEvent>();
   public conversation: Conversation;
 
-  //public conversationList; // Hash table of Conversation accesed by convID
-
   constructor(protected snackBar: MatSnackBar,
               protected conversationManager: ConversationManager,
               protected http: HttpClient,
