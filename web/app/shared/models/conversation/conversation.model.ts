@@ -22,7 +22,7 @@ export class Conversation {
     this.userName = userName;
     this.messages = [];
     this.serverNotifications = [];
-    this.ext_consumer_id = "ramdom_id" + Math.random();
+    this.ext_consumer_id = "random_id" + Math.random();
   }
 
 }
