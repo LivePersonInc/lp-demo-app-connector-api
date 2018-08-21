@@ -3,6 +3,8 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { StateManager } from './state-manager';
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {ChatMessage, MessageType} from "../../shared/models/conversation/chatMessage.model";
+import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
+import {AppState} from "../../shared/models/stored-state/AppState";
 
 describe('StateManager', () => {
 
@@ -18,7 +20,7 @@ describe('StateManager', () => {
     expect(intercptor).toBeTruthy();
   }));
 
-  it('should save the state in localstorage', inject([StateManager], (intercptor: StateManager) => {
+  it('should save the app sstate in localstorage', inject([StateManager], (intercptor: StateManager) => {
       let conversation = new Conversation(brandId, "appKey", "appSecret", "usreName" );
       conversation.messages = [];
       let firstMessage = new ChatMessage(MessageType.sent,"125123523632","Hi","usreName","status", true);
@@ -26,48 +28,33 @@ describe('StateManager', () => {
       conversation.messages.push(firstMessage);
       conversation.messages.push(seconMessage);
 
-      intercptor.storeLastConversationInLocalStorage(conversation);
+      let installedApp = new AppInstall();
+      installedApp.enabled = true;
+      installedApp.client_name = "test App";
+
+      let appState = new AppState();
+      appState.lastConversation = conversation;
+      appState.asyncMessagingEnabled = true;
+      appState.selectedApp = installedApp;
+
+      intercptor.storeLastStateInLocalStorage(appState);
 
       expect(localStorage.getItem(brandId)).toBeTruthy();
 
   }));
 
-  it('should get the conversation from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
+  it('should get the state from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
 
-    expect(intercptor.getLastStoredConversationByBrand(brandId)).toBeTruthy();
+    expect(intercptor.getLastStoredStateByBrand(brandId)).toBeTruthy();
 
 
   }));
 
   it('should get the conversation deserialized from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
 
-    expect(intercptor.getLastStoredConversationByBrand(brandId).messages.length).toBe(2);
-
+    expect(intercptor.getLastStoredStateByBrand(brandId).lastConversation.messages.length).toBe(2);
 
   }));
-
-  it('Conversation should be deserialized in an object ', () =>{
-    let conversation = new Conversation( null, null, null, null );
-
-    console.log(localStorage.getItem(brandId));
-    conversation.deserialize(localStorage.getItem(brandId));
-
-
-    console.log(conversation.messages);
-
-    expect(conversation).toEqual(jasmine.any(Object));
-
-
-  });
-
-  it('Conversation should contain 2 messages ', () =>{
-    let conversation = new Conversation( null, null, null, null );
-
-    conversation.deserialize(localStorage.getItem(brandId));
-
-    expect(conversation.messages.length).toBe(2);
-
-  });
 
 
 });

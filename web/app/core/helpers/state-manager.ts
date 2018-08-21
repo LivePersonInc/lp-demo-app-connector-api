@@ -2,24 +2,24 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {Conversation} from "../../shared/models/conversation/conversation.model";
+import {AppState} from "../../shared/models/stored-state/AppState";
 
 @Injectable()
 export class StateManager {
 
-  public storeLastConversationInLocalStorage(conversation: Conversation) {
-    let serializedConversation  = JSON.stringify(conversation);
-    localStorage.setItem(conversation.branId, serializedConversation);
+  public storeLastStateInLocalStorage(state: AppState) {
+    let serializedState = JSON.stringify(state);
+    localStorage.setItem(state.lastConversation.branId, serializedState);
   }
 
-  public getLastStoredConversationByBrand(brandId: string): Conversation {
-    let serializedConversation = localStorage.getItem(brandId);
-    let conversation = new Conversation(null,null,null,null);
-    conversation.deserialize(serializedConversation);
+  public getLastStoredStateByBrand(brandId: string): AppState {
+    let serializedState = localStorage.getItem(brandId);
+    console.log(serializedState);
+    let state = new AppState();
+    state.deserialize(JSON.parse(serializedState));
 
-    return conversation;
+    return state;
   }
-
-
 
 
 }

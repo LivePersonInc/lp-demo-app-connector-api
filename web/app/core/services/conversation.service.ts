@@ -45,7 +45,7 @@ export class ConversationService extends HttpService {
         console.log(res);
         this.successResponse("Message successfully sent to conversation with id " + this.conversation.conversationId);
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
-        this.stateManager.storeLastConversationInLocalStorage(this.conversation);
+        //this.stateManager.storeLastConversationInLocalStorage(this.conversation);
       }, error => {
         this.loadingService.stopLoading();
         this.handleError(error);
@@ -61,19 +61,19 @@ export class ConversationService extends HttpService {
     this.conversationManager.closeConversation(this.conversation).subscribe(res => {
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
       this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
-      this.stateManager.storeLastConversationInLocalStorage(this.conversation);
+      //this.stateManager.storeLastConversationInLocalStorage(this.conversation);
     }, error => {
       this.errorResponse(error);
     });
   }
 
-  public getBackPreviousConversationByBrand(brandId: string): Conversation {
+  /*public getBackPreviousConversationByBrand(brandId: string): Conversation {
     let conversation = this.stateManager.getLastStoredConversationByBrand(brandId);
     if(conversation){
       this.conversation = conversation;
     }
     return conversation;
-  }
+  }*/
 
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
