@@ -8,6 +8,8 @@ import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {MatDialog} from "@angular/material";
 import {DomainsService} from "../core/services/domains.service";
+import {ConversationService} from "../core/services/conversation.service";
+import {AccountConfigService} from "../core/services/account-config.service";
 
 @Component({
   selector: 'lp-home',
@@ -33,9 +35,11 @@ export class LpHomeComponent implements OnInit, OnDestroy {
               private domainsService: DomainsService,
               private router: Router,
               private fb: FormBuilder,
+              private conversationService: ConversationService, //Needs to be injected here before doing anything else to execute the constructor
+              private accountConfigService: AccountConfigService, //Needs to be injected here before doing anything else
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
-  }
+  }s
 
   ngOnInit() {
     if(this.authenticationService.user){
