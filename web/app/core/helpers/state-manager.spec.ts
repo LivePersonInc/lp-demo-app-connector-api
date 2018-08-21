@@ -34,7 +34,14 @@ describe('StateManager', () => {
 
   it('should get the conversation from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
 
-    expect(intercptor.getLastStoredConversation(brandId)).toBeTruthy();
+    expect(intercptor.getLastStoredConversationByBrand(brandId)).toBeTruthy();
+
+
+  }));
+
+  it('should get the conversation deserialized from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
+
+    expect(intercptor.getLastStoredConversationByBrand(brandId).messages.length).toBe(2);
 
 
   }));

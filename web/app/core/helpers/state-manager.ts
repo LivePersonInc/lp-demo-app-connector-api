@@ -11,7 +11,7 @@ export class StateManager {
     localStorage.setItem(conversation.branId, serializedConversation);
   }
 
-  public getLastStoredConversation(brandId: string): Conversation {
+  public getLastStoredConversationByBrand(brandId: string): Conversation {
     let serializedConversation = localStorage.getItem(brandId);
     let conversation = new Conversation(null,null,null,null);
     conversation.deserialize(serializedConversation);
