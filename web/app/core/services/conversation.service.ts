@@ -23,8 +23,7 @@ export class ConversationService extends HttpService {
               protected conversationManager: ConversationManager,
               protected http: HttpClient,
               protected loadingService: LoadingService,
-              protected router: Router,
-              protected stateManager: StateManager) {
+              protected router: Router,) {
     super(snackBar, http, loadingService, router);
   }
 
@@ -45,8 +44,6 @@ export class ConversationService extends HttpService {
         console.log(res);
         this.successResponse("Message successfully sent to conversation with id " + this.conversation.conversationId);
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
-
-        this.stateManager.storeLastConversationInLocalStorage(this.conversation)
       }, error => {
         this.loadingService.stopLoading();
         this.handleError(error);
@@ -62,7 +59,6 @@ export class ConversationService extends HttpService {
     this.conversationManager.closeConversation(this.conversation).subscribe(res => {
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
       this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
-      this.stateManager.storeLastConversationInLocalStorage(this.conversation)
     }, error => {
       this.errorResponse(error);
     });
