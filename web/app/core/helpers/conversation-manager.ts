@@ -157,7 +157,7 @@ export class ConversationManager {
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
-    console.log("Notification in conv manager");
+    console.log("Notification received in conversation manager");
     console.log(notification);
   }
 
@@ -171,7 +171,6 @@ export class ConversationManager {
   }
 
   private getOpenConvRequestBody(userName: string, brandId: string): any {
-    let body = [];
     let campaignInfo = new CampaignInfo("99999", "888888");
     let requestBody = new ConsumerRequestConversation(
       "CUSTOM",
@@ -195,7 +194,7 @@ export class ConversationManager {
     );
     let setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
 
-    return body = [setUserProfilePayload,requestConversationPayload];
+    return [setUserProfilePayload,requestConversationPayload];
   }
 
 }
