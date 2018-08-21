@@ -8,6 +8,7 @@ export class Endpoint implements Deserializable<Endpoint>
   constructor(){
     this.endpoint = "";
   }
+
   deserialize(input: any): Endpoint {
     Object.assign(this, input);
     return this;
