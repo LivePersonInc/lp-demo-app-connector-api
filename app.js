@@ -7,7 +7,7 @@ const umsBridge = require('./server/umsBridge');
 const installationBridge = require('./server/appInstallationBridge');
 const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
-const csdsBridge = require('./server/csdsBrigde');
+const csdsBridge = require('./server/csdsBridge');
 
 const https = require('https');
 const forceSsl = require('express-force-ssl');
