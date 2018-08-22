@@ -100,7 +100,9 @@ export class InstallationService extends HttpService {
 
   private restoreState() {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    this.selectedApp = appState.selectedApp;
+    if(appState.selectedApp){
+      this.selectedApp = appState.selectedApp;
+    }
   }
 
 }

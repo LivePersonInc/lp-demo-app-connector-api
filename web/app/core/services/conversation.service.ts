@@ -90,15 +90,16 @@ export class ConversationService extends HttpService {
 
   private restoreStoredState() {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    this.conversation = appState.lastConversation;
-    this.conversationManager.authenticate(this.conversation).subscribe(res => {
-      this.successResponse("Conversation authentication successfully");
-      this.conversationManager.subscribeToMessageNotifications(this.conversation);
-      //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
-    }, error => {
-      this.errorResponse(error);
-    });
-
+    if(appState.lastConversation){
+      this.conversation = appState.lastConversation;
+      this.conversationManager.authenticate(this.conversation).subscribe(res => {
+        this.successResponse("Conversation authentication successfully");
+        this.conversationManager.subscribeToMessageNotifications(this.conversation);
+        //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
+      }, error => {
+        this.errorResponse(error);
+      });
+    }
   }
 
 }

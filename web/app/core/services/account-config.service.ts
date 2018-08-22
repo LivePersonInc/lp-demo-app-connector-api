@@ -29,17 +29,6 @@ export class AccountConfigService extends HttpService {
               protected router: Router) {
     super(snackBar,http, loadingService,router);
 
-    /*this.authenticationService.userLoggedSubject.subscribe( event => {
-      if(event ===  'LOGGED-IN'){
-        this.brandId = this.authenticationService.user.brandId;
-        this.restoreStoredState();
-        this.headers = {
-          'headers': {
-            'Authorization': `Bearer ${this.authenticationService.user.token}`,
-          }
-        };
-      }
-    })*/
   }
 
   public init() {
@@ -94,7 +83,9 @@ export class AccountConfigService extends HttpService {
 
   private restoreStoredState() {
     let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
-    this.isAsyncMessagingActive = state.isAsyncMessagingActive;
+    if(state.isAsyncMessagingActive != null){
+      this.isAsyncMessagingActive = state.isAsyncMessagingActive;
+    }
   }
 
 }
