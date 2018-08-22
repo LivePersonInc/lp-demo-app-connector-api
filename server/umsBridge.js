@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
-const fetch = require("node-fetch");
 const SendApiConnector = require("./services/SendApiConnectorService");
+const HttpStatus = require('http-status-codes');
 
 nconf.file({file: "./settings.json"});
 
@@ -35,7 +35,7 @@ router.post("/openconv/:id", function (req, res, next) {
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send("Something was wrong");
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
   });
 
@@ -66,7 +66,7 @@ router.post("/sendraw/:id", function (req, res, next) {
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send('Something was wrong!');
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
   });
 
@@ -91,7 +91,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected");
-    res.status(500).send('Something was wrong!')
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 
 });

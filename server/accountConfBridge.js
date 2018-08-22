@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
-const fetch = require("node-fetch");
+const HttpStatus = require('http-status-codes');
 const AccountConfigService = require("./services/AccountConfigService");
 
 nconf.file({file: "./settings.json"});
@@ -21,11 +21,11 @@ router.get("/properties/:id", function (req, res, next) {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
-        res.status(resolve[1].statusCode).send("Something wrong");
+        res.status(resolve[1].statusCode).send({error: "Something was wrong"});
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected", error);
-    res.status(500).send("somthing wrong");
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 
 });
@@ -46,19 +46,19 @@ router.post("/properties/:id", function (req, res, next) {
     args.headers['X-HTTP-Method-Override'] = 'PUT';
     args.headers['authorization'] = req.header('authorization');
     args.data = body;
-    console.log(args.headers);
+
     accountConfigService
       .updateAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         console.log(resolve);
         if (handleStatusCode(resolve[1].statusCode)) {
-          res.send("OK");
+          res.send('OK');
         } else {
           res.status(resolve[1].statusCode).send("Something wrong");
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send("somthing wrong");
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
   });
 });

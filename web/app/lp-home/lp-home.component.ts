@@ -116,6 +116,4 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const nconf = require("nconf");
 const CsdsService = require("./services/CsdsService");
+const HttpStatus = require('http-status-codes');
 
 nconf.file({file: "./settings.json"});
 
@@ -16,11 +17,11 @@ router.get("/csds/:brandId", function (req, res, next) {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
-        res.status(resolve[1].statusCode).send("Something wrong");
+        res.status(resolve[1].statusCode).send({error: "Something was wrong"});
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected", error);
-    res.status(500).send("somthing wrong");
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 });
 

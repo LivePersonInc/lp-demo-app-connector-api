@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const AppInstallationService = require("./services/AppInstallationService");
-
+const HttpStatus = require('http-status-codes');
 const appInstallationService = new AppInstallationService();
 
 router.get("/:brandId", function (req, res, next) {
@@ -18,11 +18,12 @@ router.get("/:brandId", function (req, res, next) {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
-        res.status(resolve[1].statusCode).send("Something wrong");
+        res.status(resolve[1].statusCode).send({error: "Something was wrong"});
       }
     }).catch((error) => {
     console.error("ERROR: Promise rejected", error);
-    res.status(500).send("somthing wrong");
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+
   });
 });
 
@@ -44,13 +45,14 @@ router.post("/:brandId", function (req, res, next) {
     appInstallationService.installNewApp(brandId,args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
-          res.send("OK");
+          res.send('OK');
         } else {
-          res.status(resolve[1].statusCode).send("Something wrong");
+          res.status(resolve[1].statusCode).send({error: "Something was wrong"});
         }
       }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send("somthing wrong");
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+
     });
   });
 });
@@ -78,15 +80,15 @@ router.put("/:brandId/:appId", function (req, res, next) {
       return appInstallationService.update(appId, brandId, args, req.header('LP-DOMAIN'))
         .then((resolve) => {
           if (handleStatusCode(resolve[1].statusCode)) {
-            res.status(200).send();
+            res.send('OK');
           } else {
-            res.status(resolve[1].statusCode).send("Something wrong");
+            res.status(resolve[1].statusCode).send({error: "Something was wrong"});
           }
         })
 
     }).catch((error) => {
       console.error("ERROR: Promise rejected", error);
-      res.status(500).send("somthing wrong");
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
   });
 });
