@@ -5,6 +5,7 @@ import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
+import {StateManager} from "../helpers/state-manager";
 
 describe('InstallationService', () => {
   beforeEach(() => {
@@ -16,6 +17,8 @@ describe('InstallationService', () => {
     const snackBar = jasmine.createSpy('MatSnackBar');
     const http = jasmine.createSpy('HttpClient');
     const loadingService = jasmine.createSpy('LoadingService');
+    const stateManager = jasmine.createSpy('StateManager');
+
     TestBed.configureTestingModule({
       providers: [
         InstallationService,
@@ -23,6 +26,8 @@ describe('InstallationService', () => {
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
         {provide: LoadingService, useValue: loadingService},
+        {provide: StateManager, useValue: stateManager},
+
         {
           provide: Router,
           useClass: class { navigate = jasmine.createSpy("navigate"); }

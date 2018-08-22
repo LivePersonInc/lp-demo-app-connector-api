@@ -8,6 +8,7 @@ import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Router} from "@angular/router";
+import {StateManager} from "../helpers/state-manager";
 
 @Injectable()
 export class InstallationService extends HttpService {
@@ -20,7 +21,12 @@ export class InstallationService extends HttpService {
   private baseURI = `https://${environment.server}/installation/`;
 
 
-  constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected  router: Router) {
+  constructor(protected authenticationService: AuthenticationService,
+              protected snackBar: MatSnackBar,
+              protected http: HttpClient,
+              protected loadingService: LoadingService,
+              protected stateManager: StateManager,
+              protected router: Router) {
     super(snackBar,http, loadingService, router);
   }
 
@@ -39,6 +45,7 @@ export class InstallationService extends HttpService {
 
   set selectedApp(app: AppInstall) {
     this._selectedApp = app;
+    this.updateSelectedAppInState();
     this.installationSubject.next('APP_SELECTED');
   }
 
@@ -82,6 +89,12 @@ export class InstallationService extends HttpService {
 
   private isValid(app: AppInstall): boolean{
     return !(!app.enabled || (!app.scope || app.scope !== 'msg.consumer'));
+  }
+
+  private updateSelectedAppInState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    appState.selectedApp = this.selectedApp;
+    this.stateManager.storeLastStateInLocalStorage(appState, this.brandId);
   }
 
 }

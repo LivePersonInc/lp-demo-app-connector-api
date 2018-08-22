@@ -7,10 +7,6 @@ import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
 import {DomainsService} from "./domains.service";
-import {InstallationService} from "./istallation.service";
-import {ConversationEvent} from "../../shared/models/conversation/conversationEvent.model";
-import {AccountConfigService} from "./account-config.service";
-import {ConversationService} from "./conversation.service";
 import {Router} from "@angular/router";
 
 @Injectable()
