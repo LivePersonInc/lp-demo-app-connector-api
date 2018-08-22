@@ -78,6 +78,7 @@ export class ConversationService extends HttpService {
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
       // this.closeConversation();
+      this.conversation = null;
     }
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }

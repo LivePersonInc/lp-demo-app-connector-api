@@ -95,8 +95,12 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   public isConversationRestored(): boolean {
-    return this.conversationService.conversation !== null;
+    if(this.conversationService.conversation) {
+      return true;
+    }
+    return false;
   }
+
 
   public openConfirmationDialog(): void {
     const dialogRef = this.dialog.open(LpConfirmationDialogComponent);
