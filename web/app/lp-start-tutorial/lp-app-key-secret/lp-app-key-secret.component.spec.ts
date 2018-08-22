@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {MatStepper} from "@angular/material";
 import {ChangeDetectorRef} from "@angular/core";
 import {LoadingService} from "../../core/services/loading.service";
+import {StateManager} from "../../core/helpers/state-manager";
 
 describe('LpAppKeySecretComponent', () => {
   let component: LpAppKeySecretComponent;
@@ -19,6 +20,7 @@ describe('LpAppKeySecretComponent', () => {
   };
   const router = jasmine.createSpy( 'Router');
   const changeDetectorRef = jasmine.createSpy( 'ChangeDetectorRef');
+  const stateManager = jasmine.createSpy( 'StateManager');
   const loadingService = {
     isLoadingSubscription: () => {
       return  {
@@ -36,7 +38,8 @@ describe('LpAppKeySecretComponent', () => {
         {provide: InstallationService, useValue: installationService},
         {provide: Router, useValue: router},
         {provide: ChangeDetectorRef, useValue: changeDetectorRef},
-        {provide: LoadingService, useValue: loadingService}
+        {provide: LoadingService, useValue: loadingService},
+        {provide: StateManager, useValue: stateManager},
       ]
     })
     .compileComponents();

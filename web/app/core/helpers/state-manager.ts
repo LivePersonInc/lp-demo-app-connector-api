@@ -7,19 +7,19 @@ import {AppState} from "../../shared/models/stored-state/AppState";
 @Injectable()
 export class StateManager {
 
-  public storeLastStateInLocalStorage(state: AppState) {
+  public storeLastStateInLocalStorage(state: AppState, brandId: string) {
     let serializedState = JSON.stringify(state);
-    localStorage.setItem(state.lastConversation.branId, serializedState);
+    localStorage.setItem(brandId, serializedState);
   }
 
   public getLastStoredStateByBrand(brandId: string): AppState {
     let serializedState = localStorage.getItem(brandId);
     console.log(serializedState);
     let state = new AppState();
-    state.deserialize(JSON.parse(serializedState));
-
+    if(serializedState) {
+      state.deserialize(JSON.parse(serializedState));
+    }
     return state;
   }
-
 
 }

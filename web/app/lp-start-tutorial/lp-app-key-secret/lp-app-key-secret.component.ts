@@ -5,6 +5,7 @@ import {MatSelectChange} from "@angular/material";
 import {Router} from "@angular/router";
 import {ISubscription} from "rxjs/Subscription";
 import {LoadingService} from "../../core/services/loading.service";
+import {StateManager} from "../../core/helpers/state-manager";
 
 @Component({
   selector: 'lp-app-key-secret',
@@ -25,7 +26,8 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   constructor(
     private installationService:InstallationService,
     private router: Router,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService,
+    private stateManager: StateManager) { }
 
   ngOnInit() {
     if(this.installationService.appList) {
@@ -49,6 +51,7 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   public onSelectionChange(event: MatSelectChange) {
     if(event.value instanceof AppInstall){
       this.installationService.selectedApp = this.selectedApp;
+      this.setSelectedAppInState();
       this.completed.emit(true);
 
     }else{
@@ -60,4 +63,9 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/home');
   }
 
+  private setSelectedAppInState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.installationService.brandId);
+    appState.selectedApp = this.selectedApp;
+    this.stateManager.storeLastStateInLocalStorage(appState, this.installationService.brandId);
+  }
 }

@@ -37,7 +37,7 @@ describe('StateManager', () => {
       appState.asyncMessagingEnabled = true;
       appState.selectedApp = installedApp;
 
-      intercptor.storeLastStateInLocalStorage(appState);
+      intercptor.storeLastStateInLocalStorage(appState, brandId);
 
       expect(localStorage.getItem(brandId)).toBeTruthy();
 
