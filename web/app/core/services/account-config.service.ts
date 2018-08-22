@@ -29,7 +29,7 @@ export class AccountConfigService extends HttpService {
               protected router: Router) {
     super(snackBar,http, loadingService,router);
 
-    this.authenticationService.userLoggedSubject.subscribe( event => {
+    /*this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event ===  'LOGGED-IN'){
         this.brandId = this.authenticationService.user.brandId;
         this.restoreStoredState();
@@ -39,7 +39,17 @@ export class AccountConfigService extends HttpService {
           }
         };
       }
-    })
+    })*/
+  }
+
+  public init() {
+      this.brandId = this.authenticationService.user.brandId;
+      this.restoreStoredState();
+      this.headers = {
+        'headers': {
+          'Authorization': `Bearer ${this.authenticationService.user.token}`,
+        }
+      };
   }
 
   public getAccountConfigPropertiesList() {

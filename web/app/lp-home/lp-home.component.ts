@@ -51,6 +51,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.isAuthenticated = true;
         this.installationService.init();
         this.conversationService.init();
+        this.accountConfigService.init();
       }
       if (event === 'LOGGED-OUT') {
         this.isAuthenticated = false;
