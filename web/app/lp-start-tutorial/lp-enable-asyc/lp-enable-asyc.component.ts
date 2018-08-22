@@ -22,7 +22,7 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
               private  installationService: InstallationService,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private stateManager: StateManager) {
+              ) {
     this.accountConfigService = _accountConfigService;
   }
 
@@ -30,7 +30,6 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
     this.accountConfigService.acSubject.subscribe( event => {
       if(event === 'GET_LIST'){
         this.completed.emit(true);
-        this.setAsyncEnablePropInState();
       }
     });
     this.accountConfigService.getAccountConfigPropertiesList();
@@ -43,14 +42,9 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   public redirectToHome(){
     this.router.navigateByUrl('/home');
   }
+
   public getInstalledApps() {
     this.installationService.getAppListList();
-  }
-
-  private setAsyncEnablePropInState(){
-    let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
-    state.asyncMessagingEnabled = this._accountConfigService.isAsyncMessagingActive;
-    this.stateManager.storeLastStateInLocalStorage(state,this.authenticationService.user.brandId);
   }
 
 }
