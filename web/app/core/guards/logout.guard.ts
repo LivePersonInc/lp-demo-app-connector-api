@@ -19,7 +19,7 @@ export class LogoutGuard implements CanActivate {
   canActivate() {
     this.authenticationService.logOut();
     this.resetState();
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('settings');
     return true;
   }
 

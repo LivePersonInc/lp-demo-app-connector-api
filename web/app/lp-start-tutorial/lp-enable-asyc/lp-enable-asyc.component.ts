@@ -3,6 +3,8 @@ import {AccountConfigService} from "../../core/services/account-config.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {Router} from "@angular/router";
 import {ISubscription} from "rxjs/Subscription";
+import {StateManager} from "../../core/helpers/state-manager";
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
   selector: 'lp-enable-asyc',
@@ -18,7 +20,9 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
 
   constructor(private _accountConfigService: AccountConfigService,
               private  installationService: InstallationService,
-              private router: Router) {
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              ) {
     this.accountConfigService = _accountConfigService;
   }
 
@@ -36,8 +40,9 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   }
 
   public redirectToHome(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/settings');
   }
+
   public getInstalledApps() {
     this.installationService.getAppListList();
   }

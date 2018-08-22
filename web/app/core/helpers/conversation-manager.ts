@@ -33,7 +33,7 @@ export class ConversationManager {
     })
   }
 
-  private authenticate(conversation: Conversation): Observable<any> {
+  public authenticate(conversation: Conversation): Observable<any> {
     return this.getAppJWT(conversation)
       .flatMap((res: any) => {
         conversation.appJWT = res['access_token'];

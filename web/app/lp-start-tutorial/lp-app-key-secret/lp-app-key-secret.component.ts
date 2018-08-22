@@ -25,7 +25,8 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   constructor(
     private installationService:InstallationService,
     private router: Router,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService,
+    ) { }
 
   ngOnInit() {
     if(this.installationService.appList) {
@@ -57,7 +58,7 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   }
 
   public redirectToHome(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/settings');
   }
 
 }

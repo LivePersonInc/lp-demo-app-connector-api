@@ -44,7 +44,10 @@
           <div class="col-sm-12 console-container">
             <lp-console [conversation]="conversation"></lp-console>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-4 state-info">
+            <span *ngIf="conversation && !conversation.isConvStarted">State: CLOSED </span>
+          </div>
+          <div class="col-sm-7">
             <button mat-raised-button
                     (click)="closeConversation()"
                     color="primary"

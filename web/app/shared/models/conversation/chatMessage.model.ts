@@ -1,3 +1,4 @@
+
 export class ChatMessage {
   type: MessageType;
   timestamp: string;
@@ -14,6 +15,8 @@ export class ChatMessage {
     this.status = status;
     this.showUser = showUser;
   }
+
+
 }
 
 export enum MessageType{

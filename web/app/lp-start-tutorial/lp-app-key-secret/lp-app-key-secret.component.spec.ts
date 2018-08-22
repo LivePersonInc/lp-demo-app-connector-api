@@ -36,7 +36,7 @@ describe('LpAppKeySecretComponent', () => {
         {provide: InstallationService, useValue: installationService},
         {provide: Router, useValue: router},
         {provide: ChangeDetectorRef, useValue: changeDetectorRef},
-        {provide: LoadingService, useValue: loadingService}
+        {provide: LoadingService, useValue: loadingService},
       ]
     })
     .compileComponents();

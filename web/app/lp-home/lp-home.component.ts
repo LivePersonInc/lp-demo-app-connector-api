@@ -7,9 +7,9 @@ import {Router} from "@angular/router";
 import {InstallationService} from "../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {MatDialog} from "@angular/material";
+import {DomainsService} from "../core/services/domains.service";
 import {ConversationService} from "../core/services/conversation.service";
 import {AccountConfigService} from "../core/services/account-config.service";
-import {DomainsService} from "../core/services/domains.service";
 
 @Component({
   selector: 'lp-home',
@@ -32,11 +32,11 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
   constructor(private _authenticationService: AuthenticationService,
               private installationService: InstallationService,
-              private conversationService: ConversationService,
-              private accountConfigService: AccountConfigService,
               private domainsService: DomainsService,
               private router: Router,
               private fb: FormBuilder,
+              private conversationService: ConversationService, //Needs to be injected here before doing anything else to execute the constructor
+              private accountConfigService: AccountConfigService, //Needs to be injected here before doing anything else
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
   }
@@ -47,9 +47,16 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     }
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
-        this.goToStartConfigPage();
         this.isAuthenticated = true;
         this.installationService.init();
+        this.conversationService.init();
+        this.accountConfigService.init();
+
+        if(this.isConversationRestored()) {
+          this.goToStartDemoPage();
+        }else {
+          this.goToStartConfigPage();
+        }
       }
       if (event === 'LOGGED-OUT') {
         this.isAuthenticated = false;
@@ -80,7 +87,15 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   public goToStartConfigPage() {
-    this.router.navigateByUrl('home/start');
+    this.router.navigateByUrl('settings/start');
+  }
+
+  public goToStartDemoPage() {
+    this.router.navigateByUrl('demo');
+  }
+
+  public isConversationRestored(): boolean {
+    return this.conversationService.conversation !== null;
   }
 
   public openConfirmationDialog(): void {

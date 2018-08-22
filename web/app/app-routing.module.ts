@@ -9,11 +9,11 @@ import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
 import {LogoutGuard} from "./core/guards/logout.guard";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: LpHomeComponent},
+  {path: '', redirectTo: 'settings', pathMatch: 'full'},
+  {path: 'settings', component: LpHomeComponent},
   {path: 'logout', component: LpHomeComponent, canActivate: [LogoutGuard]},
   {path: 'demo', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
-  {path: 'home/start', component: LpStartTutotialComponent,   canActivate: [AuthGuardGuard]}
+  {path: 'settings/start', component: LpStartTutotialComponent,   canActivate: [AuthGuardGuard]}
 ];
 
 
