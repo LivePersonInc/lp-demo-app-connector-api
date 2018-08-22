@@ -26,7 +26,7 @@ router.post("/event", function (req, res, next) {
     if(subscriptions[convId]){
       subscriptions[convId].send(body);
     }
-    res.send('OK');
+    res.json('OK');
   });
 });
 

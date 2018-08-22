@@ -52,7 +52,7 @@ router.post("/properties/:id", function (req, res, next) {
       .then((resolve) => {
         console.log(resolve);
         if (handleStatusCode(resolve[1].statusCode)) {
-          res.send('OK');
+          res.json('OK');
         } else {
           res.status(resolve[1].statusCode).send("Something wrong");
         }

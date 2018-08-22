@@ -45,7 +45,7 @@ router.post("/:brandId", function (req, res, next) {
     appInstallationService.installNewApp(brandId,args, req.header('LP-DOMAIN'))
       .then((resolve) => {
         if (handleStatusCode(resolve[1].statusCode)) {
-          res.send('OK');
+          res.json('OK');
         } else {
           res.status(resolve[1].statusCode).send({error: "Something was wrong"});
         }
@@ -80,7 +80,7 @@ router.put("/:brandId/:appId", function (req, res, next) {
       return appInstallationService.update(appId, brandId, args, req.header('LP-DOMAIN'))
         .then((resolve) => {
           if (handleStatusCode(resolve[1].statusCode)) {
-            res.send('OK');
+            res.json('OK');
           } else {
             res.status(resolve[1].statusCode).send({error: "Something was wrong"});
           }
