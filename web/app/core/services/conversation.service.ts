@@ -77,7 +77,7 @@ export class ConversationService extends HttpService {
 
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
-      this.closeConversation();
+      // this.closeConversation();
     }
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
@@ -93,6 +93,7 @@ export class ConversationService extends HttpService {
     this.conversation = appState.lastConversation;
     this.conversationManager.authenticate(this.conversation).subscribe(res => {
       this.successResponse("Conversation authentication successfully");
+      this.conversationManager.subscribeToMessageNotifications(this.conversation);
       //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
     }, error => {
       this.errorResponse(error);
