@@ -14,7 +14,6 @@ export class StateManager {
 
   public getLastStoredStateByBrand(brandId: string): AppState {
     let serializedState = localStorage.getItem(brandId);
-    console.log(serializedState);
     let state = new AppState();
     if(serializedState) {
       state.deserialize(JSON.parse(serializedState));
