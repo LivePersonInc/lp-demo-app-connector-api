@@ -12,20 +12,28 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {ConversationManager} from "../helpers/conversation-manager";
 import {StateManager} from "../helpers/state-manager";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class ConversationService extends HttpService {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
   public conversation: Conversation;
+  public brandId: string;
 
   constructor(protected snackBar: MatSnackBar,
               protected conversationManager: ConversationManager,
               protected http: HttpClient,
               protected loadingService: LoadingService,
               protected router: Router,
+              protected authenticationService: AuthenticationService,
               protected stateManager: StateManager) {
     super(snackBar, http, loadingService, router);
+  }
+
+  public init() {
+    this.brandId = this.authenticationService.user.brandId;
+    this.restoreStoredState();
   }
 
   public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string) {
@@ -78,6 +86,11 @@ export class ConversationService extends HttpService {
     let appState = this.stateManager.getLastStoredStateByBrand(this.conversation.branId);
     appState.lastConversation = this.conversation;
     this.stateManager.storeLastStateInLocalStorage(appState, this.conversation.branId);
+  }
+
+  private restoreStoredState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    this.conversation = appState.lastConversation;
   }
 
 }

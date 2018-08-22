@@ -39,7 +39,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
               private accountConfigService: AccountConfigService, //Needs to be injected here before doing anything else
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
-  }s
+  }
 
   ngOnInit() {
     if(this.authenticationService.user){
@@ -50,6 +50,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.goToStartConfigPage();
         this.isAuthenticated = true;
         this.installationService.init();
+        this.conversationService.init();
       }
       if (event === 'LOGGED-OUT') {
         this.isAuthenticated = false;
