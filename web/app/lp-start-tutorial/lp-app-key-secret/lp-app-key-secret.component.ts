@@ -58,7 +58,7 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   }
 
   public redirectToHome(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/settings');
   }
 
 }

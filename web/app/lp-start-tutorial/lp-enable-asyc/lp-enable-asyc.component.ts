@@ -40,7 +40,7 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   }
 
   public redirectToHome(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/settings');
   }
 
   public getInstalledApps() {
