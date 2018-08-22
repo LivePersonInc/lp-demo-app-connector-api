@@ -4,7 +4,7 @@ import {Deserializable} from "../deserializable.model";
 
 export class AppState implements Deserializable<AppState>{
   lastConversation: Conversation;
-  asyncMessagingEnabled: boolean;
+  isAsyncMessagingActive: boolean;
   selectedApp: AppInstall;
 
   deserialize(input: any): AppState {

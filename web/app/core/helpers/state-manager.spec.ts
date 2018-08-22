@@ -34,7 +34,7 @@ describe('StateManager', () => {
 
       let appState = new AppState();
       appState.lastConversation = conversation;
-      appState.asyncMessagingEnabled = true;
+      appState.isAsyncMessagingActive = true;
       appState.selectedApp = installedApp;
 
       intercptor.storeLastStateInLocalStorage(appState, brandId);

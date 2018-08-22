@@ -32,6 +32,7 @@ export class AccountConfigService extends HttpService {
     this.authenticationService.userLoggedSubject.subscribe( event => {
       if(event ===  'LOGGED-IN'){
         this.brandId = this.authenticationService.user.brandId;
+        this.restoreStoredState();
         this.headers = {
           'headers': {
             'Authorization': `Bearer ${this.authenticationService.user.token}`,
@@ -45,7 +46,7 @@ export class AccountConfigService extends HttpService {
     this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe(data => {
       this.accountConfigPropList = data;
       this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
-      this.setAsyncEnablePropInState();
+      this.updateAsyncEnablePropInStoredState();
       this.loadingService.stopLoading();
       this.acSubject.next('GET_LIST');
     }, error => {
@@ -75,10 +76,15 @@ export class AccountConfigService extends HttpService {
     return feature[0].value.value;
   }
 
-  private setAsyncEnablePropInState(){
+  private updateAsyncEnablePropInStoredState(){
     let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
-    state.asyncMessagingEnabled = this.isAsyncMessagingActive;
+    state.isAsyncMessagingActive = this.isAsyncMessagingActive;
     this.stateManager.storeLastStateInLocalStorage(state,this.authenticationService.user.brandId);
+  }
+
+  private restoreStoredState() {
+    let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
+    this.isAsyncMessagingActive = state.isAsyncMessagingActive;
   }
 
 }

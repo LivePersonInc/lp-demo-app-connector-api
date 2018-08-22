@@ -32,6 +32,7 @@ export class InstallationService extends HttpService {
 
   public init() {
     this.brandId = this.authenticationService.user.brandId;
+    this.restoreState();
     this.headers = {'headers':
       {
         'Authorization': `Bearer ${this.authenticationService.user.token}`,
@@ -95,6 +96,11 @@ export class InstallationService extends HttpService {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
     appState.selectedApp = this.selectedApp;
     this.stateManager.storeLastStateInLocalStorage(appState, this.brandId);
+  }
+
+  private restoreState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    this.selectedApp = appState.selectedApp;
   }
 
 }
