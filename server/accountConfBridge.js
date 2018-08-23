@@ -30,39 +30,6 @@ router.get("/properties/:id", function (req, res, next) {
 
 });
 
-router.post("/properties/:id", function (req, res, next) {
-  let brandId = req.params.id;
-  let body = "";
-
-  req.on('data', function (chunk) {
-    body += chunk;
-  });
-  req.on('end', function () {
-    let args = {};
-    args.data = {};
-    args.headers = {};
-    args.headers['content-type'] = 'application/json';
-    args.headers['Accept'] = 'application/json';
-    args.headers['X-HTTP-Method-Override'] = 'PUT';
-    args.headers['authorization'] = req.header('authorization');
-    args.data = body;
-
-    accountConfigService
-      .updateAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
-      .then((resolve) => {
-        console.log(resolve);
-        if (handleStatusCode(resolve[1].statusCode)) {
-          res.json('OK');
-        } else {
-          res.status(resolve[1].statusCode).send("Something wrong");
-        }
-      }).catch((error) => {
-      console.error("ERROR: Promise rejected", error);
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-    });
-  });
-});
-
 function handleStatusCode(statusCode) {
   if (statusCode >= 200 && statusCode < 300) {
     return true;
