@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const SSE = require('sse-nodejs');
-const HttpStatus = require('http-status-codes');
-
 
 const subscriptions = [];
 

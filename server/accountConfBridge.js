@@ -3,6 +3,7 @@ const router = express.Router();
 const nconf = require("nconf");
 const HttpStatus = require('http-status-codes');
 const AccountConfigService = require("./services/AccountConfigService");
+const handleStatusCode = require('./util/handleStatusCode');
 
 nconf.file({file: "./settings.json"});
 
@@ -32,13 +33,5 @@ router.get("/properties/:id", (req, res, next) => {
     });
 });
 
-function handleStatusCode(statusCode) {
-  if (statusCode >= 200 && statusCode < 300) {
-    return true;
-  } else {
-    console.error("ERROR: Status code: ", statusCode);
-    return false;
-  }
-}
 
 module.exports = router;

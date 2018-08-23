@@ -3,6 +3,7 @@ const router = express.Router();
 const nconf = require("nconf");
 const SendApiConnector = require("./services/SendApiConnectorService");
 const HttpStatus = require('http-status-codes');
+const handleStatusCode = require('./util/handleStatusCode');
 
 nconf.file({file: "./settings.json"});
 
@@ -98,14 +99,5 @@ router.post("/close/:id/conv/:convId", (req, res, next) => {
 router.get("/alive", (req, res, next) => {
   res.send("Hello!!!!");
 });
-
-function handleStatusCode(statusCode) {
-  if (statusCode >= 200 && statusCode < 300) {
-    return true;
-  } else {
-    console.error("ERROR: Status code: ", statusCode);
-    return false;
-  }
-}
 
 module.exports = router;

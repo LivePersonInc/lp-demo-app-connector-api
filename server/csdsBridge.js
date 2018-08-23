@@ -3,6 +3,7 @@ const router = express.Router();
 const nconf = require("nconf");
 const CsdsService = require("./services/CsdsService");
 const HttpStatus = require('http-status-codes');
+const handleStatusCode = require('./util/handleStatusCode');
 
 nconf.file({file: "./settings.json"});
 
@@ -26,14 +27,5 @@ router.get("/csds/:brandId", (req, res, next) => {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });
-
-function handleStatusCode(statusCode) {
-  if (statusCode >= 200 && statusCode < 300) {
-    return true;
-  } else {
-    console.error("ERROR: Status code: ", statusCode);
-    return false;
-  }
-}
 
 module.exports = router;

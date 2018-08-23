@@ -3,6 +3,7 @@ const router = express.Router();
 const AppInstallationService = require("./services/AppInstallationService");
 const HttpStatus = require('http-status-codes');
 const appInstallationService = new AppInstallationService();
+const handleStatusCode = require('./util/handleStatusCode');
 
 router.get("/:brandId", (req, res, next) => {
   let brandId = req.params.brandId;
@@ -85,13 +86,5 @@ router.put("/:brandId/:appId", (req, res, next) => {
   });
 });
 
-function handleStatusCode(statusCode) {
-  if (statusCode >= 200 && statusCode < 300) {
-    return true;
-  } else {
-    console.error("ERROR: Status code: ", statusCode);
-    return false;
-  }
-}
 
 module.exports = router;
