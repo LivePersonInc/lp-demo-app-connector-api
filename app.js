@@ -9,6 +9,7 @@ const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
 const https = require('https');
+var bodyParser = require('body-parser');
 
 //load certificates
 const key = fs.readFileSync('./server/certs/dev.lpchatforconnectorapi.com.key');
@@ -24,6 +25,9 @@ const options = {
 nconf.file({file: "settings.json"});
 
 app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use("/installation", installationBridge);
 app.use("/account", accountConfBridge);
