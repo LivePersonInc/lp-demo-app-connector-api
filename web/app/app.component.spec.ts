@@ -1,7 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
-import {LpNavComponent} from "./lp-header/lp-nav/lp-nav.component";
 import {LpHeaderModule} from "./lp-header/lp-header.module";
 import {MaterialModule} from "./material.module";
 import {LoadingService} from "./core/services/loading.service";
@@ -31,7 +30,7 @@ describe('AppComponent', () => {
       providers: [
         LoadingService,
         {provide: APP_BASE_HREF, useValue : '/' },
-        {provide: AuthenticationService, useValue : 'authenticationService' },
+        {provide: AuthenticationService, useValue : authenticationService },
       ]
     }).compileComponents();
   }));

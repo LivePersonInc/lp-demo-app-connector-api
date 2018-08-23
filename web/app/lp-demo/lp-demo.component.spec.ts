@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpDemoComponent } from './lp-demo.component';
 import {MaterialModule} from "../material.module";
 import {LpConversationModule} from "../lp-conversation/lp-conversation.module";
-import {LpTestServicesComponent} from "../lp-test-services/lp-test-services.component";
 import {FormsModule} from "@angular/forms";
 import {ConversationService} from "../core/services/conversation.service";
 import {AuthenticationService} from "../core/services/authentication.service";
