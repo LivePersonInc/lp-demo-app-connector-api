@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 const AppInstallationService = require("./services/AppInstallationService");
 const HttpStatus = require('http-status-codes');
-const appInstallationService = new AppInstallationService();
 const handleStatusCode = require('./util/handleStatusCode');
+const nconf = require("nconf");
+
+nconf.file({file: "./settings.json"});
+
+const appInstallationService = new AppInstallationService(nconf);
 
 router.get("/:brandId", (req, res, next) => {
   let brandId = req.params.brandId;
