@@ -17,17 +17,12 @@ router.get("/subscribe/:convid", function (req, res, next) {
 
 //webhooks notifications
 router.post("/event", function (req, res, next) {
-  let body = "";
-  req.on('data', function (chunk) {
-    body += chunk;
-  });
-  req.on('end', function () {
-    let convId = getNotificationConversationId(body);
-    if(subscriptions[convId]){
-      subscriptions[convId].send(body);
-    }
-    res.json('OK');
-  });
+  let body = JSON.stringify(req.body);
+  let convId = getNotificationConversationId(body);
+  if(subscriptions[convId]){
+    subscriptions[convId].send(body);
+  }
+  res.json('OK');
 });
 
 function getNotificationConversationId(notificationBody) {
