@@ -8,7 +8,7 @@ nconf.file({file: "./settings.json"});
 
 const sendApiConnector = new SendApiConnector(nconf);
 
-router.post("/openconv/:id", function (req, res, next) {
+router.post("/openconv/:id", (req, res, next) => {
   let brandID = req.params.id;
 
   let args = {};
@@ -37,7 +37,7 @@ router.post("/openconv/:id", function (req, res, next) {
 
 });
 
-router.post("/sendraw/:id", function (req, res, next) {
+router.post("/sendraw/:id", (req, res, next) => {
   let brandID = req.params.id;
 
   let args = {};
@@ -65,7 +65,7 @@ router.post("/sendraw/:id", function (req, res, next) {
 
 });
 
-router.post("/close/:id/conv/:convId", function (req, res, next) {
+router.post("/close/:id/conv/:convId", (req, res, next) => {
   let brandID = req.params.id;
   let convID = req.params.convId;
 
@@ -95,7 +95,7 @@ router.post("/close/:id/conv/:convId", function (req, res, next) {
 
 });
 
-router.get("/alive", function (req, res, next) {
+router.get("/alive", (req, res, next) => {
   res.send("Hello!!!!");
 });
 

@@ -6,7 +6,7 @@ const HttpStatus = require('http-status-codes');
 
 const subscriptions = [];
 
-router.get("/subscribe/:convid", function (req, res, next) {
+router.get("/subscribe/:convid", (req, res, next) => {
   subscriptions[req.params.convid] = SSE(res);
   console.log("Client subscribed width: " + req.params.convid);
   subscriptions[req.params.convid].disconnect(function () {

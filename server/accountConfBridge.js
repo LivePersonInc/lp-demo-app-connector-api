@@ -8,9 +8,10 @@ nconf.file({file: "./settings.json"});
 
 const accountConfigService = new AccountConfigService(nconf);
 
-router.get("/properties/:id", function (req, res, next) {
+router.get("/properties/:id", (req, res, next) => {
   let brandId = req.params.id;
   let args = {};
+
   args.headers = {};
   args.headers['authorization'] = req.header('authorization');
   args.headers['Accept'] = 'application/json';
@@ -18,16 +19,17 @@ router.get("/properties/:id", function (req, res, next) {
   accountConfigService
     .getAccountPropertyList(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
+
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
         res.status(resolve[1].statusCode).send({error: "Something was wrong"});
       }
-    }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-  });
 
+    }).catch((error) => {
+      console.error("ERROR: Promise rejected", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+    });
 });
 
 function handleStatusCode(statusCode) {

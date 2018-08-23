@@ -4,7 +4,7 @@ const AppInstallationService = require("./services/AppInstallationService");
 const HttpStatus = require('http-status-codes');
 const appInstallationService = new AppInstallationService();
 
-router.get("/:brandId", function (req, res, next) {
+router.get("/:brandId", (req, res, next) => {
   let brandId = req.params.brandId;
   let args = {};
   args.data = {};
@@ -15,16 +15,17 @@ router.get("/:brandId", function (req, res, next) {
   appInstallationService
     .getAppsForBrandId(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
+
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
         res.status(resolve[1].statusCode).send({error: "Something was wrong"});
       }
-    }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
 
-  });
+    }).catch((error) => {
+      console.error("ERROR: Promise rejected", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+    });
 });
 
 router.post("/:brandId", (req, res, next) => {
@@ -37,7 +38,7 @@ router.post("/:brandId", (req, res, next) => {
   args.headers['authorization'] = req.header('authorization');
   args.data = JSON.stringify(req.body);
 
-  appInstallationService.installNewApp(brandId,args, req.header('LP-DOMAIN'))
+  appInstallationService.installNewApp(brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {
@@ -47,9 +48,8 @@ router.post("/:brandId", (req, res, next) => {
       }
 
     }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-
+      console.error("ERROR: Promise rejected", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });
 
@@ -83,7 +83,6 @@ router.put("/:brandId/:appId", (req, res, next) => {
     console.error("ERROR: Promise rejected", error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
-
 });
 
 function handleStatusCode(statusCode) {
