@@ -8,10 +8,7 @@ import {LoadingService} from "./core/services/loading.service";
 import {LpHomeComponent} from "./lp-home/lp-home.component";
 import {LpDemoComponent} from "./lp-demo/lp-demo.component";
 import {LpStartTutorialModule} from "./lp-start-tutorial/lp-start-tutorial.module";
-import {LpTestServicesComponent} from "./lp-test-services/lp-test-services.component";
-import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {LpConversationModule} from "./lp-conversation/lp-conversation.module";
-import {Router} from "@angular/router";
 import {APP_BASE_HREF} from "@angular/common";
 import {AuthenticationService} from "./core/services/authentication.service";
 describe('AppComponent', () => {
