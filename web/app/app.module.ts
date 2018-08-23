@@ -6,7 +6,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {SendApiService} from "./core/services/send-api.service";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LpTestServicesComponent} from './lp-test-services/lp-test-services.component';
 import {LpHomeComponent} from './lp-home/lp-home.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {LpDemoComponent} from './lp-demo/lp-demo.component';
@@ -31,7 +30,6 @@ import {StateManager} from "./core/helpers/state-manager";
 @NgModule({
   declarations: [
     AppComponent,
-    LpTestServicesComponent,
     LpHomeComponent,
     LpDemoComponent,
     LpConfirmationDialogComponent
