@@ -25,7 +25,13 @@ export class LpLoginComponent implements OnInit {
   }
 
   public authenticate() {
-      this.onLogin.emit({'brandId':this.brandId,'userName':this.userName,'password':this.password});
+    this.removedWhiteSpacesAtEndAndBeginning();
+    this.onLogin.emit({'brandId':this.brandId,'userName':this.userName,'password':this.password});
+  }
+
+  public removedWhiteSpacesAtEndAndBeginning() {
+    this.brandId = this.brandId.trim();
+    this.userName = this.userName.trim();
   }
 
 }
