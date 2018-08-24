@@ -1,13 +1,13 @@
 import { TestBed, async } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
-import {LpHeaderModule} from "./lp-header/lp-header.module";
+import {LpHeaderModule} from "./components/lp-header/lp-header.module";
 import {MaterialModule} from "./material.module";
 import {LoadingService} from "./core/services/loading.service";
-import {LpHomeComponent} from "./lp-home/lp-home.component";
-import {LpDemoComponent} from "./lp-demo/lp-demo.component";
-import {LpStartTutorialModule} from "./lp-start-tutorial/lp-start-tutorial.module";
-import {LpConversationModule} from "./lp-conversation/lp-conversation.module";
+import {LpHomeComponent} from "./components/lp-home/lp-home.component";
+import {LpDemoComponent} from "./components/lp-demo/lp-demo.component";
+import {LpStartTutorialModule} from "./components/lp-start-tutorial/lp-start-tutorial.module";
+import {LpConversationModule} from "./components/lp-conversation/lp-conversation.module";
 import {APP_BASE_HREF} from "@angular/common";
 import {AuthenticationService} from "./core/services/authentication.service";
 describe('AppComponent', () => {
