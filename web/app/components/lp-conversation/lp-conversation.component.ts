@@ -30,7 +30,8 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
     }
-    if(this.installationService .selectedApp){
+
+    if(this.installationService.selectedApp){
       this.appKey = this.installationService.selectedApp.client_id || "";
       this.appSecret = this.installationService.selectedApp.client_secret || "";
     }
@@ -41,15 +42,8 @@ export class LpConversationComponent implements OnInit, OnDestroy {
       this.conversation = new Conversation(this.brandId,this.appKey,this.appSecret, this.userName);
     }
 
-    this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
-       if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId){
+    this.subscribeToConversationEvents();
 
-         if(event.event === ConvEvent.OPEN ){
-           this.conversation = this.conversationService.conversation;
-         }
-
-       }
-    });
   }
 
   ngOnDestroy(){
@@ -74,6 +68,18 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
   public onConsumerName(consumerName) {
     this.userName = consumerName;
+  }
+
+  private subscribeToConversationEvents() {
+    this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
+      if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId){
+
+        if(event.event === ConvEvent.OPEN ){
+          this.conversation = this.conversationService.conversation;
+        }
+
+      }
+    });
   }
 
 
