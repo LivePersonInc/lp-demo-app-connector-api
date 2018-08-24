@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {fadeInAnimation} from "../../shared/animations/lp-animations";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {ISubscription} from "rxjs/Subscription";
@@ -33,8 +32,8 @@ export class LpHomeComponent implements OnInit, OnDestroy {
               private installationService: InstallationService,
               private domainsService: DomainsService,
               private router: Router,
-              private conversationService: ConversationService, //Needs to be injected here before doing anything else to execute the constructor
-              private accountConfigService: AccountConfigService, //Needs to be injected here before doing anything else
+              private conversationService: ConversationService,
+              private accountConfigService: AccountConfigService,
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
   }
@@ -99,7 +98,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     }
     return false;
   }
-
 
   public openConfirmationDialog(): void {
     const dialogRef = this.dialog.open(LpConfirmationDialogComponent);

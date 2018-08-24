@@ -1,9 +1,4 @@
 <mat-card class="form-container mx-auto ">
-  <div class="error-message-box">
-    <!--<mat-error *ngIf="loginForm.invalid && loginForm.touched">
-      The form is not valid
-    </mat-error>-->
-  </div>
   <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
     <div class="row">
       <div class="col-sm-12">
