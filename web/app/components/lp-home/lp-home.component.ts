@@ -24,7 +24,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   public userName: string;
   public password: string;
   public authenticationService: AuthenticationService;
-  public loginForm: FormGroup;
 
   private loginSubscription: ISubscription;
   private domainSubscription: ISubscription;
@@ -34,7 +33,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
               private installationService: InstallationService,
               private domainsService: DomainsService,
               private router: Router,
-              private fb: FormBuilder,
               private conversationService: ConversationService, //Needs to be injected here before doing anything else to execute the constructor
               private accountConfigService: AccountConfigService, //Needs to be injected here before doing anything else
               public dialog: MatDialog) {
@@ -67,11 +65,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.authenticationService.login(this.brandId, this.userName, this.password);
       }
     });
-    this.loginForm = this.fb.group({
-      'brand': new FormControl('', [Validators.required],),
-      'email': new FormControl('', [Validators.required],),
-      'password': new FormControl('', [Validators.required],)
-    });
+
   }
 
   ngOnDestroy() {
@@ -81,7 +75,12 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
   }
 
-  public authenticate() {
+  public loadDomainsForBrand(event: any) {
+    if(event && event.brandId && event.userName && event.password) {
+      this.brandId = event.brandId;
+      this.userName = event.userName;
+      this.password = event.password;
+    }
     //First of all we need to know the domains
     this.domainsService.getDomainList(this.brandId);
   }

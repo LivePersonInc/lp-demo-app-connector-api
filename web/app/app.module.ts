@@ -26,13 +26,15 @@ import {LpStartTutorialModule} from "./components/lp-start-tutorial/lp-start-tut
 import {LogoutGuard} from "./core/guards/logout.guard";
 import {ConversationManager} from "./core/helpers/conversation-manager";
 import {StateManager} from "./core/helpers/state-manager";
+import { LpLoginComponent } from './components/lp-login/lp-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LpHomeComponent,
     LpDemoComponent,
-    LpConfirmationDialogComponent
+    LpConfirmationDialogComponent,
+    LpLoginComponent
   ],
   imports: [
     LpHeaderModule,

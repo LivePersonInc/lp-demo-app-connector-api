@@ -66,8 +66,7 @@ describe('LpHomeComponent', () => {
       null,
       null,
       null,
-      null,
-      null);
+      null,);
   });
 
   it('should create', () => {
