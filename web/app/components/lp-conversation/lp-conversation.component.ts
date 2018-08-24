@@ -73,9 +73,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public onConsumerName(consumerName) {
-    console.log(consumerName);
     this.userName = consumerName;
-    this.conversation.userName = consumerName;
   }
 
 
