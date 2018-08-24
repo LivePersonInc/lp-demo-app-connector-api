@@ -16,12 +16,13 @@ import {Event} from "../../shared/models/send-api/Event.model";
 import {PublishContentEvent} from "../../shared/models/send-api/PublishContentEvent.model";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import {StateManager} from "./state-manager";
 
 
 @Injectable()
 export class ConversationManager {
 
-  constructor(private sendApiService:SendApiService){}
+  constructor(private sendApiService:SendApiService, protected stateManager: StateManager){}
 
   public openConversation(conversation: Conversation): Observable<any> {
     return this.authenticate(conversation).flatMap((res: any) => {
@@ -48,6 +49,7 @@ export class ConversationManager {
       return this.sendMessageRequest(message, conversation).map(res => {
         console.log(res);
         conversation.messages.push(new ChatMessage("sent", new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation)));
+        this.updateState(conversation);
       });
   }
 
@@ -62,6 +64,7 @@ export class ConversationManager {
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
+      this.updateState(conversation);
     });
 
   }
@@ -133,7 +136,7 @@ export class ConversationManager {
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
-  private handleIncomingNotifications(notification, conversation: Conversation) {
+  private handleIncomingNotifications(notification: any, conversation: Conversation) {
     let data = JSON.parse(notification.data);
     conversation.serverNotifications.push(JSON.stringify(data, null, " "));
 
@@ -157,6 +160,7 @@ export class ConversationManager {
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
+    this.updateState(conversation);
     console.log("Notification received in conversation manager");
     console.log(notification);
   }
@@ -195,6 +199,12 @@ export class ConversationManager {
     let setUserProfilePayload = new Request("req", "2,", "userprofile.SetUserProfile", setUserProfileBody);
 
     return [setUserProfilePayload,requestConversationPayload];
+  }
+
+  private updateState(conversation: Conversation) {
+    let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
+    appState.lastConversation = conversation;
+    this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
   }
 
 }
