@@ -3,11 +3,15 @@
   <mat-expansion-panel *ngFor="let n of conversation.serverNotifications">
     <mat-expansion-panel-header>
       <mat-panel-title>
-      {{n}}
+        <div *ngIf="n.type">{{n.type}}</div>
+        &ensp;&ensp;
+        <strong *ngIf="checkIfHasConversationStateProperty(n)">
+          {{n.body.changes[0].result.conversationDetails.state }}
+        </strong>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <pre class="pretty-json">
-      {{n}}
+      {{n|json: 2}}
     </pre>
   </mat-expansion-panel>
 

@@ -138,7 +138,9 @@ export class ConversationManager {
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
     let data = JSON.parse(notification.data);
-    conversation.serverNotifications.push(JSON.stringify(data, null, " "));
+  //  conversation.serverNotifications.push(JSON.stringify(data, null, " "));
+
+    conversation.serverNotifications.push(data);
 
     try {
       if (data.body.changes[0].originatorMetadata &&

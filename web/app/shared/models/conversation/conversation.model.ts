@@ -15,7 +15,7 @@ export class Conversation implements Deserializable<Conversation> {
   userName: string;
   eventSource: EventSourcePolyfill;
   messages: Array<ChatMessage>;
-  serverNotifications: Array<string>;
+  serverNotifications: Array<any>;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;

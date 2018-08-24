@@ -6,7 +6,7 @@ import {Conversation} from "../../../shared/models/conversation/conversation.mod
   templateUrl: './lp-console.component.html',
   styleUrls: ['./lp-console.component.scss']
 })
-export class LpConsoleComponent implements OnInit, OnChanges {
+export class LpConsoleComponent implements OnInit {
 
   @Input()
   public conversation: Conversation;
@@ -14,12 +14,13 @@ export class LpConsoleComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+
   }
 
-
-  ngOnChanges(changes: SimpleChanges) {
-
-
+  public checkIfHasConversationStateProperty(notification: any){
+    return notification.type === 'cqm.ExConversationChangeNotification' && notification.body && notification.body.changes.length > 0
+      && notification.body.changes[0].result  && notification.body.changes[0].result.conversationDetails && notification.body.changes[0].result.conversationDetails.state ;
+    ;
   }
 
 }
