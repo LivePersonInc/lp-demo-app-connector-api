@@ -1,11 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {LpConversationComponent} from './lp-conversation.component';
 import {MaterialModule} from "../../material.module";
 import {FormsModule} from "@angular/forms";
 import {LpChatBoxComponent} from "./lp-chat-box/lp-chat-box.component";
 import {LpConsoleComponent} from "./lp-console/lp-console.component";
-import {LpConversationModule} from "./lp-conversation.module";
 import {LpChatBoxMessageComponent} from "./lp-chat-box/lp-chat-box-message/lp-chat-box-message.component";
 import {LpChatBoxFooterComponent} from "./lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component";
 import {AuthenticationService} from "../../core/services/authentication.service";
