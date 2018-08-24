@@ -19,8 +19,14 @@ export class LpConsoleComponent implements OnInit {
 
   public checkIfHasConversationStateProperty(notification: any){
     return notification.type === 'cqm.ExConversationChangeNotification' && notification.body && notification.body.changes.length > 0
-      && notification.body.changes[0].result  && notification.body.changes[0].result.conversationDetails && notification.body.changes[0].result.conversationDetails.state ;
-    ;
+      && notification.body.changes[0].result  && notification.body.changes[0].result.conversationDetails
+      && notification.body.changes[0].result.conversationDetails.state ;
+
+  }
+
+  public checkIfHasSequenceProperty(notification: any){
+    return notification.type === 'ms.MessagingEventNotification' && notification.body && notification.body.changes.length > 0
+      && (notification.body.changes[0].sequence || notification.body.changes[0].sequence == 0);
   }
 
 }

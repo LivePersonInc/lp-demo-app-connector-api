@@ -3,11 +3,14 @@
   <mat-expansion-panel *ngFor="let n of conversation.serverNotifications">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <div *ngIf="n.type">{{n.type}}</div>
-        &ensp;&ensp;
-        <strong *ngIf="checkIfHasConversationStateProperty(n)">
-          {{n.body.changes[0].result.conversationDetails.state }}
-        </strong>
+        <div *ngIf="n.type"><i>{{n.type}}</i></div>
+        &ensp;&ensp;&ensp;&ensp;
+        <div class="text-right" *ngIf="checkIfHasConversationStateProperty(n)">
+          State: <strong>{{n.body.changes[0].result.conversationDetails.state }}</strong>
+        </div>
+        <div class="text-right" *ngIf="checkIfHasSequenceProperty(n)">
+          Sequence: <strong>{{n.body.changes[0].sequence }}</strong>
+        </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <pre class="pretty-json">
