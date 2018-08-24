@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpNavMenuComponent } from './lp-nav-menu.component';
-import {MaterialModule} from "../../material.module";
-import {AuthenticationService} from "../../core/services/authentication.service";
+import {MaterialModule} from "../../../material.module";
+import {AuthenticationService} from "../../../core/services/authentication.service";
 
 describe('LpNavMenuComponent', () => {
   let component: LpNavMenuComponent;

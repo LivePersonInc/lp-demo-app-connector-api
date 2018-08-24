@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpConfigCheckComponent } from './lp-config-check.component';
-import {MaterialModule} from "../../material.module";
+import {MaterialModule} from "../../../material.module";
 import {FormsModule} from "@angular/forms";
-import {AccountConfigService} from "../../core/services/account-config.service";
-import {InstallationService} from "../../core/services/istallation.service";
+import {AccountConfigService} from "../../../core/services/account-config.service";
+import {InstallationService} from "../../../core/services/istallation.service";
 
 describe('LpConfigCheckComponent', () => {
   let component: LpConfigCheckComponent;

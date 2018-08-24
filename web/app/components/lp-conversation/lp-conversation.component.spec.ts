@@ -12,6 +12,7 @@ import {AuthenticationService} from "../../core/services/authentication.service"
 import {ConversationService} from "../../core/services/conversation.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {LpConversationFormComponent} from "./lp-conversation-form/lp-conversation-form.component";
 
 describe('LpConversationComponent', () => {
   let component: LpConversationComponent;
@@ -43,7 +44,8 @@ describe('LpConversationComponent', () => {
         LpChatBoxComponent,
         LpConsoleComponent,
         LpChatBoxMessageComponent,
-        LpChatBoxFooterComponent
+        LpChatBoxFooterComponent,
+        LpConversationFormComponent
       ],
       providers: [
         {provide: AuthenticationService, useValue: authenticationService},

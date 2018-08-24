@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpStartTutotialComponent } from './lp-start-tutotial.component';
-import {MaterialModule} from "../../app/material.module";
+import {MaterialModule} from "../../../app/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LpStartTutorialModule} from "./lp-start-tutorial.module";
 import {LpWebhooksConfigComponent} from "./lp-webhooks-config/lp-webhooks-config.component";
@@ -9,8 +9,8 @@ import {LpEnableAsycComponent} from "./lp-enable-asyc/lp-enable-asyc.component";
 import {LpConfigCheckComponent} from "./lp-config-check/lp-config-check.component";
 import {LpAppKeySecretComponent} from "./lp-app-key-secret/lp-app-key-secret.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AccountConfigService} from "../../app/core/services/account-config.service";
-import {InstallationService} from "../../app/core/services/istallation.service";
+import {AccountConfigService} from "../../../app/core/services/account-config.service";
+import {InstallationService} from "../../../app/core/services/istallation.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 

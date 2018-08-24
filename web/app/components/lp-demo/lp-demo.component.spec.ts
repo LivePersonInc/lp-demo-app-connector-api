@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpDemoComponent } from './lp-demo.component';
-import {MaterialModule} from "../../app/material.module";
-import {LpConversationModule} from "../../app/components/lp-conversation/lp-conversation.module";
+import {MaterialModule} from "../../../app/material.module";
+import {LpConversationModule} from "../../../app/components/lp-conversation/lp-conversation.module";
 import {FormsModule} from "@angular/forms";
-import {ConversationService} from "../../app/core/services/conversation.service";
-import {AuthenticationService} from "../../app/core/services/authentication.service";
-import {InstallationService} from "../../app/core/services/istallation.service";
-import {SendApiService} from "../../app/core/services/send-api.service";
-import {LoadingService} from "../../app/core/services/loading.service";
+import {ConversationService} from "../../../app/core/services/conversation.service";
+import {AuthenticationService} from "../../../app/core/services/authentication.service";
+import {InstallationService} from "../../../app/core/services/istallation.service";
+import {SendApiService} from "../../../app/core/services/send-api.service";
+import {LoadingService} from "../../../app/core/services/loading.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('LpDemoComponent', () => {

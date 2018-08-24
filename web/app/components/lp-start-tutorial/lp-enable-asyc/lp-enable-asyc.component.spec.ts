@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LpEnableAsycComponent } from './lp-enable-asyc.component';
-import {MaterialModule} from "../../material.module";
-import {AccountConfigService} from "../../core/services/account-config.service";
+import {MaterialModule} from "../../../material.module";
+import {AccountConfigService} from "../../../core/services/account-config.service";
 import {Router} from "@angular/router";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../../core/services/istallation.service";
 import {MatStepper} from "@angular/material";
-import {StateManager} from "../../core/helpers/state-manager";
-import {AuthenticationService} from "../../core/services/authentication.service";
+import {StateManager} from "../../../core/helpers/state-manager";
+import {AuthenticationService} from "../../../core/services/authentication.service";
 
 describe('LpEnableAsycComponent', () => {
   let component: LpEnableAsycComponent;

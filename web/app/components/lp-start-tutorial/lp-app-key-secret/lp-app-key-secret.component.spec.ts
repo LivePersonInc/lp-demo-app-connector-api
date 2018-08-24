@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpAppKeySecretComponent } from './lp-app-key-secret.component';
-import {MaterialModule} from "../../material.module";
-import {InstallationService} from "../../core/services/istallation.service";
+import {MaterialModule} from "../../../material.module";
+import {InstallationService} from "../../../core/services/istallation.service";
 import {Router} from "@angular/router";
 import {MatStepper} from "@angular/material";
 import {ChangeDetectorRef} from "@angular/core";
-import {LoadingService} from "../../core/services/loading.service";
+import {LoadingService} from "../../../core/services/loading.service";
 
 describe('LpAppKeySecretComponent', () => {
   let component: LpAppKeySecretComponent;
