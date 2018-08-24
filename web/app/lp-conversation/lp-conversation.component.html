@@ -1,53 +1,18 @@
 <div class="container-fluid">
   <div class="row h-100">
     <div class="col-md-5 text-center">
-      <div *ngIf="conversation && conversation.conversationId"><b>Conversation id:</b> {{conversation.conversationId}}
-      </div>
       <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"></lp-chat-box>
     </div>
     <div class="col-md-7 text-left">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-6">
-            <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="Brand ID" required [(ngModel)]="brandId"
-                     [disabled]="conversation && conversation.isConvStarted"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="Installation id" required [(ngModel)]="appKey"
-                     [disabled]="conversation && conversation.isConvStarted"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="Consumer Name" required [(ngModel)]="userName"
-                     [disabled]="conversation && conversation.isConvStarted"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6">
-            <mat-form-field class="full-width" color="accent">
-              <input matInput placeholder="Secret" required [(ngModel)]="appSecret"
-                     [disabled]="conversation && conversation.isConvStarted"
-                     [ngModelOptions]="{standalone: true}">
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
+
+      <lp-conversation-form [conversation]="conversation" (consumerNameChange)="onConsumerName($event)"></lp-conversation-form>
 
       <div class="container-fluid  text-right">
         <div class="row">
           <div class="col-sm-12 console-container">
             <lp-console [conversation]="conversation"></lp-console>
           </div>
-          <div class="col-sm-4 state-info">
-            <span *ngIf="conversation && !conversation.isConvStarted">State: CLOSED </span>
-          </div>
-          <div class="col-sm-7">
+          <div class="col-sm-12">
             <button mat-raised-button
                     (click)="closeConversation()"
                     color="primary"

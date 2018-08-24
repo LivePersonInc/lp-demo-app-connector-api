@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="_conversation">
+    <div class="col-sm-6">
+      <mat-form-field  class="full-width" color="accent">
+        <input matInput placeholder="Consumer Name" required [(ngModel)]="_conversation.userName"
+               [disabled]="_conversation && _conversation.isConvStarted"
+               (ngModelChange)="onChange($event)"
+               [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-6">
+     <strong>Brand id: </strong>
+      <div> {{_conversation.branId}}</div>
+    </div>
+    <div class="col-sm-6">
+      <strong>Installation id: </strong>
+      <div> {{_conversation.appKey}}</div>
+      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
+    </div>
+    <div class="col-sm-6">
+      <strong>Secret: </strong>
+      <div> {{_conversation.appSecret}}</div>
+      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
+    </div>
+    <div class="col-sm-12">
+      <strong>Conversation Id: </strong>
+      <div> {{_conversation.conversationId}}</div>
+      <div *ngIf="!_conversation.conversationId" class="alert-info"> Type a message and press enter to start a new conversation</div>
+    </div>
+  </div>
+</div>

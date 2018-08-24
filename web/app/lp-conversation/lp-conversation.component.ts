@@ -13,10 +13,11 @@ import {ISubscription} from "rxjs/Subscription";
 })
 export class LpConversationComponent implements OnInit, OnDestroy {
   public brandId: string;
-  public conversation: Conversation;
   public appKey: string;
   public appSecret: string;
   public userName: string;
+
+  public conversation: Conversation;
   private conversationSubscription: ISubscription;
 
   constructor(private conversationService: ConversationService,
@@ -24,6 +25,8 @@ export class LpConversationComponent implements OnInit, OnDestroy {
               private installationService: InstallationService) { }
 
   ngOnInit() {
+    this.userName = "John TestName";
+
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
     }
@@ -32,18 +35,19 @@ export class LpConversationComponent implements OnInit, OnDestroy {
       this.appSecret = this.installationService.selectedApp.client_secret || "";
     }
 
-    this.userName = "Consumer Name";
-
     if(this.conversationService.conversation){
       this.conversation = this.conversationService.conversation;
+    }else  {
+      this.conversation = new Conversation(this.brandId,this.appKey,this.appSecret, this.userName);
     }
 
     this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
        if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId){
-         console.log(event.event);
+
          if(event.event === ConvEvent.OPEN ){
            this.conversation = this.conversationService.conversation;
          }
+
        }
     });
   }
@@ -66,6 +70,11 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     }else{
       this.startConversation(messageText);
     }
+  }
+
+  public onConsumerName(consumerName) {
+    console.log(consumerName);
+    this.conversation.userName = consumerName;
   }
 
 
