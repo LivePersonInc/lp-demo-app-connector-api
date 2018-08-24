@@ -23,10 +23,17 @@
   .lp-card{
     padding-top: 66px;
   }
+
   .console-container{
     margin-top:20px;
     height: 335px;
     display: block;
+  }
+
+  @media (min-width: 1200px) {
+    .console-container{
+      height: 357px;
+    }
   }
 
   .mat-raised-button{
