@@ -31,7 +31,7 @@ export class LpConsoleComponent implements OnInit {
 
   public checkIfHasChatStateEventProperty(notification: any){
     return notification.type === 'ms.MessagingEventNotification' && notification.body && notification.body.changes.length > 0
-      && (notification.body.changes[0].sequence || notification.body.changes[0].sequence == 0);
+      && (notification.body.changes[0].event && notification.body.changes[0].event.type && notification.body.changes[0].event.chatState);
   }
 
 }
