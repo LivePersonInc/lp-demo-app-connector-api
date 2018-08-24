@@ -27,6 +27,7 @@ import {LogoutGuard} from "./core/guards/logout.guard";
 import {ConversationManager} from "./core/helpers/conversation-manager";
 import {StateManager} from "./core/helpers/state-manager";
 import { LpLoginComponent } from './components/lp-login/lp-login.component';
+import { LpFooterComponent } from './components/lp-footer/lp-footer.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { LpLoginComponent } from './components/lp-login/lp-login.component';
     LpHomeComponent,
     LpDemoComponent,
     LpConfirmationDialogComponent,
-    LpLoginComponent
+    LpLoginComponent,
+    LpFooterComponent
   ],
   imports: [
     LpHeaderModule,

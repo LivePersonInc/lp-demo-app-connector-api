@@ -10,6 +10,7 @@
       </p>
       <p>you can start here using your brand Id.</p>
 
+
       <lp-login (onLogin)="loadDomainsForBrand($event)"></lp-login>
 
       <br>
@@ -22,32 +23,24 @@
       Settings properties
     </mat-card-title>
     <mat-card-content>
+
       <lp-config-check></lp-config-check>
-      <button mat-raised-button
-              class=" start-config-btn"
-              color="primary"
-              (click)="goToStartConfigPage()"
-      >
+
+      <button mat-raised-button class="start-config-btn" color="primary" (click)="goToStartConfigPage()">
         Configuration
         <i class="material-icons">settings</i>
       </button>
 
-      <button mat-raised-button
-              color="primary"
-              class="start-config-btn"
-              (click)="openConfirmationDialog()"
-      >
+      <button mat-raised-button color="primary" class="start-config-btn" (click)="openConfirmationDialog()">
         Log out
         <i class="material-icons">account_circle</i>
+
       </button>
     </mat-card-content>
   </mat-card>
 
 </div>
 
-<footer class="footer text-center" *ngIf="!isAuthenticated">
-  <span>&copy; 2018 LivePerson, Inc. All rights reserved.</span>
-</footer>
 
 
 
