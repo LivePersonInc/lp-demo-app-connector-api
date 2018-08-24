@@ -150,7 +150,7 @@ export class ConversationManager {
               "received",
               data.body.changes[0].serverTimestamp,
               data.body.changes[0].event.message,
-              "AGENT",
+              "Agent",
               "ok",
               false
             )

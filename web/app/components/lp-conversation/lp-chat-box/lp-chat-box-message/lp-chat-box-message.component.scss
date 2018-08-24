@@ -4,12 +4,13 @@
     text-align: left;
     width: calc(100% - 60px);
     background-color: #f0f9ff;
-    margin: 10px;
+    margin: 5px;
     border-radius: 5px;
 
     .username{
       display: inline-grid;
       font-weight: bold;
+      font-size: 12px !important;
       width: 70%;
     }
     .message{
@@ -17,10 +18,11 @@
       width: 100%;
       word-break: break-all;
       display: inline-block;
+      font-size: 12px !important;
     }
     .time{
       text-align: right;
-      font-size: 10px;
+      font-size: 9px;
       line-height: 20px;
       color: #b0b0b0;
       width: 28%;
