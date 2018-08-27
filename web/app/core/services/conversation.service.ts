@@ -55,7 +55,7 @@ export class ConversationService extends HttpService {
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
       }, error => {
         this.loadingService.stopLoading();
-        this.handleError(error);
+        this.errorResponse(error);
       });
     } else {
       const msg = "A Conversation has to be intialized before send a message";

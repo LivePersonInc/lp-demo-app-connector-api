@@ -66,8 +66,6 @@ export class HttpService {
       this.snackBar.open('[ERROR]: ' + error.status + " " + (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
       if(error.status === 401) {
         this.router.navigateByUrl('/logout');
-      }else{
-        this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
       }
     }else {
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
