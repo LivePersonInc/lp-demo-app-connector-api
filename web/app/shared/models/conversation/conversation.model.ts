@@ -2,6 +2,7 @@ import {ChatMessage} from "./chatMessage.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {Deserializable} from "../deserializable.model";
 import {getNonAotConfig} from "@angular/cli/models/webpack-configs";
+import {ChatState} from "../send-api/EventChatState.model";
 
 export class Conversation implements Deserializable<Conversation> {
   isConvStarted: boolean;
@@ -16,6 +17,7 @@ export class Conversation implements Deserializable<Conversation> {
   eventSource: EventSourcePolyfill;
   messages: Array<ChatMessage>;
   serverNotifications: Array<any>;
+  chatState: ChatState;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;
@@ -39,6 +41,7 @@ export class Conversation implements Deserializable<Conversation> {
     this.conversationId = input.conversationId;
     this.userName = input.userName;
     this.eventSource = null;
+    this.chatState = ChatState.ACTIVE;
 
     if(input.messages){
       this.messages = [];

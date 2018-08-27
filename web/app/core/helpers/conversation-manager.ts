@@ -17,6 +17,7 @@ import {PublishContentEvent} from "../../shared/models/send-api/PublishContentEv
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {StateManager} from "./state-manager";
+import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 
 
 @Injectable()
@@ -133,7 +134,7 @@ export class ConversationManager {
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
     let data = JSON.parse(notification.data);
   //  conversation.serverNotifications.push(JSON.stringify(data, null, " "));
-
+    this.setChatState(data, conversation);
     conversation.serverNotifications.push(data);
 
     try {
@@ -201,6 +202,28 @@ export class ConversationManager {
     let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
     appState.lastConversation = conversation;
     this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
+  }
+
+
+  private setChatState(notificationJson: any, conversation: Conversation) {
+    if(this.checkIfAcceptStatusEvent(notificationJson)) {
+      console.log(notificationJson);
+      if(notificationJson.body.changes[0].event.chatState == 'COMPOSING'){
+        conversation.chatState = ChatState.COMPOSING;
+      }else if(notificationJson.body.changes[0].event.chatState == 'ACTIVE'){
+        conversation.chatState = ChatState.ACTIVE;
+      }
+    }
+  }
+
+  private checkIfHasChatStateEventProperty(notification: any){
+    return notification.type === 'ms.MessagingEventNotification' && notification.body && notification.body.changes.length > 0
+      && (notification.body.changes[0].event && notification.body.changes[0].event.type && notification.body.changes[0].event.chatState);
+  }
+
+
+  private checkIfAcceptStatusEvent(notification: any){
+    return this.checkIfHasChatStateEventProperty(notification) && notification.body.changes[0].event.type === 'ChatStateEvent';
   }
 
 }

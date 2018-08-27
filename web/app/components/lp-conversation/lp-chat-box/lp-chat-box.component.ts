@@ -12,7 +12,7 @@ import {Conversation} from "../../../shared/models/conversation/conversation.mod
 })
 export class LpChatBoxComponent implements OnInit {
   @Input() disabled: boolean;
-  @Input()  conversation: Conversation;
+  @Input() conversation: Conversation;
   @Output() onSendMessage = new EventEmitter<string>();
   @ViewChild('messagearea') private messageArea: ElementRef;
 
