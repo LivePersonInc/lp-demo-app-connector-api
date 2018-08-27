@@ -25,7 +25,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
               private installationService: InstallationService) { }
 
   ngOnInit() {
-    this.userName = "John TestName";
+    this.userName = "John";
 
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
@@ -68,6 +68,10 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
   public onConsumerName(consumerName) {
     this.userName = consumerName;
+  }
+
+  public isConversationDisabled(): boolean {
+    return !this.userName || !this.brandId || !this.appSecret || !this.appSecret
   }
 
   private subscribeToConversationEvents() {

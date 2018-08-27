@@ -25,7 +25,7 @@ export class Conversation implements Deserializable<Conversation> {
     this.messages = [];
     this.eventSource = null;
     this.serverNotifications = [];
-    this.ext_consumer_id = "random_id" + Math.random();
+    this.ext_consumer_id = Math.random().toString();
   }
 
   deserialize(input: any): Conversation {

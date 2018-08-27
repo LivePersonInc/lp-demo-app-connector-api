@@ -1,5 +1,5 @@
 <div class="footer-container">
   <input (keydown)="keyDownFunction($event)"  [(ngModel)]="messageText" placeholder="Type your message...">
   <!--<textarea (keydown)="keyDownFunction($event)"  [(ngModel)]="messageText"></textarea>-->
-  <button  mat-button (click)="sendMessage()" [disabled]="messageText.length === 0"> <i class="material-icons">send</i></button>
+  <button  mat-button (click)="sendMessage()" [disabled]="messageText.length === 0 || disabled"> <i class="material-icons">send</i></button>
 </div>

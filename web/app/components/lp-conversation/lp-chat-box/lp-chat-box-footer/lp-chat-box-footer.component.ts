@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'lp-chat-box-footer',
@@ -7,7 +7,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class LpChatBoxFooterComponent implements OnInit {
   @Output() onSendMessage = new EventEmitter<string>();
-
+  @Input() disabled: boolean;
   public messageText: string;
 
   constructor() { }

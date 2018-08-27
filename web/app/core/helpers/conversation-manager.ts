@@ -191,7 +191,7 @@ export class ConversationManager {
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
     let setUserProfileBody = new SetUserProfile(
       userName || "WEB UI USER",
-      "Test",
+      "",
       "http://avatarurl.com",
       "consumer",
       "http://something.com",
