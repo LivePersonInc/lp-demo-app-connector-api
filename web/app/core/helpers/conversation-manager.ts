@@ -92,6 +92,7 @@ export class ConversationManager {
     }
   }
 
+
   private getAppJWT(conversation: Conversation): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -113,27 +114,26 @@ export class ConversationManager {
   }
 
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
-    const headers = {
-      'headers': {
-        'content-type': 'application/json',
-        'Authorization': conversation.appJWT,
-        'x-lp-on-behalf': conversation.consumerJWS
-      }
-    };
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, conversation.conversationId, body, headers);
   };
 
   private openConversationRequest(conversation: Conversation): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
+    return this.sendApiService.openConversation(conversation.branId, body, headers);
+  }
+
+  private addSendRawEndpointHeaders (appJWT, consumerJWS): any {
     const headers = {
       'headers': {
         'content-type': 'application/json',
-        'Authorization': conversation.appJWT,
-        'x-lp-on-behalf': conversation.consumerJWS
+        'Authorization': appJWT,
+        'x-lp-on-behalf': consumerJWS
       }
     };
-    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
-    return this.sendApiService.openConversation(conversation.branId, body, headers);
+    return headers;
   }
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
@@ -169,7 +169,7 @@ export class ConversationManager {
 
   private getMessageRequestBody(message: string, conversationId: string) {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
-      new Event("ContentEvent", "text/plain", message)));
+      new Event("AcceptStatusEvent", "text/plain", message)));
   }
 
   private getShowUserValue(userName: string, conversation: Conversation): boolean {
