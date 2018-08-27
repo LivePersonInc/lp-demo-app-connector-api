@@ -8,6 +8,7 @@ import {LpAppKeySecretComponent} from "./lp-app-key-secret/lp-app-key-secret.com
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from "../../material.module";
 import { LpWebhooksInfoComponent } from './lp-config-check/lp-webhooks-info/lp-webhooks-info.component';
+import { LpWebhooksFormComponent } from './lp-webhooks-config/lp-webhooks-form/lp-webhooks-form.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { LpWebhooksInfoComponent } from './lp-config-check/lp-webhooks-info/lp-w
     LpEnableAsycComponent,
     LpConfigCheckComponent,
     LpAppKeySecretComponent,
-    LpWebhooksInfoComponent
+    LpWebhooksInfoComponent,
+    LpWebhooksFormComponent
   ],
   exports: [
     LpStartTutotialComponent,

@@ -17,12 +17,12 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   public completed = new EventEmitter();
   public webhooks: Webhooks;
   public installationService: InstallationService;
-  public webhooksForm: FormGroup;
 
   private installationSubscription: ISubscription;
   private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
 
-  constructor(private _installationService: InstallationService, private fb: FormBuilder) {
+  constructor(private _installationService: InstallationService,
+              private formBuilder: FormBuilder) {
     this.installationService = _installationService;
   }
 
@@ -42,14 +42,6 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
           break;
         }
       }
-    });
-
-    this.webhooksForm = this.fb.group({
-      'AcceptStatusEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-      'ChatStateEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-      'ContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-      'RichContentEvent': new FormControl('', [Validators.pattern(this.pattern),]),
-      'ExConversationChangeNotification': new FormControl('', [Validators.pattern(this.pattern),])
     });
   }
 
