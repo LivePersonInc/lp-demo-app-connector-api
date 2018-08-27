@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {MaterialModule} from "../../../../material.module";
+import {FormsModule} from "@angular/forms";
 import { LpWebhooksInfoComponent } from './lp-webhooks-info.component';
 
 describe('LpWebhooksInfoComponent', () => {
@@ -8,6 +9,7 @@ describe('LpWebhooksInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports:[MaterialModule, FormsModule],
       declarations: [ LpWebhooksInfoComponent ]
     })
     .compileComponents();
