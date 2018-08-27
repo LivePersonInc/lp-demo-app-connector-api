@@ -1,0 +1,34 @@
+<b class="subtitle">Webhooks endpoints</b>
+<div class="row" *ngIf="webhooks">
+
+  <div class="col-md-6">
+    <mat-form-field class="w-100" color="accent">
+      <input matInput placeholder="AcceptStatusEvent" readonly
+             value="{{webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint}}">
+    </mat-form-field>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field class="w-100" color="accent">
+      <input matInput placeholder="ChatStateEvent" readonly
+             value="{{webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint}}">
+    </mat-form-field>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field class="w-100" color="accent">
+      <input matInput placeholder="ContentEvent" readonly
+             value="{{webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}">
+    </mat-form-field>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field class="w-100" color="accent">
+      <input matInput placeholder="RichContentEvent" readonly
+             value="{{webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint}}">
+    </mat-form-field>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field class="w-100" color="accent">
+      <input matInput placeholder="ExConversationChangeNotification" readonly
+             value="{{webhooks['cqm.ExConversationChangeNotification'].endpoint}}">
+    </mat-form-field>
+  </div>
+</div>

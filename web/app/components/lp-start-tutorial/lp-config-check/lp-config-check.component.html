@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="container-fluid">
     <div *ngIf="isAsyncMessagingActive; else no_enabled ">
       <p class="icon-p">
@@ -23,46 +22,14 @@
       <b>App name:</b> <span>{{currentAppInstallation.client_name}}</span>
     </div>
     <mat-form-field class="w-100" color="accent">
-      <input matInput placeholder="Installation id" disabled value="{{currentAppInstallation.client_id}}">
+      <input matInput placeholder="Installation id" readonly value="{{currentAppInstallation.client_id}}">
     </mat-form-field>
     <mat-form-field class="w-100" color="accent">
-      <input matInput placeholder="Secret" disabled value="{{currentAppInstallation.client_secret}}">
+      <input matInput placeholder="Secret" readonly value="{{currentAppInstallation.client_secret}}">
     </mat-form-field>
 
-    <b class="subtitle">Webhooks endpoints</b>
-    <div class="row" *ngIf="webhooks">
+    <lp-webhooks-info [webhooks]="webhooks"></lp-webhooks-info>
 
-      <div class="col-md-6">
-        <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="AcceptStatusEvent" disabled
-                 value="{{webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint}}">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ChatStateEvent" disabled
-                 value="{{webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint}}">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ContentEvent" disabled
-                 value="{{webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint}}">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="RichContentEvent" disabled
-                 value="{{webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint}}">
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="w-100" color="accent">
-          <input matInput placeholder="ExConversationChangeNotification" disabled
-                 value="{{webhooks['cqm.ExConversationChangeNotification'].endpoint}}">
-        </mat-form-field>
-      </div>
-    </div>
   </div>
 
   <ng-template #no_app>
