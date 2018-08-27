@@ -49,9 +49,11 @@ router.post("/sendraw/:id", (req, res, next) => {
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
   args.data = JSON.stringify(req.body);
 
+
   sendApiConnector
     .sendRaw(brandID, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
+      console.log(resolve[1]);
 
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send({"message": "Message successfully sent"});

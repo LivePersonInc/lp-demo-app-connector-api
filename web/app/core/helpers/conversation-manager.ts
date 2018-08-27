@@ -54,13 +54,7 @@ export class ConversationManager {
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
-    const headers = {
-      'headers': {
-        'content-type': 'application/json',
-        'Authorization': conversation.appJWT,
-        'x-lp-on-behalf': conversation.consumerJWS
-      }
-    };
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
@@ -169,7 +163,7 @@ export class ConversationManager {
 
   private getMessageRequestBody(message: string, conversationId: string) {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
-      new Event("AcceptStatusEvent", "text/plain", message)));
+      new Event("ContentEvent", "text/plain", message)));
   }
 
   private getShowUserValue(userName: string, conversation: Conversation): boolean {
