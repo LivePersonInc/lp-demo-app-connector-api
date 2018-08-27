@@ -16,8 +16,12 @@
               </strong>
             </div>
             <div class="text-right" *ngIf="checkIfHasSequenceProperty(n)">
-              <span class="text-primary">Sequence:</span>
+              <strong  class="event-notification-text">{{n.body.changes[0].event.type}}</strong>
+              <strong *ngIf="checkIfAcceptStatusEvent(n)">{{n.body.changes[0].event.status}}</strong>
+
+              <span class="text-primary">Seq:</span>
               <strong class="text-secondary">{{n.body.changes[0].sequence }}</strong>
+
             </div>
             <div class="text-right " *ngIf="checkIfHasChatStateEventProperty(n)">
               <span class="text-info">Chat state:</span>

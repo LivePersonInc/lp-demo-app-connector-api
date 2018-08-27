@@ -34,4 +34,9 @@ export class LpConsoleComponent implements OnInit {
       && (notification.body.changes[0].event && notification.body.changes[0].event.type && notification.body.changes[0].event.chatState);
   }
 
+
+  public checkIfAcceptStatusEvent(notification: any){
+    return this.checkIfHasChatStateEventProperty && notification.body.changes[0].event.type === 'AcceptStatusEvent';
+  }
+
 }
