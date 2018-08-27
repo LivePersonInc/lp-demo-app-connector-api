@@ -3,18 +3,30 @@
   <mat-expansion-panel *ngFor="let n of conversation.serverNotifications">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <div *ngIf="n.type" class="text-secondary"><i>{{n.type}}</i></div>
-        &ensp;&ensp;&ensp;&ensp;
-        <div class="text-right" *ngIf="checkIfHasConversationStateProperty(n)">
-          <span class="text-warning">State:</span> <strong  [ngClass]="{'text-danger': n.body.changes[0].result.conversationDetails.state === 'CLOSE'}">
-          {{n.body.changes[0].result.conversationDetails.state }}</strong>
+        <div class="container-fluid console-text">
+
+          <div *ngIf="n.type" class="text-secondary notification-type"><i>{{n.type}}</i></div>
+          &ensp;&ensp;
+          <div class="notification-status">
+            <div class="text-right" *ngIf="checkIfHasConversationStateProperty(n)">
+              <span class="text-warning">State:
+              </span>
+              <strong [ngClass]="{'text-danger': n.body.changes[0].result.conversationDetails.state === 'CLOSE'}">
+              {{n.body.changes[0].result.conversationDetails.state }}
+              </strong>
+            </div>
+            <div class="text-right" *ngIf="checkIfHasSequenceProperty(n)">
+              <span class="text-primary">Sequence:</span>
+              <strong class="text-secondary">{{n.body.changes[0].sequence }}</strong>
+            </div>
+            <div class="text-right " *ngIf="checkIfHasChatStateEventProperty(n)">
+              <span class="text-info">Chat state:</span>
+              <strong class="text-secondary">{{n.body.changes[0].event.chatState}}</strong>
+            </div>
+          </div>
+
         </div>
-        <div class="text-right" *ngIf="checkIfHasSequenceProperty(n)">
-          <span class="text-primary">Sequence:</span> <strong>{{n.body.changes[0].sequence }}</strong>
-        </div>
-        <div class="text-right" *ngIf="checkIfHasChatStateEventProperty(n)">
-          <span class="text-info">Chat state:</span> <strong>{{n.body.changes[0].event.chatState}}</strong>
-        </div>
+
       </mat-panel-title>
     </mat-expansion-panel-header>
     <pre class="pretty-json">

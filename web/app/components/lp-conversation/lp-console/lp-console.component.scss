@@ -18,6 +18,17 @@
   .pretty-json{
     text-align: left;
   }
+  .console-text{
+    font-size: small;
+    .notification-type{
+      float: left;
+      display: inline-block;
+    }
+    .notification-status{
+      float: right;
+      display: inline-block;
+    }
+  }
 }
 
 
