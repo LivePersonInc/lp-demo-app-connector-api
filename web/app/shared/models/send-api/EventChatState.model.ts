@@ -2,11 +2,9 @@
 export class EventChatState {
   public type;
   public chatState: ChatState;
-  public sequenceList: Array<number>
-  constructor(type, chatState: ChatState, sequenceList:Array<number>) {
-    this.type = type;
+  constructor(chatState: ChatState) {
+    this.type = "ChatStateEvent";
     this.chatState = chatState;
-    this.chatState = sequenceList || [];
   }
 }
 
