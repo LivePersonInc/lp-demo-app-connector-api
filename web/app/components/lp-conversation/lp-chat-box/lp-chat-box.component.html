@@ -1,7 +1,8 @@
+<div *ngIf="conversation.chatState == 3" class="text-left typing">typing...</div>
+
 <div class="messages-area" #messagearea>
   <div *ngIf="conversation">
     <lp-chat-box-message *ngFor="let message of conversation.messages" [message]="message"></lp-chat-box-message>
-    <div *ngIf="conversation.chatState == 3" class="text-left tipyng">typing...</div>
   </div>
 </div>
 
