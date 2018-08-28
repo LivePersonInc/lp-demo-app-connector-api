@@ -18,6 +18,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {StateManager} from "./state-manager";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
+import {transformPanel} from "@angular/material";
 
 
 @Injectable()
@@ -48,9 +49,8 @@ export class ConversationManager {
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
       return this.sendMessageRequest(message, conversation).map(res => {
-        console.log(res);
         let sequence;
-        if(res && res.body && res.body.sequence){
+        if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
         }
         conversation.messages.push(
@@ -184,6 +184,7 @@ export class ConversationManager {
             data.body.changes[0].event.sequenceList.forEach( number => {
               let message = this.findMessageInConversationBySequence(number, conversation);
               if(message){
+                message.accepted = true;
                 message.read = true;
               }
             });
@@ -196,7 +197,7 @@ export class ConversationManager {
     }
   }
 
-  private findMessageInConversationBySequence(sequence: number, conversation: Conversation): any {
+  private findMessageInConversationBySequence(sequence: number, conversation: Conversation): ChatMessage {
     let res = null;
     conversation.messages.forEach(m => {
       if(m.sequence === sequence){
