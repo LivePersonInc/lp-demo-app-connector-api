@@ -25,7 +25,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
               private installationService: InstallationService) { }
 
   ngOnInit() {
-    this.userName = "John";
+    this.userName = 'John';
 
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
