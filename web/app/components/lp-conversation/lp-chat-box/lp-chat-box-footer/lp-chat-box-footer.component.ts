@@ -13,13 +13,13 @@ export class LpChatBoxFooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.messageText = "";
+    this.messageText = '';
   }
 
   public sendMessage() {
     if(this.messageText.length > 0) {
       this.onSendMessage.emit(this.messageText);
-      this.messageText = "";
+      this.messageText = '';
     }
   }
 
@@ -27,7 +27,7 @@ export class LpChatBoxFooterComponent implements OnInit {
     if(event.keyCode == 13) {
       if(this.messageText.length > 0) {
         this.onSendMessage.emit(this.messageText);
-        this.messageText = "";
+        this.messageText = '';
       }
     }
   }
