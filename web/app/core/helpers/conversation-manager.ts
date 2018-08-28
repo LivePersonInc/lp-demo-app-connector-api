@@ -161,7 +161,49 @@ export class ConversationManager {
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
+
+    this.checkIfMessageIsAcceptedOrRead(data, conversation);
     this.updateState(conversation);
+  }
+
+  private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
+    try {
+      if (data.body.changes[0].originatorMetadata &&
+        data.body.changes[0].originatorMetadata.role === 'ASSIGNED_AGENT') {
+
+        if (data.body.changes[0].event.type === 'AcceptStatusEvent' ) {
+          if(data.body.changes[0].event.status === 'ACCEPT'){
+            data.body.changes[0].event.sequenceList.forEach( number => {
+              let message = this.findMessageInConversationBySequence(number, conversation);
+              if(message) {
+                message.accepted = true;
+              }
+            });
+          }
+          if(data.body.changes[0].event.status === 'READ'){
+            data.body.changes[0].event.sequenceList.forEach( number => {
+              let message = this.findMessageInConversationBySequence(number, conversation);
+              if(message){
+                message.read = true;
+              }
+            });
+          }
+
+        }
+      }
+    } catch (error) {
+      console.error("ERROR parsing notification", error);
+    }
+  }
+
+  private findMessageInConversationBySequence(sequence: number, conversation: Conversation): any {
+    let res = null;
+    conversation.messages.forEach(m => {
+      if(m.sequence === sequence){
+        res = m;
+      }
+    });
+    return res;
   }
 
   private getMessageRequestBody(message: string, conversationId: string) {
