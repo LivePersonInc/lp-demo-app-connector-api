@@ -49,7 +49,12 @@ export class ConversationManager {
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
       return this.sendMessageRequest(message, conversation).map(res => {
         console.log(res);
-        conversation.messages.push(new ChatMessage("sent", new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation)));
+        let sequence;
+        if(res && res.body && res.body.sequence){
+          sequence = res.body.sequence;
+        }
+        conversation.messages.push(
+          new ChatMessage("sent", new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation), sequence));
         this.updateState(conversation);
       });
   }
@@ -140,7 +145,6 @@ export class ConversationManager {
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT") {
-        console.log(data);
         if (data.body.changes[0].event.message) {
           conversation.messages.push(
             new ChatMessage(
@@ -149,7 +153,8 @@ export class ConversationManager {
               data.body.changes[0].event.message,
               "Agent",
               "ok",
-              false
+              false,
+              data.body.changes[0].sequence,
             )
           );
         }
@@ -158,8 +163,6 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
     this.updateState(conversation);
-    console.log("Notification received in conversation manager");
-    console.log(notification);
   }
 
   private getMessageRequestBody(message: string, conversationId: string) {
