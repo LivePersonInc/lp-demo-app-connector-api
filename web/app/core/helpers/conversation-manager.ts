@@ -141,7 +141,6 @@ export class ConversationManager {
   //  conversation.serverNotifications.push(JSON.stringify(data, null, " "));
     this.setChatState(data, conversation);
     conversation.serverNotifications.push(data);
-
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT") {

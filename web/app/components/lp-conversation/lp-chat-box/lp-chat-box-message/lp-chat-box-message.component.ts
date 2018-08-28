@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChatMessage} from "../../../../shared/models/conversation/chatMessage.model";
+import {ChatMessage, MessageType} from "../../../../shared/models/conversation/chatMessage.model";
 
 @Component({
   selector: 'lp-chat-box-message',
@@ -7,14 +7,13 @@ import {ChatMessage} from "../../../../shared/models/conversation/chatMessage.mo
   styleUrls: ['./lp-chat-box-message.component.scss']
 })
 export class LpChatBoxMessageComponent implements OnInit {
-
   @Input() public message: ChatMessage;
+  public messageType: string;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit() {
+    this.messageType = MessageType[this.message.type].toLocaleLowerCase()
   }
 
   public isTodayMessage(): boolean {
@@ -34,6 +33,5 @@ export class LpChatBoxMessageComponent implements OnInit {
       (messageDate.getMonth() === today.getMonth()) &&
       (messageDate.getDay() === today.getDay()-1);
   }
-
 
 }
