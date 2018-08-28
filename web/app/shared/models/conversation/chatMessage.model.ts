@@ -7,6 +7,8 @@ export class ChatMessage {
   status: string;
   showUser: boolean;
   sequence: number;
+  accepted: boolean;
+  read:boolean;
 
   constructor(type, timestamp, message, userName, status, showUser, sequence) {
     this.type = type;
@@ -16,8 +18,9 @@ export class ChatMessage {
     this.status = status;
     this.showUser = showUser;
     this.sequence = sequence;
+    this.accepted = false;
+    this.read = false;
   }
-
 
 }
 
