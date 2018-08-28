@@ -46,7 +46,7 @@ export class Conversation implements Deserializable<Conversation> {
     if(input.messages){
       this.messages = [];
       input.messages.forEach( message => {
-        this.messages.push(new ChatMessage(message.type, message.timestamp, message.message, message.userName, message.status, message.showUser));
+        this.messages.push(new ChatMessage(message.type, message.timestamp, message.message, message.userName, message.status, message.showUser, message.sequence));
       });
     }
 
