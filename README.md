@@ -6,8 +6,8 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 - Node 6.9.0 or higher, together with NPM 3 or higher.
 - Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
-- A Valid brandId with Async Messaging enabled.
-- An app installed for your brand Id and data sources configured in LiveEngage. 
+- A valid brandID with Async Messaging enabled.
+- An installed APP for your brandID and the data sources configured in LiveEngage. 
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the notifications from outside to your internal network.
   * (optional). Use [NgRock](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
   Run it with the port 8282 by default ```./ngRock http 8282``` 
@@ -21,13 +21,13 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 
 ## How to use
 
-1. Login with a valid brandId, user and password. (the first time it will redirect you to the step by step settings section)
-1. You have to select an installed app from the list.
-1. Add your server url in to the webhooks configuration endpoints. E.g. for NgRok is should be similar like 
+1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section)
+1. You have to select an installed APP from the list.
+1. Add your server url in to the webhooks configuration endpoints of the selected APP. E.g. for NgRok is should be similar like 
 https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be on the following format: https://{your server url}/notifications/event
 1. After updating the webhooks endpoints you will be redirected to the chat window.
 1. Type any message in order to start a conversation.
-1. You can login with you account in liveEngage platform, see the sent message and play with it.
+1. You can login with you account in liveEngage platform, see the sent messages and play with it.
 
 ## Run with docker
 
