@@ -152,7 +152,7 @@ export class ConversationManager {
               data.body.changes[0].event.message,
               "Agent",
               "ok",
-              false,
+              this.getShowUserValue("Agent", conversation),
               data.body.changes[0].sequence,
             )
           );
