@@ -3,7 +3,11 @@
     <div >{{message.userName}}</div>
   </div>
   <div class="time">
-    {{message.timestamp | date:'h:mm a'}}
+    <div *ngIf="!isYesterdayMessage() && !isTodayMessage()">Yesterday {{message.timestamp | date:'dd-MMM h:mm a'}}</div>
+
+    <div *ngIf="isYesterdayMessage()">Yesterday {{message.timestamp | date:'h:mm a'}}</div>
+
+    <div *ngIf="isTodayMessage()"> {{message.timestamp | date:'h:mm a'}}</div>
   </div>
   <div class="message">
     {{message.message}}
