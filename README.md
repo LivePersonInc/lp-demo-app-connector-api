@@ -5,23 +5,23 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 ## Requirements.
 
 - Node 6.9.0 or higher, together with NPM 3 or higher.
-- Angular CLI 1.7.3 or higher. Download here: https://cli.angular.io/
+- [Angular CLI](https://cli.angular.io/) 1.7.3 or higher. 
 - A valid brandID with Async Messaging enabled.
 - An installed APP for your brandID and the data sources configured in LiveEngage. 
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the notifications from outside to your internal network.
   * (optional). Use [NgRock](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
-  Run it with the port 8282 by default ```./ngRock http 8282``` 
+  Run it with the port 8282 by default ```./ngRock http 8282``` .
 
 ## Run
 
 1. ```npm install``` 
 2. ```sudo npm start```
 3. Open ``` http://localhost:8282``` in your browser. 
-4. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property)
+4. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property).
 
 ## How to use
 
-1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section)
+1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
 1. You have to select an installed APP from the list.
 1. Add your server url in to the webhooks configuration endpoints of the selected APP. E.g. for NgRok is should be similar like 
 https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be on the following format: https://{your server url}/notifications/event
