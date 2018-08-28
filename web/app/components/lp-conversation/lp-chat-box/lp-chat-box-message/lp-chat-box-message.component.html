@@ -3,11 +3,14 @@
     <div >{{message.userName}}</div>
   </div>
   <div class="time">
-    <div *ngIf="!isYesterdayMessage() && !isTodayMessage()">Yesterday {{message.timestamp | date:'dd-MMM h:mm a'}}</div>
-
-    <div *ngIf="isYesterdayMessage()">Yesterday {{message.timestamp | date:'h:mm a'}}</div>
-
-    <div *ngIf="isTodayMessage()"> {{message.timestamp | date:'h:mm a'}}</div>
+    <div>
+      <span *ngIf="!isYesterdayMessage() && !isTodayMessage()">Yesterday {{message.timestamp | date:'dd-MMM h:mm a'}}</span>
+      <span *ngIf="isYesterdayMessage()">Yesterday {{message.timestamp | date:'h:mm a'}}</span>
+      <span *ngIf="isTodayMessage()" > {{message.timestamp | date:'h:mm a'}}</span>
+      <span *ngIf="message.type == 0 && message.accepted">
+        &nbsp;&nbsp;&#10003; <span *ngIf="message.type == 0 && message.read" >&#10003;</span>
+      </span>
+    </div>
   </div>
   <div class="message">
     {{message.message}}

@@ -50,7 +50,7 @@ export class ConversationService extends HttpService {
   public sendMessage(message: string) {
     if (this.conversation.isConvStarted) {
       this.conversationManager.sendMessage(message, this.conversation).subscribe(res => {
-        this.successResponse("Message successfully sent to conversation with id " + this.conversation.conversationId);
+        this.successResponse("Message successfully SENT to conversation with id " + this.conversation.conversationId);
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
       }, error => {
         this.loadingService.stopLoading();

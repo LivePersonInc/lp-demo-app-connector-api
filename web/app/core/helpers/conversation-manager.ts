@@ -5,7 +5,7 @@ import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs/Observable";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {EventSourcePolyfill} from 'ng-event-source';
-import {ChatMessage} from "../../shared/models/conversation/chatMessage.model";
+import {ChatMessage, MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {CampaignInfo} from "../../shared/models/send-api/CampaignInfo.model";
 import {ConsumerRequestConversation} from "../../shared/models/send-api/ConsumerRequestConversation.model";
 import {PushNotificationData} from "../../shared/models/send-api/PushNotificationData.model";
@@ -54,7 +54,7 @@ export class ConversationManager {
           sequence = res.body.sequence;
         }
         conversation.messages.push(
-          new ChatMessage("sent", new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation), sequence));
+          new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation), sequence));
         this.updateState(conversation);
       });
   }
@@ -148,7 +148,7 @@ export class ConversationManager {
         if (data.body.changes[0].event.message) {
           conversation.messages.push(
             new ChatMessage(
-              "received",
+              MessageType.RECEIVED,
               data.body.changes[0].serverTimestamp,
               data.body.changes[0].event.message,
               "Agent",

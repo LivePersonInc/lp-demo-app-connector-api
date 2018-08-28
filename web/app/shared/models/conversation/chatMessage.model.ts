@@ -25,6 +25,6 @@ export class ChatMessage {
 }
 
 export enum MessageType{
-  sent,
-  received
+  SENT,
+  RECEIVED
 }

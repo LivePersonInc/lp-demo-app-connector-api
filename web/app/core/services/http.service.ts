@@ -77,7 +77,7 @@ export class HttpService {
   public successResponse(message) {
     this.loadingService.stopLoading();
     this.snackBarConfig.duration = 2000;
-    this.snackBar.open('Request successfully sent: ' + message, null, this.snackBarConfig);
+    this.snackBar.open('Request successfully SENT: ' + message, null, this.snackBarConfig);
   }
 
 }
