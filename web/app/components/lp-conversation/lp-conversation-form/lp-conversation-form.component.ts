@@ -15,6 +15,10 @@ export class LpConversationFormComponent implements OnInit {
     this._conversation = conversation;
   };
 
+  get conversation(): Conversation{
+    return this._conversation
+  }
+
   @Output() public consumerNameChange = new EventEmitter<string>();
 
   constructor() { }
