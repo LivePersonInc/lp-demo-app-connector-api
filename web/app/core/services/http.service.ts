@@ -59,7 +59,7 @@ export class HttpService {
     );
   }
 
-  public errorResponse(error) {
+  public errorResponse(error: (string | HttpErrorResponse)) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
     if (error instanceof HttpErrorResponse) {
@@ -74,7 +74,7 @@ export class HttpService {
 
   }
 
-  public successResponse(message) {
+  public successResponse(message: string) {
     this.loadingService.stopLoading();
     this.snackBarConfig.duration = 2000;
     this.snackBar.open('Request successfully SENT: ' + message, null, this.snackBarConfig);
