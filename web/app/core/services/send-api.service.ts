@@ -35,7 +35,7 @@ export class SendApiService extends HttpService {
     return this.doPost(`${this.baseURI}openconv/${brandId}`, body, headers);
   }
 
-  public sendMessage(brandId: string, convId: string, body: any, headers: any): Observable<Object> {
+  public sendMessage(brandId: string, body: any, headers: any): Observable<Object> {
     return this.doPost(`${this.baseURI}sendraw/${brandId}`, body, headers);
   }
 

@@ -13,6 +13,7 @@ import 'rxjs/add/operator/mergeMap';
 import {ConversationManager} from "../helpers/conversation-manager";
 import {StateManager} from "../helpers/state-manager";
 import {AuthenticationService} from "./authentication.service";
+import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -92,6 +93,45 @@ export class ConversationService extends HttpService {
         this.errorResponse(error);
       });
     }
+  }
+
+  public notifyAgentConsumerIsInTheChat() {
+    this.deactivateLoadingService();
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.ACTIVE).subscribe(res => {
+      this.activateLoadingService();
+    },error => {
+      this.errorResponse(error);
+
+    });
+  }
+
+  public notifyAgentConsumerIsNotInTheChat() {
+    this.deactivateLoadingService();
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.GONE).subscribe(res => {
+      this.activateLoadingService();
+    },error => {
+      this.errorResponse(error);
+
+    });
+  }
+
+  public notifyAgentThatUserIsTyping() {
+    this.deactivateLoadingService();
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.COMPOSING).subscribe(res => {
+      this.activateLoadingService();
+    },error => {
+      this.errorResponse(error);
+    });
+  }
+
+  public notifyAgentThatUserStopsTyping() {
+    this.deactivateLoadingService();
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.PAUSE).subscribe(res => {
+      this.activateLoadingService();
+    },error => {
+      this.errorResponse(error);
+    });
+
   }
 
 }

@@ -1,10 +1,10 @@
 
 export class EventChatState {
-  public type;
-  public chatState: ChatState;
+  type;
+  chatState: string;
   constructor(chatState: ChatState) {
     this.type = "ChatStateEvent";
-    this.chatState = chatState;
+    this.chatState = ChatState[chatState];
   }
 }
 

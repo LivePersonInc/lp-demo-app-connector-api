@@ -4,10 +4,12 @@ import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class LoadingService {
-
+  private isServiceActive:boolean;
   private loadingSubject = new Subject<boolean>();
 
-  constructor() { }
+  constructor() {
+    this.activateLoadingService();
+  }
 
   public isLoadingSubscription(): Observable<boolean> {
     return this.loadingSubject.asObservable();
@@ -18,7 +20,17 @@ export class LoadingService {
   }
 
   public startLoading() {
-    this.loadingSubject.next(true);
+    if(this.isServiceActive){
+      this.loadingSubject.next(true);
+    }
+  }
+
+  public activateLoadingService() {
+    this.isServiceActive = true;
+  }
+
+  public deactivateLoadingService() {
+    this.isServiceActive = false;
   }
 
 }

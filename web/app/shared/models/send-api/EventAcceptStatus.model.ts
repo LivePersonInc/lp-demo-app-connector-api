@@ -1,4 +1,6 @@
 
+import {hasOwnProperty} from "tslint/lib/utils";
+
 export class EventAcceptStatus {
   public type;
   public status: Status;

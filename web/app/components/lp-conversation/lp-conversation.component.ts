@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {ConversationService} from "../../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
@@ -23,6 +23,22 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   constructor(private conversationService: ConversationService,
               private authenticationService: AuthenticationService,
               private installationService: InstallationService) { }
+
+
+  @HostListener('window:focus', ['$event'])
+  onFocus(event: any): void {
+    if(this.conversation && this.conversation.isConvStarted) {
+      this.conversationService.notifyAgentConsumerIsInTheChat();
+    }
+  }
+
+  @HostListener('window:blur', ['$event'])
+  onBlur(event: any): void {
+    if(this.conversation && this.conversation.isConvStarted){
+      this.conversationService.notifyAgentConsumerIsNotInTheChat();
+
+    }
+  }
 
   ngOnInit() {
     this.userName = 'John';

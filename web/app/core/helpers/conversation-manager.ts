@@ -17,7 +17,7 @@ import {PublishContentEvent} from "../../shared/models/send-api/PublishContentEv
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {StateManager} from "./state-manager";
-import {ChatState} from "../../shared/models/send-api/EventChatState.model";
+import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
 import {transformPanel} from "@angular/material";
 
 
@@ -116,13 +116,20 @@ export class ConversationManager {
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
-    return this.sendApiService.sendMessage(conversation.branId, conversation.conversationId, body, headers);
+    return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
   private openConversationRequest(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
+  }
+
+  public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
+    console.log(body);
+    return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
   private addSendRawEndpointHeaders (appJWT, consumerJWS): any {
@@ -249,12 +256,17 @@ export class ConversationManager {
     return [setUserProfilePayload,requestConversationPayload];
   }
 
+  private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
+    let eventChatState = new EventChatState(event);
+    let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
+    return new Request("req", "1,", "ms.PublishEvent", requestBody);
+  }
+
   private updateState(conversation: Conversation) {
     let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
     appState.lastConversation = conversation;
     this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
   }
-
 
   private setChatState(notificationJson: any, conversation: Conversation) {
     if(this.checkIfAcceptStatusEvent(notificationJson)) {

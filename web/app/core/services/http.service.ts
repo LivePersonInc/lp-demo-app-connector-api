@@ -71,13 +71,20 @@ export class HttpService {
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
     }
     this.loadingService.stopLoading();
-
+    this.activateLoadingService();
   }
 
   public successResponse(message: string) {
     this.loadingService.stopLoading();
     this.snackBarConfig.duration = 2000;
     this.snackBar.open('Request successfully SENT: ' + message, null, this.snackBarConfig);
+  }
+
+  public deactivateLoadingService(){
+    this.loadingService.deactivateLoadingService();
+  }
+  public activateLoadingService(){
+    this.loadingService.activateLoadingService();
   }
 
 }
