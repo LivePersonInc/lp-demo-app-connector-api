@@ -138,9 +138,18 @@ export class ConversationManager {
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
     let data = JSON.parse(notification.data);
-  //  conversation.serverNotifications.push(JSON.stringify(data, null, " "));
+
     this.setChatState(data, conversation);
+
     conversation.serverNotifications.push(data);
+
+    this.checkAndFilterIncomingTextMessages(data, conversation);
+    this.checkIfMessageIsAcceptedOrRead(data, conversation);
+
+    this.updateState(conversation);
+  }
+
+  private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT") {
@@ -161,9 +170,6 @@ export class ConversationManager {
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
-
-    this.checkIfMessageIsAcceptedOrRead(data, conversation);
-    this.updateState(conversation);
   }
 
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
