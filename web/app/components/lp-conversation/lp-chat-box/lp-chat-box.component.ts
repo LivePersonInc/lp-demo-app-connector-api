@@ -23,7 +23,7 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   private pendingEvent = false;
 
-  constructor(private conversationService: ConversationService,) {}
+  constructor(private conversationService: ConversationService) {}
 
   ngOnInit() {
     this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {

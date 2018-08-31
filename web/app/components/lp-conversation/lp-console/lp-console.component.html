@@ -5,8 +5,10 @@
       <mat-panel-title>
         <div class="container-fluid console-text">
 
-          <div *ngIf="n.type" class="text-secondary notification-type"><i>{{n.type}}</i></div>
+          <div *ngIf="checkIfHasRoleProperty(n)" class=""><i>{{n.body.changes[0].originatorMetadata.role}}</i></div>
           &ensp;&ensp;
+          <div *ngIf="n.type" class="text-secondary notification-type"><i>{{n.type}}</i></div>
+
           <div class="notification-status">
             <div class="text-right" *ngIf="checkIfHasConversationStateProperty(n)">
               <span class="text-warning">State:
