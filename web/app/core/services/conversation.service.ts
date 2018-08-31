@@ -42,6 +42,8 @@ export class ConversationService extends HttpService {
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.EVENT_RECEIVED));
       } else if(event.event === ConvEvent.MSG_RECEIVED ) {
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.MSG_RECEIVED));
+
+        this.notifyMessageWasAccepted(this.conversation.messages[this.conversation.messages.length-1].sequence);
       }
     });
   }
@@ -147,6 +149,18 @@ export class ConversationService extends HttpService {
     if(sequenceList.length > 0) {
       this.deactivateLoadingService();
       this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.READ, sequenceList).subscribe(res => {
+        this.activateLoadingService();
+      },error => {
+        this.errorResponse(error);
+      });
+    }
+  }
+
+  public notifyMessageWasAccepted(sequence: number) {
+    let sequenceList = [sequence];
+    if(sequenceList.length > 0) {
+      this.deactivateLoadingService();
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.ACCEPT, sequenceList).subscribe(res => {
         this.activateLoadingService();
       },error => {
         this.errorResponse(error);
