@@ -14,6 +14,8 @@ import {ConversationManager} from "../helpers/conversation-manager";
 import {StateManager} from "../helpers/state-manager";
 import {AuthenticationService} from "./authentication.service";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
+import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
+import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -139,7 +141,29 @@ export class ConversationService extends HttpService {
     },error => {
       this.errorResponse(error);
     });
+  }
 
+  public notifyMessagesWasRead() {
+    let sequenceList = this.getLastReadMessages();
+    if(sequenceList.length > 0) {
+      this.deactivateLoadingService();
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.READ, sequenceList).subscribe(res => {
+        this.activateLoadingService();
+      },error => {
+        this.errorResponse(error);
+      });
+    }
+  }
+
+  private getLastReadMessages(): Array<number> {
+    let lastReadSequenceList = [];
+    this.conversation.messages.forEach(message => {
+      if(message.type === MessageType.RECEIVED && !message.read ){
+        message.read = true
+        lastReadSequenceList.push(message.sequence);
+      }
+    });
+    return lastReadSequenceList;
   }
 
 }

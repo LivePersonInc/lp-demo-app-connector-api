@@ -20,6 +20,7 @@ import {StateManager} from "./state-manager";
 import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
+import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 
 
 @Injectable()
@@ -131,6 +132,12 @@ export class ConversationManager {
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
+    return this.sendApiService.sendMessage(conversation.branId,body, headers);
+  }
+
+  public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const body = JSON.stringify(this.getEventAcceptStatusRequestBody(conversation, event, sequenceList));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
@@ -268,6 +275,12 @@ export class ConversationManager {
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
     let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
+    return new Request("req", "1,", "ms.PublishEvent", requestBody);
+  }
+
+  private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
+    let event = new EventAcceptStatus(event, sequenceList);
+    let requestBody = new PublishContentEvent(conversation.conversationId, event);
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 

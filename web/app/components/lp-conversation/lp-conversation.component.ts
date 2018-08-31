@@ -29,6 +29,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   onFocus(event: any): void {
     if(this.conversation && this.conversation.isConvStarted) {
       this.conversationService.notifyAgentConsumerIsInTheChat();
+      this.conversationService.notifyMessagesWasRead();
     }
   }
 
