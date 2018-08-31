@@ -7,8 +7,8 @@
       <span *ngIf="!isYesterdayMessage() && !isTodayMessage()">Yesterday {{message.timestamp | date:'dd-MMM h:mm a'}}</span>
       <span *ngIf="isYesterdayMessage()">Yesterday {{message.timestamp | date:'h:mm a'}}</span>
       <span *ngIf="isTodayMessage()" > {{message.timestamp | date:'h:mm a'}}</span>
-      <span *ngIf="message.type == 0">
-       &nbsp;&nbsp;<span *ngIf="message.accepted">&#10003;</span>  <span *ngIf="message.read" >&#10003;</span>
+      <span *ngIf="message.type == 0"  [ngClass]="{'read': message.read}">
+       &nbsp;&nbsp;<span *ngIf="message.sequence != null && message.sequence != undefined">&#10003;</span> <span *ngIf="message.accepted || message.read" >&#10003;</span>
       </span>
     </div>
   </div>
