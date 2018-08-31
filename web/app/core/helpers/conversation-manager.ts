@@ -279,8 +279,8 @@ export class ConversationManager {
   }
 
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
-    let event = new EventAcceptStatus(event, sequenceList);
-    let requestBody = new PublishContentEvent(conversation.conversationId, event);
+    let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
+    let requestBody = new PublishContentEvent(conversation.conversationId, eventAcceptStatus);
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
