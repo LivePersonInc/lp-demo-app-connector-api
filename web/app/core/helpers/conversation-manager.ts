@@ -128,7 +128,6 @@ export class ConversationManager {
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
-    console.log(body);
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
@@ -270,11 +269,13 @@ export class ConversationManager {
 
   private setChatState(notificationJson: any, conversation: Conversation) {
     if(this.checkIfAcceptStatusEvent(notificationJson)) {
-      console.log(notificationJson);
-      if(notificationJson.body.changes[0].event.chatState == 'COMPOSING'){
-        conversation.chatState = ChatState.COMPOSING;
-      }else if(notificationJson.body.changes[0].event.chatState == 'ACTIVE'){
-        conversation.chatState = ChatState.ACTIVE;
+      if (notificationJson.body.changes[0].originatorMetadata &&
+        notificationJson.body.changes[0].originatorMetadata.role === 'ASSIGNED_AGENT') {
+        if (notificationJson.body.changes[0].event.chatState == 'COMPOSING') {
+          conversation.chatState = ChatState.COMPOSING;
+        } else if (notificationJson.body.changes[0].event.chatState == 'ACTIVE') {
+          conversation.chatState = ChatState.ACTIVE;
+        }
       }
     }
   }

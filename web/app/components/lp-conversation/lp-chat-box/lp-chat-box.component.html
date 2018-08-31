@@ -6,4 +6,4 @@
   </div>
 </div>
 
-<lp-chat-box-footer (onSendMessage)="sendMessage($event)" [disabled]="disabled"></lp-chat-box-footer>
+<lp-chat-box-footer (onSendMessage)="sendMessage($event)" [disabled]="disabled" (onIsTyping)="checkTyping($event)"></lp-chat-box-footer>

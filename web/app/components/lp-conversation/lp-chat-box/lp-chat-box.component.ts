@@ -14,6 +14,8 @@ export class LpChatBoxComponent implements OnInit {
   @Input() disabled: boolean;
   @Input() conversation: Conversation;
   @Output() onSendMessage = new EventEmitter<string>();
+  @Output() onIsTyping = new EventEmitter<boolean>();
+
   @ViewChild('messagearea') private messageArea: ElementRef;
 
   constructor() { }
@@ -35,6 +37,10 @@ export class LpChatBoxComponent implements OnInit {
     } catch(err) {
 
     }
+  }
+
+  public  checkTyping(isTyping) {
+    this.onIsTyping.emit(isTyping);
   }
 
 

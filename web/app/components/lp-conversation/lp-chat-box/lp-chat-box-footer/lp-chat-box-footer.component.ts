@@ -7,8 +7,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class LpChatBoxFooterComponent implements OnInit {
   @Output() onSendMessage = new EventEmitter<string>();
+  @Output() onIsTyping = new EventEmitter<boolean>();
+
   @Input() disabled: boolean;
   public messageText: string;
+  private isTyping = false;
 
   constructor() { }
 
@@ -28,8 +31,12 @@ export class LpChatBoxFooterComponent implements OnInit {
       if(this.messageText.length > 0) {
         this.onSendMessage.emit(this.messageText);
         this.messageText = '';
+        this.isTyping = false;
+        this.onIsTyping.emit(this.isTyping);
       }
     }
   }
-
+  public onTypeChange(event) {
+    this.onIsTyping.emit(true);
+  }
 }

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row h-100">
     <div class="col-md-5 text-center">
-      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"  [disabled]="isConversationDisabled()"></lp-chat-box>
+      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"  [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"></lp-chat-box>
     </div>
     <div class="col-md-7 text-left">
 

@@ -36,7 +36,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   onBlur(event: any): void {
     if(this.conversation && this.conversation.isConvStarted){
       this.conversationService.notifyAgentConsumerIsNotInTheChat();
-
     }
   }
 
@@ -75,6 +74,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public sendMessage(messageText : string) {
+    this.conversationService.notifyAgentThatUserStopsTyping();
     if(this.conversation &&  this.conversation.isConvStarted){
       this.conversationService.sendMessage(messageText);
     }else{
@@ -100,6 +100,32 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
       }
     });
+  }
+
+  private stopNotificationSent = false;
+  private isFistTime = true;
+  private timeout = null;
+
+  public handleTypingEvent(isTyping) {
+    if(isTyping && this.conversation && this.conversation.isConvStarted) {
+      clearTimeout(this.timeout);
+
+      if(this.stopNotificationSent || this.isFistTime) {
+        this.conversationService.notifyAgentThatUserIsTyping();
+         this.isFistTime = false;
+         this.stopNotificationSent = false;
+      }
+
+      this.timeout = setTimeout( () => {
+
+        this.conversationService.notifyAgentThatUserStopsTyping();
+
+
+        this.stopNotificationSent = true;
+
+        }, 1000);
+    }
+
   }
 
 
