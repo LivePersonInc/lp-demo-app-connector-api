@@ -1,13 +1,15 @@
 :host{
-  display: block;
-  height: 100%;
-  background-color: #f3f3f3;
-  overflow-y: auto;
-  border: 1px solid gainsboro;
-  border-radius: 2px;
+
   .container-custom{
     margin-left: 5px !important;
     margin-right: 5px !important;
+
+    display: block;
+    height: 100%;
+    background-color: #f3f3f3;
+    overflow-y: auto;
+    border: 1px solid gainsboro;
+    border-radius: 2px;
   }
   .mat-expansion-panel-header-title {
     color: #070B16;

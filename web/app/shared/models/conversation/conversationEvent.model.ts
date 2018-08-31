@@ -12,5 +12,7 @@ export enum ConvEvent{
   OPEN,
   CLOSE,
   MESSAGE_SENT,
-  RESET
+  RESET,
+  MSG_RECEIVED,
+  EVENT_RECEIVED,
 }

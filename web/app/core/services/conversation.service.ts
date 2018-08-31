@@ -35,6 +35,14 @@ export class ConversationService extends HttpService {
   public init() {
     this.brandId = this.authenticationService.user.brandId;
     this.restoreStoredState();
+
+    this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
+      if(event.event === ConvEvent.EVENT_RECEIVED ) {
+        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.EVENT_RECEIVED));
+      } else if(event.event === ConvEvent.MSG_RECEIVED ) {
+        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.MSG_RECEIVED));
+      }
+    });
   }
 
   public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string) {

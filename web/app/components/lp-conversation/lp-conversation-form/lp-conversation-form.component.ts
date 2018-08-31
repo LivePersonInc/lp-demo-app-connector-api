@@ -10,8 +10,6 @@ export class LpConversationFormComponent implements OnInit {
   private _conversation: Conversation;
 
   @Input() set conversation(conversation: Conversation){
-    console.log(conversation);
-
     this._conversation = conversation;
   };
 

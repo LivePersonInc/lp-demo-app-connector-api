@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
 
 @Component({
@@ -11,10 +11,26 @@ export class LpConsoleComponent implements OnInit {
   @Input()
   public conversation: Conversation;
 
+
+  @ViewChild('notifications') private notifications: ElementRef;
+
   constructor() { }
 
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+
+
+  public scrollToBottom() {
+    try {
+      this.notifications.nativeElement.scrollTop = this.notifications.nativeElement.scrollHeight;
+    } catch(err) {
+
+    }
   }
 
   public checkIfHasConversationStateProperty(notification: any){

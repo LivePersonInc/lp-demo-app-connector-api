@@ -18,11 +18,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {StateManager} from "./state-manager";
 import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
-import {transformPanel} from "@angular/material";
+import {Subject} from "rxjs/Subject";
+import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 
 
 @Injectable()
 export class ConversationManager {
+
+  public conversationEventSubject = new Subject<ConversationEvent>();
 
   constructor(private sendApiService:SendApiService, protected stateManager: StateManager){}
 
@@ -143,6 +146,9 @@ export class ConversationManager {
   }
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
+
+    this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.EVENT_RECEIVED));
+
     let data = JSON.parse(notification.data);
 
     this.setChatState(data, conversation);
@@ -159,7 +165,11 @@ export class ConversationManager {
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT") {
+
         if (data.body.changes[0].event.message) {
+
+          this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+
           conversation.messages.push(
             new ChatMessage(
               MessageType.RECEIVED,

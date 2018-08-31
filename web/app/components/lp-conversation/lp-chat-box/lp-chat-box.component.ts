@@ -1,16 +1,19 @@
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {ChatMessage} from "../../../shared/models/conversation/chatMessage.model";
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
+import {ConversationService} from "../../../core/services/conversation.service";
+import {ConversationEvent, ConvEvent} from "../../../shared/models/conversation/conversationEvent.model";
 
 @Component({
   selector: 'lp-chat-box',
   templateUrl: './lp-chat-box.component.html',
   styleUrls: ['./lp-chat-box.component.scss']
 })
-export class LpChatBoxComponent implements OnInit {
+export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() disabled: boolean;
   @Input() conversation: Conversation;
   @Output() onSendMessage = new EventEmitter<string>();
@@ -18,13 +21,27 @@ export class LpChatBoxComponent implements OnInit {
 
   @ViewChild('messagearea') private messageArea: ElementRef;
 
-  constructor() { }
+  private pendingEvent = false;
+
+  constructor(private conversationService: ConversationService,) {}
 
   ngOnInit() {
+    this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
+      if(event.event === ConvEvent.MSG_RECEIVED || event.event === ConvEvent.MESSAGE_SENT){
+        this.pendingEvent = true;
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
   }
 
   ngAfterViewChecked(){
-    this.scrollToBottom();
+    if(this.pendingEvent){
+      this.scrollToBottom();
+      this.pendingEvent = false;
+    }
   }
 
   public sendMessage(message) {
