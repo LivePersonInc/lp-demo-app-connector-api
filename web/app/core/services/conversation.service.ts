@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from "@angular/material";
-import {SendApiService} from "./send-api.service";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {HttpClient} from "@angular/common/http";
@@ -159,7 +158,7 @@ export class ConversationService extends HttpService {
     let lastReadSequenceList = [];
     this.conversation.messages.forEach(message => {
       if(message.type === MessageType.RECEIVED && !message.read ){
-        message.read = true
+        message.read = true;
         lastReadSequenceList.push(message.sequence);
       }
     });

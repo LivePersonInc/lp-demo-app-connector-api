@@ -96,7 +96,6 @@ export class ConversationManager {
     }
   }
 
-
   private getAppJWT(conversation: Conversation): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -175,8 +174,6 @@ export class ConversationManager {
 
         if (data.body.changes[0].event.message) {
 
-          this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
-
           conversation.messages.push(
             new ChatMessage(
               MessageType.RECEIVED,
@@ -188,6 +185,9 @@ export class ConversationManager {
               data.body.changes[0].sequence,
             )
           );
+
+          this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+
         }
       }
     } catch (error) {
