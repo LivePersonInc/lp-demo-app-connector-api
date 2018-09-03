@@ -8,6 +8,8 @@ const installationBridge = require('./server/appInstallationBridge');
 const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
+const historyBridge = require('./server/convHistoryBridge');
+
 const https = require('https');
 var bodyParser = require('body-parser');
 
@@ -34,6 +36,7 @@ app.use("/account", accountConfBridge);
 app.use("/ums", umsBridge);
 app.use("/notifications", notifications); //receive webhooks notifications
 app.use("/domains", csdsBridge);
+app.use("/history", historyBridge);
 
 //Serve our UI
 app.use(express.static('dist'));
