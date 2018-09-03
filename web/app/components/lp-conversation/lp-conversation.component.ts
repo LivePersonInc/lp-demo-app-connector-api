@@ -22,7 +22,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   private conversationSubscription: ISubscription;
 
   constructor(private conversationService: ConversationService,
-              private historyService: HistoryService,
               private authenticationService: AuthenticationService,
               private installationService: InstallationService) { }
 
@@ -47,7 +46,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
-      this.historyService.init();
     }
 
     if(this.installationService.selectedApp){

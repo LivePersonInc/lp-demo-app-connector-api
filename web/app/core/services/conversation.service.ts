@@ -15,6 +15,7 @@ import {AuthenticationService} from "./authentication.service";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {MessageType} from "../../shared/models/conversation/chatMessage.model";
+import {HistoryService} from "./history.service";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -29,12 +30,16 @@ export class ConversationService extends HttpService {
               protected loadingService: LoadingService,
               protected router: Router,
               protected authenticationService: AuthenticationService,
-              protected stateManager: StateManager) {
+              protected stateManager: StateManager,
+              protected historyService: HistoryService) {
     super(snackBar, http, loadingService, router);
   }
 
   public init() {
     this.brandId = this.authenticationService.user.brandId;
+
+    this.historyService.init();
+
     this.restoreStoredState();
 
     this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
@@ -100,6 +105,10 @@ export class ConversationService extends HttpService {
         this.successResponse("Conversation authentication successfully");
         this.conversationManager.subscribeToMessageNotifications(this.conversation);
         //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
+
+        if(this.conversation.consumerId){
+          this.historyService.getHistoryByConsumerId(this.conversation.consumerId);
+        }
       }, error => {
         this.errorResponse(error);
       });

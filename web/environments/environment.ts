@@ -6,4 +6,5 @@ export const environment = {
   installation:"accountConfigReadWrite",
   ums:"asyncMessagingEnt",
   account: "accountConfigReadWrite",
+  history: "msgHist"
 };
