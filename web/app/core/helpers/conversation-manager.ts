@@ -163,6 +163,7 @@ export class ConversationManager {
 
     this.checkAndFilterIncomingTextMessages(data, conversation);
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
+    this.checkIfConversationWasClosed(data, conversation);
 
     this.updateState(conversation);
   }
@@ -224,6 +225,21 @@ export class ConversationManager {
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
+  }
+
+  private checkIfConversationWasClosed(data: any, conversation: Conversation) {
+    console.log("CHECK CLOSE");
+    try {
+      if (data.body.changes[0].result && data.body.changes[0].result.state === 'CLOSE') {
+        console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.closeReason);
+        this.unSubscribeToMessageNotifications(conversation);
+        conversation.isConvStarted = false;
+        this.updateState(conversation);
+      }
+    } catch (error) {
+      console.error("ERROR parsing notification", error);
+    }
+
   }
 
   private findMessageInConversationBySequence(sequence: number, conversation: Conversation): ChatMessage {
