@@ -228,10 +228,10 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
-    console.log("CHECK CLOSE");
-    try {
-      if (data.body.changes[0].result && data.body.changes[0].result.state === 'CLOSE') {
-        console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.closeReason);
+     try {
+      if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
+        && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
+        console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
         this.updateState(conversation);

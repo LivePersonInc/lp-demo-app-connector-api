@@ -30,9 +30,9 @@ function getNotificationConversationId(notificationBody) {
 
   try {
     jsonBody = JSON.parse(notificationBody);
-    if(jsonBody.body.changes[0].hasOwnProperty("dialogId")) {
+    if(jsonBody.body.changes[0].hasOwnProperty("conversationId")) {
 
-      conversationId = jsonBody.body.changes[0].dialogId;
+      conversationId = jsonBody.body.changes[0].conversationId;
 
     } else if(jsonBody.body.changes[0].hasOwnProperty("result") && jsonBody.body.changes[0].result.hasOwnProperty("convId")) {
 
