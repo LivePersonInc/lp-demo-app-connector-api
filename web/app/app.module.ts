@@ -28,6 +28,7 @@ import {ConversationManager} from './core/helpers/conversation-manager';
 import {StateManager} from './core/helpers/state-manager';
 import {LpLoginComponent} from './components/lp-login/lp-login.component';
 import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
+import {HistoryService} from "./core/services/history.service";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
     DomainsService,
     ConversationManager,
     StateManager,
+    HistoryService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: DomainHeaderInterceptor,
