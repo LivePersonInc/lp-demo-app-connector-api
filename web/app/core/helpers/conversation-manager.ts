@@ -164,6 +164,7 @@ export class ConversationManager {
     this.checkAndFilterIncomingTextMessages(data, conversation);
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
     this.checkIfConversationWasClosed(data, conversation);
+    this.checkConsumerGeneratedId(data, conversation);
 
     this.updateState(conversation);
   }
@@ -240,6 +241,20 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
 
+  }
+
+  private checkConsumerGeneratedId(data: any, conversation: Conversation){
+    try {
+      if(!conversation.consumerId &&  data.body.changes[0].originatorMetadata
+        && data.body.changes[0].originatorMetadata.role === 'CONSUMER') {
+
+        conversation.consumerId = data.body.changes[0].originatorMetadata.id;
+
+      }
+
+    } catch (error) {
+      console.error("ERROR parsing notification", error);
+    }
   }
 
   private findMessageInConversationBySequence(sequence: number, conversation: Conversation): ChatMessage {

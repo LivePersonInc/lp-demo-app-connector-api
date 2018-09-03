@@ -12,6 +12,7 @@ export class Conversation implements Deserializable<Conversation> {
   appKey: string;
   appSecret: string;
   ext_consumer_id: string;
+  consumerId: string;
   conversationId: string;
   userName: string;
   eventSource: EventSourcePolyfill;
@@ -28,6 +29,7 @@ export class Conversation implements Deserializable<Conversation> {
     this.eventSource = null;
     this.serverNotifications = [];
     this.ext_consumer_id = Math.random().toString();
+    this.consumerId = "";
   }
 
   deserialize(input: any): Conversation {
@@ -38,6 +40,7 @@ export class Conversation implements Deserializable<Conversation> {
     this.appKey = input.appKey;
     this.appSecret = input.appSecret;
     this.ext_consumer_id = input.ext_consumer_id;
+    this.consumerId = input.consumerId;
     this.conversationId = input.conversationId;
     this.userName = input.userName;
     this.eventSource = null;

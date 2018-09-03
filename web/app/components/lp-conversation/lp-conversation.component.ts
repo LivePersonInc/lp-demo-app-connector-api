@@ -5,6 +5,7 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {ISubscription} from "rxjs/Subscription";
+import {HistoryService} from "../../core/services/history.service";
 
 @Component({
   selector: 'lp-conversation',
@@ -21,6 +22,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   private conversationSubscription: ISubscription;
 
   constructor(private conversationService: ConversationService,
+              private historyService: HistoryService,
               private authenticationService: AuthenticationService,
               private installationService: InstallationService) { }
 
@@ -45,6 +47,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
+      this.historyService.init();
     }
 
     if(this.installationService.selectedApp){
