@@ -353,6 +353,10 @@ export class ConversationManager {
     if(this.historyService.history && this.historyService.history.conversationHistoryRecords[0]
       && this.historyService.history.conversationHistoryRecords[0].messageRecords){
 
+      if(this.checkIfConversationWasClosedInHistroy(this.historyService.history.conversationHistoryRecords[0])) {
+        conversation.isConvStarted = false;
+      }
+
       this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach( record => {
 
         if(!this.findMessageInConversationBySequence(record.seq, conversation)) {
@@ -406,6 +410,10 @@ export class ConversationManager {
         }
       }
     });
+  }
+
+  private checkIfConversationWasClosedInHistroy(history): boolean {
+    return history && history.info && history.info.status === 'CLOSE';
   }
 
 }
