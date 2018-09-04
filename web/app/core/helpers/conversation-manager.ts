@@ -144,14 +144,13 @@ export class ConversationManager {
   }
 
   private addSendRawEndpointHeaders (appJWT, consumerJWS): any {
-    const headers = {
+    return {
       'headers': {
         'content-type': 'application/json',
         'Authorization': appJWT,
         'x-lp-on-behalf': consumerJWS
       }
     };
-    return headers;
   }
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
