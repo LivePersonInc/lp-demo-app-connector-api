@@ -94,9 +94,9 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
   private subscribeToConversationEvents() {
     this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
-      if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId){
+      if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId) {
 
-        if(event.event === ConvEvent.OPEN ){
+        if(event.event === ConvEvent.OPEN ) {
           this.conversation = this.conversationService.conversation;
         }
 
