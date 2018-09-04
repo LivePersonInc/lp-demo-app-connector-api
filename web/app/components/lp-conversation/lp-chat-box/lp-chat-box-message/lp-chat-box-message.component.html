@@ -1,4 +1,4 @@
-<div class="message-container" [ngClass]="messageType">
+<div class="message-container" *ngIf="message" [ngClass]="messageType">
   <div class="username">
     <div *ngIf="message.showUser">{{message.userName}}</div>
   </div>

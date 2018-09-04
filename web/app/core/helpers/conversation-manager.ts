@@ -21,6 +21,7 @@ import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatS
 import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
+import {HistoryService} from "../services/history.service";
 
 
 @Injectable()
@@ -28,7 +29,9 @@ export class ConversationManager {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
 
-  constructor(private sendApiService:SendApiService, protected stateManager: StateManager){}
+  constructor(private sendApiService:SendApiService,
+              protected stateManager: StateManager,
+              protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
     return this.authenticate(conversation).flatMap((res: any) => {
@@ -57,8 +60,8 @@ export class ConversationManager {
         if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
         }
-        conversation.messages.push(
-          new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, "ok", this.getShowUserValue(conversation.userName, conversation), sequence));
+        conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, "ok", true, sequence));
+
         this.updateState(conversation);
       });
   }
@@ -183,10 +186,12 @@ export class ConversationManager {
               data.body.changes[0].event.message,
               "Agent",
               "ok",
-              this.getShowUserValue("Agent", conversation),
+              true, // this.getShowUserValue("Agent", conversation)
               data.body.changes[0].sequence,
             )
           );
+
+          console.log(conversation);
 
           this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
 
@@ -342,6 +347,65 @@ export class ConversationManager {
 
   private checkIfAcceptStatusEvent(notification: any){
     return this.checkIfHasChatStateEventProperty(notification) && notification.body.changes[0].event.type === 'ChatStateEvent';
+  }
+
+  public addHistoryMessageToCurrentState(conversation: Conversation) {
+    if(this.historyService.history && this.historyService.history.conversationHistoryRecords[0]
+      && this.historyService.history.conversationHistoryRecords[0].messageRecords){
+
+      this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach( record => {
+
+        if(!this.findMessageInConversationBySequence(record.seq, conversation)) {
+          console.log(record);
+          let messageType =  MessageType.RECEIVED;
+          let userName = "Agent";
+
+          if(record.participantId == conversation.consumerId){
+            messageType = MessageType.SENT;
+            userName = conversation.userName;
+          }
+          conversation.messages.push(
+            new ChatMessage(
+              messageType,
+              record.timeL,
+              record.messageData.msg.text,
+              userName,
+              "ok",
+              true,
+              record.seq,
+            ));
+        }
+
+      });
+
+      this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
+
+
+      conversation.messages.sort((a,b) =>{
+        return a.sequence - b.sequence;
+      });
+
+      console.log(conversation.messages);
+
+
+      this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+    }
+  }
+
+  private updateMessagesStatus(messageStatuses: any, conversation: Conversation) {
+    messageStatuses.forEach( status => {
+      let message =   this.findMessageInConversationBySequence(status.seq, conversation);
+      if(message){
+
+        if(status.messageDeliveryStatus == 'READ') {
+          message.read = true;
+        }
+
+        if(status.messageDeliveryStatus == 'ACCEPT') {
+          message.accepted = true;
+        }
+      }
+    });
   }
 
 }

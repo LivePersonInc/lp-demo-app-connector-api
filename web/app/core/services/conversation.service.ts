@@ -40,6 +40,13 @@ export class ConversationService extends HttpService {
 
     this.historyService.init();
 
+    this.historyService.historySubject.subscribe( event => {
+      if(event === 'GET_CONV_HISTORY'){
+        console.log("HISTORY IS RECOVERY ");
+        this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
+      }
+    });
+
     this.restoreStoredState();
 
     this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
@@ -105,7 +112,6 @@ export class ConversationService extends HttpService {
         this.successResponse("Conversation authentication successfully");
         this.conversationManager.subscribeToMessageNotifications(this.conversation);
         //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
-
         if(this.conversation.consumerId){
           this.historyService.getHistoryByConsumerId(this.conversation.consumerId);
         }
@@ -180,7 +186,7 @@ export class ConversationService extends HttpService {
   private getLastReadMessages(): Array<number> {
     let lastReadSequenceList = [];
     this.conversation.messages.forEach(message => {
-      if(message.type === MessageType.RECEIVED && !message.read ){
+      if(message.type === MessageType.RECEIVED && !message.read )  {
         message.read = true;
         lastReadSequenceList.push(message.sequence);
       }
