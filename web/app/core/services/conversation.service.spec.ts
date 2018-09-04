@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {ConversationManager} from "../helpers/conversation-manager";
 import {StateManager} from "../helpers/state-manager";
 import {AuthenticationService} from "./authentication.service";
+import {HistoryService} from "./history.service";
 
 describe('ConversationService', () => {
   beforeEach(() => {
@@ -16,6 +17,8 @@ describe('ConversationService', () => {
     const conversationManager = jasmine.createSpy('ConversationManager');
     const stateManager = jasmine.createSpy('StateManager');
     const authenticationService = jasmine.createSpy('AuthenticationService');
+    const historyService = jasmine.createSpy('HistoryService');
+
 
     TestBed.configureTestingModule({
       providers: [
@@ -26,6 +29,7 @@ describe('ConversationService', () => {
         {provide: LoadingService, useValue: loadingService},
         {provide: StateManager, useValue: stateManager},
         {provide: AuthenticationService, useValue: authenticationService},
+        {provide: HistoryService, useValue: historyService},
 
         {
           provide: Router,

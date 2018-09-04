@@ -23,8 +23,8 @@ describe('StateManager', () => {
   it('should save the app sstate in localstorage', inject([StateManager], (intercptor: StateManager) => {
       let conversation = new Conversation(brandId, "appKey", "appSecret", "usreName" );
       conversation.messages = [];
-      let firstMessage = new ChatMessage(MessageType.SENT,"125123523632","Hi","usreName","status", true,0);
-      let seconMessage = new ChatMessage(MessageType.SENT,"125123523632", "How are u?","usreName", "status", true, 1);
+      let firstMessage = new ChatMessage(MessageType.SENT,"125123523632","Hi","usreName", true, 0);
+      let seconMessage = new ChatMessage(MessageType.SENT,"125123523632", "How are u?","usreName", true, 1);
       conversation.messages.push(firstMessage);
       conversation.messages.push(seconMessage);
 
