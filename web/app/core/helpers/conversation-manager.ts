@@ -60,7 +60,7 @@ export class ConversationManager {
         if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
         }
-        conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, "ok", true, sequence));
+        conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
 
         this.updateState(conversation);
       });
@@ -185,7 +185,6 @@ export class ConversationManager {
               data.body.changes[0].serverTimestamp,
               data.body.changes[0].event.message,
               "Agent",
-              "ok",
               true, // this.getShowUserValue("Agent", conversation)
               data.body.changes[0].sequence,
             )
@@ -374,7 +373,6 @@ export class ConversationManager {
               record.timeL,
               record.messageData.msg.text,
               userName,
-              "ok",
               true,
               record.seq,
             ));
