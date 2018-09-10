@@ -1,8 +1,15 @@
 # Demo App for connector API
 
-This app can create a conversation within a consumer and an agent. You can send message and events with it as well as visualize the incoming event notifications.
+This app can create a conversation within a consumer and an agent. You can send message and events with it as well as 
+visualize the incoming event notifications.
 
-This project is a NodeJS app integrated with an Angular_cli generated project, this means: the default configuration has been changed in order to integrate Angular with NodeJS.
+This project is a NodeJS app integrated with an Angular_cli generated project, this means: the default configuration 
+has been changed in order to integrate Angular with NodeJS.
+
+## IMPORTANT!!!
+
+This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is no using
+any data base, sensitive data is saved in your browser local storage. (this will be changed in the future).
 
 ## Requirements.
 
@@ -10,7 +17,8 @@ This project is a NodeJS app integrated with an Angular_cli generated project, t
 - [Angular CLI](https://cli.angular.io/) 1.7.3 or higher. 
 - A valid brandID with Async Messaging enabled.
 - An installed APP for your brandID with the data sources configured in LiveEngage. 
-- Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the notifications from outside to your internal network.
+- Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
+ notifications from outside to your internal network.
   * (optional). Use [NgRock](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
   Run it with the port 8282 by default ```./ngRock http 8282``` .
 
