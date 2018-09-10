@@ -8,6 +8,7 @@ import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
 import {DomainsService} from "./domains.service";
 import {Router} from "@angular/router";
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -28,7 +29,7 @@ export class AuthenticationService extends HttpService {
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
      return this.
-        doPost(`https://${this.domainsService.getDomainByServiceName('agentVep')}/api/account/${brandId}/login`,
+        doPost(`https://${environment.server}/authentication/${brandId}`,
        { username: username, password: password }, {})
        .subscribe(res => {
          this._user = new User();
