@@ -382,13 +382,9 @@ export class ConversationManager {
 
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
 
-
       conversation.messages.sort((a,b) =>{
         return a.sequence - b.sequence;
       });
-
-      console.log(conversation.messages);
-
 
       //this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
     }
