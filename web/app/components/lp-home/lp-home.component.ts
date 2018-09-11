@@ -49,6 +49,9 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.installationService.init();
         this.conversationService.init();
         this.accountConfigService.init();
+
+        this.goToStartConfigPage();
+
       }
       if (event === 'LOGGED-OUT') {
         this.isAuthenticated = false;
@@ -59,8 +62,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     this.conversationService.conversationRestoredSubject.subscribe( event => {
       if (event === 'RESTORED') {
           this.goToStartDemoPage();
-      } else {
-        this.goToStartConfigPage();
       }
     });
     this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
@@ -89,7 +90,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   public goToStartConfigPage() {
-    console.log("WWOWOWOWOW");
     this.router.navigateByUrl('settings/start');
   }
 
@@ -98,7 +98,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   public isConversationRestored(): boolean {
-    if(this.conversationService.conversation) {
+    if (this.conversationService.conversation) {
       return true;
     }
     return false;
