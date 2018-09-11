@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {AppState} from "../../shared/models/stored-state/AppState";
 
 @Injectable()

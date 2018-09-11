@@ -320,7 +320,8 @@ export class ConversationManager {
 
   private updateState(conversation: Conversation) {
     let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
-    appState.lastConversation = conversation;
+    appState.conversationId = conversation.conversationId;
+    appState.appId = conversation.appKey;
     this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
   }
 

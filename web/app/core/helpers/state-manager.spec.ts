@@ -20,41 +20,27 @@ describe('StateManager', () => {
     expect(intercptor).toBeTruthy();
   }));
 
-  it('should save the app sstate in localstorage', inject([StateManager], (intercptor: StateManager) => {
-      let conversation = new Conversation(brandId, "appKey", "appSecret", "usreName" );
-      conversation.messages = [];
-      let firstMessage = new ChatMessage(MessageType.SENT,"125123523632","Hi","usreName", true, 0);
-      let seconMessage = new ChatMessage(MessageType.SENT,"125123523632", "How are u?","usreName", true, 1);
-      conversation.messages.push(firstMessage);
-      conversation.messages.push(seconMessage);
 
-      let installedApp = new AppInstall();
-      installedApp.enabled = true;
-      installedApp.client_name = "test App";
+  it('should save the app state in localstorage', inject([StateManager], (intercptor: StateManager) => {
 
-      let appState = new AppState();
-      appState.lastConversation = conversation;
-      appState.isAsyncMessagingActive = true;
-      appState.selectedApp = installedApp;
-
-      intercptor.storeLastStateInLocalStorage(appState, brandId);
-
+      this.storeAppState(intercptor);
       expect(localStorage.getItem(brandId)).toBeTruthy();
 
   }));
 
   it('should get the state from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
-
+    this.storeAppState(intercptor);
     expect(intercptor.getLastStoredStateByBrand(brandId)).toBeTruthy();
-
-
   }));
 
-  it('should get the conversation deserialized from the localStorage ', inject([StateManager], (intercptor: StateManager) => {
 
-    expect(intercptor.getLastStoredStateByBrand(brandId).lastConversation.messages.length).toBe(2);
+  function storeAppState(intercptor: StateManager) {
+    let appState = new AppState();
+    appState.conversationId = "conversation_id";
+    appState.appId = "app_id";
 
-  }));
+    intercptor.storeLastStateInLocalStorage(appState, brandId);
+  }
 
 
 });

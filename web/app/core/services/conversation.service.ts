@@ -105,7 +105,9 @@ export class ConversationService extends HttpService {
   }
 
   private restoreStoredState() {
-    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+
+    //TODO:
+    /*let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
     if(appState.lastConversation){
       this.conversation = appState.lastConversation;
       this.conversationManager.authenticate(this.conversation).subscribe(res => {
@@ -118,7 +120,7 @@ export class ConversationService extends HttpService {
       }, error => {
         this.errorResponse(error);
       });
-    }
+    }*/
   }
 
   public notifyAgentConsumerIsInTheChat() {
