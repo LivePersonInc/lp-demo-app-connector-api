@@ -6,9 +6,9 @@ const handleStatusCode = require('./util/handleStatusCode');
 
 const convHistoryService = new ConvHistoryService();
 
-router.get("/:brandId/consumer/:consumerId", function (req, res, next) {
+router.get("/:brandId/consumer/:conversationId", function (req, res, next) {
   let brandId = req.params.brandId;
-  let consumerId = req.params.consumerId;
+  let conversationId = req.params.conversationId;
 
   let args = {};
   args.data = {};
@@ -17,7 +17,7 @@ router.get("/:brandId/consumer/:consumerId", function (req, res, next) {
   args.headers['authorization'] = req.header('authorization');
 
   convHistoryService
-    .getHistoryByConsumerId(consumerId, brandId, args, req.header('LP-DOMAIN'))
+    .getHistoryByConsumerId(conversationId, brandId, args, req.header('LP-DOMAIN'))
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);

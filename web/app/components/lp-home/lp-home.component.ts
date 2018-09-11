@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material";
 import {DomainsService} from "../../core/services/domains.service";
 import {ConversationService} from "../../core/services/conversation.service";
 import {AccountConfigService} from "../../core/services/account-config.service";
+import {ConversationEvent} from "../../shared/models/conversation/conversationEvent.model";
 
 @Component({
   selector: 'lp-home',
@@ -48,15 +49,18 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.installationService.init();
         this.conversationService.init();
         this.accountConfigService.init();
-
-        if(this.isConversationRestored()) {
-          this.goToStartDemoPage();
-        }else {
-          this.goToStartConfigPage();
-        }
       }
       if (event === 'LOGGED-OUT') {
         this.isAuthenticated = false;
+      }
+    });
+
+
+    this.conversationService.conversationRestoredSubject.subscribe( event => {
+      if (event === 'RESTORED') {
+          this.goToStartDemoPage();
+      } else {
+        this.goToStartConfigPage();
       }
     });
     this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {

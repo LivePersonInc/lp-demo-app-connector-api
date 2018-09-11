@@ -11,7 +11,7 @@ class ConvHistoryService {
     return new Promise((resolve, reject) => {
       return this.client
         .post(
-          `https://${domain}/messaging_history/api/account/${brandId}/conversations/consumer/search?offset=0&limit=100&sort=start%3Adesc&NC=true&__d=2013`,
+          `https://${domain}/messaging_history/api/account/${brandId}/conversations/conversation/search?offset=0&limit=100&sort=start%3Adesc&NC=true&__d=2013`,
           args,
           function (data, response) {
             resolve([data, response]);
@@ -23,9 +23,9 @@ class ConvHistoryService {
     });
   }
 
-  createHistoryBody(consumerId) {
+  createHistoryBody(conversationId) {
     let body = {
-      "consumer": consumerId,
+      "conversationId": conversationId,
       "contentToRetrieve":["campaign","messageRecords","agentParticipants","agentParticipantsLeave","agentParticipantsActive","consumerParticipants","transfers","messageScores","messageStatuses"]
 
     };

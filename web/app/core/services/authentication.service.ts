@@ -51,7 +51,6 @@ export class AuthenticationService extends HttpService {
   }
 
   public logOut() {
-    //sessionStorage.removeItem("lp-logged-in-user");
     this._user = null;
     this.userLoggedSubject.next('LOGGED-OUT');
   }

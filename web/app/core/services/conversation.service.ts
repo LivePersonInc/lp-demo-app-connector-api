@@ -16,11 +16,14 @@ import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {HistoryService} from "./history.service";
+import {InstallationService} from "./istallation.service";
 
 @Injectable()
 export class ConversationService extends HttpService {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
+  public conversationRestoredSubject = new Subject<string>();
+
   public conversation: Conversation;
   public brandId: string;
 
@@ -31,6 +34,7 @@ export class ConversationService extends HttpService {
               protected router: Router,
               protected authenticationService: AuthenticationService,
               protected stateManager: StateManager,
+              protected installationService: InstallationService,
               protected historyService: HistoryService) {
     super(snackBar, http, loadingService, router);
   }
@@ -43,11 +47,16 @@ export class ConversationService extends HttpService {
     this.historyService.historySubject.subscribe( event => {
       if(event === 'GET_CONV_HISTORY'){
         console.log("HISTORY IS RECOVERY ");
-        this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
+        //this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
       }
     });
 
-    this.restoreStoredState();
+    this.installationService.installationSubject.subscribe( event => {
+      if(event === 'APP_SELECTED') {
+        this.restoreStoredState();
+      }
+    });
+
 
     this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
       if(event.event === ConvEvent.EVENT_RECEIVED ) {
@@ -105,22 +114,26 @@ export class ConversationService extends HttpService {
   }
 
   private restoreStoredState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    if(appState.conversationId){
 
-    //TODO:
-    /*let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    if(appState.lastConversation){
-      this.conversation = appState.lastConversation;
+      this.conversation =
+         new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, "");
+      this.conversation.conversationId = appState.conversationId;
+
+      this.conversationRestoredSubject.next("RESTORED");
+      console.log("SFSFSFSFF");
       this.conversationManager.authenticate(this.conversation).subscribe(res => {
         this.successResponse("Conversation authentication successfully");
         this.conversationManager.subscribeToMessageNotifications(this.conversation);
         //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
-        if(this.conversation.consumerId){
-          this.historyService.getHistoryByConsumerId(this.conversation.consumerId);
+        if(this.conversation.conversationId){
+          this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
         }
       }, error => {
         this.errorResponse(error);
       });
-    }*/
+    }
   }
 
   public notifyAgentConsumerIsInTheChat() {
