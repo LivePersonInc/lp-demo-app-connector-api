@@ -33,7 +33,6 @@ export class AccountConfigService extends HttpService {
 
   public init() {
       this.brandId = this.authenticationService.user.brandId;
-      this.restoreStoredState();
       this.headers = {
         'headers': {
           'Authorization': `Bearer ${this.authenticationService.user.token}`,
@@ -45,7 +44,6 @@ export class AccountConfigService extends HttpService {
     this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe(data => {
       this.accountConfigPropList = data;
       this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
-      this.updateAsyncEnablePropInStoredState();
       this.loadingService.stopLoading();
       this.acSubject.next('GET_LIST');
     }, error => {
@@ -75,17 +73,5 @@ export class AccountConfigService extends HttpService {
     return feature[0].value.value;
   }
 
-  private updateAsyncEnablePropInStoredState(){
-    let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
-    state.isAsyncMessagingActive = this.isAsyncMessagingActive;
-    this.stateManager.storeLastStateInLocalStorage(state,this.authenticationService.user.brandId);
-  }
-
-  private restoreStoredState() {
-    let state = this.stateManager.getLastStoredStateByBrand(this.authenticationService.user.brandId);
-    if(state.isAsyncMessagingActive != null){
-      this.isAsyncMessagingActive = state.isAsyncMessagingActive;
-    }
-  }
 
 }
