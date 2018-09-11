@@ -232,6 +232,7 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
+    console.log("checkIfConversationWasClosed");
      try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
@@ -349,21 +350,26 @@ export class ConversationManager {
   }
 
   public addHistoryMessageToCurrentState(conversation: Conversation) {
+    console.log("addHistoryMessageToCurrentState");
     if(this.historyService.history && this.historyService.history.conversationHistoryRecords[0]
       && this.historyService.history.conversationHistoryRecords[0].messageRecords){
 
       if(this.checkIfConversationWasClosedInHistroy(this.historyService.history.conversationHistoryRecords[0])) {
         conversation.isConvStarted = false;
+      }else {
+        conversation.isConvStarted = true;
       }
 
       this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach( record => {
 
         if(!this.findMessageInConversationBySequence(record.seq, conversation)) {
           console.log(record);
+          console.log(record.sentBy);
+
           let messageType =  MessageType.RECEIVED;
           let userName = "Agent";
 
-          if(record.participantId == conversation.consumerId){
+          if(record.sentBy == "Consumer"){
             messageType = MessageType.SENT;
             userName = conversation.userName;
           }
@@ -390,7 +396,7 @@ export class ConversationManager {
       console.log(conversation.messages);
 
 
-      this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+      //this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
     }
   }
 

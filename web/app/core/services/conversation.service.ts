@@ -47,7 +47,7 @@ export class ConversationService extends HttpService {
     this.historyService.historySubject.subscribe( event => {
       if(event === 'GET_CONV_HISTORY'){
         console.log("HISTORY IS RECOVERY ");
-        //this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
+        this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
       }
     });
 
@@ -121,14 +121,18 @@ export class ConversationService extends HttpService {
          new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, "");
       this.conversation.conversationId = appState.conversationId;
 
-      this.conversationRestoredSubject.next("RESTORED");
-      console.log("SFSFSFSFF");
       this.conversationManager.authenticate(this.conversation).subscribe(res => {
         this.successResponse("Conversation authentication successfully");
+        console.log("Conversation authentication successfully"); // XXX
+        console.log(this.conversation); // XXX
         this.conversationManager.subscribeToMessageNotifications(this.conversation);
         //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
         if(this.conversation.conversationId){
           this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
+          this.conversationRestoredSubject.next("RESTORED");
+
+          console.log(this.conversation); // XXX
+
         }
       }, error => {
         this.errorResponse(error);
@@ -187,6 +191,7 @@ export class ConversationService extends HttpService {
   }
 
   public notifyMessageWasAccepted(sequence: number) {
+    console.log("APCET");
     let sequenceList = [sequence];
     if(sequenceList.length > 0) {
       this.deactivateLoadingService();
