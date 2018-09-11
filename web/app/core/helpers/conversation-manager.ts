@@ -323,6 +323,7 @@ export class ConversationManager {
     let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
     appState.conversationId = conversation.conversationId;
     appState.appId = conversation.appKey;
+    appState.ext_consumer_id = conversation.ext_consumer_id;
     this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
   }
 

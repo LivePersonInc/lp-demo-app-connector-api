@@ -89,6 +89,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   public goToStartConfigPage() {
+    console.log("WWOWOWOWOW");
     this.router.navigateByUrl('settings/start');
   }
 
