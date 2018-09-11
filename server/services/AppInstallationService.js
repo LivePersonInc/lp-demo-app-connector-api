@@ -57,6 +57,9 @@ class AppInstallationService {
   }
 
   getAppById(app_id, brandId, args, domain) {
+    console.log(`https://${domain}/api/account/${brandId}/configuration/app-install/installations/${app_id}?v=${this.nconf.get("APP_INSTALL_VERSION")}`);
+    console.log(args);
+
     return new Promise((resolve, reject) => {
       return this.client
         .get(

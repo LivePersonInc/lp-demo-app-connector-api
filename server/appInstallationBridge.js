@@ -33,6 +33,31 @@ router.get("/:brandId", (req, res, next) => {
     });
 });
 
+router.get("/:brandId/:appId", (req, res, next) => {
+  let brandId = req.params.brandId;
+  let appId = req.params.appId;
+  let args = {};
+  args.data = {};
+  args.headers = {};
+  args.headers['content-type'] = 'application/json';
+  args.headers['authorization'] = req.header('authorization');
+
+  appInstallationService
+    .getAppById(appId, brandId, args, req.header('LP-DOMAIN'))
+    .then((resolve) => {
+
+      if (handleStatusCode(resolve[1].statusCode)) {
+        res.send(resolve[0]);
+      } else {
+        res.status(resolve[1].statusCode).send({error: "Something was wrong"});
+      }
+
+    }).catch((error) => {
+    console.error("ERROR: Promise rejected", error);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+  });
+});
+
 router.post("/:brandId", (req, res, next) => {
   let brandId = req.params.brandId;
 
