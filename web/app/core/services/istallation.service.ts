@@ -32,13 +32,13 @@ export class InstallationService extends HttpService {
 
   public init() {
     this.brandId = this.authenticationService.user.brandId;
-    this.restoreState();
     this.headers = {'headers':
       {
         'Authorization': `Bearer ${this.authenticationService.user.token}`,
         'content-type': 'application/json',
       }
     };
+    this.restoreState();
   }
 
   get selectedApp(): AppInstall {
@@ -81,6 +81,15 @@ export class InstallationService extends HttpService {
     });
   }
 
+  public getSelectedAppByAppId(appId: string) {
+    this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers).subscribe(app => {
+      this._selectedApp = app;
+      this.installationSubject.next('APP_SELECTED');
+    }, error => {
+      this.errorResponse(error);
+    });
+  }
+
   public reset() {
     this.appList = null;
     this._selectedApp = null;
@@ -95,14 +104,14 @@ export class InstallationService extends HttpService {
 
   private updateSelectedAppInState() {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    appState.selectedApp = this.selectedApp;
+    appState.appId = this.selectedApp.client_id;
     this.stateManager.storeLastStateInLocalStorage(appState, this.brandId);
   }
 
   private restoreState() {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    if(appState.selectedApp){
-      this.selectedApp = appState.selectedApp;
+    if(appState && appState.appId){
+        this.getSelectedAppByAppId(appState.appId);
     }
   }
 
