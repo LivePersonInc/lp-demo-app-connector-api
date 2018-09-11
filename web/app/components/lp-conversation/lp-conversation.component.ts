@@ -26,7 +26,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
               private installationService: InstallationService) { }
 
 
- /*@HostListener('window:focus', ['$event'])
+ @HostListener('window:focus', ['$event'])
   onFocus(event: any): void {
     if(this.conversation && this.conversation.isConvStarted) {
       this.conversationService.notifyAgentConsumerIsInTheChat();
@@ -39,7 +39,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     if(this.conversation && this.conversation.isConvStarted){
       this.conversationService.notifyAgentConsumerIsNotInTheChat();
     }
-  }*/
+  }
 
   ngOnInit() {
     this.userName = 'John';

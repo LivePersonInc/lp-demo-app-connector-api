@@ -118,21 +118,17 @@ export class ConversationService extends HttpService {
     if(appState.conversationId){
 
       this.conversation =
-         new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, "");
+         new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
       this.conversation.conversationId = appState.conversationId;
       this.conversation.ext_consumer_id = appState.ext_consumer_id;
+      this.conversation.userName = appState.userName;
 
       this.conversationManager.authenticate(this.conversation).subscribe(res => {
         this.successResponse("Conversation authentication successfully");
-        console.log("Conversation authentication successfully"); // XXX
-        console.log(this.conversation); // XXX
         this.conversationManager.subscribeToMessageNotifications(this.conversation);
-        //this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
         if(this.conversation.conversationId){
           this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
           this.conversationRestoredSubject.next("RESTORED");
-
-          console.log(this.conversation); // XXX
 
         }
       }, error => {

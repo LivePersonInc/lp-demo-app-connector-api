@@ -324,6 +324,7 @@ export class ConversationManager {
     appState.conversationId = conversation.conversationId;
     appState.appId = conversation.appKey;
     appState.ext_consumer_id = conversation.ext_consumer_id;
+    appState.userName = conversation.userName;
     this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
   }
 
@@ -351,7 +352,6 @@ export class ConversationManager {
   }
 
   public addHistoryMessageToCurrentState(conversation: Conversation) {
-    console.log("addHistoryMessageToCurrentState");
     if(this.historyService.history && this.historyService.history.conversationHistoryRecords[0]
       && this.historyService.history.conversationHistoryRecords[0].messageRecords){
 
@@ -362,29 +362,22 @@ export class ConversationManager {
       }
 
       this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach( record => {
+        let messageType =  MessageType.RECEIVED;
+        let userName = "Agent";
 
-        if(!this.findMessageInConversationBySequence(record.seq, conversation)) {
-          console.log(record);
-          console.log(record.sentBy);
-
-          let messageType =  MessageType.RECEIVED;
-          let userName = "Agent";
-
-          if(record.sentBy == "Consumer"){
-            messageType = MessageType.SENT;
-            userName = conversation.userName;
-          }
-          conversation.messages.push(
-            new ChatMessage(
-              messageType,
-              record.timeL,
-              record.messageData.msg.text,
-              userName,
-              true,
-              record.seq,
-            ));
+        if(record.sentBy == "Consumer"){
+          messageType = MessageType.SENT;
+          userName = conversation.userName;
         }
-
+        conversation.messages.push(
+          new ChatMessage(
+            messageType,
+            record.timeL,
+            record.messageData.msg.text,
+            userName,
+            true,
+            record.seq,
+          ));
       });
 
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
