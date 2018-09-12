@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {ConversationManager} from "../helpers/conversation-manager";
-import {StateManager} from "../helpers/state-manager";
+import {StateStorage} from "../helpers/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
@@ -33,7 +33,7 @@ export class ConversationService extends HttpService {
               protected loadingService: LoadingService,
               protected router: Router,
               protected authenticationService: AuthenticationService,
-              protected stateManager: StateManager,
+              protected stateManager: StateStorage,
               protected installationService: InstallationService,
               protected historyService: HistoryService) {
     super(snackBar, http, loadingService, router);

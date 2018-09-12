@@ -25,7 +25,7 @@ import {LpConversationModule} from './components/lp-conversation/lp-conversation
 import {LpStartTutorialModule} from './components/lp-start-tutorial/lp-start-tutorial.module';
 import {LogoutGuard} from './core/guards/logout.guard';
 import {ConversationManager} from './core/helpers/conversation-manager';
-import {StateManager} from './core/helpers/state-manager';
+import {StateStorage} from './core/helpers/state-storage';
 import {LpLoginComponent} from './components/lp-login/lp-login.component';
 import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
 import {HistoryService} from "./core/services/history.service";
@@ -64,7 +64,7 @@ import {HistoryService} from "./core/services/history.service";
     ConversationService,
     DomainsService,
     ConversationManager,
-    StateManager,
+    StateStorage,
     HistoryService,
     {
     provide: HTTP_INTERCEPTORS,

@@ -6,7 +6,7 @@ import {AccountConfigService} from "../../../core/services/account-config.servic
 import {Router} from "@angular/router";
 import {InstallationService} from "../../../core/services/istallation.service";
 import {MatStepper} from "@angular/material";
-import {StateManager} from "../../../core/helpers/state-manager";
+import {StateStorage} from "../../../core/helpers/state-storage";
 import {AuthenticationService} from "../../../core/services/authentication.service";
 
 describe('LpEnableAsycComponent', () => {
@@ -23,7 +23,7 @@ describe('LpEnableAsycComponent', () => {
     const installationService = jasmine.createSpy( 'InstallationService');
     const router = jasmine.createSpy( 'Router');
     const matStepper = jasmine.createSpy( 'MatStepper');
-    const stateManager = jasmine.createSpy( 'StateManager');
+    const stateManager = jasmine.createSpy( 'StateStorage');
     const authenticationService = jasmine.createSpy( 'AuthenticationService');
 
     TestBed.configureTestingModule({
@@ -35,7 +35,7 @@ describe('LpEnableAsycComponent', () => {
         {provide: Router, useValue: router},
         {provide: MatStepper, useValue: matStepper},
         {provide: AuthenticationService, useValue: authenticationService},
-        {provide: StateManager, useValue: stateManager},
+        {provide: StateStorage, useValue: stateManager},
       ]
     })
     .compileComponents();

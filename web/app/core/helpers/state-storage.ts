@@ -4,7 +4,7 @@ import 'rxjs/add/operator/mergeMap';
 import {AppState} from "../../shared/models/stored-state/AppState";
 
 @Injectable()
-export class StateManager {
+export class StateStorage {
 
   public storeLastStateInLocalStorage(state: AppState, brandId: string) {
     let serializedState = JSON.stringify(state);

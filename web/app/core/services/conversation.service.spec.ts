@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
 import {ConversationManager} from "../helpers/conversation-manager";
-import {StateManager} from "../helpers/state-manager";
+import {StateStorage} from "../helpers/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {HistoryService} from "./history.service";
 
@@ -15,7 +15,7 @@ describe('ConversationService', () => {
     const http = jasmine.createSpy('HttpClient');
     const loadingService = jasmine.createSpy('LoadingService');
     const conversationManager = jasmine.createSpy('ConversationManager');
-    const stateManager = jasmine.createSpy('StateManager');
+    const stateManager = jasmine.createSpy('StateStorage');
     const authenticationService = jasmine.createSpy('AuthenticationService');
     const historyService = jasmine.createSpy('HistoryService');
 
@@ -27,7 +27,7 @@ describe('ConversationService', () => {
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
         {provide: LoadingService, useValue: loadingService},
-        {provide: StateManager, useValue: stateManager},
+        {provide: StateStorage, useValue: stateManager},
         {provide: AuthenticationService, useValue: authenticationService},
         {provide: HistoryService, useValue: historyService},
 

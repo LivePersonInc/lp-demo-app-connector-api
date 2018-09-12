@@ -5,7 +5,7 @@ import {LoadingService} from "./loading.service";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {StateManager} from "../helpers/state-manager";
+import {StateStorage} from "../helpers/state-storage";
 
 describe('AccountConfigService', () => {
 
@@ -18,7 +18,7 @@ describe('AccountConfigService', () => {
     const snackBar = jasmine.createSpy('MatSnackBar');
     const http = jasmine.createSpy('HttpClient');
     const loadingService = jasmine.createSpy('LoadingService');
-    const stateManager = jasmine.createSpy('StateManager');
+    const stateManager = jasmine.createSpy('StateStorage');
 
     TestBed.configureTestingModule({
       providers: [
@@ -30,7 +30,7 @@ describe('AccountConfigService', () => {
         },
         {provide: MatSnackBar, useValue: snackBar},
         {provide: HttpClient, useValue: http},
-        {provide: StateManager, useValue: stateManager},
+        {provide: StateStorage, useValue: stateManager},
         {provide: LoadingService, useValue: loadingService}]
 
     });

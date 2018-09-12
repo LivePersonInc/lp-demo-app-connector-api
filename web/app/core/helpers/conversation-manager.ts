@@ -16,7 +16,7 @@ import {Event} from "../../shared/models/send-api/Event.model";
 import {PublishContentEvent} from "../../shared/models/send-api/PublishContentEvent.model";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {StateManager} from "./state-manager";
+import {StateStorage} from "./state-storage";
 import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
@@ -30,7 +30,7 @@ export class ConversationManager {
   public conversationEventSubject = new Subject<ConversationEvent>();
 
   constructor(private sendApiService:SendApiService,
-              protected stateManager: StateManager,
+              protected stateManager: StateStorage,
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
