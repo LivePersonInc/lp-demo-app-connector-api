@@ -57,7 +57,6 @@ export class ConversationService extends HttpService {
       }
     });
 
-
     this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
       if(event.event === ConvEvent.EVENT_RECEIVED ) {
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.EVENT_RECEIVED));
@@ -113,29 +112,6 @@ export class ConversationService extends HttpService {
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
 
-  private restoreStoredState() {
-    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-
-    if(appState.conversationId){
-      this.conversation =
-         new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
-      this.conversation.conversationId = appState.conversationId;
-      this.conversation.ext_consumer_id = appState.ext_consumer_id;
-      this.conversation.userName = appState.userName;
-
-      this.conversationManager.authenticate(this.conversation).subscribe(res => {
-        this.successResponse("Conversation authentication successfully");
-        this.conversationManager.subscribeToMessageNotifications(this.conversation);
-        if(this.conversation.conversationId){
-          this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
-          this.conversationRestoredSubject.next("RESTORED");
-
-        }
-      }, error => {
-        this.errorResponse(error);
-      });
-    }
-  }
 
   public notifyAgentConsumerIsInTheChat() {
     this.deactivateLoadingService();
@@ -209,6 +185,30 @@ export class ConversationService extends HttpService {
       }
     });
     return lastReadSequenceList;
+  }
+
+  private restoreStoredState() {
+    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+
+    if(appState.conversationId){
+      this.conversation =
+        new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
+      this.conversation.conversationId = appState.conversationId;
+      this.conversation.ext_consumer_id = appState.ext_consumer_id;
+      this.conversation.userName = appState.userName;
+
+      this.conversationManager.authenticate(this.conversation).subscribe(res => {
+        this.successResponse("Conversation authentication successfully");
+        this.conversationManager.subscribeToMessageNotifications(this.conversation);
+        if(this.conversation.conversationId){
+          this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
+          this.conversationRestoredSubject.next("RESTORED");
+
+        }
+      }, error => {
+        this.errorResponse(error);
+      });
+    }
   }
 
 }

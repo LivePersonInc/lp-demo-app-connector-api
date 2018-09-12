@@ -232,7 +232,6 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
-    console.log("checkIfConversationWasClosed");
      try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
