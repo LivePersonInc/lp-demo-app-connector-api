@@ -8,6 +8,7 @@ import {ConversationManager} from "../helpers/conversation-manager";
 import {StateStorage} from "../helpers/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {HistoryService} from "./history.service";
+import {InstallationService} from "./istallation.service";
 
 describe('ConversationService', () => {
   beforeEach(() => {
@@ -18,6 +19,7 @@ describe('ConversationService', () => {
     const stateManager = jasmine.createSpy('StateStorage');
     const authenticationService = jasmine.createSpy('AuthenticationService');
     const historyService = jasmine.createSpy('HistoryService');
+    const installationService = jasmine.createSpy('InstallationService');
 
 
     TestBed.configureTestingModule({
@@ -30,7 +32,7 @@ describe('ConversationService', () => {
         {provide: StateStorage, useValue: stateManager},
         {provide: AuthenticationService, useValue: authenticationService},
         {provide: HistoryService, useValue: historyService},
-
+        {provide: InstallationService, useValue: installationService},
         {
           provide: Router,
           useClass: class { navigate = jasmine.createSpy("navigate"); }

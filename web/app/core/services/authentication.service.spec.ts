@@ -12,6 +12,7 @@ describe('AuthenticationService', () => {
     const http = jasmine.createSpy('HttpClient');
     const loadingService = jasmine.createSpy('LoadingService');
     const domainsService = jasmine.createSpy('DomainService');
+
     TestBed.configureTestingModule({
       providers: [
         AuthenticationService,

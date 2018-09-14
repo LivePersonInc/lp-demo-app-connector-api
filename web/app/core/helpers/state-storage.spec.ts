@@ -22,14 +22,13 @@ describe('StateStorage', () => {
 
 
   it('should save the app state in localstorage', inject([StateStorage], (intercptor: StateStorage) => {
-
-      this.storeAppState(intercptor);
+      storeAppState(intercptor);
       expect(localStorage.getItem(brandId)).toBeTruthy();
 
   }));
 
   it('should get the state from the localStorage ', inject([StateStorage], (intercptor: StateStorage) => {
-    this.storeAppState(intercptor);
+    storeAppState(intercptor);
     expect(intercptor.getLastStoredStateByBrand(brandId)).toBeTruthy();
   }));
 
@@ -38,6 +37,8 @@ describe('StateStorage', () => {
     let appState = new AppState();
     appState.conversationId = "conversation_id";
     appState.appId = "app_id";
+    appState.ext_consumer_id = "054085048u06";
+    appState.userName = "kim";
 
     intercptor.storeLastStateInLocalStorage(appState, brandId);
   }
