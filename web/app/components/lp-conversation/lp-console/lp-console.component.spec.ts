@@ -11,7 +11,7 @@ describe('LpConsoleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule],
+      imports: [ MaterialModule ],
       declarations: [ LpConsoleComponent ],
       providers: [
         {provide: ConversationService, useValue: conversationService}
@@ -21,12 +21,12 @@ describe('LpConsoleComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LpConsoleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+   fixture = TestBed.createComponent(LpConsoleComponent);
+   component = fixture.componentInstance;
+  // fixture.detectChanges();
   });
 
   it('should create', () => {
-      expect(component).toBeTruthy();
+     expect(component).toBeDefined();
   });
 });
