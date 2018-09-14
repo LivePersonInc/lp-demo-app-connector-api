@@ -12,16 +12,14 @@ This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensit
 any data base, sensitive data is saved in your browser local storage. (this will be changed in the future).
 
 ## Table of Contents
-<!--ts-->
-  - [Requirements](#Requirements)
-  - [Run](#Run)
-  - [How to use](#How-to-use)
-  - [Run with docker](#Run-with-docker)
-  - [Project structure](#Project-structure)
-  - [Settings](#Settings)
-  - [Webhooks Setup](#Webhooks-Setup)
-  - [Development Mode](#Development-Mode)
-<!--te-->
+  - [Requirements](#requirements)
+  - [Run](#run)
+  - [How to use](#how-to-use)
+  - [Run with docker](#run-with-docker)
+  - [Project structure](#project-structure)
+  - [Settings](#settings)
+  - [Webhooks Setup](#webhooks-Setup)
+  - [Development Mode](#development-mode)
 
 ## Requirements.
 
