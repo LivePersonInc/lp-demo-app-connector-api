@@ -52,7 +52,7 @@ export class ConversationService extends HttpService {
     });
 
     this.installationService.installationSubject.subscribe( event => {
-      if(event === 'APP_SELECTED') {
+      if(event === 'APP_SECRET_FOUND') {
         this.restoreStoredState();
       }
     });

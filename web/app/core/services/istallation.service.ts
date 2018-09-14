@@ -81,10 +81,10 @@ export class InstallationService extends HttpService {
     });
   }
 
-  public getSelectedAppByAppId(appId: string) {
+  public getAppByAppId(appId: string) {
     this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers).subscribe(app => {
       this._selectedApp = app;
-      this.installationSubject.next('APP_SELECTED');
+      this.installationSubject.next('APP_SECRET_FOUND');
     }, error => {
       this.errorResponse(error);
     });
@@ -111,7 +111,7 @@ export class InstallationService extends HttpService {
   private restoreState() {
     let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
     if(appState && appState.appId){
-        this.getSelectedAppByAppId(appState.appId);
+        this.getAppByAppId(appState.appId);
     }
   }
 
