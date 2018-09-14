@@ -42,7 +42,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userName = 'John';
+    this.userName = 'Kim';
 
     if(this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || "";
