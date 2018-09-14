@@ -18,7 +18,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
   - [Run with docker](#run-with-docker)
   - [Project structure](#project-structure)
   - [Settings](#settings)
-  - [Webhooks Setup](#webhooks-Setup)
+  - [Webhooks Setup](#webhooks-setup)
   - [Development Mode](#development-mode)
 
 ## Requirements.
