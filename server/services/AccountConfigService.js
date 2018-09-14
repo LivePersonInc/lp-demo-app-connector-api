@@ -3,7 +3,6 @@ const Client = require("node-rest-client").Client;
 
 class AccountConfigService {
     constructor(nconf) {
-        // nconf object
         this.nconf = nconf;
         this.client = new Client();
     }

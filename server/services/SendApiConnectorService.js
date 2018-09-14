@@ -6,10 +6,8 @@ const Client = require("node-rest-client").Client;
 
 class SendApiConnectorService {
     constructor(nconf) {
-        // nconf object
         this.nconf = nconf;
         this.client = new Client();
-        this.baseUri = ``;
         this.closeConversationField = {
           "field": "ConversationStateField",
           "conversationState": "CLOSE"

@@ -5,7 +5,6 @@ const Client = require("node-rest-client").Client;
 class CsdsService {
 
     constructor(nconf) {
-        // nconf object
         this.nconf = nconf;
         this.client = new Client();
     }
