@@ -1,15 +1,26 @@
 # Demo App for connector API
 
-This app can create a conversation within a consumer and an agent. You can send message and events with it as well as 
+This project contains the a demo app for connector api tha can create a conversation within a consumer and an agent. 
+You can send message and events with it as well as 
 visualize the incoming event notifications.
 
-This project is a NodeJS app integrated with an Angular_cli generated project, this means: the default configuration 
-has been changed in order to integrate Angular with NodeJS.
+---
 
-## IMPORTANT!!!
+`Important!`
 
 This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is no using
 any data base, sensitive data is saved in your browser local storage. (this will be changed in the future).
+
+## Table of Contents
+
+- [Requirements](#Requirements)
+- [Run](#Run)
+- [How to use](#How-to-use)
+- [Run with docker](#Run-with-docker)
+- [Project structure](#Project-structure)
+- [Settings](#Settings)
+- [Webhooks Setup](#Webhooks-Setup)
+- [Development Mode](#Development-Mode)
 
 ## Requirements.
 
