@@ -30,7 +30,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
  notifications from outside to your internal network.
   * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
-  Run it with the port 8282 by default ```./ngRock http 8282``` .
+  Run it with the port 8282 by default ```./ngRok http 8282``` .
 
 ## Run
 
