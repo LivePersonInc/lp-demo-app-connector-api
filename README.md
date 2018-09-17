@@ -4,7 +4,8 @@ This project contains a demo app for connector api that can create a conversatio
 You can send messages and events with it as well as 
 visualize the incoming event notifications.
 
-see: [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html)
+See, [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html) for a better
+understanding.
 
 ---
 
@@ -15,7 +16,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ## Table of Contents
   - [Requirements](#requirements)
-  - [hoe to run](#how-to-run)
+  - [how to run](#how-to-run)
   - [Run NgRok](#run-ngrok)
   - [Configure webhooks endpints](#configure-webhooks-endpoints)
   - [How to use](#how-to-use)
@@ -88,7 +89,7 @@ In your app installation you need to add this webhook listener server url:<br/> 
 
 ``https://{your server domain or ip}/notifications/event``
 
-### Development Mode:
+## Development Mode:
 
 Angular CLI provides a fast development server using Webpack. Every change is automatically refreshed in the browser.
 
@@ -99,10 +100,17 @@ To run the application using the dev server instead a built project:
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
-## Send and handle conversation events
+#### Send and handle conversation events
 
 The demo connector app can hadle most and send most of the conversation events descrived int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
+
+[SEND](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2)
+
+#### Sending and handling chat state events
+
+#### Sending and handling Message status events
+
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
 
