@@ -104,7 +104,7 @@ To run the application using the dev server instead a built project:
 The demo connector app can hadle most and send most of the conversation events descrived int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
 
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.gng)
+![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
 
 
 
