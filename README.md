@@ -1,6 +1,6 @@
 # Demo App for connector API
 
-This project contains the a demo app for connector api tha can create a conversation within a consumer and an agent. 
+This project contains a demo app for connector api tha can create a conversation within a consumer and an agent. 
 You can send message and events with it as well as 
 visualize the incoming event notifications.
 
