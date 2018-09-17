@@ -25,11 +25,11 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 - Node 6.9.0 or higher, together with NPM 3 or higher.
 - [Angular CLI](https://cli.angular.io/) 1.7.3 or higher. 
-- A valid brandID with Async Messaging enabled.
+- A valid brandID with Async prop Messaging enabled.
 - An installed APP for your brandID with the data sources configured in LiveEngage. 
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
  notifications from outside to your internal network.
-  * (optional). Use [NgRock](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
+  * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
   Run it with the port 8282 by default ```./ngRock http 8282``` .
 
 ## Run
@@ -48,6 +48,10 @@ https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be
 1. After updating the webhooks endpoints you will be redirected to the chat window.
 1. Type any message in order to start a conversation.
 1. You can login with you account in liveEngage platform, see the sent messages and play with it.
+
+### Run NgRok
+
+![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/ngrock1.gif)
 
 ## Run with docker
 
