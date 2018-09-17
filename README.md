@@ -1,8 +1,10 @@
 # Demo App for connector API
 
-This project contains a demo app for connector api tha can create a conversation within a consumer and an agent. 
-You can send message and events with it as well as 
+This project contains a demo app for connector api that can create a conversation within a consumer and an agent. 
+You can send messages and events with it as well as 
 visualize the incoming event notifications.
+
+see: [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html)
 
 ---
 
@@ -52,6 +54,11 @@ https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be
 ### Run NgRok
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/ngrock1.gif)
+
+### Configure webhooks endpoints
+
+![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/webhooks_configuration.gif)
+
 
 ## Run with docker
 
