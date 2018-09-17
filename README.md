@@ -16,6 +16,8 @@ any data base, sensitive data is saved in your browser local storage. (this will
 ## Table of Contents
   - [Requirements](#requirements)
   - [Run](#run)
+  - [Run NgRok](#run-ngrok)
+  - [Configure webhooks endpints](#configure-webhooks-endpoints)
   - [How to use](#how-to-use)
   - [Run with docker](#run-with-docker)
   - [Project structure](#project-structure)
@@ -41,16 +43,6 @@ any data base, sensitive data is saved in your browser local storage. (this will
 3. Open ``` http://localhost:8282``` in your browser. 
 4. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
 
-## How to use
-
-1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
-1. You have to select an installed APP from the list.
-1. Add your server url in to the webhooks configuration endpoints of the selected APP. E.g. for NgRok is should be similar like 
-https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be on the following format: https://{your server url}/notifications/event
-1. After updating the webhooks endpoints you will be redirected to the chat window.
-1. Type any message in order to start a conversation.
-1. You can login with you account in liveEngage platform, see the sent messages and play with it.
-
 ### Run NgRok
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/ngrock1.gif)
@@ -66,6 +58,18 @@ https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be
 2. Create the image ```docker run -p 443:443 -d demo-connector-app ```
 3. Open ``` https://localhost``` in your browser.
 
+
+## How to use
+
+1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
+1. You have to select an installed APP from the list.
+1. Add your server url in to the webhooks configuration endpoints of the selected APP. E.g. for NgRok is should be similar like 
+https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be on the following format: https://{your server url}/notifications/event
+1. After updating the webhooks endpoints you will be redirected to the chat window.
+1. Type any message in order to start a conversation.
+1. You can login with you account in liveEngage platform, see the sent messages and play with it.
+
+![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/example.gif)
 ## Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
