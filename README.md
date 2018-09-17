@@ -99,7 +99,7 @@ To run the application using the dev server instead a built project:
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
-##Send and handle conversation events
+## Send and handle conversation events
 
 The demo connector app can hadle most and send most of the conversation events descrived int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
