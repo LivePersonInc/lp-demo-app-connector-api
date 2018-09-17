@@ -15,7 +15,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ## Table of Contents
   - [Requirements](#requirements)
-  - [Run](#run)
+  - [hoe to run](#how-to-run)
   - [Run NgRok](#run-ngrok)
   - [Configure webhooks endpints](#configure-webhooks-endpoints)
   - [How to use](#how-to-use)
@@ -24,6 +24,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
   - [Settings](#settings)
   - [Webhooks Setup](#webhooks-setup)
   - [Development Mode](#development-mode)
+  - [Send and handle conversation events](#send-snd-handle-conversation-events)
 
 ## Requirements.
 
@@ -36,7 +37,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
   * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
   Run it with the port 8282 by default ```./ngRok http 8282``` .
 
-## Run
+## How to run
 
 1. ```npm install``` 
 2. ```sudo npm start```
@@ -97,4 +98,10 @@ To run the application using the dev server instead a built project:
 2. ```sudo node app``` to run the server
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
+
+##Send and handle conversation events
+
+The demo connector app can hadle most and send most of the conversation events descrived int the 
+[oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
+
 
