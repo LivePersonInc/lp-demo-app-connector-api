@@ -57,7 +57,7 @@ https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be
 
 ### Configure webhooks endpoints
 
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/webhooks_config.gif)
+![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/webhook_config.gif)
 
 
 ## Run with docker
