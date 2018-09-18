@@ -16,10 +16,11 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ## Table of Contents
   - [Requirements](#requirements)
+  - [Installation](#installation)
   - [How to make it running](#how-to-make-it-running)
     - [Running NgRok](#running-ngrok)
     - [Running with docker](#running-with-docker)
-  - [How to use the app](#how-to-use-the-app)
+  - [Usage](#usage)
   - [Settings](#settings)
     - [Configuring the_webhooks endpints](#configuring-the-webhooks-endpoints)
   - [Development Mode](#development-mode)
@@ -37,12 +38,17 @@ any data base, sensitive data is saved in your browser local storage. (this will
   * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notifications from internet to your local host.
   Run it with the port 8282 by default ```./ngRok http 8282``` .
 
+## Installation
+
+In order to install the project dependencies:
+
+ ```npm install``` 
+
 ## How to make it running
 
-1. ```npm install``` 
-2. ```sudo npm start```
-3. Open ``` http://localhost:8282``` in your browser. 
-4. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
+1. ```sudo npm start``` will build the project and start the server.
+1. Open ``` http://localhost:8282``` in your browser. 
+1. Login with your account(By default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
 
 ### Running NgRok
 
@@ -63,7 +69,7 @@ Requirements: [docker](https://www.docker.com/products/docker-desktop) installed
 3. Open ``` https://localhost``` in your browser.
 
 
-## How to use the app
+## Usage
 
 1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
 1. You have to select an installed APP from the list.
@@ -101,22 +107,22 @@ To run the application using the dev server instead a built project:
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
-#### Project structure
+### Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
 The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
 - Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using your brand credentials).
 
-#### Sending and handling conversation events
+### Sending and handling conversation events
 
 The demo connector app can hadle most and send most of the conversation events descrived int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
 
 For the [SEND](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2) endpint.
 
-#### Sending and handling chat state events
+#### Chat state events
 
-#### Sending and handling Message status events
+#### Message status events
 
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
