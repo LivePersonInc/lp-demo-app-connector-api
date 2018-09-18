@@ -35,7 +35,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 - An installed APP for your brandID with the data sources configured in LiveEngage. 
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
  notifications from outside to your internal network.
-  * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notifications from internet to your local host.
+  * (optional). Use [NgRok](#running-ngrok) for redirecting the webhooks notifications from internet to your local host.
   Run it with the port 8282 by default ```./ngRok http 8282``` .
 
 ## Installation
@@ -75,14 +75,15 @@ Requirements: [docker](https://www.docker.com/products/docker-desktop) installed
 1. You have to select an installed APP from the list.
 1. Add your server url in to the [webhooks configuration endpoints](#configuring-the-webhooks-endpoints) of the selected APP. 
 E.g. for NgRok is should be similar like 
-https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be on the following format: https://{your server url}/notifications/event
+```https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
 1. After updating the webhooks endpoints you will be redirected to the chat window.
 1. Type any message in order to start a conversation.
 1. You can login with you account in liveEngage platform, see the sent messages and play with it.
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/example.gif)
 
-## Settings
+## Settings`
+
 Before running or deployment it is necessary to setup some configuration parameters:
 - settings.json:
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (Production csds domain by default)
@@ -102,23 +103,21 @@ Angular CLI provides a fast development server using Webpack. Every change is au
 
 To run the application using the dev server instead a built project:
 
-1. ```npm install```
-2. ```sudo node app``` to run the server
-2. ```ng serve``` to run web development server
-4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
+1. ```sudo node app``` to run the server
+1. ```ng serve``` to run web development server
+1. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
 ### Project structure
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
 The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
-- Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using your brand credentials).
+- Web app: Angular 5 project.
 
 ### Sending and handling conversation events
 
-The demo connector app can hadle most and send most of the conversation events descrived int the 
+The demo connector app can handle most of the conversation events described int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
-
-For the [SEND](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2) endpint.
+and [here](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
 
 #### Chat state events
 
