@@ -17,9 +17,9 @@ any data base, sensitive data is saved in your browser local storage. (this will
 ## Table of Contents
   - [Requirements](#requirements)
   - [How to make it running](#how-to-make-it-running)
-  - [Running NgRok](#running-ngrok)
+    - [Running NgRok](#running-ngrok)
+    - [Running with docker](#running-with-docker)
   - [How to use the app](#how-to-use-the-app)
-  - [Run it with docker](#run-it-with-docker)
   - [Project structure](#project-structure)
   - [Settings](#settings)
     - [Configuring the_webhooks endpints](#configuring-the-webhooks-endpoints)
@@ -34,7 +34,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 - An installed APP for your brandID with the data sources configured in LiveEngage. 
 - Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
  notifications from outside to your internal network.
-  * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notification from internet to your local host.
+  * (optional). Use [NgRok](https://ngrok.com/) for redirecting the webhooks notifications from internet to your local host.
   Run it with the port 8282 by default ```./ngRok http 8282``` .
 
 ## How to make it running
@@ -46,10 +46,15 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ### Running NgRok
 
+  You can use [NgRok](https://ngrok.com/)  as an optional tool for redirecting the webhooks notifications from internet to your local host.
+  The default port is 8282. To run int you have to download and execute the following command (in the same directory):
+  
+  ```./ngRok http 8282``` 
+  
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/ngrock1.gif)
 
 
-## Run with docker
+### Running with docker
 
 1. Create the image ```docker build -t demo-connector-app .```
 2. Create the image ```docker run -p 443:443 -d demo-connector-app ```
