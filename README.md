@@ -53,7 +53,7 @@ In order to install the project dependencies:
 ### Running NgRok
 
   You can use [NgRok](https://ngrok.com/)  as an optional tool for redirecting the webhooks notifications from internet to your local host.
-  The default port is 8282. To run it, you have to [download](https://ngrok.com/) and execute the following command (in the same directory):
+  The default port is 8282. To run it, you have to [download](https://ngrok.com/download) and execute the following command (in the same directory):
   
   ```./ngRok http 8282``` 
   
@@ -82,7 +82,7 @@ E.g. for NgRok is should be similar like
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/example.gif)
 
-## Settings`
+## Settings
 
 Before running or deployment it is necessary to setup some configuration parameters:
 - settings.json:
@@ -116,8 +116,8 @@ The server is also used as a bridge to avoid Cross-Domain restrictions in the br
 ### Sending and handling conversation events
 
 The demo connector app can handle most of the conversation events described int the 
-[oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
-and [here](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
+[developers documentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
+and in [send-endpoint section](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
 
 #### Chat state events
 
