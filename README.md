@@ -117,7 +117,7 @@ The server is also used as a bridge to avoid Cross-Domain restrictions in the br
 
 The demo connector app can handle most of the conversation events described int the 
 [developers documentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
-and in [send-endpoint section](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
+and especially in [send-endpoint section](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
 
 #### Chat state events
 
@@ -204,7 +204,66 @@ and in [send-endpoint section](https://developers.liveperson.com/connector-api-a
 determined period of time. 
  
 
-#### Message status events
+#### Message status events 
+
+The demo connector app also can handle most of the message status events, e.g when a message is send, read  or acepted.
+
+- ACCEPT: The request is send after a message 
+```json
+{
+  "kind": "req",
+  "id": "1,",
+  "type": "ms.PublishEvent",
+  "body": {
+    "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
+    "event": {
+      "type": "AcceptStatusEvent",
+      "status": "ACCEPT",
+      "sequenceList": [
+        2
+      ]
+    }
+  }
+}
+  
+```
+  
+- READ:
+
+```json
+{
+  "kind": "req",
+  "id": "1,",
+  "type": "ms.PublishEvent",
+  "body": {
+    "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
+    "event": {
+      "type": "AcceptStatusEvent",
+      "status": "READ",
+      "sequenceList": [
+        2
+      ]
+    }
+  }
+}
+  
+```
+- NACK: Not implemented
+- ACTION:Not implemented
+
+####  Message sequence number
+
+The sequence of every message if obtained after each request
+
+```json
+{
+    "reqId": "1",
+    "code": "OK",
+    "body": {
+        "sequence": 0
+    }
+}
+```
 
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
