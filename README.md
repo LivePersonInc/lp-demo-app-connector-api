@@ -4,7 +4,7 @@ This project contains a demo app for connector api that can create a conversatio
 You can send messages and events with it as well as 
 visualize the incoming event notifications.
 
-See, [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html) for a better
+Look at [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html) for a better
 understanding.
 
 ---
@@ -20,10 +20,10 @@ any data base, sensitive data is saved in your browser local storage. (this will
     - [Running NgRok](#running-ngrok)
     - [Running with docker](#running-with-docker)
   - [How to use the app](#how-to-use-the-app)
-  - [Project structure](#project-structure)
   - [Settings](#settings)
     - [Configuring the_webhooks endpints](#configuring-the-webhooks-endpoints)
   - [Development Mode](#development-mode)
+    - [Project structure](#project-structure)
     - [Sending and handling conversation events](#Sending-and-handling-conversation-events)
 
 ## Requirements.
@@ -73,11 +73,6 @@ https://b36a71d7.ngrok.io/notifications/event. Every webhooks endpoint should be
 1. You can login with you account in liveEngage platform, see the sent messages and play with it.
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/example.gif)
-## Project structure
-
-- Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
-The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
-- Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using your brand credentials).
 
 ## Settings
 Before running or deployment it is necessary to setup some configuration parameters:
@@ -104,12 +99,18 @@ To run the application using the dev server instead a built project:
 2. ```ng serve``` to run web development server
 4. open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
+#### Project structure
+
+- Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
+The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
+- Web app: Angular 5 project.(Its possible to open a new chat conversation for a random consumer using your brand credentials).
+
 #### Sending and handling conversation events
 
 The demo connector app can hadle most and send most of the conversation events descrived int the 
 [oficial documuentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
 
-[SEND](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2)
+For the [SEND](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2) endpint.
 
 #### Sending and handling chat state events
 
