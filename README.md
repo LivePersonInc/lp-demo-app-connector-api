@@ -1,8 +1,8 @@
 # Demo App for connector API
 
-This project contains a demo app for connector api that can create a conversation within a consumer and an agent. 
+This project contains a demo app for connector API that can create a conversation within a consumer and an agent. 
 You can send messages and events with it as well as 
-visualize the incoming event notifications.
+visualize the incoming events or notifications.
 
 Look at [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html) for a better
 understanding.
@@ -40,7 +40,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ## Installation
 
-In order to install the project dependencies:
+In order to install the project dependencies type this command in a terminal from the root folder where the project is located:
 
  ```npm install``` 
 
@@ -52,8 +52,8 @@ In order to install the project dependencies:
 
 ### Running NgRok
 
-  You can use [NgRok](https://ngrok.com/)  as an optional tool for redirecting the webhooks notifications from internet to your local host.
-  The default port is 8282. To run it, you have to [download](https://ngrok.com/download) and execute the following command (in the same directory):
+  You can use [NgRok](https://ngrok.com/) as an optional tool for redirecting the webhooks notifications from internet to your local host.
+  The default that we use in our server is 8282. To run it, you have to [download](https://ngrok.com/download) and execute the following command (in the same directory):
   
   ```./ngRok http 8282``` 
   
@@ -91,6 +91,7 @@ Before running or deployment it is necessary to setup some configuration paramet
   https, if u are using https the port cant be changed (443).
 
 ### Configure the webhooks endpoints
+
 In your app installation you need to add this webhook listener server url:<br/>  You can add this after login, in the configuration webhooks page.
 
 ``https://{your server domain or ip}/notifications/event``
