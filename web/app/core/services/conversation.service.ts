@@ -164,7 +164,6 @@ export class ConversationService extends HttpService {
   }
 
   public notifyMessageWasAccepted(sequence: number) {
-    console.log("APCET");
     let sequenceList = [sequence];
     if(sequenceList.length > 0) {
       this.deactivateLoadingService();

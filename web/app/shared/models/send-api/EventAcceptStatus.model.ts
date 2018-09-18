@@ -1,13 +1,10 @@
-
-import {hasOwnProperty} from "tslint/lib/utils";
-
 export class EventAcceptStatus {
   public type;
-  public status: Status;
+  public status: string;
   public sequenceList: Array<number>
   constructor(status: Status, sequenceList: Array<number>) {
     this.type = "AcceptStatusEvent";
-    this.status = status;
+    this.status = Status[status];
     this.sequenceList = sequenceList;
   }
 }
