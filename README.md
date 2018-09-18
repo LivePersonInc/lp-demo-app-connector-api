@@ -56,7 +56,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ### Running with docker
 
-Requirements: Having [docker](#https://www.docker.com/products/docker-desktop) installed and running in your computer. 
+Requirements: [docker](https://www.docker.com/products/docker-desktop) installed and running in your computer. 
 
 1. Create the image ```docker build -t demo-connector-app .```
 2. Run the image ```docker run -p 443:443 -d demo-connector-app ```
