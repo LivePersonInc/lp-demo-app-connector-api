@@ -47,7 +47,7 @@ any data base, sensitive data is saved in your browser local storage. (this will
 ### Running NgRok
 
   You can use [NgRok](https://ngrok.com/)  as an optional tool for redirecting the webhooks notifications from internet to your local host.
-  The default port is 8282. To run int you have to download and execute the following command (in the same directory):
+  The default port is 8282. To run it, you have to [download](https://ngrok.com/) and execute the following command (in the same directory):
   
   ```./ngRok http 8282``` 
   
@@ -56,8 +56,10 @@ any data base, sensitive data is saved in your browser local storage. (this will
 
 ### Running with docker
 
+Requirements: Having [docker](#https://www.docker.com/products/docker-desktop) installed and running in your computer. 
+
 1. Create the image ```docker build -t demo-connector-app .```
-2. Create the image ```docker run -p 443:443 -d demo-connector-app ```
+2. Run the image ```docker run -p 443:443 -d demo-connector-app ```
 3. Open ``` https://localhost``` in your browser.
 
 
