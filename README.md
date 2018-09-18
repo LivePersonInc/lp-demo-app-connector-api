@@ -121,6 +121,7 @@ and in [send-endpoint section](https://developers.liveperson.com/connector-api-a
 
 #### Chat state events
 
+
  - COMPOSING: A request is sent with this event when consumer/agent starts to typing in the chat box.
  Example of consumer request:
  ```json
@@ -163,14 +164,15 @@ and in [send-endpoint section](https://developers.liveperson.com/connector-api-a
   "type": "ms.MessagingEventNotification"
 }
 ```
- 
- - PAUSE: This event is send after user stops typing, this is sent after composing and should be sent always. 
- If not the typing indicator will be shown during all the time.
- 
-  
 
+In order to show that the consumer has stopped typing, you will need to pass any other state which is different than COMPOSING (it doesn't matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
  
- - ACTIVE:
+ - PAUSE: In this APP this event is send after consumer stops typing.
+ 
+ 
+ - ACTIVE: LiveEngage normally sends ACTIVE events after composing instead OF PAUSE. In This app ACTIVE is sent
+ when the window focus event is triggerd E.G when u are in the the demo app tab or by clicking in the chatbox after
+ leaving other window.
  
   Example received notification:
   ```json
@@ -196,8 +198,9 @@ and in [send-endpoint section](https://developers.liveperson.com/connector-api-a
   "type": "ms.MessagingEventNotification"
 }
  ```
- - GONE:
- - INACTIVE: Not implented, It could be added easyliy and send a request ag
+ - GONE: In this app this even is sent when window Blur event is triggered. E.G openind another tab or window.
+ - INACTIVE: Not implemented, It could be added easyliy and send a request after the user does not use the app for a 
+determined period of time. 
  
 
 #### Message status events
