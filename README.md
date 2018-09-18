@@ -123,83 +123,84 @@ and in [send-endpoint section](https://developers.liveperson.com/connector-api-a
 
 
  - COMPOSING: A request is sent with this event when consumer/agent starts to typing in the chat box.
- Example of consumer request:
- ```json
-{  
-   "kind":"req",
-   "id":"1",
-   "type":"ms.PublishEvent",
-   "body":{  
-      "dialogId":"b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
-      "event":{  
-         "type":"ChatStateEvent",
-         "chatState":"COMPOSING"
-      }
-   }
-}
-
-```
+   Example of consumer request:
+     ```json
+    {  
+       "kind":"req",
+       "id":"1",
+       "type":"ms.PublishEvent",
+       "body":{  
+          "dialogId":"b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
+          "event":{  
+             "type":"ChatStateEvent",
+             "chatState":"COMPOSING"
+          }
+       }
+    }
+    
+    ```
  
- Example received notification:
- ```json
-   {
-  "kind": "notification",
-  "body": {
-    "changes": [
-      {
-        "originatorId": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
-        "originatorMetadata": {
-          "id": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
-          "role": "ASSIGNED_AGENT"
-        },
-        "event": {
-          "type": "ChatStateEvent",
-          "chatState": "COMPOSING"
-        },
-        "conversationId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
-        "dialogId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7"
-      }
-    ]
-  },
-  "type": "ms.MessagingEventNotification"
-}
-```
+   Example received notification:
+     ```json
+       {
+      "kind": "notification",
+      "body": {
+        "changes": [
+          {
+            "originatorId": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
+            "originatorMetadata": {
+                   "id": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
+                   "role": "ASSIGNED_AGENT"
+                 },
+                 "event": {
+                   "type": "ChatStateEvent",
+                   "chatState": "COMPOSING"
+                 },
+                 "conversationId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
+                 "dialogId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7"
+               }
+             ]
+           },
+           "type": "ms.MessagingEventNotification"
+         }
+    ```
 
-In order to show that the consumer has stopped typing, you will need to pass any other state which is different than COMPOSING (it doesn't matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
+     In order to show that the consumer has stopped typing, you will need to pass any other state which is different
+      than COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
  
  - PAUSE: In this APP this event is send after consumer stops typing.
  
  
  - ACTIVE: LiveEngage normally sends ACTIVE events after composing instead OF PAUSE. In This app ACTIVE is sent
- when the window focus event is triggerd E.G when u are in the the demo app tab or by clicking in the chatbox after
+ when the window focus event is triggered E.G when u are in the the demo app tab or by clicking in the chat bix after
  leaving other window.
  
-  Example received notification:
-  ```json
-{
-  "kind": "notification",
-  "body": {
-    "changes": [
-      {
-        "originatorId": "31fe13ba27250bfff439a6f875cfd135cf64f680f9dded3b123cb0529d1e5a29",
-        "originatorMetadata": {
-          "id": "31fe13ba27250bfff439a6f875cfd135cf64f680f9dded3b123cb0529d1e5a29",
-          "role": "CONSUMER"
-        },
-        "event": {
-          "type": "ChatStateEvent",
-          "chatState": "ACTIVE"
-        },
-        "conversationId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
-        "dialogId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7"
-      }
-    ]
-  },
-  "type": "ms.MessagingEventNotification"
-}
- ```
+    Example received notification:
+     ```json
+    {
+      "kind": "notification",
+      "body": {
+        "changes": [
+          {
+            "originatorId": "31fe13ba27250bfff439a6f875cfd135cf64f680f9dded3b123cb0529d1e5a29",
+            "originatorMetadata": {
+              "id": "31fe13ba27250bfff439a6f875cfd135cf64f680f9dded3b123cb0529d1e5a29",
+              "role": "CONSUMER"
+            },
+            "event": {
+              "type": "ChatStateEvent",
+              "chatState": "ACTIVE"
+            },
+            "conversationId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7",
+            "dialogId": "b3aea67d-01ca-4bf7-af4f-9897cf6b77a7"
+          }
+        ]
+      },
+      "type": "ms.MessagingEventNotification"
+    }
+    ```
  - GONE: In this app this even is sent when window Blur event is triggered. E.G openind another tab or window.
- - INACTIVE: Not implemented, It could be added easyliy and send a request after the user does not use the app for a 
+ - INACTIVE: Not implemented, It could be added easily and send a request after the user does not use the app for a 
 determined period of time. 
  
 
