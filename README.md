@@ -278,7 +278,7 @@ The demo connector app also can handle most of the message status events, i.e wh
   
 ```
 - NACK: Not implemented for this app.
-- ACTION:Not implemented for this app.
+- ACTION: Not implemented for this app.
 
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
 
