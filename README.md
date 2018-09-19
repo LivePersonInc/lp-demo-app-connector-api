@@ -172,7 +172,7 @@ Most of those events are reflected in UI. i.e when user is typing or a message i
      In order to show that the consumer has stopped typing, you will need to pass any other state which is different
       than COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
       
-      ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/typing.png)
+      ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/typing.png | width=100 ) 
 
  
  - PAUSE: In this APP this event is send after consumer stops typing.
