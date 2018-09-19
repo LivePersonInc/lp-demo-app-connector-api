@@ -238,45 +238,77 @@ The demo connector app also can handle most of the message status events, i.e wh
 
 - ACCEPT: This event request is sent to indicate to agent the list of messages tha where accepted
 
-```json
-{
-  "kind": "req",
-  "id": "1,",
-  "type": "ms.PublishEvent",
-  "body": {
-    "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
-    "event": {
-      "type": "AcceptStatusEvent",
-      "status": "ACCEPT",
-      "sequenceList": [
-        2,3,5 
-      ]
+  ```json
+  {
+    "kind": "req",
+    "id": "1,",
+    "type": "ms.PublishEvent",
+    "body": {
+      "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
+      "event": {
+        "type": "AcceptStatusEvent",
+        "status": "ACCEPT",
+        "sequenceList": [
+          2,3,5 
+        ]
+      }
     }
   }
-}
-  
-```
+    
+  ```
   
 - READ: This event request is sent to indicate to agent the list of messages that where Read
 
-```json
-{
-  "kind": "req",
-  "id": "1,",
-  "type": "ms.PublishEvent",
-  "body": {
-    "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
-    "event": {
-      "type": "AcceptStatusEvent",
-      "status": "READ",
-      "sequenceList": [
-        2,3,5
-      ]
+  ```json
+  {
+    "kind": "req",
+    "id": "1,",
+    "type": "ms.PublishEvent",
+    "body": {
+      "dialogId": "88166f48-6254-496f-9508-96b044fc0442",
+      "event": {
+        "type": "AcceptStatusEvent",
+        "status": "READ",
+        "sequenceList": [
+          2,3,5
+        ]
+      }
     }
   }
-}
+    
+  ```
   
-```
+  When an agent has read some of your messages, you will get via webhooks a notification like this:
+  
+  ```json
+        {
+    "kind": "notification",
+    "body": {
+      "changes": [
+        {
+          "sequence": 9,
+          "originatorId": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
+          "originatorMetadata": {
+            "id": "662eb2c6-cf25-5ea8-8fbd-9f1781558c24",
+            "role": "ASSIGNED_AGENT"
+          },
+          "serverTimestamp": 1537343869240,
+          "event": {
+            "type": "AcceptStatusEvent",
+            "status": "READ",
+            "sequenceList": [
+              6
+            ]
+          },
+          "conversationId": "f66ad121-8dcb-4430-9fc2-731e961f6eae",
+          "dialogId": "f66ad121-8dcb-4430-9fc2-731e961f6eae"
+        }
+      ]
+    },
+    "type": "ms.MessagingEventNotification"
+  }
+     
+  ```
 - NACK: Not implemented for this app.
 - ACTION: Not implemented for this app.
 
