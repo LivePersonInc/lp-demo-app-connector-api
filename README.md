@@ -89,7 +89,7 @@ i.e for NgRok is should be similar like
 
 ## Settings
 
-Before running the app, maybe you want to change some configuration parameters in [settings.json](settings.json)):
+Before running the app, maybe you want to change some configuration parameters in [settings.json](settings.json):
 
   1. [CSDS_DOMAIN] : The domain of the service to get the rest of domains. (Production csds domain by default)
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
