@@ -25,7 +25,12 @@ any data base, sensitive data is saved in your browser local storage. (this will
     - [Configuring the_webhooks endpints](#configuring-the-webhooks-endpoints)
   - [Development Mode](#development-mode)
     - [Project structure](#project-structure)
-    - [Sending and handling conversation events](#Sending-and-handling-conversation-events)
+    - [Sending and handling conversation events](#sending-and-handling-conversation-events)
+      - [Message sequence number](#message-sequence-number)
+      - [Chat state events](#chat-state-events)
+      - [Message status events](#message-status-events)
+
+
 
 ## Requirements.
 
