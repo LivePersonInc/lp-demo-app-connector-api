@@ -78,7 +78,7 @@ Requirements: [docker](https://www.docker.com/products/docker-desktop) installed
 
 1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
 1. You have to select an installed APP from the list.
-1. Add your server url in to the [webhooks configuration endpoints](#configuring-the-webhooks-endpoints) of the selected APP. 
+1. Add your server url in to the [webhooks configuration endpoints](#configure-the-webhooks-endpoints) of the selected APP. 
 i.e for NgRok is should be similar like 
 ```https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
 1. After updating the webhooks endpoints you will be redirected to the chat window.
