@@ -122,6 +122,22 @@ and especially in [send-endpoint section](https://developers.liveperson.com/conn
 
 Most of those events are reflected in UI. i.e when user is typing or a message is read.
 
+####  Message sequence number
+
+The sequence of every message is obtained after each request. A Message object is created with this sequence number. This
+is very important to save in order to handle the message status events like READ, ACCEPT, etc.
+
+```json
+{
+    "reqId": "1",
+    "code": "OK",
+    "body": {
+        "sequence": 0
+    }
+}
+```
+
+
 
 #### Chat state events
 
@@ -259,22 +275,11 @@ The demo connector app also can handle most of the message status events, i.e wh
 - NACK: Not implemented for this app.
 - ACTION:Not implemented for this app.
 
-####  Message sequence number
-
-The sequence of every message if obtained after each request
-
-```json
-{
-    "reqId": "1",
-    "code": "OK",
-    "body": {
-        "sequence": 0
-    }
-}
-```
-
-
 ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
+
+
+
+
 
 
 
