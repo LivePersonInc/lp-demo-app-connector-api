@@ -126,7 +126,7 @@ Most of those events are reflected in UI. i.e when user is typing or a message i
 #### Chat state events
 
 
- - COMPOSING: A request is sent with this event when consumer/agent starts to typing in the chat box.
+ - COMPOSING: A request is sent with this event when consumer starts to typing in the chat box.
    Example of consumer request:
      ```json
     {  
@@ -144,7 +144,7 @@ Most of those events are reflected in UI. i.e when user is typing or a message i
     
     ```
  
-   Example received notification:
+   Example received notification, in this case when agent is composing:
      ```json
        {
       "kind": "notification",
@@ -169,15 +169,15 @@ Most of those events are reflected in UI. i.e when user is typing or a message i
          }
     ```
 
-     In order to show that the consumer has stopped typing, you will need to pass any other state which is different
-      than COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
+     In order to show that the consumer has stopped typing, we need pass any other state which is different 
+     than COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
+     In this app, we pass a PAUSE event every time the consumer stops typing.
       
       ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/typing.png) 
 
  
- - PAUSE: In this APP this event is send after consumer stops typing.
- 
- 
+ - PAUSE: In this APP this event is sent after consumer stops typing.
+
  - ACTIVE: LiveEngage normally sends ACTIVE events after composing instead of PAUSE. In This app ACTIVE is sent
  when the window focus event is triggered i.e when u are in the the demo app tab or by clicking in the chat bix after
  leaving other window.
@@ -206,16 +206,17 @@ Most of those events are reflected in UI. i.e when user is typing or a message i
       "type": "ms.MessagingEventNotification"
     }
     ```
- - GONE: In this app this even is sent when window Blur event is triggered. i.e open in another tab or window.
- - INACTIVE: Not implemented, It could be added easily and send a request after the user does not use the app for a 
+ - GONE: In this app, this event is sent when a window Blur event is triggered. i.e wen user opens other tab or window.
+ - INACTIVE: Not implemented for this app, It could be added easily and send a request after the user does not use the app for a 
 determined period of time. 
  
 
 #### Message status events 
 
-The demo connector app also can handle most of the message status events, i.e when a message is send, read  or acepted.
+The demo connector app also can handle most of the message status events, i.e when a message is send, read  or accepted.
 
-- ACCEPT: The request is send after a message 
+- ACCEPT: This event request is sent to indicate to agent the list of messages tha where accepted
+
 ```json
 {
   "kind": "req",
@@ -227,7 +228,7 @@ The demo connector app also can handle most of the message status events, i.e wh
       "type": "AcceptStatusEvent",
       "status": "ACCEPT",
       "sequenceList": [
-        2
+        2,3,5 
       ]
     }
   }
@@ -235,7 +236,7 @@ The demo connector app also can handle most of the message status events, i.e wh
   
 ```
   
-- READ:
+- READ: This event request is sent to indicate to agent the list of messages that where Read
 
 ```json
 {
@@ -248,15 +249,15 @@ The demo connector app also can handle most of the message status events, i.e wh
       "type": "AcceptStatusEvent",
       "status": "READ",
       "sequenceList": [
-        2
+        2,3,5
       ]
     }
   }
 }
   
 ```
-- NACK: Not implemented
-- ACTION:Not implemented
+- NACK: Not implemented for this app.
+- ACTION:Not implemented for this app.
 
 ####  Message sequence number
 
