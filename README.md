@@ -74,7 +74,7 @@ Requirements: [docker](https://www.docker.com/products/docker-desktop) installed
 1. Login with a valid brandID, user and password. (the first time it will redirect you to the "step by step" settings section).
 1. You have to select an installed APP from the list.
 1. Add your server url in to the [webhooks configuration endpoints](#configuring-the-webhooks-endpoints) of the selected APP. 
-E.g. for NgRok is should be similar like 
+i.e for NgRok is should be similar like 
 ```https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
 1. After updating the webhooks endpoints you will be redirected to the chat window.
 1. Type any message in order to start a conversation.
@@ -116,9 +116,12 @@ The server is also used as a bridge to avoid Cross-Domain restrictions in the br
 
 ### Sending and handling conversation events
 
-The demo connector app can handle most of the conversation events described int the 
+The demo connector app can handle most of the conversation events described in the 
 [developers documentation](https://developers.liveperson.com/connector-api-examples-send-chat-state-events.html)
 and especially in [send-endpoint section](https://developers.liveperson.com/connector-api-api-reference-send.html#mspublishevent-properties-2).
+
+Most of those events are reflected in UI. i.e when user is typing or a message is read.
+
 
 #### Chat state events
 
@@ -168,12 +171,15 @@ and especially in [send-endpoint section](https://developers.liveperson.com/conn
 
      In order to show that the consumer has stopped typing, you will need to pass any other state which is different
       than COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e: ACTIVE , INACTIVE, GONE, PAUSE.
+      
+      ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/typing.png)
+
  
  - PAUSE: In this APP this event is send after consumer stops typing.
  
  
- - ACTIVE: LiveEngage normally sends ACTIVE events after composing instead OF PAUSE. In This app ACTIVE is sent
- when the window focus event is triggered E.G when u are in the the demo app tab or by clicking in the chat bix after
+ - ACTIVE: LiveEngage normally sends ACTIVE events after composing instead of PAUSE. In This app ACTIVE is sent
+ when the window focus event is triggered i.e when u are in the the demo app tab or by clicking in the chat bix after
  leaving other window.
  
     Example received notification:
@@ -200,14 +206,14 @@ and especially in [send-endpoint section](https://developers.liveperson.com/conn
       "type": "ms.MessagingEventNotification"
     }
     ```
- - GONE: In this app this even is sent when window Blur event is triggered. E.G openind another tab or window.
+ - GONE: In this app this even is sent when window Blur event is triggered. i.e open in another tab or window.
  - INACTIVE: Not implemented, It could be added easily and send a request after the user does not use the app for a 
 determined period of time. 
  
 
 #### Message status events 
 
-The demo connector app also can handle most of the message status events, e.g when a message is send, read  or acepted.
+The demo connector app also can handle most of the message status events, i.e when a message is send, read  or acepted.
 
 - ACCEPT: The request is send after a message 
 ```json
