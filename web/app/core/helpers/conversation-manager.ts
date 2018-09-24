@@ -174,7 +174,7 @@ export class ConversationManager {
   private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
-        data.body.changes[0].originatorMetadata.role === "ASSIGNED_AGENT") {
+        data.body.changes[0].originatorMetadata.role != "CONSUMER") {
 
         if (data.body.changes[0].event.message) {
 
@@ -183,7 +183,7 @@ export class ConversationManager {
               MessageType.RECEIVED,
               data.body.changes[0].serverTimestamp,
               data.body.changes[0].event.message,
-              "Agent",
+              data.body.changes[0].originatorMetadata.role,
               true, // this.getShowUserValue("Agent", conversation)
               data.body.changes[0].sequence,
             )
@@ -203,7 +203,7 @@ export class ConversationManager {
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
-        data.body.changes[0].originatorMetadata.role === 'ASSIGNED_AGENT') {
+        data.body.changes[0].originatorMetadata.role != 'CONSUMER') {
 
         if (data.body.changes[0].event.type === 'AcceptStatusEvent' ) {
           if(data.body.changes[0].event.status === 'ACCEPT'){
@@ -330,7 +330,7 @@ export class ConversationManager {
   private setChatState(notificationJson: any, conversation: Conversation) {
     if(this.checkIfAcceptStatusEvent(notificationJson)) {
       if (notificationJson.body.changes[0].originatorMetadata &&
-        notificationJson.body.changes[0].originatorMetadata.role === 'ASSIGNED_AGENT') {
+        notificationJson.body.changes[0].originatorMetadata.role != 'CONSUMER') {
         if (notificationJson.body.changes[0].event.chatState == 'COMPOSING') {
           conversation.chatState = ChatState.COMPOSING;
         } else if (notificationJson.body.changes[0].event.chatState == 'ACTIVE') {
