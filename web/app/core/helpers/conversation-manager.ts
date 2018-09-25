@@ -362,7 +362,7 @@ export class ConversationManager {
 
       this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach( record => {
         let messageType =  MessageType.RECEIVED;
-        let userName = "Agent";
+        let userName = record.sentBy;
 
         if(record.sentBy == "Consumer"){
           messageType = MessageType.SENT;
