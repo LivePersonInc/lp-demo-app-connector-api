@@ -76,7 +76,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     if(this.loginSubscription) this.loginSubscription.unsubscribe();
     if(this.domainSubscription) this.domainSubscription.unsubscribe();
     if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
-
   }
 
   public loadDomainsForBrand(event: any) {
@@ -112,7 +111,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        console.log("FSF");
         this.router.navigateByUrl('/logout');
       }
     });
