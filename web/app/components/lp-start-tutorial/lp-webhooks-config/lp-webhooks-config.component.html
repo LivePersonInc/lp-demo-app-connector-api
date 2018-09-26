@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="installationService.selectedApp; else no_app">
   <b>{{installationService.selectedApp.client_name}}</b>
   <mat-form-field class="w-100" color="accent">
-    <input matInput placeholder="App id" disabled value="{{installationService.selectedApp.client_id}}">
+    <input matInput placeholder="App Id" disabled value="{{installationService.selectedApp.client_id}}">
   </mat-form-field>
   <mat-form-field class="w-100" color="accent">
     <input matInput placeholder="App Secret" disabled value="{{installationService.selectedApp.client_secret}}">
