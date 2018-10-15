@@ -70,7 +70,8 @@ In order to install the project dependencies type this command in a terminal fro
 Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed and running in your computer. 
 
 1. Create the image ```docker build -t demo-connector-app .```
-2. Run the image ```docker run -p 443:443 -p 8282:8282 -d demo-connector-app ``` 
+2. Run the image ```docker run -p 443:443 -p 8282:8282 -d demo-connector-app ```  
+(After this command, You need to wait 1 or 2 minutes till be able to open the app in a browser)
 3. Open ``` http://localhost:8282``` in your browser. 
 
 ## Usage
