@@ -15,7 +15,7 @@ export class HistoryService extends HttpService {
   public history;
   public brandId;
   private headers = {};
-  private baseURI = `https://${environment.server}/history/`;
+  private baseURI = `http://${environment.server}:${environment.port}/history/`;
 
 
   constructor(private authenticationService: AuthenticationService,protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected  router: Router) {
