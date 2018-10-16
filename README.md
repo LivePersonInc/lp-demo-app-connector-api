@@ -72,7 +72,7 @@ In order to install the project dependencies type this command in a terminal fro
   
   ```./ngRok http 8282``` 
   
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/ngrock1.gif)
+![alt text](docs/gifs/ngrock1.gif)
 
 
 ### Running with Docker
@@ -94,7 +94,7 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 1. Type any message in order to start a conversation.
 1. You can login with you account in LiveEngage platform, see the sent messages and play with it.
 
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/example.gif)
+![alt text](docs/gifs/example.gif)
 
 ## Settings
 
@@ -112,7 +112,7 @@ In your app installation you need to add this webhook listener server url:
 
 You can add this after login, in the configuration webhooks page.
 
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/gifs/webhook_config.gif)
+![alt text](docs/gifs/webhook_config.gif)
 
 ## Development Mode:
 
@@ -205,7 +205,7 @@ is very important to save in order to handle the message status events like READ
      from COMPOSING (it does not matter which value you choose, as long as it is not COMPOSING) i.e. ACTIVE , INACTIVE, GONE, PAUSE.
      In this app, we pass a PAUSE event every time the consumer stops typing.
       
-      ![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/typing.png) 
+      ![alt text](docs/imgs/typing.png) 
 
  
  - PAUSE: In this APP this event is sent after consumer stops typing.
@@ -323,7 +323,7 @@ The demo connector app also can handle most of the message status events, i.e. w
 - NACK: Not implemented for this app.
 - ACTION: Not implemented for this app.
 
-![alt text](https://lpgithub.dev.lprnd.net/RnD-Mannheim/lp-demo-app-connector-api/blob/master/docs/imgs/chat-state.png)
+![alt text](docs/imgs/chat-state.png)
 
 
 
