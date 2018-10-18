@@ -112,6 +112,9 @@ In your app installation you need to add this webhook listener server url:
 
 You can add this after login, in the configuration webhooks page.
 
+NOTE: You would need to configure an HTTPS proxy server with valid certificates that redirect all request to http://localhost:8282/notifications/event
+Webhooks require HTTPS.
+
 ![alt text](docs/gifs/webhook_config.gif)
 
 ## Development Mode:
