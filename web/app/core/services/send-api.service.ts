@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 @Injectable()
 export class SendApiService extends HttpService {
 
-  private baseURI = `http://${environment.server}:${environment.port}/ums/`;
+  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/ums/`;
 
 
   constructor(protected snackBar: MatSnackBar,
