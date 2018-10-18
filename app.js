@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const nconf = require("nconf");
-const fs = require('fs');
 const cors = require('cors');
 const umsBridge = require('./server/umsBridge');
 const installationBridge = require('./server/appInstallationBridge');
@@ -11,20 +10,7 @@ const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
 const loginBridge = require('./server/loginBridge');
 
-
-const https = require('https');
 var bodyParser = require('body-parser');
-
-//load certificates
-const key = fs.readFileSync('./server/certs/dev.lpchatforconnectorapi.com.key');
-const cert = fs.readFileSync('./server/certs/dev.lpchatforconnectorapi.com.crt');
-const ca = fs.readFileSync('./server/certs/dev.lpchatforconnectorapi.com.crt');
-
-const options = {
-  key: key,
-  cert: cert,
-  ca: ca
-};
 
 nconf.file({file: "settings.json"});
 
@@ -41,11 +27,8 @@ app.use("/domains", csdsBridge);
 app.use("/history", historyBridge);
 app.use("/authentication", loginBridge);
 
-
 //Serve our UI
 app.use(express.static('dist'));
-
-https.createServer(options, app).listen(443);
 
 //http server
 app.listen(nconf.get("SERVER_HTTP_PORT"), function () {
