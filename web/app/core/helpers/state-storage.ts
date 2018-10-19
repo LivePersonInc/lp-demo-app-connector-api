@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {AppState} from "../../shared/models/stored-state/AppState";
+import {State} from "../../shared/models/stored-state/AppState";
 
 @Injectable()
 export class StateStorage {
 
-  public storeLastStateInLocalStorage(state: AppState, brandId: string) {
+  public storeLastStateInLocalStorage(state: State, brandId: string) {
     let serializedState = JSON.stringify(state);
     localStorage.setItem(brandId, serializedState);
   }
 
-  public getLastStoredStateByBrand(brandId: string): AppState {
+  public getLastStoredStateByBrand(brandId: string): State {
     let serializedState = localStorage.getItem(brandId);
-    let state = new AppState();
+    let state = new State();
     if(serializedState) {
       state.deserialize(JSON.parse(serializedState));
     }

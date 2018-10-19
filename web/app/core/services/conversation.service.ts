@@ -187,9 +187,10 @@ export class ConversationService extends HttpService {
   }
 
   private restoreStoredState() {
-    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
 
-    if(appState.conversationId){
+    if(state.selectedAppId){
+      let appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
       this.conversation =
         new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
       this.conversation.conversationId = appState.conversationId;

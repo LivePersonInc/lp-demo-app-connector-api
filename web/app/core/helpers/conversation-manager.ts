@@ -22,6 +22,7 @@ import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {HistoryService} from "../services/history.service";
+import {AppState, State} from "../../shared/models/stored-state/AppState";
 
 
 @Injectable()
@@ -319,12 +320,38 @@ export class ConversationManager {
   }
 
   private updateState(conversation: Conversation) {
-    let appState = this.stateManager.getLastStoredStateByBrand(conversation.branId);
-    appState.conversationId = conversation.conversationId;
-    appState.appId = conversation.appKey;
-    appState.ext_consumer_id = conversation.ext_consumer_id;
-    appState.userName = conversation.userName;
-    this.stateManager.storeLastStateInLocalStorage(appState, conversation.branId);
+    let state = this.stateManager.getLastStoredStateByBrand(conversation.branId);
+    state.selectedAppId = conversation.appKey;
+
+    let appState = this.fidAppById(state.states, conversation.appKey);
+
+    if(!appState) {
+      appState = new AppState();
+
+      appState.conversationId = conversation.conversationId;
+      appState.appId = conversation.appKey;
+      appState.ext_consumer_id = conversation.ext_consumer_id;
+      appState.userName = conversation.userName;
+
+      state.states.push(appState);
+
+    } else{
+      appState.conversationId = conversation.conversationId;
+      appState.appId = conversation.appKey;
+      appState.ext_consumer_id = conversation.ext_consumer_id;
+      appState.userName = conversation.userName;
+    }
+
+    this.stateManager.storeLastStateInLocalStorage(state, conversation.branId);
+  }
+
+  public fidAppById(states: Array<AppState>, appId: string): AppState {
+    for (let i=0; i < states.length; i ++) {
+      if(states[i].appId === appId){
+        return states[i];
+      }
+    }
+    return null;
   }
 
   private setChatState(notificationJson: any, conversation: Conversation) {

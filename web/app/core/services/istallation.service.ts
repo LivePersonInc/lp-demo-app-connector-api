@@ -103,15 +103,15 @@ export class InstallationService extends HttpService {
   }
 
   private updateSelectedAppInState() {
-    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    appState.appId = this.selectedApp.client_id;
-    this.stateManager.storeLastStateInLocalStorage(appState, this.brandId);
+    let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    state.selectedAppId = this.selectedApp.client_id;
+    this.stateManager.storeLastStateInLocalStorage(state, this.brandId);
   }
 
   private restoreState() {
-    let appState = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    if(appState && appState.appId){
-        this.getAppByAppId(appState.appId);
+    let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    if(state && state.selectedAppId){
+        this.getAppByAppId(state.selectedAppId);
     }
   }
 
