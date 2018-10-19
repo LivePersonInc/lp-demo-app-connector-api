@@ -114,7 +114,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
       if(this.stopNotificationSent || this.isFistTime) {
         this.conversationService.notifyAgentThatUserIsTyping();
-        console.log("COMPOSING");
 
         this.isFistTime = false;
          this.stopNotificationSent = false;
@@ -123,8 +122,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
       this.timeout = setTimeout( () => {
 
         this.conversationService.notifyAgentThatUserStopsTyping();
-        console.log("STOP");
-
 
         this.stopNotificationSent = true;
 
