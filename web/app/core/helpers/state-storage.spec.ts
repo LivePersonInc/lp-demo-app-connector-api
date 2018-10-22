@@ -21,7 +21,7 @@ describe('StateStorage', () => {
   }));
 
 
-  it('should save the app state in localstorage', inject([StateStorage], (intercptor: StateStorage) => {
+  /*it('should save the app state in localstorage', inject([StateStorage], (intercptor: StateStorage) => {
       storeAppState(intercptor);
       expect(localStorage.getItem(brandId)).toBeTruthy();
 
@@ -33,15 +33,15 @@ describe('StateStorage', () => {
   }));
 
 
-  function storeAppState(intercptor: StateStorage) {
+  function storeAppState(interceptor: StateStorage) {
     let appState = new AppState();
     appState.conversationId = "conversation_id";
     appState.appId = "app_id";
     appState.ext_consumer_id = "054085048u06";
     appState.userName = "kim";
 
-    intercptor.storeLastStateInLocalStorage(appState, brandId);
-  }
+    interceptor.storeLastStateInLocalStorage(appState, brandId);
+  }*/
 
 
 });
