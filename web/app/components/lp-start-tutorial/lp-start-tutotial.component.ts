@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fadeInAnimation} from "../../shared/animations/lp-animations";
+import {InstallationService} from "../../core/services/istallation.service";
+import {ConversationService} from "../../core/services/conversation.service";
 
 @Component({
   selector: 'app-lp-start-tutotial',
@@ -15,7 +17,8 @@ export class LpStartTutotialComponent implements OnInit {
   public stepsCompleted: Array<boolean>;
 
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private router: Router,
+              private conversationService:ConversationService) { }
 
   ngOnInit() {
      this.stepsCompleted = new Array(4);
@@ -29,6 +32,8 @@ export class LpStartTutotialComponent implements OnInit {
   }
 
   public done() {
+    this.conversationService.reset();
+    this.conversationService.restoreStoredState();
     this.router.navigateByUrl('/demo');
   }
 

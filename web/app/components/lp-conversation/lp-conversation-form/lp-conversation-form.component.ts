@@ -24,7 +24,6 @@ export class LpConversationFormComponent implements OnInit {
   ngOnInit() {}
 
   onChange(consumerName: string) {
-    console.log(consumerName);
     this.consumerNameChange.emit(consumerName);
   }
 

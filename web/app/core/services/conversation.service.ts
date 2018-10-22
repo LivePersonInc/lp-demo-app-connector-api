@@ -46,7 +46,6 @@ export class ConversationService extends HttpService {
 
     this.historyService.historySubject.subscribe( event => {
       if(event === 'GET_CONV_HISTORY'){
-        console.log("HISTORY IS RECOVERY ");
         this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
       }
     });
@@ -91,7 +90,6 @@ export class ConversationService extends HttpService {
     } else {
       const msg = "A Conversation has to be intialized before send a message";
       this.errorResponse(msg);
-      console.error(msg);
     }
   };
 
@@ -186,28 +184,30 @@ export class ConversationService extends HttpService {
     return lastReadSequenceList;
   }
 
-  private restoreStoredState() {
+  public restoreStoredState() {
     let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
-
     if(state.selectedAppId){
       let appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
-      this.conversation =
-        new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
-      this.conversation.conversationId = appState.conversationId;
-      this.conversation.ext_consumer_id = appState.ext_consumer_id;
-      this.conversation.userName = appState.userName;
+      if(appState) {
+        this.conversation =
+          new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
+        this.conversation.conversationId = appState.conversationId;
+        this.conversation.ext_consumer_id = appState.ext_consumer_id;
+        this.conversation.userName = appState.userName;
 
-      this.conversationManager.authenticate(this.conversation).subscribe(res => {
-        this.successResponse("Conversation authentication successfully");
-        this.conversationManager.subscribeToMessageNotifications(this.conversation);
-        if(this.conversation.conversationId){
-          this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
-          this.conversationRestoredSubject.next("RESTORED");
+        this.conversationManager.authenticate(this.conversation).subscribe(res => {
+          this.successResponse("Conversation authentication successfully");
+          this.conversationManager.subscribeToMessageNotifications(this.conversation);
+          if(this.conversation.conversationId){
+            this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
+            this.conversationRestoredSubject.next("RESTORED");
 
-        }
-      }, error => {
-        this.errorResponse(error);
-      });
+          }
+        }, error => {
+          this.errorResponse(error);
+        });
+      }
+
     }
   }
 

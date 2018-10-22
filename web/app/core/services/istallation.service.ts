@@ -85,6 +85,7 @@ export class InstallationService extends HttpService {
     this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers).subscribe(app => {
       this._selectedApp = app;
       this.installationSubject.next('APP_SECRET_FOUND');
+      this.loadingService.stopLoading();
     }, error => {
       this.errorResponse(error);
     });
@@ -108,7 +109,7 @@ export class InstallationService extends HttpService {
     this.stateManager.storeLastStateInLocalStorage(state, this.brandId);
   }
 
-  private restoreState() {
+  public restoreState() {
     let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
     if(state && state.selectedAppId){
         this.getAppByAppId(state.selectedAppId);

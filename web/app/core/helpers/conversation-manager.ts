@@ -190,8 +190,6 @@ export class ConversationManager {
             )
           );
 
-          console.log(conversation);
-
           this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
 
         }
@@ -347,7 +345,7 @@ export class ConversationManager {
 
   public fidAppById(states: Array<AppState>, appId: string): AppState {
     for (let i=0; i < states.length; i ++) {
-      if(states[i].appId === appId){
+      if(states[i].appId == appId){
         return states[i];
       }
     }
