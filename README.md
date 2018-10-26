@@ -335,7 +335,12 @@ The demo connector app also can handle most of the message status events, i.e. w
 
 
 
+## Deployment
 
+//TODO
 
+### Nginx configuration
+
+//TODO:
 
 
