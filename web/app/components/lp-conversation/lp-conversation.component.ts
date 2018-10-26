@@ -5,7 +5,6 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {ISubscription} from "rxjs/Subscription";
-import {HistoryService} from "../../core/services/history.service";
 
 @Component({
   selector: 'lp-conversation',
