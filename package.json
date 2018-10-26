@@ -17,7 +17,7 @@
     "ng": "ng",
     "start": "ng build --prod && node app --unsafe-perm",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
