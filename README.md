@@ -39,6 +39,8 @@ any database, sensitive data are saved in your browser local storage (this will 
       - [Message sequence number](#message-sequence-number)
       - [Chat state events](#chat-state-events)
       - [Message status events](#message-status-events)
+  - [Deployment](#Deployment)
+    - [Nginx configuration](#Nginx-configuration)
 
 
 
@@ -101,8 +103,11 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 Before running the app, maybe you want to change some configuration parameters in [settings.json](settings.json):
 
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
-  1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications. NOTE: The server is running in http and
-  https; if you are using https the port cannot be other than 443.
+  1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
+  
+### web entviornment file
+
+//TODO
 
 ### Configure the webhooks endpoints
 
