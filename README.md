@@ -105,7 +105,7 @@ Before running the app, maybe you want to change some configuration parameters i
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
   
-### web entviornment file
+### web environment file
 
 //TODO
 
