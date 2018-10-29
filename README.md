@@ -33,16 +33,14 @@ any database, sensitive data are saved in your browser local storage (this will 
   - [Usage](#usage)
   - [Settings](#settings)
     - [Configuring the webhooks endpoints](#configuring-the-webhooks-endpoints)
+    - [web_environment_files](#web-environment-files)
   - [Development Mode](#development-mode)
     - [Project structure](#project-structure)
     - [Sending and handling conversation events](#sending-and-handling-conversation-events)
       - [Message sequence number](#message-sequence-number)
       - [Chat state events](#chat-state-events)
       - [Message status events](#message-status-events)
-  - [Deployment](#Deployment)
-    - [Nginx configuration](#Nginx-configuration)
-
-
+  
 
 ## Requirements.
 
@@ -105,9 +103,17 @@ Before running the app, maybe you want to change some configuration parameters i
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
   
-### web environment file
+### web environment files
 
-//TODO
+In web/environment folder you can find 2 files: ``environment.prod.ts`` and ``environment.ts``.
+
+If you want to deploy your app in a server you need to set the https protocol in ```environment.prod.ts``` file.
+and leave the port property blank:
+
+  protocol: "https",
+  port: "",
+
+Then you must configure the https service, necessary for receiving webhooks events, in a proxy like Nginx.
 
 ### Configure the webhooks endpoints
 
@@ -334,13 +340,5 @@ The demo connector app also can handle most of the message status events, i.e. w
 ![alt text](docs/imgs/chat-state.png)
 
 
-
-## Deployment
-
-//TODO
-
-### Nginx configuration
-
-//TODO:
 
 
