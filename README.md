@@ -340,5 +340,14 @@ The demo connector app also can handle most of the message status events, i.e. w
 ![alt text](docs/imgs/chat-state.png)
 
 
+## Deployment example
+
+### Configuring Nginx https
+
+ 
+
+
+
+
 
 
