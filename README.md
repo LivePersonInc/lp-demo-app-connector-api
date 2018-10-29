@@ -33,7 +33,7 @@ any database, sensitive data are saved in your browser local storage (this will 
   - [Usage](#usage)
   - [Settings](#settings)
     - [Configuring the webhooks endpoints](#configuring-the-webhooks-endpoints)
-    - [web_environment_files](#web-environment-files)
+    - [Web environment files](#Web-environment-files)
   - [Development Mode](#development-mode)
     - [Project structure](#project-structure)
     - [Sending and handling conversation events](#sending-and-handling-conversation-events)
@@ -103,7 +103,7 @@ Before running the app, maybe you want to change some configuration parameters i
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
   
-### web environment files
+### Web environment files
 
 In web/environment folder you can find 2 files: ``environment.prod.ts`` and ``environment.ts``.
 
