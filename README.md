@@ -338,7 +338,7 @@ For a correct deployment of this app, we need to consider the following:
  -  A HTTPS server in order to be able to receive events via webhooks
  -  A reverse proxy like Ngnix would redirect HTTPS requests to our HTTP server.
  -  Valid certificates are needed in order to use the webhooks service.
- -  For a secure web using HTTPS for every request, we need to change in `web/environment/environment.prod.ts`` the properties protocol and port to: 
+ -  For a secure web using HTTPS for every request, we need to change in `web/environment/environment.prod.ts` the properties protocol and port to: 
   
     ```
       ...
