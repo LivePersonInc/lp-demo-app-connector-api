@@ -407,7 +407,7 @@ it to work properly with Nginx:
        keepalive_timeout 3600;
 ```
 
-#### Nginx configuration sample file 
+### Nginx configuration sample file 
 ```
 user nginx;
 worker_processes auto;
