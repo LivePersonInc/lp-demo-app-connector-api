@@ -40,6 +40,9 @@ any database, sensitive data are saved in your browser local storage (this will 
       - [Message sequence number](#message-sequence-number)
       - [Chat state events](#chat-state-events)
       - [Message status events](#message-status-events)
+  - [Deployment](#Deployment)
+    - [Configuring Nginx](#Configuring-Nginx)
+    - [Nginx configuration sample file](#Nginx-configuration-sample-file)
   
 
 ## Requirements.
@@ -103,18 +106,6 @@ Before running the app, maybe you want to change some configuration parameters i
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
   1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
   
-### Web environment files
-
-In web/environment folder you can find 2 files: ``environment.prod.ts`` and ``environment.ts``.
-
-If you want to deploy your app in a server you need to set the https protocol in ```environment.prod.ts``` file.
-and leave the port property blank:
-
-  protocol: "https",
-  port: "",
-
-Then you must configure the https service, necessary for receiving webhooks events, in a proxy like Nginx.
-
 ### Configure the webhooks endpoints
 
 In your app installation you need to add this webhook listener server url:
@@ -340,9 +331,169 @@ The demo connector app also can handle most of the message status events, i.e. w
 ![alt text](docs/imgs/chat-state.png)
 
 
-## Deployment example
+## Deployment 
 
-### Configuring Nginx https
+For a correct deployment of this app, we need to consider the following:
+
+ -  A HTTPS server in order to be able to receive events via webhooks
+ -  A reverse proxy like Ngnix would redirect HTTPS requests to our HTTP server.
+ -  Valid certificates are needed in order to use the webhooks service.
+ -  For a secure web using HTTPS for every request, we need to change in `web/environment/environment.prod.ts`` the properties protocol and port to: 
+  
+    ```
+      ...
+      protocol: "https",
+      port: "",
+      ...
+    ```
+  - Redirect all HTTP request to HTTPS (This can be done with Nginx). If we don't do this, the browser will block all HTTP requests considered not secure.
+  
+### Configuring Nginx
+
+ - Redirect all HTTP requests to HTTPS:
+
+```
+  http {
+  ...
+  server {
+        listen       80;
+        return 301 https://$host$request_uri;
+     }
+   
+```
+ - Redirect HTTPS requests to internal http server and port: 
+ ```
+  server {
+        listen       443 ssl http2 default_server;
+        ...
+        
+        location / {		
+                proxy_pass http://localhost:8282;
+              }
+        ...
+ ```
+
+ - Add Valid certs in https server configuration: 
+
+```
+ server {
+       listen       443 ssl http2 default_server;
+       
+       ...
+       
+       ssl on;   
+       ssl_certificate "/your/path/to/file.pem";
+       ssl_certificate_key "/your/path/to/file.key";
+       ssl_session_cache shared:SSL:1m;
+       ssl_session_timeout  10m;
+       ssl_ciphers HIGH:!aNULL:!MD5;
+       ssl_prefer_server_ciphers on;
+       
+       ...
+```
+ - Configuration for SSE (Server Send Events). We are sending the received events to the UI through SSE and we need 
+it to work properly with Nginx:
+```
+       #This deals with the Aggregating issue
+       chunked_transfer_encoding off;
+       proxy_buffering off;
+       proxy_cache off;
+
+       #This deals with the connection closing issue
+       proxy_set_header Connection keep-alive;
+       proxy_connect_timeout 3600;
+       proxy_send_timeout 3600;
+       proxy_read_timeout 3600;
+       keepalive_timeout 3600;
+```
+
+#### Nginx configuration sample file 
+```
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80;
+	      return 301 https://$host$request_uri;
+     }
+
+# Settings for a TLS enabled server.
+    server {
+       listen       443 ssl http2 default_server;
+
+       listen       [::]:443 ssl http2 default_server;
+       server_name  connector-api.dev.liveperson.net;
+       root         /usr/share/nginx/html;
+       
+       #This deals with the Aggregating issue
+       chunked_transfer_encoding off;
+       proxy_buffering off;
+       proxy_cache off;
+
+       #This deals with the connection closing issue
+       proxy_set_header Connection keep-alive;
+       proxy_connect_timeout 3600;
+       proxy_send_timeout 3600;
+       proxy_read_timeout 3600;
+       keepalive_timeout 3600;
+       
+       ssl on;
+       ssl_certificate "/home/ec2-user/wildcard.dev.liveperson.net.pem";
+       ssl_certificate_key "/home/ec2-user/wildcard.dev.liveperson.net.key";
+       ssl_session_cache shared:SSL:1m;
+       ssl_session_timeout  10m;
+       ssl_ciphers HIGH:!aNULL:!MD5;
+       ssl_prefer_server_ciphers on;
+
+       # Load configuration files for the default server block.
+       include /etc/nginx/default.d/*.conf;
+
+       location / {		
+	        proxy_pass http://localhost:8282;
+       }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+
+}
+
+```
 
  
 
