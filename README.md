@@ -335,18 +335,17 @@ The demo connector app also can handle most of the message status events, i.e. w
 
 For a correct deployment of this app, we need to consider the following:
 
- -  A HTTPS server in order to be able to receive events via webhooks
- -  A reverse proxy like Ngnix would redirect HTTPS requests to our HTTP server.
+ -  A HTTPS server in order to be able to receive events via webhooks.
  -  Valid certificates are needed in order to use the webhooks service.
- -  For a secure web using HTTPS for every request, we need to change in `web/environment/environment.prod.ts` the properties protocol and port to: 
-  
-    ```
-      ...
-      protocol: "https",
-      port: "",
-      ...
-    ```
-  - Redirect all HTTP request to HTTPS (This can be done with Nginx). If we don't do this, the browser will block all HTTP requests considered not secure.
+ -  A reverse proxy like Ngnix would redirect all HTTPS requests to our HTTP server.If we don't do this, the browser will block all HTTP requests considered not secure.
+ -  Related with the previous point, we need to change the properties protocol and port in `web/environment/environment.prod.ts` to: 
+    
+      ```
+        ...
+        protocol: "https",
+        port: "",
+        ...
+      ```
   
 ### Configuring Nginx
 
@@ -361,7 +360,7 @@ For a correct deployment of this app, we need to consider the following:
      }
    
 ```
- - Redirect HTTPS requests to internal http server and port: 
+ - Redirect HTTPS requests to internal HTTP server and port: 
  ```
   server {
         listen       443 ssl http2 default_server;
@@ -373,7 +372,7 @@ For a correct deployment of this app, we need to consider the following:
         ...
  ```
 
- - Add Valid certs in https server configuration: 
+ - Add valid certs in HTTPS server configuration: 
 
 ```
  server {
@@ -393,6 +392,7 @@ For a correct deployment of this app, we need to consider the following:
 ```
  - Configuration for SSE (Server Send Events). We are sending the received events to the UI through SSE and we need 
 it to work properly with Nginx:
+
 ```
        #This deals with the Aggregating issue
        chunked_transfer_encoding off;
