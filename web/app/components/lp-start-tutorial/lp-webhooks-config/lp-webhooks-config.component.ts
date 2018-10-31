@@ -3,6 +3,7 @@ import {InstallationService} from '../../../core/services/istallation.service';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
 import {ISubscription} from "rxjs/Subscription";
+import {environment} from "../../../../environments/environment.prod";
 
 @Component({
   selector: 'lp-webhooks-config',
@@ -15,6 +16,7 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   public completed = new EventEmitter();
   public webhooks: Webhooks;
   public installationService: InstallationService;
+  public server = environment.server;
 
   private installationSubscription: ISubscription;
 

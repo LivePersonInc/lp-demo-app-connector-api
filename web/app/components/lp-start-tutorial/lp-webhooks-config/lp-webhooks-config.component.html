@@ -7,7 +7,15 @@
     <input matInput placeholder="App Secret" disabled value="{{installationService.selectedApp.client_secret}}">
   </mat-form-field>
 
-  Webhooks endpoints
+    <p class="alert-info">
+      The Webhooks urls below, are the endpoints that Webhooks sends the events to, as is configured in your account.
+      To use the Demo app, change the domain to the URL of this demo app. (i.e. <strong>https://your-domain/notifications/event</strong>.)
+      NOTE: any change made here is stored in the configuration of your account and will need to be reverted once you are done with the Demo app.
+    </p>
+
+
+
+  <strong>Webhooks endpoints</strong>
 
   <lp-webhooks-form [webhooks]="webhooks" (onSubmit)="updateWebhooks()"></lp-webhooks-form>
 
