@@ -16,9 +16,12 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   @Output()
   public completed = new EventEmitter();
   public webhooks: Webhooks;
+  public revertWebhooks: Webhooks;
   public installationService: InstallationService;
   public server = environment.server;
-  public currentURL = "https://" + this.server + "/notifications/event"
+  public currentURL = "https://" + this.server + "/notifications/event";
+  public isChanged = false;
+
   private installationSubscription: ISubscription;
 
   constructor(private _installationService: InstallationService) {
@@ -29,10 +32,13 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
     this.installationSubscription = this.installationService.installationSubject.subscribe(event => {
       switch (event) {
         case 'APP_SELECTED': {
+          this.revertWebhooks = new Webhooks();
+          this.revertWebhooks.initEndpoints();
           this.webhooks = new Webhooks();
           this.webhooks.initEndpoints();
           if (this.installationService.selectedApp.capabilities && this.installationService.selectedApp.capabilities.webhooks) {
             this.webhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
+            this.revertWebhooks.deserialize(this.installationService.selectedApp.capabilities.webhooks);
           }
           break;
         }
@@ -48,13 +54,24 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
     if(this.installationSubscription) this.installationSubscription.unsubscribe();
   }
 
-  addCurrentURLtoendpoints(){
+  addCurrentURLtoEndpoints(){
+    this.isChanged = true;
     this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.currentURL;
     this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.currentURL;
     this.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.currentURL;
     this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.currentURL;
     this.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.currentURL;
     this.webhooks['cqm.ExConversationChangeNotification'].endpoint = this.currentURL;
+  }
+
+  revertEndpoints(){
+    this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint =   this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint =this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.webhooks['cqm.ExConversationChangeNotification'].endpoint = this.revertWebhooks['ms.MessagingEventNotification.ContentEvent'].endpoint;
+    this.isChanged = false;
   }
 
   public updateWebhooks() {

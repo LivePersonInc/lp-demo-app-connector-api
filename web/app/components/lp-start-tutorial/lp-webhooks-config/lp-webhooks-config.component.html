@@ -18,11 +18,13 @@
   </p>
 
   <p>
-    The corresponding URL for the current servers is: <strong>https://{{server}}/notifications/event</strong>
+    The corresponding URL for the current server is: <strong>https://{{server}}/notifications/event</strong>
   </p>
 
   <p>
-    <button type="button" mat-raised-button (click)="addCurrentURLtoendpoints()" >Add your server URL to the endpoints</button>
+    <button type="button" mat-raised-button (click)="addCurrentURLtoEndpoints()" >Add your server URL to the endpoints</button>
+    <button type="button" mat-raised-button (click)="revertEndpoints()" [disabled]="!isChanged" >Revert</button>
+
   </p>
 
   <p>Webhooks endpoints</p>
