@@ -1,21 +1,31 @@
 <div class="container-fluid" *ngIf="installationService.selectedApp; else no_app">
-  <b>{{installationService.selectedApp.client_name}}</b>
-  <mat-form-field class="w-100" color="accent">
+  <p>
+    <b>Selected App Id:</b> {{installationService.selectedApp.client_id}}
+  </p>
+  <!--<mat-form-field class="w-100" color="accent">
     <input matInput placeholder="App Id" disabled value="{{installationService.selectedApp.client_id}}">
   </mat-form-field>
   <mat-form-field class="w-100" color="accent">
     <input matInput placeholder="App Secret" disabled value="{{installationService.selectedApp.client_secret}}">
-  </mat-form-field>
+  </mat-form-field>-->
 
-    <p class="alert-info">
-      The Webhooks urls below, are the endpoints that Webhooks sends the events to, as is configured in your account.
-      To use the Demo app, change the domain to the URL of this demo app. (i.e. <strong>https://your-domain/notifications/event</strong>.)
-      NOTE: any change made here is stored in the configuration of your account and will need to be reverted once you are done with the Demo app.
-    </p>
+  <p class="alert-info">
+    The Webhooks urls below, are the endpoints that Webhooks sends the events to, as is configured in your account.
+    To use the Demo app, change the domain to the URL of this demo app. (i.e. <strong>https://your-domain/notifications/event</strong>.)
+  </p>
+  <p class="alert-warning">
+    NOTE: any change made here is stored in the configuration of your account and will need to be reverted once you are done with the Demo app.
+  </p>
 
+  <p>
+    The corresponding URL for the current servers is: <strong>https://{{server}}/notifications/event</strong>
+  </p>
 
+  <p>
+    <button type="button" mat-raised-button (click)="addCurrentURLtoendpoints()" >Add your server URL to the endpoints</button>
+  </p>
 
-  <strong>Webhooks endpoints</strong>
+  <p>Webhooks endpoints</p>
 
   <lp-webhooks-form [webhooks]="webhooks" (onSubmit)="updateWebhooks()"></lp-webhooks-form>
 

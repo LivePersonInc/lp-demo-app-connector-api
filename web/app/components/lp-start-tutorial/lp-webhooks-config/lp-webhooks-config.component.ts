@@ -4,6 +4,7 @@ import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
 import {ISubscription} from "rxjs/Subscription";
 import {environment} from "../../../../environments/environment.prod";
+import {Endpoint} from "../../../shared/models/app-installation/endpoint.model";
 
 @Component({
   selector: 'lp-webhooks-config',
@@ -17,7 +18,7 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   public webhooks: Webhooks;
   public installationService: InstallationService;
   public server = environment.server;
-
+  public currentURL = "https://" + this.server + "/notifications/event"
   private installationSubscription: ISubscription;
 
   constructor(private _installationService: InstallationService) {
@@ -45,6 +46,15 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.installationSubscription) this.installationSubscription.unsubscribe();
+  }
+
+  addCurrentURLtoendpoints(){
+    this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.currentURL;
+    this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.currentURL;
+    this.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.currentURL;
+    this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.currentURL;
+    this.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.currentURL;
+    this.webhooks['cqm.ExConversationChangeNotification'].endpoint = this.currentURL;
   }
 
   public updateWebhooks() {
