@@ -1,9 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {InstallationService} from '../../../core/services/istallation.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
-import {FormControl, Validators} from '@angular/forms';
 import {ISubscription} from "rxjs/Subscription";
 
 @Component({
@@ -19,10 +17,8 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   public installationService: InstallationService;
 
   private installationSubscription: ISubscription;
-  private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
 
-  constructor(private _installationService: InstallationService,
-              private formBuilder: FormBuilder) {
+  constructor(private _installationService: InstallationService) {
     this.installationService = _installationService;
   }
 
