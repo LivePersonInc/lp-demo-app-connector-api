@@ -75,7 +75,9 @@
     "typescript": "~2.5.3",
     "url-polyfill": "^1.1.0",
     "winston": "^3.0.0",
-    "zone.js": "^0.8.19",
+    "zone.js": "^0.8.19"
+  },
+  "devDependencies": {
     "karma-phantomjs-launcher": "^1.0.4",
     "phantomjs-prebuilt": "^2.1.16"
   }
