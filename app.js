@@ -1,3 +1,5 @@
+process.title = "demoapp";
+
 const express = require('express');
 const app = express();
 const nconf = require("nconf");
