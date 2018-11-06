@@ -16,34 +16,30 @@ router.get("/subscribe/:convid", (req, res, next) => {
 
 //webhooks notifications
 router.post("/event", function (req, res, next) {
-  let body = JSON.stringify(req.body);
-  let convId = getNotificationConversationId(body);
+  let convId = getNotificationConversationId(req.body);
   if(subscriptions[convId]){
-    subscriptions[convId].send(body);
+    subscriptions[convId].send(req.body);
   }
   res.json('OK');
 });
 
+
+
 function getNotificationConversationId(notificationBody) {
-  logger.debug(notificationBody);
-  let jsonBody;
-  let conversationId = null;
+  logger.debug(JSON.stringify(notificationBody));
+
+  const noConversationId = "";
 
   try {
-    jsonBody = JSON.parse(notificationBody);
-    if(jsonBody.body.changes[0].hasOwnProperty("conversationId")) {
-
-      conversationId = jsonBody.body.changes[0].conversationId;
-
-    } else if(jsonBody.body.changes[0].hasOwnProperty("result") && jsonBody.body.changes[0].result.hasOwnProperty("convId")) {
-
-      conversationId = jsonBody.body.changes[0].result.convId;
-
+    if(notificationBody.body.changes[0].hasOwnProperty("conversationId")) {
+      return notificationBody.body.changes[0].conversationId;
+    } else if(notificationBody.body.changes[0].hasOwnProperty("result") && notificationBody.body.changes[0].result.hasOwnProperty("convId")) {
+      return notificationBody.body.changes[0].result.convId;
     }
   }catch(err) {
-    logger.error("ERROR parsing JSON ", err);
+    logger.error("ERROR parsing notification JSON, the conversation ID  cannot be found ", err);
   }
-  return conversationId;
+  return noConversationId;
 }
 
 module.exports = router;
