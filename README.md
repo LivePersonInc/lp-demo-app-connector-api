@@ -64,7 +64,7 @@ In order to install the project dependencies type this command in a terminal fro
 
 ## How to make it running
 
-1. ```sudo npm start``` will build the project and start the server.
+1. ```npm start``` will build the project and start the server.
 1. Open ``` http://localhost:8282``` in your browser. 
 1. Login with your account (by default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
 
@@ -125,7 +125,7 @@ Angular CLI provides a fast development server using Webpack. Every change is au
 
 To run the application using the dev server instead of a built project:
 
-1. ```sudo node app``` to run the server
+1. ```node app``` to run the server
 1. ```ng serve``` to run web development server
 1. Open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
