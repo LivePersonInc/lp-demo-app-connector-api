@@ -10,6 +10,9 @@ nconf.file({file: "./settings.json"});
 const sendApiConnector = new SendApiConnector(nconf);
 
 router.post("/openconv/:id", (req, res, next) => {
+
+  console.log(req.sessionID);
+
   let brandID = req.params.id;
 
   let args = {};
@@ -39,6 +42,7 @@ router.post("/openconv/:id", (req, res, next) => {
 });
 
 router.post("/sendraw/:id", (req, res, next) => {
+  console.log(req.sessionID);
   let brandID = req.params.id;
 
   let args = {};

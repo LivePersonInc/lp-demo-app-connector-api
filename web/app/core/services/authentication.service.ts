@@ -30,7 +30,7 @@ export class AuthenticationService extends HttpService {
     this.loadingService.startLoading();
      return this.
         doPost(`${environment.protocol}://${environment.server}:${environment.port}/authentication/${brandId}`,
-       { username: username, password: password }, {})
+       {username:  brandId + "-" + username, password: password }, {})
        .subscribe(res => {
          this._user = new User();
          this._user.token = res.bearer;

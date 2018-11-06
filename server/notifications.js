@@ -6,10 +6,10 @@ const subscriptions = [];
 
 router.get("/subscribe/:convid", (req, res, next) => {
   subscriptions[req.params.convid] = SSE(res);
-  console.log("Client subscribed width: " + req.params.convid);
+//  console.log("Client subscribed width: " + req.params.convid);
   subscriptions[req.params.convid].disconnect(function () {
     subscriptions.splice(req.params.convid,1);
-    console.log("Client unsubscribed width: " + req.params.convid);
+//    console.log("Client unsubscribed width: " + req.params.convid);
   });
 });
 
@@ -24,7 +24,7 @@ router.post("/event", function (req, res, next) {
 });
 
 function getNotificationConversationId(notificationBody) {
-  console.log(notificationBody);
+  //console.log(notificationBody);
   let jsonBody;
   let conversationId = null;
 
