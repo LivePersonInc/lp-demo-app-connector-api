@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && node app --unsafe-perm",
+    "start": "ng build --prod && NODE_ENV=prod  node app --unsafe-perm",
     "build": "ng build --prod",
     "test": "ng test",
     "tc-test": "ng test --single-run=true --browsers PhantomJS --watch=false",

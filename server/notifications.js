@@ -41,7 +41,7 @@ function getNotificationConversationId(notificationBody) {
 
     }
   }catch(err) {
-    logger.error("ERROR parsing JSON:", err);
+    logger.error("ERROR parsing JSON ", err);
   }
   return conversationId;
 }
