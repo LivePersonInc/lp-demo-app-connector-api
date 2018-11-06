@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const SSE = require('sse-nodejs');
+const logger = require('./util/logger');
 
 const subscriptions = [];
 
 router.get("/subscribe/:convid", (req, res, next) => {
   subscriptions[req.params.convid] = SSE(res);
-  console.log("Client subscribed width: " + req.params.convid);
+  logger.debug("Client subscribed width: " + req.params.convid);
   subscriptions[req.params.convid].disconnect(function () {
     subscriptions.splice(req.params.convid,1);
-    console.log("Client unsubscribed width: " + req.params.convid);
+    logger.debug("Client unsubscribed width: " + req.params.convid);
   });
 });
 
@@ -24,7 +25,7 @@ router.post("/event", function (req, res, next) {
 });
 
 function getNotificationConversationId(notificationBody) {
-  console.log(notificationBody);
+  logger.debug(notificationBody);
   let jsonBody;
   let conversationId = null;
 
@@ -40,7 +41,7 @@ function getNotificationConversationId(notificationBody) {
 
     }
   }catch(err) {
-    console.error("ERROR parsing JSON:", err);
+    logger.error("ERROR parsing JSON:", err);
   }
   return conversationId;
 }

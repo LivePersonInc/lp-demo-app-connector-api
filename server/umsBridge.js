@@ -4,6 +4,8 @@ const nconf = require("nconf");
 const SendApiConnector = require("./services/SendApiConnectorService");
 const HttpStatus = require('http-status-codes');
 const handleStatusCode = require('./util/handleStatusCode');
+const logger = require('./util/logger');
+
 
 nconf.file({file: "./settings.json"});
 
@@ -32,7 +34,7 @@ router.post("/openconv/:id", (req, res, next) => {
       }
 
     }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
+    logger.error("ERROR: Promise rejected", error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 
@@ -60,7 +62,7 @@ router.post("/sendraw/:id", (req, res, next) => {
 
       }
     }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
+    logger.error("ERROR: Promise rejected", error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 
@@ -90,7 +92,7 @@ router.post("/close/:id/conv/:convId", (req, res, next) => {
 
       }
     }).catch((error) => {
-    console.error("ERROR: Promise rejected");
+    logger.error("ERROR: Promise rejected");
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 

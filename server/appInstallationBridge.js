@@ -4,6 +4,7 @@ const AppInstallationService = require("./services/AppInstallationService");
 const HttpStatus = require('http-status-codes');
 const handleStatusCode = require('./util/handleStatusCode');
 const nconf = require("nconf");
+const logger = require('./util/logger');
 
 nconf.file({file: "./settings.json"});
 
@@ -28,7 +29,7 @@ router.get("/:brandId", (req, res, next) => {
       }
 
     }).catch((error) => {
-      console.error("ERROR: Promise rejected", error);
+      logger.error("ERROR: Promise rejected", error);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });
@@ -53,7 +54,7 @@ router.get("/:brandId/:appId", (req, res, next) => {
       }
 
     }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
+    logger.error("ERROR: Promise rejected", error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 });
@@ -78,7 +79,7 @@ router.post("/:brandId", (req, res, next) => {
       }
 
     }).catch((error) => {
-      console.error("ERROR: Promise rejected", error);
+      logger.error("ERROR: Promise rejected", error);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });
@@ -110,7 +111,7 @@ router.put("/:brandId/:appId", (req, res, next) => {
       })
 
   }).catch((error) => {
-    console.error("ERROR: Promise rejected", error);
+    logger.error("ERROR: Promise rejected", error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
   });
 });

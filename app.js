@@ -12,8 +12,7 @@ const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
 const loginBridge = require('./server/loginBridge');
 const bodyParser = require('body-parser');
-
-nconf.file({file: "settings.json"});
+const logger = require('./server/util/logger');
 
 app.use(cors());
 
@@ -33,7 +32,7 @@ app.use(express.static('dist'));
 
 //http server
 app.listen(nconf.get("SERVER_HTTP_PORT"), function () {
-  console.log("listening");
+  logger.info("listening");
   app.isReady = true;
   app.emit("ready", true);
 });
