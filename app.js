@@ -11,8 +11,7 @@ const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
 const loginBridge = require('./server/loginBridge');
-
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 nconf.file({file: "settings.json"});
 
