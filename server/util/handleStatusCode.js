@@ -1,9 +1,10 @@
+const logger = require('./logger');
 
 function handleStatusCode(statusCode) {
   if (statusCode >= 200 && statusCode < 300) {
     return true;
   } else {
-    console.error("ERROR: Status code: ", statusCode);
+    logger.error("ERROR: Status code: ", statusCode);
     return false;
   }
 }
