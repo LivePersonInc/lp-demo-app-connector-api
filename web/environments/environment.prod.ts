@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   server: location.hostname,
-  protocol: "http",
-  port: "8282",
+  protocol: "https",
+  port: "",
   //Services names to get the domain with the CSDS
   authentication: "agentVep",
   installation:"accountConfigReadWrite",
