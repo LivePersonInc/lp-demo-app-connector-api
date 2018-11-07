@@ -23,8 +23,6 @@ router.post("/event", function (req, res, next) {
   res.json('OK');
 });
 
-
-
 function getNotificationConversationId(notificationBody) {
   logger.debug(JSON.stringify(notificationBody));
 
@@ -37,7 +35,7 @@ function getNotificationConversationId(notificationBody) {
       return notificationBody.body.changes[0].result.convId;
     }
   }catch(err) {
-    logger.error("ERROR parsing notification JSON, the conversation ID  cannot be found ", err);
+    logger.error("ERROR parsing notification JSON, the conversation ID cannot be found ", err);
   }
   return noConversationId;
 }
