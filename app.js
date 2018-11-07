@@ -11,12 +11,13 @@ const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
 const loginBridge = require('./server/loginBridge');
+const bodyParser = require('body-parser');
+const logger = require('./server/util/logger');
 const uuid = require('uuid/v4');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const authLocalStrategy = require('./server/auth/authLocalStrategy');
-var bodyParser = require('body-parser');
 
 // configure passport.js to use the local strategy
 passport.use(authLocalStrategy());
@@ -94,7 +95,7 @@ app.use(express.static('dist'));
 
 //http server
 app.listen(nconf.get("SERVER_HTTP_PORT"), function () {
-  console.log("listening");
+  logger.info("listening");
   app.isReady = true;
   app.emit("ready", true);
 });

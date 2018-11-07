@@ -4,6 +4,7 @@ const nconf = require("nconf");
 const CsdsService = require("./services/CsdsService");
 const HttpStatus = require('http-status-codes');
 const handleStatusCode = require('./util/handleStatusCode');
+const logger = require('./util/logger');
 
 nconf.file({file: "./settings.json"});
 
@@ -23,7 +24,7 @@ router.get("/csds/:brandId", (req, res, next) => {
       }
 
     }).catch((error) => {
-      console.error("ERROR: Promise rejected", error);
+      logger.error("ERROR: Promise rejected", error);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });

@@ -27,7 +27,7 @@ any database, sensitive data are saved in your browser local storage (this will 
 ## Table of Contents
   - [Requirements](#requirements)
   - [Installation](#installation)
-  - [How to make it running](#how-to-make-it-running)
+  - [How to make it running locally](#how-to-make-it-running-locally)
     - [Running NgRok](#running-ngrok)
     - [Running with Docker](#running-with-docker)
   - [Usage](#usage)
@@ -62,11 +62,12 @@ In order to install the project dependencies type this command in a terminal fro
 
  ```npm install``` 
 
-## How to make it running
+## How to make it running locally
 
-1. ```sudo npm start``` will build the project and start the server.
+1. ```npm run start-local``` will build the project and start the server.
 1. Open ``` http://localhost:8282``` in your browser. 
 1. Login with your account (by default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
+
 
 ### Running NgRok
 
@@ -125,7 +126,7 @@ Angular CLI provides a fast development server using Webpack. Every change is au
 
 To run the application using the dev server instead of a built project:
 
-1. ```sudo node app``` to run the server
+1. ```node app``` to run the server
 1. ```ng serve``` to run web development server
 1. Open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
 
@@ -157,8 +158,6 @@ is very important to save in order to handle the message status events like READ
     }
 }
 ```
-
-
 
 #### Chat state events
 
@@ -338,7 +337,7 @@ For a correct deployment of this app, we need to consider the following:
  -  A HTTPS server in order to be able to receive events via webhooks.
  -  Valid certificates are needed in order to use the webhooks service.
  -  A reverse proxy like Ngnix would redirect all HTTPS requests to our HTTP server. If we don't do this, the browser will block all HTTP requests considered not secure.
- -  Related to the previous point, we need to change the properties protocol and port in `web/environment/environment.prod.ts` to: 
+ -  Related to the previous point, we need to keep the properties protocol and port in `web/environment/environment.prod.ts` like defult: 
     
       ```
         ...
@@ -346,6 +345,7 @@ For a correct deployment of this app, we need to consider the following:
         port: "",
         ...
       ```
+ -  Run it with ```mpm start```. This will build the project with the production configuration.
   
 ### Configuring Nginx
 

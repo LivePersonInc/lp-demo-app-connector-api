@@ -4,6 +4,7 @@ const nconf = require("nconf");
 const HttpStatus = require('http-status-codes');
 const AccountConfigService = require("./services/AccountConfigService");
 const handleStatusCode = require('./util/handleStatusCode');
+const logger = require('./util/logger');
 
 nconf.file({file: "./settings.json"});
 
@@ -28,7 +29,7 @@ router.get("/properties/:id", (req, res, next) => {
       }
 
     }).catch((error) => {
-      console.error("ERROR: Promise rejected", error);
+      logger.error("ERROR: Promise rejected", error);
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
     });
 });
