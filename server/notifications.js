@@ -6,7 +6,6 @@ const logger = require('./util/logger');
 const subscriptions = [];
 
 router.get("/subscribe/:convid", (req, res, next) => {
-  if(req.isAuthenticated()) {
     subscriptions[req.params.convid] = SSE(res);
     logger.debug("Client subscribed width: " + req.params.convid);
     let convId = req.params.convid;
@@ -15,10 +14,6 @@ router.get("/subscribe/:convid", (req, res, next) => {
       subscriptions.splice(convId,1);
       logger.debug("Client unsubscribed width: " + convId);
     });
-    next();
-  } else {
-    res.status(401).send("ERROR");
-  }
 });
 
 //webhooks notifications

@@ -19,6 +19,13 @@ const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const authLocalStrategy = require('./server/auth/authLocalStrategy');
 
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//receive webhooks notifications
+app.use("/notifications", notifications);
+
 // configure passport.js to use the local strategy
 passport.use(authLocalStrategy());
 
@@ -58,9 +65,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 app.use('/demo', function (req, res, next) {
   if(req.isAuthenticated()) {
     next();
@@ -76,16 +80,17 @@ app.use("/demo/history", historyBridge);
 //CSDS
 app.use("/domains", csdsBridge);
 
-//receive webhooks notifications
-app.use("/notifications", notifications);
 
 //app.use("/authentication", loginBridge);
 app.post('/login', (req, res, next) => {
-  console.log('Inside POST /login callback')
+
   passport.authenticate('local', (err, user, info) => {
     console.log('Inside passport.authenticate() callback');
+    if(info) {return res.send(info.message)}
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/#/settings'); }
     req.login(user, (err) => {
-      console.log('Inside req.login() callback');
+      console.log('Inside req.login() callback')
       return res.send({bearer: user.bearer});
     })
   })(req, res, next);
