@@ -18,7 +18,7 @@ export class AccountConfigService extends HttpService {
   public brandId = "";
   private headers = {};
 
-  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/account/properties/`;
+  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/account/properties/`;
 
 
   constructor(protected authenticationService: AuthenticationService,

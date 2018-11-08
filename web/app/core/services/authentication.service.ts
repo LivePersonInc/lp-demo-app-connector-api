@@ -29,7 +29,7 @@ export class AuthenticationService extends HttpService {
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
      return this.
-        doPost(`${environment.protocol}://${environment.server}:${environment.port}/authentication/${brandId}`,
+        doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
        {username:  brandId + "-" + username, password: password }, {})
        .subscribe(res => {
          this._user = new User();

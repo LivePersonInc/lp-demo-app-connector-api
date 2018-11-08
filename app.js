@@ -24,17 +24,15 @@ passport.use(authLocalStrategy());
 
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
-  console.log(user);
-  console.log('Inside serializeUser callback. User id is save to the session file store here')
+  console.log('Inside serializeUser callback. User id is save to the session file store here');
+  console.log('Inside serializeUser callback. User id is save to the session file store here');
 
   //Here i have to save the user data in the format I want
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-  console.log('Inside deserializeUser callback. id ' + id)
-  console.log(`The user id passport saved in the session file store is: ${id}`)
-  const user = {id: '2f24vvg', email: "wsfsf", password: "sfsf"};
+passport.deserializeUser((user, done) => {
+  console.log('Inside deserializeUser callback. id ' + user),
 
   done(null, user);
 });
@@ -44,14 +42,10 @@ nconf.file({file: "settings.json"});
 app.use(cors());
 
 app.use(session({
-  genid: (req) => {
-    console.log('Inside the session middleware')
-    console.log(req.sessionID)
-    return uuid() // use UUIDs for session IDs
-  },
+  genid: (req) => { return uuid()},
   store: new FileStore(),
   secret: 'keyboard cat', //ADD ENVIRONMENT VAR
-  resave: false,
+  resave: true,
   cookie: {
     secure: false,
     maxAge: 2160000000,
@@ -67,27 +61,47 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/installation", installationBridge);
-app.use("/account", accountConfBridge);
-app.use("/ums", umsBridge);
-app.use("/notifications", notifications); //receive webhooks notifications
+app.use('/demo', function (req, res, next) {
+  if(req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(401).send("ERROR");
+  }
+});
+app.use("/demo/installation", installationBridge);
+app.use("/demo/account", accountConfBridge);
+app.use("/demo/ums", umsBridge);
+app.use("/demo/history", historyBridge);
+
+//CSDS
 app.use("/domains", csdsBridge);
-app.use("/history", historyBridge);
+
+//receive webhooks notifications
+app.use("/notifications", notifications);
 
 //app.use("/authentication", loginBridge);
-app.post('/authentication/:id', (req, res, next) => {
+app.post('/login', (req, res, next) => {
   console.log('Inside POST /login callback')
   passport.authenticate('local', (err, user, info) => {
     console.log('Inside passport.authenticate() callback');
-    console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-    console.log(`req.user: ${JSON.stringify(req.user)}`)
     req.login(user, (err) => {
-      console.log('Inside req.login() callback')
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-      console.log(`req.user: ${JSON.stringify(req.user)}`)
-      return res.send('You were authenticated & logged in!\n');
+      console.log('Inside req.login() callback');
+      return res.send({bearer: user.bearer});
     })
   })(req, res, next);
+});
+
+app.post('/logout', (req, res, next) => {
+  req.logOut();
+  res.status(200)
+});
+
+app.get('/isAuthenticated',(req, res, next) => {
+  if(req.isAuthenticated()) {
+    res.status(200).send(true);
+  } else {
+    res.status(200).send(false);
+  }
 });
 
 //Serve our UI

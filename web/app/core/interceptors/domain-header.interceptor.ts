@@ -21,6 +21,9 @@ export class DomainHeaderInterceptor implements HttpInterceptor {
 
   getServiceNameByUrl(stringUrl: string): string{
     const url = new URL(stringUrl);
+    if (url.pathname.split('/')[1] == 'demo') {
+      return url.pathname.split('/')[2];
+    }
     return url.pathname.split('/')[1];
   }
 }

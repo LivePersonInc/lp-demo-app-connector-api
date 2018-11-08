@@ -8,7 +8,6 @@ class IdpService {
   }
 
   logIn(brandId, args, domain) {
-
     return new Promise((resolve, reject) => {
       return this.client
         .post(
