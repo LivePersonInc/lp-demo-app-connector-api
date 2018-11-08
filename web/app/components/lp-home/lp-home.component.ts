@@ -40,7 +40,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(this.authenticationService.user){
+  /*  if(this.authenticationService.user){
       this.isAuthenticated = true;
     }
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
@@ -69,7 +69,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.authenticationService.login(this.brandId, this.userName, this.password);
       }
     });
-
+  */
   }
 
   ngOnDestroy() {
@@ -78,15 +78,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
   }
 
-  public loadDomainsForBrand(event: any) {
-    if(event && event.brandId && event.userName && event.password) {
-      this.brandId = event.brandId;
-      this.userName = event.userName;
-      this.password = event.password;
-    }
-    //First of all we need to know the domains
-    this.domainsService.getDomainList(this.brandId);
-  }
+
 
   public goToStartConfigPage() {
     this.router.navigateByUrl('settings/start');

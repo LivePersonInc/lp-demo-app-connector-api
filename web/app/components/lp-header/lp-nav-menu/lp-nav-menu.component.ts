@@ -14,7 +14,7 @@ export class LpNavMenuComponent implements OnInit {
   }
 
   isUserAuthenticated() {
-    return this.authenticationService.user && this.authenticationService.user.token;
+    return this.authenticationService.isLoggedIn;
   }
 
 }

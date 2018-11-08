@@ -9,10 +9,13 @@ import {User} from "../../shared/models/user.model";
 import {DomainsService} from "./domains.service";
 import {Router} from "@angular/router";
 import {environment} from '../../../environments/environment';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthenticationService extends HttpService {
   private _user: User;
+  private loggedInStatus = false
+
   public userLoggedSubject = new Subject<string>();
 
   constructor(protected http: HttpClient,
@@ -25,6 +28,9 @@ export class AuthenticationService extends HttpService {
     super( snackBar, http,loadingService, router);
   }
 
+  setLoggedIn(value: boolean) {
+    this.loggedInStatus = value
+  }
   //Bearer Token
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
@@ -37,6 +43,7 @@ export class AuthenticationService extends HttpService {
          this._user.userName = username;
          this._user.brandId = brandId;
          this.successResponse('Authentication was successful ');
+         this.setLoggedIn(true);
          setTimeout(()=>{
            this.userLoggedSubject.next('LOGGED-IN');
          }, 1500);
@@ -46,13 +53,28 @@ export class AuthenticationService extends HttpService {
        });
   }
 
+  public logout() {
+    this.loadingService.startLoading();
+    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).subscribe(res => {
+      this._user = null;
+      this.setLoggedIn(false);
+      this.userLoggedSubject.next('LOGGED-OUT');
+    }, error => {
+      this.errorResponse("Problem with Authentication");
+    });
+  }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/isAuthenticated`, {}, false);
+  }
+
   get user(): User {
     return this._user ;
   }
 
-  public logOut() {
-    this._user = null;
-    this.userLoggedSubject.next('LOGGED-OUT');
+
+  get isLoggedIn() {
+    return this.loggedInStatus
   }
 
 }

@@ -52,7 +52,7 @@ export class InstallationService extends HttpService {
   }
 
   public getAppListList() {
-    this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe((data: Array<any>) => {
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers, true).subscribe((data: Array<any>) => {
       this.appList = data.map( app => new AppInstall().deserialize(app)).filter( app => this.isValid(app));
       this.loadingService.stopLoading();
       this.installationSubject.next('GET_APP_LIST');
@@ -82,7 +82,7 @@ export class InstallationService extends HttpService {
   }
 
   public getAppByAppId(appId: string) {
-    this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers).subscribe(app => {
+    this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers, true).subscribe(app => {
       this._selectedApp = app;
       this.installationSubject.next('APP_SECRET_FOUND');
       this.loadingService.stopLoading();

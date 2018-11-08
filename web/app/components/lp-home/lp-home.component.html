@@ -1,24 +1,5 @@
 <div class="container">
-  <mat-card *ngIf="!isAuthenticated" [@fadeInAnimation]>
-    <mat-card-title>
-      Welcome to Demo Connector App
-    </mat-card-title>
-    <mat-card-content>
-      <p class="introduction">
-        This app was created for developers, here you can test the Connector API services,
-        create a new conversation, chat with your LiveEngage account as a consumer and more.
-      </p>
-      <p>You can start here using your brand Id.</p>
-
-
-      <lp-login (onLogin)="loadDomainsForBrand($event)"></lp-login>
-
-      <br>
-      <br>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card *ngIf="isAuthenticated">
+  <mat-card>
     <mat-card-title class="m-0">
       Settings properties
     </mat-card-title>

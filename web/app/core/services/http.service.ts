@@ -33,8 +33,10 @@ export class HttpService {
       );
   }
 
-  public doGet(url:string, httpOptions: any ):  Observable<any> {
-    this.loadingService.startLoading();
+  public doGet(url:string, httpOptions: any, loading: boolean ):  Observable<any> {
+    if(loading) {
+      this.loadingService.startLoading();
+    }
     return this.http.get(url, httpOptions)
       .pipe(
         catchError(this.handleError),

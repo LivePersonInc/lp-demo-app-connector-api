@@ -41,7 +41,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public getAccountConfigPropertiesList() {
-    this.doGet(`${this.baseURI}${this.brandId}`, this.headers).subscribe(data => {
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers,true).subscribe(data => {
       this.accountConfigPropList = data;
       this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
       this.loadingService.stopLoading();

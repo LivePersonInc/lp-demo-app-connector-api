@@ -32,7 +32,7 @@ export class HistoryService extends HttpService {
   }
 
   public getHistoryByConsumerId(consumerId: string) {
-    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, this.headers).subscribe((data: Array<any>) => {
+    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, this.headers, true).subscribe((data: Array<any>) => {
       this.history = data;
       this.loadingService.stopLoading();
       this.historySubject.next('GET_CONV_HISTORY');
