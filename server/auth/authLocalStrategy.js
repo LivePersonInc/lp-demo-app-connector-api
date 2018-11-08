@@ -4,17 +4,14 @@ const IdpService = require("../services/IdpService");
 const nconf = require("nconf");
 const logger = require('../util/logger');
 
-
-
-
 function authLocalStrategy() {
   return new LocalStrategy(
-    { usernameField: 'username' },
-    (username, password, done) => {
+    { usernameField: 'username',
+      passReqToCallback: true },
+    ( req, username, password, done) => {
       nconf.file({file: "./settings.json"});
-
       const idpService = new IdpService(nconf);
-      const idpDomain = "ca.agentvep.liveperson.net";
+      const idpDomain = req.header('LP-DOMAIN');
       let aux = username.split('-');
       let brandId = aux[0];
       let email = aux[1];

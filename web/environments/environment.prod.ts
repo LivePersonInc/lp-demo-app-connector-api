@@ -4,7 +4,7 @@ export const environment = {
   protocol: "https",
   port: "",
   //Services names to get the domain with the CSDS
-  authentication: "agentVep",
+  login: "agentVep",
   installation:"accountConfigReadWrite",
   ums:"asyncMessagingEnt",
   account: "accountConfigReadWrite",
