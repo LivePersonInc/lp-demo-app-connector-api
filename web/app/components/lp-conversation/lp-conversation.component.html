@@ -2,12 +2,12 @@
   <div class="row h-100">
 
     <div class="col-md-12" *ngIf="conversation && !conversation.isConvStarted && conversation.messages.length > 0">
-      <p class="conv-closed-info text-info">
+      <p class="conv-closed-info alert-info">
         INFO: This conversation is closed. Please type a new message and press enter to start a new conversation
       </p>
     </div>
 
-    <div class="col-md-5 text-center">
+    <div class="col-md-5  nopadding text-center">
       <!--<div *ngIf="conversation && !conversation.isConvStarted" class="alert-danger"> Conversation was already closed</div>-->
       <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"  [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"></lp-chat-box>
     </div>

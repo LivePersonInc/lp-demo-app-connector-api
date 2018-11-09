@@ -13,6 +13,19 @@
   display: inline-block;
   margin-bottom: 20px;
 
+  .conv-closed{
+    position: absolute;
+    text-align: center;
+    display: block;
+    width: 100%;
+    background: #a9a9a9b3;
+    height: 40px;
+    padding-top: 8px;
+    max-width: 500px;
+    min-width: 200px;
+    font-weight: bold;
+  }
+
   .messages-area{
     width: 100%;
     height: -webkit-calc(100%- 55px);
