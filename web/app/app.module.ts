@@ -37,7 +37,7 @@ import {HistoryService} from "./core/services/history.service";
     LpDemoComponent,
     LpConfirmationDialogComponent,
     LpLoginComponent,
-    LpFooterComponent
+    LpFooterComponent,
   ],
   imports: [
     LpHeaderModule,
