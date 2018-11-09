@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'settings', pathMatch: 'full'},
   {path: 'settings', component: LpHomeComponent},
   {path: 'logout', component: LpHomeComponent, canActivate: [LogoutGuard]},
-  {path: 'demo', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
+  {path: 'demo', component: LpDemoComponent},
   {path: 'settings/start', component: LpStartTutotialComponent,   canActivate: [AuthGuardGuard]}
 ];
 
