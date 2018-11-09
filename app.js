@@ -96,8 +96,10 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-app.post('/logout', (req, res, next) => {
+app.get('/logout', (req, res, next) => {
+  console.log("LOG OUT");
   req.logOut();
+  //TODO: logout does not work
   res.status(200)
 });
 
