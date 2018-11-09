@@ -3,6 +3,7 @@ import {EventSourcePolyfill} from 'ng-event-source';
 import {Deserializable} from "../deserializable.model";
 import {getNonAotConfig} from "@angular/cli/models/webpack-configs";
 import {ChatState} from "../send-api/EventChatState.model";
+import {SentRequestModel} from "./sentRequest.model";
 
 export class Conversation implements Deserializable<Conversation> {
   isConvStarted: boolean;
@@ -18,6 +19,7 @@ export class Conversation implements Deserializable<Conversation> {
   eventSource: EventSourcePolyfill;
   messages: Array<ChatMessage>;
   serverNotifications: Array<any>;
+  sentRequests: Array<SentRequestModel>;
   chatState: ChatState;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
@@ -30,6 +32,7 @@ export class Conversation implements Deserializable<Conversation> {
     this.serverNotifications = [];
     this.ext_consumer_id = Math.random().toString();
     this.consumerId = "";
+    this.sentRequests = [];
   }
 
   deserialize(input: any): Conversation {

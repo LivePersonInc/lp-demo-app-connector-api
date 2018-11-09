@@ -23,6 +23,7 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
+import {SentRequestModel} from "../../shared/models/conversation/sentRequest.model";
 
 
 @Injectable()
@@ -36,9 +37,20 @@ export class ConversationManager {
 
   public openConversation(conversation: Conversation): Observable<any> {
     return this.authenticate(conversation).flatMap((res: any) => {
-      return this.openConversationRequest(conversation).map((res: any) => {
+      const sendRequest = new SentRequestModel();
+
+      return this.openConversationRequest(conversation, sendRequest).map((res: any) => {
+        console.log(res);
+
+        console.log(res);
+        sendRequest.response = res;
+        sendRequest.title = "Open Conversation";
+        sendRequest.type = "POST";
+
         conversation.conversationId = res["convId"];
         conversation.isConvStarted = true;
+        conversation.sentRequests.push(sendRequest);
+
         this.subscribeToMessageNotifications(conversation);
       });
     })
@@ -50,18 +62,30 @@ export class ConversationManager {
         conversation.appJWT = res['access_token'];
         return this.getConsumerJWS(conversation)
           .map((res: any) => {
+            console.log(res);
             conversation.consumerJWS = res['token'];
           })
       });
   }
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
-      return this.sendMessageRequest(message, conversation).map(res => {
+      const sendRequest = new SentRequestModel();
+      return this.sendMessageRequest(message, conversation, sendRequest).map(res => {
+        console.log(res);
+
         let sequence;
         if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
+          sendRequest.response = res;
         }
         conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
+
+
+        sendRequest.title = "Send Message (Row Endpoint)";
+        sendRequest.type = "POST";
+
+
+        conversation.sentRequests.push(sendRequest);
 
         this.updateState(conversation);
       });
@@ -70,6 +94,8 @@ export class ConversationManager {
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
+      console.log(res);
+
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
       this.updateState(conversation);
@@ -120,15 +146,17 @@ export class ConversationManager {
     return this.sendApiService.getConsumerJWS(conversation.branId, body, httpOptions);
   }
 
-  private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
+  private sendMessageRequest(message: string, conversation: Conversation, sentRequest: SentRequestModel): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
+    sentRequest.payload = JSON.parse(body);
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
-  private openConversationRequest(conversation: Conversation): Observable<any> {
+  private openConversationRequest(conversation: Conversation, sentRequest: SentRequestModel): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
     const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
+    sentRequest.payload = JSON.parse(body);
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 

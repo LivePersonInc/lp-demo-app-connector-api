@@ -1,5 +1,6 @@
 :host{
   .wh-title{
+    z-index: 5;
     position: absolute;
     text-align: center;
     display: block;
@@ -30,6 +31,13 @@
   .pretty-json{
     text-align: left;
     font-size: 10px;
+  }
+
+  .request{
+    background-color: #fff8e4;
+  }
+  .response{
+    background-color: #e4f1ff;
   }
   .console-text{
     font-size: 10px;
