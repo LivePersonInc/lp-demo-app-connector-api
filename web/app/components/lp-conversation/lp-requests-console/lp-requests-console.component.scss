@@ -1,0 +1,51 @@
+:host{
+  .wh-title{
+    position: absolute;
+    text-align: center;
+    display: block;
+    width: calc(100% - 15px); //15px padding of the col
+    background: #a9a9a9b3;
+    height: 20px;
+    padding-top: 1px;
+  }
+  .container-custom{
+    display: block;
+    height: 100%;
+    background-color: #f3f3f3;
+    overflow-y: auto;
+    /*border: 1px solid gainsboro;
+    border-radius: 2px;*/
+    padding-top: 21px;
+
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+  .mat-expansion-panel-header-title {
+    color: #070B16;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .pretty-json{
+    text-align: left;
+    font-size: 10px;
+  }
+  .console-text{
+    font-size: 10px;
+    .notification-type{
+      font-size: 10px;
+      float: left;
+      display: inline-block;
+    }
+    .notification-status{
+      float: right;
+      display: inline-block;
+    }
+    .event-notification-text{
+      color:#006600;
+    }
+  }
+}
+
+
