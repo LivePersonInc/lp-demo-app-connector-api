@@ -16,62 +16,60 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   intercept(reportingRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const consoleRequest = new SentRequestModel();
-    consoleRequest.type = reportingRequest.method;
-    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
-    consoleRequest.payload = reportingRequest.body;
-
-    if(reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string'){
-      consoleRequest.payload = JSON.parse(reportingRequest.body);
-    }
-
-    consoleRequest.headers = reportingRequest.headers;
+    this.setConsoleRequestBeforeResponse(reportingRequest, consoleRequest);
 
     return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
-
-      if(this.conversationService.conversation && event.status && event.status != 204) {
-        consoleRequest.status = event.status;
-        consoleRequest.response = event.body;
-        if(this.isConsumerJWSRequest(event.body)){
-            consoleRequest.title = "Get Consumer JWS"
-        }
-        if(this.isAPPJWTRequest(event.body)){
-          consoleRequest.title = "Get APP JWT"
-
-        }
-        this.conversationService.conversation.sentRequests.push(consoleRequest);
-      }
-
+      this.setConsoleRequestAfterResponse(event, consoleRequest);
     }, (err: any) => {
-
       if (err instanceof HttpErrorResponse && this.conversationService.conversation) {
         if(this.conversationService.conversation) {
-          console.log("RequestConsoleInterceptor RESPONSE");
           consoleRequest.status = err.status;
-
           this.conversationService.conversation.sentRequests.push(consoleRequest);
         }
-
       }
     });
   }
 
-  getServiceNameByUrl(stringUrl: string): string{
+  private getServiceNameByUrl(stringUrl: string): string{
     const url = new URL(stringUrl);
     return url.pathname.split('/')[1];
   }
 
-  private isConsumerJWSRequest(responseBody: any): boolean {
-    if(responseBody && responseBody.hasOwnProperty("token")){
-      return true;
+  private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequestModel, ) {
+    consoleRequest.type = reportingRequest.method;
+    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
+    consoleRequest.headers = reportingRequest.headers;
+
+    if(reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string'){
+      consoleRequest.payload = JSON.parse(reportingRequest.body);
+    }else {
+      consoleRequest.payload = reportingRequest.body;
     }
-    return false;
+
+  }
+
+  private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
+    if(this.conversationService.conversation && event.status && event.status != 204) {
+      consoleRequest.status = event.status;
+      consoleRequest.response = event.body;
+
+      if(this.isConsumerJWSRequest(event.body)){
+        consoleRequest.title = "Get Consumer JWS"
+      }
+      if(this.isAPPJWTRequest(event.body)){
+        consoleRequest.title = "Get APP JWT"
+
+      }
+      this.conversationService.conversation.sentRequests.push(consoleRequest);
+    }
+  }
+
+  private isConsumerJWSRequest(responseBody: any): boolean {
+    return responseBody && responseBody.hasOwnProperty("token");
   }
 
   private isAPPJWTRequest(responseBody:any): boolean {
-    if(responseBody && responseBody.hasOwnProperty("token_type")){
-      return true;
-    }
-    return false;
+    return responseBody && responseBody.hasOwnProperty("token_type");
   }
 
 }
