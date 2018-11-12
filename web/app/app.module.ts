@@ -29,6 +29,7 @@ import {StateStorage} from './core/helpers/state-storage';
 import {LpLoginComponent} from './components/lp-login/lp-login.component';
 import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
 import {HistoryService} from "./core/services/history.service";
+import {RequestConsoleInterceptor} from "./core/interceptors/request-console.interceptor";
 
 @NgModule({
   declarations: [
@@ -70,7 +71,13 @@ import {HistoryService} from "./core/services/history.service";
     provide: HTTP_INTERCEPTORS,
     useClass: DomainHeaderInterceptor,
     multi: true,
-  }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestConsoleInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
