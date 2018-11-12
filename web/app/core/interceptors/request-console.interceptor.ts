@@ -19,6 +19,11 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     consoleRequest.type = reportingRequest.method;
     consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
     consoleRequest.payload = reportingRequest.body;
+
+    if(reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string'){
+      consoleRequest.payload = JSON.parse(reportingRequest.body);
+    }
+
     consoleRequest.headers = reportingRequest.headers;
 
     return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
