@@ -37,19 +37,17 @@ export class ConversationManager {
 
   public openConversation(conversation: Conversation): Observable<any> {
     return this.authenticate(conversation).flatMap((res: any) => {
-      const sendRequest = new SentRequestModel();
+      const sentRequest = new SentRequestModel();
+      sentRequest.title = "Open Conversation";
+      sentRequest.type = "POST";
 
-      return this.openConversationRequest(conversation, sendRequest).map((res: any) => {
-        console.log(res);
+      return this.openConversationRequest(conversation, sentRequest).map((res: any) => {
 
-        console.log(res);
-        sendRequest.response = res;
-        sendRequest.title = "Open Conversation";
-        sendRequest.type = "POST";
+        sentRequest.response = res;
 
         conversation.conversationId = res["convId"];
         conversation.isConvStarted = true;
-        conversation.sentRequests.push(sendRequest);
+        conversation.sentRequests.push(sentRequest);
 
         this.subscribeToMessageNotifications(conversation);
       });
@@ -57,35 +55,50 @@ export class ConversationManager {
   }
 
   public authenticate(conversation: Conversation): Observable<any> {
-    return this.getAppJWT(conversation)
+    const sentRequest = new SentRequestModel();
+    sentRequest.title = "Get APPJWT";
+    sentRequest.type = "POST";
+
+    return this.getAppJWT(conversation, sentRequest)
       .flatMap((res: any) => {
+        sentRequest.response = res;
+        conversation.sentRequests.push(sentRequest);
         conversation.appJWT = res['access_token'];
-        return this.getConsumerJWS(conversation)
+
+        ///
+        const sentRequest2 = new SentRequestModel();
+        sentRequest2.title = "Get Consumer JWT";
+        sentRequest2.type = "POST";
+
+        return this.getConsumerJWS(conversation, sentRequest2)
           .map((res: any) => {
             console.log(res);
+            sentRequest2.response = res;
+            conversation.sentRequests.push(sentRequest);
+
             conversation.consumerJWS = res['token'];
           })
       });
   }
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
-      const sendRequest = new SentRequestModel();
-      return this.sendMessageRequest(message, conversation, sendRequest).map(res => {
+      const sentRequest = new SentRequestModel();
+      return this.sendMessageRequest(message, conversation, sentRequest).map(res => {
         console.log(res);
 
         let sequence;
         if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
-          sendRequest.response = res;
+          sentRequest.response = res;
         }
         conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
 
 
-        sendRequest.title = "Send Message (Row Endpoint)";
-        sendRequest.type = "POST";
+        sentRequest.title = "Send Message (Row Endpoint)";
+        sentRequest.type = "POST";
 
 
-        conversation.sentRequests.push(sendRequest);
+        conversation.sentRequests.push(sentRequest);
 
         this.updateState(conversation);
       });
@@ -126,7 +139,7 @@ export class ConversationManager {
     }
   }
 
-  private getAppJWT(conversation: Conversation): Observable<any> {
+  private getAppJWT(conversation: Conversation,  sentRequest: SentRequestModel): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'content-type': 'application/x-www-form-urlencoded'
@@ -135,7 +148,7 @@ export class ConversationManager {
     return this.sendApiService.getAppJWT(conversation.branId, conversation.appKey, conversation.appSecret, httpOptions);
   }
 
-  private getConsumerJWS(conversation: Conversation): Observable<any> {
+  private getConsumerJWS(conversation: Conversation, sentRequest: SentRequestModel): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'content-type': 'application/json',
@@ -143,6 +156,7 @@ export class ConversationManager {
       })
     };
     const body = {"ext_consumer_id": conversation.ext_consumer_id};
+    sentRequest.payload = body;
     return this.sendApiService.getConsumerJWS(conversation.branId, body, httpOptions);
   }
 
