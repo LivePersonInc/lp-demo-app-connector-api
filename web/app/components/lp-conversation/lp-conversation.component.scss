@@ -26,10 +26,12 @@
   }
 
   .console-container{
-    margin-top:20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding-left: 0;
     height: 360px;
     display: block;
+
   }
 
   @media (min-width: 1200px) {
@@ -38,8 +40,11 @@
     }
   }
 
-  .mat-raised-button{
-    margin-top: 20px;
+  .close-conv-btn {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 500px;
   }
 
   .state-info {
