@@ -49,6 +49,9 @@
     .notification-status{
       float: right;
       display: inline-block;
+      .error{
+        color: red;
+      }
     }
     .event-notification-text{
       color:#006600;

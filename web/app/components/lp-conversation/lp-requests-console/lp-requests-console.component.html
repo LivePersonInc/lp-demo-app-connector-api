@@ -1,4 +1,4 @@
-<div class="wh-title">Sent Requests</div>
+<div class="wh-title">Requests</div>
 
 <div class="container-custom"  #notifications>
   <mat-accordion *ngIf="conversation">
@@ -13,8 +13,8 @@
 
             <div class="notification-status">
               <div class="text-right">
-                <span class="text-info">Status:</span>
-                <strong class="text-secondary">{{n.status}}</strong>
+                <span class="text-info "  >Status:</span>
+                <strong [ngClass]="{'error' : n.status >= 400 }">{{n.status}}</strong>
               </div>
             </div>
 
@@ -23,13 +23,13 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="row text-left">
-        <div class="col-12 " *ngIf="n.payload">
+        <div class="col-12" *ngIf="n.payload">
           <strong>Request Body: </strong>
           <pre class="pretty-json request">
             {{n.payload|json}}
           </pre>
         </div>
-        <div class="col-12"  *ngIf="n.response">
+        <div class="col-12" *ngIf="n.response">
           <strong>Response Body: </strong>
           <pre class="pretty-json response">
             {{n.response|json}}
