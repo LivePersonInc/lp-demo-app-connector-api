@@ -56,7 +56,7 @@ export class ConversationManager {
 
   public authenticate(conversation: Conversation): Observable<any> {
     const sentRequest = new SentRequestModel();
-    sentRequest.title = "Get APPJWT";
+    sentRequest.title = "Get APP JWT";
     sentRequest.type = "POST";
 
     return this.getAppJWT(conversation, sentRequest)
@@ -67,15 +67,14 @@ export class ConversationManager {
 
         ///
         const sentRequest2 = new SentRequestModel();
-        sentRequest2.title = "Get Consumer JWT";
+        sentRequest2.title = "Get Consumer JWS";
         sentRequest2.type = "POST";
 
         return this.getConsumerJWS(conversation, sentRequest2)
           .map((res: any) => {
             console.log(res);
             sentRequest2.response = res;
-            conversation.sentRequests.push(sentRequest);
-
+            conversation.sentRequests.push(sentRequest2);
             conversation.consumerJWS = res['token'];
           })
       });
@@ -84,15 +83,12 @@ export class ConversationManager {
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
       const sentRequest = new SentRequestModel();
       return this.sendMessageRequest(message, conversation, sentRequest).map(res => {
-        console.log(res);
-
         let sequence;
         if(res && res.body && res.body.hasOwnProperty('sequence')){
           sequence = res.body.sequence;
           sentRequest.response = res;
         }
         conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
-
 
         sentRequest.title = "Send Message (Row Endpoint)";
         sentRequest.type = "POST";
@@ -105,9 +101,15 @@ export class ConversationManager {
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
+    const sentRequest = new SentRequestModel();
+
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
-      console.log(res);
+      sentRequest.title = "CLOSE CONVERSATION";
+      sentRequest.type = "POST";
+      sentRequest.response = res;
+
+      conversation.sentRequests.push(sentRequest);
 
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;

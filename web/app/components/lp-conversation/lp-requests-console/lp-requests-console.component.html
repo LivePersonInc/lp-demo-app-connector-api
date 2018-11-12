@@ -23,13 +23,13 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="row text-left">
-        <div class="col-7 ">
+        <div class="col-7 " *ngIf="n.payload">
           <strong>Request Body: </strong>
           <pre class="pretty-json request">
-            {{n|json: 2}}
+            {{n.payload|json: 2}}
           </pre>
         </div>
-        <div class="col-5 ">
+        <div class="col-5" [ngClass]="{'col-12': !n.payload}">
           <strong>Response Body: </strong>
           <pre class="pretty-json response">
             {{n.response|json: 2}}
