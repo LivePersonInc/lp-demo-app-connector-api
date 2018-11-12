@@ -14,43 +14,36 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   constructor(private conversationService: ConversationService) {}
 
   intercept(reportingRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    const consoleRequest = new SentRequestModel();
+    consoleRequest.type = reportingRequest.method;
+    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
+    consoleRequest.payload = reportingRequest.body;
+    consoleRequest.headers = reportingRequest.headers;
+
     return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
 
-      if(this.conversationService.conversation && event.status && event.status != 204) { // we dont want 204 calls of CORS
-        if(this.conversationService.conversation) {
-          const consoleRequest = new SentRequestModel();
-
-          consoleRequest.type = reportingRequest.method;
-
-          consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
-          consoleRequest.payload = reportingRequest.body;
-          consoleRequest.headers = reportingRequest.headers;
-          console.log("RequestConsoleInterceptor RESPONSE");
-          consoleRequest.status = event.status;
-          consoleRequest.response = event.body;
-          if(this.isConsumerJWSRequest(event.body)){
+      if(this.conversationService.conversation && event.status && event.status != 204) {
+        consoleRequest.status = event.status;
+        consoleRequest.response = event.body;
+        if(this.isConsumerJWSRequest(event.body)){
             consoleRequest.title = "Get Consumer JWS"
-          }
-          if(this.isAPPJWTRequest(event.body)){
-            consoleRequest.title = "Get APP JWT"
-
-          }
-          this.conversationService.conversation.sentRequests.push(consoleRequest);
         }
+        if(this.isAPPJWTRequest(event.body)){
+          consoleRequest.title = "Get APP JWT"
 
+        }
+        this.conversationService.conversation.sentRequests.push(consoleRequest);
       }
 
     }, (err: any) => {
-      console.log("RequestConsoleInterceptor RESPONSE");
 
       if (err instanceof HttpErrorResponse && this.conversationService.conversation) {
-        // do error handling here
-
         if(this.conversationService.conversation) {
           console.log("RequestConsoleInterceptor RESPONSE");
-          //consoleRequest.status = err.status;
+          consoleRequest.status = err.status;
 
-         // this.conversationService.conversation.sentRequests.push(consoleRequest);
+          this.conversationService.conversation.sentRequests.push(consoleRequest);
         }
 
       }
