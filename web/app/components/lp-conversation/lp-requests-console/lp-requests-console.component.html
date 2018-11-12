@@ -22,6 +22,7 @@
 
         </mat-panel-title>
       </mat-expansion-panel-header>
+
       <div class="row text-left">
         <div class="col-12" *ngIf="n.payload">
           <strong>Request Body: </strong>
@@ -29,13 +30,18 @@
             {{n.payload|json}}
           </pre>
         </div>
-        <div class="col-12" *ngIf="n.response">
+        <div class="col-12 " *ngIf="n.response">
           <strong>Response Body: </strong>
           <pre class="pretty-json response">
             {{n.response|json}}
           </pre>
         </div>
-
+        <div class="col-12" *ngIf="n.headers">
+          <strong>Request Headers: </strong>
+          <pre class="pretty-json headers">
+            {{n.headers|json}}
+          </pre>
+        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

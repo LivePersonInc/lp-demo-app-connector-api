@@ -6,11 +6,4 @@ export class SentRequestModel {
   status: number;
   headers: any;
 
-  /*constructor(title: string, type: string, payload: string, response:string, stauts: number) {
-    this.title = title;
-    this.type = type;
-    this.payload = payload;
-    this.response = response;
-    this.status = stauts;
-  }*/
 }

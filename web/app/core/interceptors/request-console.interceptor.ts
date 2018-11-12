@@ -30,20 +30,39 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     });
   }
 
-  private getServiceNameByUrl(stringUrl: string): string{
-    const url = new URL(stringUrl);
-    return url.pathname.split('/')[1];
-  }
 
   private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequestModel, ) {
     consoleRequest.type = reportingRequest.method;
     consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
-    consoleRequest.headers = reportingRequest.headers;
+
+    //Set headers object
+    const keys = reportingRequest.headers.keys();
+    consoleRequest.headers = [];
+    for(let i=0; i < keys.length; i++ ){
+      consoleRequest.headers.push("{"+ keys[i] + ": " + reportingRequest.headers.get(keys[i])+"}");}
 
     if(reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string'){
       consoleRequest.payload = JSON.parse(reportingRequest.body);
     }else {
       consoleRequest.payload = reportingRequest.body;
+    }
+
+    if(consoleRequest.title === 'ums'){
+      if(consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')){
+        consoleRequest.title = consoleRequest.payload.type;
+      }
+      if(this.isCloseConversation(reportingRequest.url)){
+        consoleRequest.title = "CLOSE CONVERSATION";
+      }
+    }
+    if(this.isOpenConversation(reportingRequest.url)){
+      consoleRequest.title = "OPEN CONVERSATION";
+    }
+    if(this.isConsumerJWSRequest(reportingRequest.url)){
+      consoleRequest.title = "Get Consumer JWS";
+    }
+    if(this.isAPPJWTRequest(reportingRequest.url)){
+      consoleRequest.title = "Get APP JWT";
     }
 
   }
@@ -53,23 +72,28 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
       consoleRequest.status = event.status;
       consoleRequest.response = event.body;
 
-      if(this.isConsumerJWSRequest(event.body)){
-        consoleRequest.title = "Get Consumer JWS"
-      }
-      if(this.isAPPJWTRequest(event.body)){
-        consoleRequest.title = "Get APP JWT"
-
-      }
       this.conversationService.conversation.sentRequests.push(consoleRequest);
     }
   }
 
-  private isConsumerJWSRequest(responseBody: any): boolean {
-    return responseBody && responseBody.hasOwnProperty("token");
+  private getServiceNameByUrl(stringUrl: string): string{
+    const url = new URL(stringUrl);
+    return url.pathname.split('/')[1];
   }
 
-  private isAPPJWTRequest(responseBody:any): boolean {
-    return responseBody && responseBody.hasOwnProperty("token_type");
+  private isConsumerJWSRequest(stringUrl:string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] == 'account' ;
+  }
+
+  private isAPPJWTRequest(stringUrl:string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] == 'sentinel' ;
+  }
+
+  private isOpenConversation(stringUrl:string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] == 'openconv' ;
+  }
+  private isCloseConversation(stringUrl: string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] == 'close' ;
   }
 
 }
