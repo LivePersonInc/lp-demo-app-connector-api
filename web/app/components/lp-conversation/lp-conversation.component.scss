@@ -1,8 +1,7 @@
 :host {
   display: block;
   height: 100%;
-  padding-top: 20px;
-  padding-bottom: 0;
+  padding-bottom: 20px;
   font-size: 12px;
   .basic-form {
     width: 100%;
@@ -31,7 +30,6 @@
     padding-left: 0;
     height: 360px;
     display: block;
-
   }
 
   @media (min-width: 1200px) {
@@ -42,7 +40,6 @@
 
   .close-conv-btn {
     width: 100%;
-    margin-top: 5px;
     margin-bottom: 5px;
     max-width: 500px;
   }
