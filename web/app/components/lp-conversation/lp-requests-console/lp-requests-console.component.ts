@@ -10,11 +10,32 @@ export class LpRequestsConsoleComponent implements OnInit {
   @Input()
   public conversation: Conversation;
 
+  public lasLengthOfRequests  = 0;
+
   @ViewChild('notifications') private notifications: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
+    this.lasLengthOfRequests = this.conversation.sentRequests.length;
   }
 
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked(){
+    if(this.conversation.sentRequests.length > this.lasLengthOfRequests){
+      this.scrollToBottom();
+      this.lasLengthOfRequests = this.conversation.sentRequests.length;
+    }
+  }
+
+  public scrollToBottom() {
+    try {
+      this.notifications.nativeElement.scrollTop = this.notifications.nativeElement.scrollHeight;
+    } catch (err) {
+
+    }
+  }
 }
