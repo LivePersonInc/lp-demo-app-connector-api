@@ -78,7 +78,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
-    if(this.conversationService.conversation && event.status && event.status != 204) {
+    if(this.conversationService.conversation && event.status && event.status !== 204) {
       consoleRequest.status = event.status;
       consoleRequest.response = event.body;
 
@@ -92,18 +92,18 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isConsumerJWSRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] == 'account' ;
+    return new URL(stringUrl).pathname.split('/')[2] === 'account' ;
   }
 
   private isAPPJWTRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] == 'sentinel' ;
+    return new URL(stringUrl).pathname.split('/')[1] === 'sentinel' ;
   }
 
   private isOpenConversation(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] == 'openconv' ;
+    return new URL(stringUrl).pathname.split('/')[2] === 'openconv' ;
   }
   private isCloseConversation(stringUrl: string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] == 'close' ;
+    return new URL(stringUrl).pathname.split('/')[2] === 'close' ;
   }
 
 }
