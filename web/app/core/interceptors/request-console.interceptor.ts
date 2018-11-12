@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
+import {
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse,
+  HttpResponse
+} from '@angular/common/http';
 import {ConversationService} from "../services/conversation.service";
 import {SentRequestModel} from "../../shared/models/conversation/sentRequest.model";
 import { Observable } from 'rxjs/Observable';
@@ -11,30 +13,46 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
 
   constructor(private conversationService: ConversationService) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const domainKey = this.getServiceNameByUrl(request.url);
+  intercept(reportingRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
 
-    console.log("RequestConsoleInterceptor");
+      if(this.conversationService.conversation && event.status && event.status != 204) { // we dont want 204 calls of CORS
+        if(this.conversationService.conversation) {
+          const consoleRequest = new SentRequestModel();
 
-    if(this.conversationService.conversation) {
-       const consoleRequest = new SentRequestModel();
-      consoleRequest.type = request.method;
-      consoleRequest.title = domainKey;
-      consoleRequest.payload = request.body;
-      consoleRequest.headers = request.headers;
+          consoleRequest.type = reportingRequest.method;
 
-       this.conversationService.conversation.sentRequests.push(consoleRequest);
-    }
+          consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
+          consoleRequest.payload = reportingRequest.body;
+          consoleRequest.headers = reportingRequest.headers;
+          console.log("RequestConsoleInterceptor RESPONSE");
+          consoleRequest.status = event.status;
+          consoleRequest.response = event.body;
+          if(this.isConsumerJWSRequest(event.body)){
+            consoleRequest.title = "Get Consumer JWS"
+          }
+          if(this.isAPPJWTRequest(event.body)){
+            consoleRequest.title = "Get APP JWT"
 
-    return next.handle(request).do((event: HttpEvent<any>) => {
-      console.log("RequestConsoleInterceptor RESPONSE");
+          }
+          this.conversationService.conversation.sentRequests.push(consoleRequest);
+        }
 
+      }
 
     }, (err: any) => {
       console.log("RequestConsoleInterceptor RESPONSE");
 
-      if (err instanceof HttpErrorResponse) {
+      if (err instanceof HttpErrorResponse && this.conversationService.conversation) {
         // do error handling here
+
+        if(this.conversationService.conversation) {
+          console.log("RequestConsoleInterceptor RESPONSE");
+          //consoleRequest.status = err.status;
+
+         // this.conversationService.conversation.sentRequests.push(consoleRequest);
+        }
+
       }
     });
   }
@@ -43,4 +61,19 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     const url = new URL(stringUrl);
     return url.pathname.split('/')[1];
   }
+
+  private isConsumerJWSRequest(responseBody: any): boolean {
+    if(responseBody && responseBody.hasOwnProperty("token")){
+      return true;
+    }
+    return false;
+  }
+
+  private isAPPJWTRequest(responseBody:any): boolean {
+    if(responseBody && responseBody.hasOwnProperty("token_type")){
+      return true;
+    }
+    return false;
+  }
+
 }
