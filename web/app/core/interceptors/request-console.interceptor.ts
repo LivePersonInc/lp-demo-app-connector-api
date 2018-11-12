@@ -16,10 +16,13 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   intercept(reportingRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const consoleRequest = new SentRequestModel();
+
     this.setConsoleRequestBeforeResponse(reportingRequest, consoleRequest);
 
     return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
+
       this.setConsoleRequestAfterResponse(event, consoleRequest);
+
     }, (err: any) => {
       if (err instanceof HttpErrorResponse && this.conversationService.conversation) {
         if(this.conversationService.conversation) {
@@ -30,41 +33,48 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     });
   }
 
-
   private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequestModel, ) {
     consoleRequest.type = reportingRequest.method;
-    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url);
 
-    //Set headers object
+    this.addHeadestToConsoleRequest(reportingRequest, consoleRequest);
+    this.setTittleToConsoleRequest(consoleRequest, reportingRequest);
+
+  }
+
+  private addHeadestToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
     const keys = reportingRequest.headers.keys();
     consoleRequest.headers = [];
-    for(let i=0; i < keys.length; i++ ){
-      consoleRequest.headers.push("{"+ keys[i] + ": " + reportingRequest.headers.get(keys[i])+"}");}
-
-    if(reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string'){
-      consoleRequest.payload = JSON.parse(reportingRequest.body);
-    }else {
-      consoleRequest.payload = reportingRequest.body;
+    for (let i = 0; i < keys.length; i++) {
+      consoleRequest.headers.push("{" + keys[i] + ": " + reportingRequest.headers.get(keys[i]) + "}");
     }
 
-    if(consoleRequest.title === 'ums'){
-      if(consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')){
+    if (reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string') {
+      consoleRequest.payload = JSON.parse(reportingRequest.body);
+    } else {
+      consoleRequest.payload = reportingRequest.body;
+    }
+  }
+
+  private setTittleToConsoleRequest(consoleRequest: SentRequestModel, reportingRequest: HttpRequest<any>) {
+    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
+
+    if (consoleRequest.title === 'ums') {
+      if (consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')) {
         consoleRequest.title = consoleRequest.payload.type;
       }
-      if(this.isCloseConversation(reportingRequest.url)){
+      if (this.isCloseConversation(reportingRequest.url)) {
         consoleRequest.title = "CLOSE CONVERSATION";
       }
     }
-    if(this.isOpenConversation(reportingRequest.url)){
+    if (this.isOpenConversation(reportingRequest.url)) {
       consoleRequest.title = "OPEN CONVERSATION";
     }
-    if(this.isConsumerJWSRequest(reportingRequest.url)){
+    if (this.isConsumerJWSRequest(reportingRequest.url)) {
       consoleRequest.title = "Get Consumer JWS";
     }
-    if(this.isAPPJWTRequest(reportingRequest.url)){
+    if (this.isAPPJWTRequest(reportingRequest.url)) {
       consoleRequest.title = "Get APP JWT";
     }
-
   }
 
   private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
