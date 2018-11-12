@@ -10,14 +10,14 @@ export class LpRequestsConsoleComponent implements OnInit {
   @Input()
   public conversation: Conversation;
 
-  public lasLengthOfRequests  = 0;
+  public lastLengthOfRequests  = 0;
 
   @ViewChild('notifications') private notifications: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
-    this.lasLengthOfRequests = this.conversation.sentRequests.length;
+    this.lastLengthOfRequests = this.conversation.sentRequests.length;
   }
 
   ngAfterViewInit() {
@@ -25,9 +25,9 @@ export class LpRequestsConsoleComponent implements OnInit {
   }
 
   ngAfterViewChecked(){
-    if(this.conversation.sentRequests.length > this.lasLengthOfRequests){
+    if(this.conversation.sentRequests.length > this.lastLengthOfRequests){
       this.scrollToBottom();
-      this.lasLengthOfRequests = this.conversation.sentRequests.length;
+      this.lastLengthOfRequests = this.conversation.sentRequests.length;
     }
   }
 
