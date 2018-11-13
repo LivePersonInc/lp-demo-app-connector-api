@@ -17,7 +17,9 @@ export class LpRequestsConsoleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.lastLengthOfRequests = this.conversation.sentRequests.length;
+    if(this.conversation && this.conversation.sentRequests){
+      this.lastLengthOfRequests = this.conversation.sentRequests.length;
+    }
   }
 
   ngAfterViewInit() {
@@ -25,7 +27,7 @@ export class LpRequestsConsoleComponent implements OnInit {
   }
 
   ngAfterViewChecked(){
-    if(this.conversation.sentRequests.length > this.lastLengthOfRequests){
+    if(this.conversation && this.conversation.sentRequests.length > this.lastLengthOfRequests){
       this.scrollToBottom();
       this.lastLengthOfRequests = this.conversation.sentRequests.length;
     }
