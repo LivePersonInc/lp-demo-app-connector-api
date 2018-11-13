@@ -24,11 +24,9 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
       this.setConsoleRequestAfterResponse(event, consoleRequest);
 
     }, (err: any) => {
-      if (err instanceof HttpErrorResponse && this.conversationService.conversation) {
-        if(this.conversationService.conversation) {
-          consoleRequest.status = err.status;
-          this.conversationService.conversation.sentRequests.push(consoleRequest);
-        }
+      if (this.isAnHttpErrorResponseAndConversationExists(err)) {
+        consoleRequest.status = err.status;
+        this.conversationService.conversation.sentRequests.push(consoleRequest);
       }
     });
   }
@@ -37,18 +35,19 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     consoleRequest.type = reportingRequest.method;
 
     this.addHeadersToConsoleRequest(reportingRequest, consoleRequest);
+    this.addBodyToConsoleRequest(reportingRequest, consoleRequest);
     this.setTittleToConsoleRequest(reportingRequest, consoleRequest);
-
   }
 
   private addHeadersToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
     const keys = reportingRequest.headers.keys();
     consoleRequest.headers = [];
+    keys.forEach(key => {
+      consoleRequest.headers.push("{" + key + ": " + reportingRequest.headers.get(key) + "}");
+    });
+  }
 
-    for (let i = 0; i < keys.length; i++) {
-      consoleRequest.headers.push("{" + keys[i] + ": " + reportingRequest.headers.get(keys[i]) + "}");
-    }
-
+  private addBodyToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
     if (reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string') {
       consoleRequest.payload = JSON.parse(reportingRequest.body);
     } else {
@@ -71,7 +70,6 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     }else {
       consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
     }
-
   }
 
   private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
@@ -99,8 +97,13 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   private isOpenConversation(stringUrl:string): boolean {
     return new URL(stringUrl).pathname.split('/')[2] === 'openconv' ;
   }
+
   private isCloseConversation(stringUrl: string): boolean {
     return new URL(stringUrl).pathname.split('/')[2] === 'close' ;
+  }
+
+  private isAnHttpErrorResponseAndConversationExists(err: any) {
+    return err instanceof HttpErrorResponse && this.conversationService.conversation;
   }
 
 }
