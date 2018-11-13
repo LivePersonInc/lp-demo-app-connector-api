@@ -8,7 +8,7 @@ inaccuracies, errors, bugs or interruptions.  LivePerson will not be
 liable for any claims,  damages or liability related to the sample
 applications and code or your use of them.
 
-# Demo App for connector API
+# Demo App for Connector API
 
 This project contains a demo app for the Connector API that can create a conversation within a consumer and an agent. 
 You can send messages and events with it as well as 
@@ -22,7 +22,7 @@ understanding.
 `Important!`
 
 This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is not using
-any database, sensitive data are saved in your browser local storage (this will be changed in the future).
+any database, sensitive data is saved in your browser local storage (this will be changed in the future).
 
 ## Table of Contents
   - [Requirements](#requirements)
