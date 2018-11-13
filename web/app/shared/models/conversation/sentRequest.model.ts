@@ -1,4 +1,4 @@
-export class SentRequestModel {
+export class SentRequest {
   title: string; //i.e: Open Conversation, Send Row, Close, Get History....
   type: string; //POST, GET..
   payload: any;

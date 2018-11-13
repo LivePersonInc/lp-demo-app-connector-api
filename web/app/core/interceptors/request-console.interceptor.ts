@@ -4,7 +4,7 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import {ConversationService} from "../services/conversation.service";
-import {SentRequestModel} from "../../shared/models/conversation/sentRequest.model";
+import {SentRequest} from "../../shared/models/conversation/sentRequest.model";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
@@ -15,7 +15,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
 
   intercept(reportingRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const consoleRequest = new SentRequestModel();
+    const consoleRequest = new SentRequest();
 
     this.setConsoleRequestBeforeResponse(reportingRequest, consoleRequest);
 
@@ -31,7 +31,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     });
   }
 
-  private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequestModel, ) {
+  private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequest, ) {
     consoleRequest.type = reportingRequest.method;
 
     this.addHeadersToConsoleRequest(reportingRequest, consoleRequest);
@@ -39,7 +39,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     this.setTittleToConsoleRequest(reportingRequest, consoleRequest);
   }
 
-  private addHeadersToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
+  private addHeadersToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequest) {
     const keys = reportingRequest.headers.keys();
     consoleRequest.headers = [];
     keys.forEach(key => {
@@ -47,7 +47,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     });
   }
 
-  private addBodyToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
+  private addBodyToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequest) {
     if (reportingRequest.hasOwnProperty('body') && typeof reportingRequest.body == 'string') {
       consoleRequest.payload = JSON.parse(reportingRequest.body);
     } else {
@@ -55,7 +55,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     }
   }
 
-  private setTittleToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel,) {
+  private setTittleToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequest,) {
 
     if(consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')) {
         consoleRequest.title = consoleRequest.payload.type;
@@ -72,7 +72,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     }
   }
 
-  private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
+  private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequest, ) {
     if(this.conversationService.conversation && event.status && event.status !== 204) {
       consoleRequest.status = event.status;
       consoleRequest.response = event.body;
