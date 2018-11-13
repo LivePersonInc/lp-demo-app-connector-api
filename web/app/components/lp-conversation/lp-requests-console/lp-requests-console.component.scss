@@ -31,7 +31,16 @@
   .pretty-json{
     text-align: left;
     font-size: 10px;
-    background-color: #fbf0d0;
+  }
+
+  .request{
+    background-color: #fff8e4;
+  }
+  .response{
+    background-color: #e4f1ff;
+  }
+  .headers {
+    background-color: #e3ffde;
   }
   .console-text{
     font-size: 10px;
@@ -43,13 +52,14 @@
     .notification-status{
       float: right;
       display: inline-block;
+      .error{
+        color: red;
+      }
     }
     .event-notification-text{
       color:#006600;
     }
   }
 }
-
-
 
 

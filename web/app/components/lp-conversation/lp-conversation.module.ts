@@ -8,6 +8,7 @@ import {LpChatBoxMessageComponent} from "./lp-chat-box/lp-chat-box-message/lp-ch
 import {MaterialModule} from "../../material.module";
 import {FormsModule} from '@angular/forms';
 import { LpConversationFormComponent } from './lp-conversation-form/lp-conversation-form.component';
+import {LpRequestsConsoleComponent} from "./lp-requests-console/lp-requests-console.component";
 
 @NgModule({
   imports: [
@@ -21,14 +22,16 @@ import { LpConversationFormComponent } from './lp-conversation-form/lp-conversat
     LpChatBoxComponent,
     LpChatBoxFooterComponent,
     LpChatBoxMessageComponent,
-    LpConversationFormComponent
+    LpConversationFormComponent,
+    LpRequestsConsoleComponent
   ],
   exports: [
     LpConversationComponent,
     LpConsoleComponent,
     LpChatBoxComponent,
     LpChatBoxFooterComponent,
-    LpChatBoxMessageComponent
+    LpChatBoxMessageComponent,
+    LpRequestsConsoleComponent
   ]
 })
 export class LpConversationModule { }

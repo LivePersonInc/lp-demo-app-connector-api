@@ -1,0 +1,48 @@
+<div class="wh-title">Requests</div>
+
+<div class="container-custom"  #notifications>
+  <mat-accordion *ngIf="conversation">
+    <mat-expansion-panel *ngFor="let n of conversation.sentRequests">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="container-fluid console-text">
+
+            <div class=""><i>{{n.type}}</i></div>
+            &ensp;&ensp;
+            <div *ngIf="n.type" class="text-secondary notification-type"><i>{{n.title}}</i></div>
+
+            <div class="notification-status">
+              <div class="text-right">
+                <span class="text-info "  >Status:</span>
+                <strong [ngClass]="{'error' : n.status >= 400 }">{{n.status}}</strong>
+              </div>
+            </div>
+
+          </div>
+
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="row text-left">
+        <div class="col-12" *ngIf="n.payload">
+          <strong>Request Body: </strong>
+          <pre class="pretty-json request">
+            {{n.payload|json}}
+          </pre>
+        </div>
+        <div class="col-12 " *ngIf="n.response">
+          <strong>Response Body: </strong>
+          <pre class="pretty-json response">
+            {{n.response|json}}
+          </pre>
+        </div>
+        <div class="col-12" *ngIf="n.headers">
+          <strong>Request Headers: </strong>
+          <pre class="pretty-json headers">
+            {{n.headers|json}}
+          </pre>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

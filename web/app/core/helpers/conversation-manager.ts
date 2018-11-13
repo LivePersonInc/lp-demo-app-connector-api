@@ -56,15 +56,15 @@ export class ConversationManager {
   }
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
-      return this.sendMessageRequest(message, conversation).map(res => {
-        let sequence;
-        if(res && res.body && res.body.hasOwnProperty('sequence')){
-          sequence = res.body.sequence;
-        }
-        conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
+    return this.sendMessageRequest(message, conversation).map(res => {
+      let sequence;
+      if(res && res.body && res.body.hasOwnProperty('sequence')){
+        sequence = res.body.sequence;
+      }
+      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
 
-        this.updateState(conversation);
-      });
+      this.updateState(conversation);
+    });
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
@@ -231,7 +231,7 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
-     try {
+    try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
@@ -284,7 +284,7 @@ export class ConversationManager {
       "CUSTOM",
       campaignInfo,
       "MESSAGING",
-       brandId,
+      brandId,
       "-1"
     );
     let requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
