@@ -36,14 +36,15 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequestModel, ) {
     consoleRequest.type = reportingRequest.method;
 
-    this.addHeadestToConsoleRequest(reportingRequest, consoleRequest);
-    this.setTittleToConsoleRequest(consoleRequest, reportingRequest);
+    this.addHeadersToConsoleRequest(reportingRequest, consoleRequest);
+    this.setTittleToConsoleRequest(reportingRequest, consoleRequest);
 
   }
 
-  private addHeadestToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
+  private addHeadersToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel) {
     const keys = reportingRequest.headers.keys();
     consoleRequest.headers = [];
+
     for (let i = 0; i < keys.length; i++) {
       consoleRequest.headers.push("{" + keys[i] + ": " + reportingRequest.headers.get(keys[i]) + "}");
     }
@@ -55,26 +56,22 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
     }
   }
 
-  private setTittleToConsoleRequest(consoleRequest: SentRequestModel, reportingRequest: HttpRequest<any>) {
-    consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
+  private setTittleToConsoleRequest(reportingRequest: HttpRequest<any>, consoleRequest: SentRequestModel,) {
 
-    if (consoleRequest.title === 'ums') {
-      if (consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')) {
+    if(consoleRequest.payload && consoleRequest.payload.hasOwnProperty('type')) {
         consoleRequest.title = consoleRequest.payload.type;
-      }
-      if (this.isCloseConversation(reportingRequest.url)) {
-        consoleRequest.title = "CLOSE CONVERSATION";
-      }
-    }
-    if (this.isOpenConversation(reportingRequest.url)) {
+    }else if (this.isCloseConversation(reportingRequest.url)) {
+      consoleRequest.title = "CLOSE CONVERSATION";
+    }else if (this.isOpenConversation(reportingRequest.url)) {
       consoleRequest.title = "OPEN CONVERSATION";
-    }
-    if (this.isConsumerJWSRequest(reportingRequest.url)) {
+    }else if (this.isConsumerJWSRequest(reportingRequest.url)) {
       consoleRequest.title = "Get Consumer JWS";
-    }
-    if (this.isAPPJWTRequest(reportingRequest.url)) {
+    } else if (this.isAPPJWTRequest(reportingRequest.url)) {
       consoleRequest.title = "Get APP JWT";
+    }else {
+      consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
     }
+
   }
 
   private setConsoleRequestAfterResponse(event: HttpResponse<any>,consoleRequest: SentRequestModel, ) {
