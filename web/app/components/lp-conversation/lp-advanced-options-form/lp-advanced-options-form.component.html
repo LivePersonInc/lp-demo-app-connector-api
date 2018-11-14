@@ -2,15 +2,15 @@
   <div class="row" *ngIf="conversation">
       <div class="col-sm-5">
         <strong>Features:</strong>
-        <ul  class="features-list">
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">AUTO_MESSAGES</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary"> RICH_CONTENT</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">MULTI_DIALOG</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">QUICK_REPLIES</mat-checkbox></li>
+        <ul class="features-list">
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">AUTO MESSAGES</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">RICH CONTENT</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">MULTI DIALOG</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">QUICK REPLIES</mat-checkbox></li>
         </ul>
       </div>
       <div class="col-sm-7">
-        <mat-form-field  class="full-width" color="accent">
+        <mat-form-field style="padding-top: 10px" class="full-width">
           <input matInput placeholder="CONSUMEER NAME" required [(ngModel)]="_conversation.userName"
                  [disabled]="_conversation && _conversation.isConvStarted"
                  (ngModelChange)="onChange($event)"
