@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-  selector: 'lp-conversation-form',
-  templateUrl: './lp-conversation-form.component.html',
-  styleUrls: ['./lp-conversation-form.component.scss']
+  selector: 'lp-advances-options-form',
+  templateUrl: './lp-advanced-options-form.component.html',
+  styleUrls: ['./lp-advanced-options-form.component.scss']
 })
-export class LpConversationFormComponent implements OnInit {
+export class LpAdvancedOptionsFormComponent implements OnInit {
   private _conversation: Conversation;
 
   @Input() set conversation(conversation: Conversation){
@@ -18,6 +19,9 @@ export class LpConversationFormComponent implements OnInit {
   }
 
   constructor() { }
+
+  @Output() public consumerNameChange = new EventEmitter<string>();
+
 
   ngOnInit() {}
 
