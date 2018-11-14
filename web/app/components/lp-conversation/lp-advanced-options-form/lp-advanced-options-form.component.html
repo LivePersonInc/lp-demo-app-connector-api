@@ -3,10 +3,10 @@
       <div class="col-sm-5">
         <strong>Features:</strong>
         <ul  class="features-list">
-          <li><mat-checkbox color="primary">AUTO_MESSAGES</mat-checkbox></li>
-          <li><mat-checkbox color="primary"> RICH_CONTENT</mat-checkbox></li>
-          <li><mat-checkbox color="primary">MULTI_DIALOG</mat-checkbox></li>
-          <li><mat-checkbox color="primary">QUICK_REPLIES</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">AUTO_MESSAGES</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary"> RICH_CONTENT</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">MULTI_DIALOG</mat-checkbox></li>
+          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">QUICK_REPLIES</mat-checkbox></li>
         </ul>
       </div>
       <div class="col-sm-7">
@@ -17,12 +17,11 @@
                  [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput placeholder="SKILL ID" value="235235">
+          <input  [disabled]="_conversation && _conversation.isConvStarted" matInput placeholder="SKILL ID" value="235235">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input matInput placeholder="CONTEXT" value="SharkContext">
+          <input [disabled]="_conversation && _conversation.isConvStarted"  matInput placeholder="CONTEXT" value="SharkContext">
         </mat-form-field>
       </div>
-
   </div>
 </div>
