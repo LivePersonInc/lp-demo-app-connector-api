@@ -21,6 +21,9 @@ export class Conversation implements Deserializable<Conversation> {
   serverNotifications: Array<any>;
   sentRequests: Array<SentRequest>;
   chatState: ChatState;
+  features: Array<string>;
+  skillId: string;
+  context_name: string;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;
@@ -33,6 +36,9 @@ export class Conversation implements Deserializable<Conversation> {
     this.ext_consumer_id = Math.random().toString();
     this.consumerId = "";
     this.sentRequests = [];
+    this.features = [];
+    this.skillId = "-1";
+    this.features = [];
   }
 
   deserialize(input: any): Conversation {
@@ -48,6 +54,9 @@ export class Conversation implements Deserializable<Conversation> {
     this.userName = input.userName;
     this.eventSource = null;
     this.chatState = ChatState.ACTIVE;
+    this.features = input.features;
+    this.skillId = input.skillId;
+    this.context_name = input.context_name;
 
     if(input.messages){
       this.messages = [];

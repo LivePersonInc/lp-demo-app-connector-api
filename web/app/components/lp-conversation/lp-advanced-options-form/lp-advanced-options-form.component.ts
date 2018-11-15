@@ -14,6 +14,14 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
     this._conversation = conversation;
   };
 
+  public checkOptions = [
+    {name: "AUTO_MESSAGES", value: false},
+    {name: "RICH_CONTENT", value: false},
+    {name: "QUICK_REPLIES", value: false},
+    {name: "MULTI_DIALOG", value: false}
+  ];
+
+
   get conversation(): Conversation{
     return this._conversation
   }
@@ -22,9 +30,12 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
 
   @Output() public consumerNameChange = new EventEmitter<string>();
 
-
+  public isConvStarted(): boolean{
+    return this._conversation && this._conversation.isConvStarted;
+  }
   ngOnInit() {}
 
-
-
+  onChange(consumerName: string) {
+    this.consumerNameChange.emit(consumerName);
+  }
 }

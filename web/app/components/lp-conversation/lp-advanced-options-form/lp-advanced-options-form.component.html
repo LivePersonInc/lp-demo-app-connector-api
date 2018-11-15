@@ -2,25 +2,24 @@
   <div class="row" *ngIf="conversation">
       <div class="col-sm-5">
         <strong>Features:</strong>
-        <ul class="features-list">
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">AUTO MESSAGES</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">RICH CONTENT</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">MULTI DIALOG</mat-checkbox></li>
-          <li><mat-checkbox  [disabled]="_conversation && _conversation.isConvStarted" color="primary">QUICK REPLIES</mat-checkbox></li>
+        <ul class="features-list" >
+          <li *ngFor="let option of checkOptions">
+            <mat-checkbox  [disabled]="isConvStarted()"[checked]="option.value" color="primary">{{option.name}}</mat-checkbox>
+          </li>
         </ul>
       </div>
       <div class="col-sm-7">
         <mat-form-field style="padding-top: 10px" class="full-width">
           <input matInput placeholder="CONSUMEER NAME" required [(ngModel)]="_conversation.userName"
-                 [disabled]="_conversation && _conversation.isConvStarted"
+                 [disabled]="isConvStarted()"
                  (ngModelChange)="onChange($event)"
                  [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="_conversation && _conversation.isConvStarted" matInput placeholder="SKILL ID" value="235235">
+          <input  [disabled]="isConvStarted()" matInput placeholder="SKILL ID" value="-1">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input [disabled]="_conversation && _conversation.isConvStarted"  matInput placeholder="CONTEXT" value="SharkContext">
+          <input [disabled]="isConvStarted()"  matInput placeholder="CONTEXT" value="SharkContext">
         </mat-form-field>
       </div>
   </div>

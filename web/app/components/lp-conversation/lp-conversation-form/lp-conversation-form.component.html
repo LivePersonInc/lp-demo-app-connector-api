@@ -15,9 +15,13 @@
       <div> {{_conversation.appSecret}}</div>
       <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
     </div>
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       <strong>Brand Id: </strong>
       <div> {{_conversation.branId}}</div>
+    </div>
+    <div class="col-sm-6">
+      <strong>Consumer Id: </strong>
+      <div> {{_conversation.ext_consumer_id}}</div>
     </div>
   </div>
 </div>
