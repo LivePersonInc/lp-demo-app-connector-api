@@ -27,7 +27,8 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
           option.value = true;
         }
       })
-    })
+    });
+    this.onChange();
   };
 
   public checkOptions = [
