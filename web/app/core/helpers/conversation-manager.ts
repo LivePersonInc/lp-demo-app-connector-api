@@ -69,7 +69,7 @@ export class ConversationManager {
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
@@ -122,35 +122,37 @@ export class ConversationManager {
   }
 
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
   private openConversationRequest(conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getOpenConvRequestBody(conversation));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getEventAcceptStatusRequestBody(conversation, event, sequenceList));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
-  private addSendRawEndpointHeaders (appJWT, consumerJWS): any {
+  private addSendRawEndpointHeaders (appJWT, consumerJWS, features): any {
+    console.log("CFEG");
     return {
       'headers': {
         'content-type': 'application/json',
         'Authorization': appJWT,
-        'x-lp-on-behalf': consumerJWS
+        'x-lp-on-behalf': consumerJWS,
+        'Client-Properties': JSON.stringify({"type":".ClientProperties","features":features})
       }
     };
   }
