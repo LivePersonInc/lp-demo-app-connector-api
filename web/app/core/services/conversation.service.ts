@@ -67,8 +67,15 @@ export class ConversationService extends HttpService {
     });
   }
 
-  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string) {
+  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string, options: any) {
     this.conversation = new Conversation(brandId, appKey, appSecret, userName);
+
+    this.conversation.context_name = options.context_name;
+    this.conversation.skillId = options.skillId;
+    this.conversation.engagementId = options.engagementId;
+    this.conversation.campaignId = options.campaignId;
+    this.conversation.features = options.features;
+
     this.conversationManager.openConversation(this.conversation).subscribe(res => {
       this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));

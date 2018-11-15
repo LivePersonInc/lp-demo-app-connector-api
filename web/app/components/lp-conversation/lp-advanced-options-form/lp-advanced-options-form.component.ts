@@ -10,6 +10,15 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class LpAdvancedOptionsFormComponent implements OnInit {
   private _conversation: Conversation;
 
+  protected options = {
+    features: [],
+    userName: "",
+    skillId: "",
+    engagementId:"",
+    campaignId:"",
+    context_name:""
+  };
+
   @Input() set conversation(conversation: Conversation){
     this._conversation = conversation;
     this._conversation.features.forEach( feature => {
@@ -35,14 +44,30 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
 
   constructor() { }
 
-  @Output() public consumerNameChange = new EventEmitter<string>();
+  @Output() public conversationChange = new EventEmitter<any>();
 
   public isConvStarted(): boolean{
     return this._conversation && this._conversation.isConvStarted;
   }
   ngOnInit() {}
 
-  onChange(consumerName: string) {
-    this.consumerNameChange.emit(consumerName);
+  onChange() {
+    let features = [];
+    this.checkOptions.forEach(option => {
+      console.log(option);
+      if(option.value){
+        features.push(option.name);
+      }
+    });
+
+    this.options.features = features;
+    this.options.userName = this._conversation.userName;
+    this.options.skillId = this._conversation.skillId;
+    this.options.engagementId = this._conversation.engagementId;
+    this.options.campaignId = this._conversation.campaignId;
+    this.options.context_name = this._conversation.context_name;
+
+
+    this.conversationChange.emit(this.options);
   }
 }

@@ -16,7 +16,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   public appKey: string;
   public appSecret: string;
   public userName: string;
-
+  public options: any;
   public conversation: Conversation;
   private conversationSubscription: ISubscription;
 
@@ -67,7 +67,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationService.openConversation(this.brandId, this.appKey, this.appSecret, this.userName, initialMessage);
+    this.conversationService.openConversation(this.brandId, this.appKey, this.appSecret, this.userName, initialMessage, this.options);
   }
 
   public closeConversation() {
@@ -83,8 +83,12 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onConsumerName(consumerName) {
-    this.userName = consumerName;
+  public onConversationChange(conversationChange) {
+
+    this.userName = conversationChange.userName;
+    console.log(conversationChange);
+    this.options = conversationChange;
+
   }
 
   public isConversationDisabled(): boolean {

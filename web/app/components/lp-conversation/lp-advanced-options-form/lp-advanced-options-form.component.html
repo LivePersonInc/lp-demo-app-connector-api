@@ -4,7 +4,7 @@
         <strong>Features:</strong>
         <ul class="features-list" >
           <li *ngFor="let option of checkOptions">
-            <mat-checkbox  [disabled]="isConvStarted()"[checked]="option.value" color="primary">{{option.name}}</mat-checkbox>
+            <mat-checkbox  [disabled]="isConvStarted()" (change)="onChange($event)" [(ngModel)]="option.value" color="primary">{{option.name}}</mat-checkbox>
           </li>
         </ul>
       </div>
@@ -16,16 +16,16 @@
                  [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" matInput placeholder="Skill id" [(ngModel)]="_conversation.skillId" >
+          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)" matInput placeholder="Skill id" [(ngModel)]="_conversation.skillId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" matInput placeholder="Engagement id" [(ngModel)]="_conversation.engagementId" >
+          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)"matInput placeholder="Engagement id" [(ngModel)]="_conversation.engagementId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" matInput placeholder="Campaign id" [(ngModel)]="_conversation.campaignId" >
+          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)" matInput placeholder="Campaign id" [(ngModel)]="_conversation.campaignId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input [disabled]="isConvStarted()"  matInput placeholder="Context" [(ngModel)]="_conversation.context_name" >
+          <input [disabled]="isConvStarted()"  (ngModelChange)="onChange($event)" matInput placeholder="Context" [(ngModel)]="_conversation.context_name" >
         </mat-form-field>
       </div>
   </div>
