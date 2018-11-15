@@ -85,7 +85,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public onConversationChange(conversationChange: Options) {
-
     this.userName = conversationChange.userName;
     this.options = conversationChange;
 

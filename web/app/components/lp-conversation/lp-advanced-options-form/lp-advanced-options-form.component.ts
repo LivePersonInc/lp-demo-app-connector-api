@@ -15,8 +15,8 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
     features: [],
     userName: "",
     skillId: "",
-    engagementId:"",
-    campaignId:"",
+    engagementId:0,
+    campaignId: 0,
     context_name:""
   };
 
@@ -29,6 +29,13 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
         }
       })
     });
+    this.options.userName = this.conversation.userName;
+    this.options.skillId = this.conversation.skillId;
+    this.options.context_name = this.conversation.context_name;
+    this.options.engagementId = this.conversation.engagementId;
+    this.options.campaignId = this.conversation.campaignId;
+
+
     this.onChange();
   };
 
@@ -63,12 +70,6 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
     });
 
     this.options.features = features;
-    this.options.userName = this._conversation.userName;
-    this.options.skillId = this._conversation.skillId;
-    this.options.engagementId = this._conversation.engagementId;
-    this.options.campaignId = this._conversation.campaignId;
-    this.options.context_name = this._conversation.context_name;
-
 
     this.conversationChange.emit(this.options);
   }

@@ -23,8 +23,8 @@ export class Conversation implements Deserializable<Conversation> {
   chatState: ChatState;
   features: Array<string>;
   skillId: string;
-  campaignId: string;
-  engagementId:string ;
+  campaignId: number;
+  engagementId:number ;
   context_name: string;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
@@ -42,8 +42,8 @@ export class Conversation implements Deserializable<Conversation> {
     this.skillId = "-1";
     this.features = [];
     this.context_name = "SharkContext";
-    this.campaignId = "2894629312";
-    this.engagementId = "2894629412";
+    this.campaignId = 2894629312;
+    this.engagementId = 2894629412;
 
   }
 
