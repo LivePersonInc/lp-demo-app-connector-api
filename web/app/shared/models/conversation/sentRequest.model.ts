@@ -5,5 +5,4 @@ export class SentRequest {
   response: any;
   status: number;
   headers: any;
-
 }

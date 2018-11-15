@@ -24,8 +24,7 @@ export class Conversation implements Deserializable<Conversation> {
   features: Array<string>;
   skillId: string;
   campaignId: string;
-  engagementId:string
-
+  engagementId:string ;
   context_name: string;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {

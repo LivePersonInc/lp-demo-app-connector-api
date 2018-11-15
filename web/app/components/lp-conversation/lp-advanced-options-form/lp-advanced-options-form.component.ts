@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {Options} from "../../../shared/models/conversation/options.model";
 
 @Component({
   selector: 'lp-advances-options-form',
@@ -10,7 +11,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class LpAdvancedOptionsFormComponent implements OnInit {
   private _conversation: Conversation;
 
-  protected options = {
+  protected options: Options = {
     features: [],
     userName: "",
     skillId: "",

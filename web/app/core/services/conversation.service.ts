@@ -17,6 +17,7 @@ import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {HistoryService} from "./history.service";
 import {InstallationService} from "./istallation.service";
+import {Options} from "../../shared/models/conversation/options.model";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -67,7 +68,7 @@ export class ConversationService extends HttpService {
     });
   }
 
-  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string, options: any) {
+  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string, options: Options) {
     this.conversation = new Conversation(brandId, appKey, appSecret, userName);
 
     this.conversation.context_name = options.context_name;
