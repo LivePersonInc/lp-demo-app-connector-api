@@ -23,6 +23,7 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
+import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 
 
 @Injectable()
@@ -128,7 +129,7 @@ export class ConversationManager {
 
   private openConversationRequest(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
-    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
+    const body = JSON.stringify(this.getOpenConvRequestBody(conversation));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
@@ -278,21 +279,23 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getOpenConvRequestBody(userName: string, brandId: string): any {
-    let campaignInfo = new CampaignInfo("99999", "888888");
+  private getOpenConvRequestBody(conversation: Conversation): any {
+    let campaignInfo = new CampaignInfo(conversation.campaignId, conversation.engagementId);
+    let conversationContext = new ConversationContext(conversation.context_name, conversation.features);
     let requestBody = new ConsumerRequestConversation(
       "CUSTOM",
       campaignInfo,
       "MESSAGING",
-      brandId,
-      "-1"
+      conversation.branId,
+      conversation.skillId,
+      conversationContext
     );
     let requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
 
     let pushNotificationData = new PushNotificationData("Service", "CertName", "TOKEN");
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
     let setUserProfileBody = new SetUserProfile(
-      userName || "WEB UI USER",
+      conversation.userName || "WEB UI USER",
       "",
       "http://avatarurl.com",
       "consumer",

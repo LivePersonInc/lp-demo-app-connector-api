@@ -5,13 +5,13 @@ export class ConsumerRequestConversation {
   public brandId;
   public skillId;
   public conversationContext;
-  constructor(ttrDefName, campaignInfo, channelType, brandId, skillId) {
+  constructor(ttrDefName, campaignInfo, channelType, brandId, skillId, conversationContext) {
     this.ttrDefName = ttrDefName || "CUSTOM";
     this.campaignInfo = campaignInfo;
     this.channelType = channelType || "MESSAGING";
     this.brandId = brandId;
     this.skillId = skillId || -1;
-    this.conversationContext = {};
+    this.conversationContext = conversationContext ||  {};
   }
 }
 
