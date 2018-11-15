@@ -10,16 +10,22 @@
       </div>
       <div class="col-sm-7">
         <mat-form-field style="padding-top: 10px" class="full-width">
-          <input matInput placeholder="CONSUMEER NAME" required [(ngModel)]="_conversation.userName"
+          <input matInput placeholder="Consumer name" required [(ngModel)]="_conversation.userName"
                  [disabled]="isConvStarted()"
                  (ngModelChange)="onChange($event)"
                  [ngModelOptions]="{standalone: true}">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" matInput placeholder="SKILL ID" value="-1">
+          <input  [disabled]="isConvStarted()" matInput placeholder="Skill id" [(ngModel)]="_conversation.skillId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input [disabled]="isConvStarted()"  matInput placeholder="CONTEXT" value="SharkContext">
+          <input  [disabled]="isConvStarted()" matInput placeholder="Engagement id" [(ngModel)]="_conversation.skillId" >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input  [disabled]="isConvStarted()" matInput placeholder="Campaing id" [(ngModel)]="_conversation.skillId" >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input [disabled]="isConvStarted()"  matInput placeholder="Context" [(ngModel)]="_conversation.context_name" >
         </mat-form-field>
       </div>
   </div>

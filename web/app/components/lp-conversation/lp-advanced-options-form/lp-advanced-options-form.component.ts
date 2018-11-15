@@ -12,6 +12,13 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
 
   @Input() set conversation(conversation: Conversation){
     this._conversation = conversation;
+    this._conversation.features.forEach( feature => {
+      this.checkOptions.forEach( option => {
+        if(feature === option.name){
+          option.value = true;
+        }
+      })
+    })
   };
 
   public checkOptions = [
