@@ -19,13 +19,13 @@
           <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)" matInput placeholder="Skill id" [(ngModel)]="options.skillId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)"matInput placeholder="Engagement id" [(ngModel)]="options.engagementId" >
+          <input  [disabled]="isConvStarted()" (keypress)="onValidateNumber($event)" (ngModelChange)="onChange($event)"matInput placeholder="Engagement id" [(ngModel)]="options.engagementId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)" matInput placeholder="Campaign id" [(ngModel)]="options.campaignId" >
+          <input  [disabled]="isConvStarted()" (keypress)="onValidateNumber($event)" (ngModelChange)="onChange($event); " matInput placeholder="Campaign id" [(ngModel)]="options.campaignId" >
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input [disabled]="isConvStarted()"  (ngModelChange)="onChange($event)" matInput placeholder="Context" [(ngModel)]="options.context_name" >
+          <input [disabled]="true"  (ngModelChange)="onChange($event)" matInput placeholder="Context" [(ngModel)]="options.context_name" >
         </mat-form-field>
       </div>
   </div>

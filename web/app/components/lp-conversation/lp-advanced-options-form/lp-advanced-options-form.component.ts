@@ -63,7 +63,6 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
   onChange() {
     let features = [];
     this.checkOptions.forEach(option => {
-      console.log(option);
       if(option.value){
         features.push(option.name);
       }
@@ -73,4 +72,11 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
 
     this.conversationChange.emit(this.options);
   }
+  onValidateNumber(event){
+    const pattern = /[0-9]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }  }
 }
