@@ -9,8 +9,8 @@ import {Conversation} from "../../shared/models/conversation/conversation.model"
 import {Router} from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {ConversationManager} from "../helpers/conversation-manager";
-import {StateStorage} from "../helpers/state-storage";
+import {ConversationManager} from "../util/conversation-manager";
+import {StateStorage} from "../util/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";

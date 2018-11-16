@@ -5,7 +5,7 @@ import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
-import {StateStorage} from "../helpers/state-storage";
+import {StateStorage} from "../util/state-storage";
 
 describe('InstallationService', () => {
   beforeEach(() => {
