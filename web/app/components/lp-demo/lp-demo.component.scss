@@ -3,12 +3,10 @@
   padding-bottom: 60px;
   display: block;
 }
-// Small devices (landscape phones, 576px and up)
 @media (min-width: 1200px) {
   .container-fluid {
     max-width: 1450px;
   }
-
 }
 @media (max-width: 800px) {
   .container-fluid {
