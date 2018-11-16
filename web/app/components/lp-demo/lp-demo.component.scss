@@ -4,16 +4,11 @@
   display: block;
 }
 // Small devices (landscape phones, 576px and up)
-@media (max-width: 1024px) {
-  :host{
-    margin-top: 5px;
+@media (min-width: 1200px) {
+  .container-fluid {
+    max-width: 1450px;
   }
 
-  .container{
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    max-width: 1024px;
-  }
 }
 @media (max-width: 800px) {
   .container-fluid {
