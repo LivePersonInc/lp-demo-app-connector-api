@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && NODE_ENV=prod node app",
+    "start": "NODE_ENV=prod node app",
     "start-local": "ng build && node app",
     "build": "ng build --prod",
     "test": "ng test",
