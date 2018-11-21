@@ -444,6 +444,7 @@ http {
 
     server {
         listen       80;
+        server_name  connector-api.dev.liveperson.net;
 	      return 301 https://$host$request_uri;
      }
 
