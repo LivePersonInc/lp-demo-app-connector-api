@@ -1,16 +1,16 @@
 version: '3'
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: production_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./wildcard.dev.liveperson.net.pem:/etc/nginx/wildcard.dev.liveperson.net.pem
+      - ./wildcard.dev.liveperson.net.key:/etc/nginx/wildcard.dev.liveperson.net.key
     ports:
       - 80:80
       - 443:443
-
   demoapp:
-    image: demo-connector-app:latest
+    image: eplaza/lp-connector-api-demo-app:latest
     container_name: demo-connector-app
-    expose:
-      - "8282"
+
