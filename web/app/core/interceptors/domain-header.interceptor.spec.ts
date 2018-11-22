@@ -1,9 +1,6 @@
-import { TestBed, async, inject } from '@angular/core/testing';
-
+import { TestBed, inject } from '@angular/core/testing';
 import { DomainHeaderInterceptor } from './domain-header.interceptor';
 import {DomainsService} from "../services/domains.service";
-import {MatSnackBar} from "@angular/material";
-import {Router} from "@angular/router";
 
 describe('DomainHeaderInterceptor', () => {
   beforeEach(() => {

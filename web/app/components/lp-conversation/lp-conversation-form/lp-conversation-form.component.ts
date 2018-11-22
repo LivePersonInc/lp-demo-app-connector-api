@@ -17,14 +17,10 @@ export class LpConversationFormComponent implements OnInit {
     return this._conversation
   }
 
-  @Output() public consumerNameChange = new EventEmitter<string>();
-
   constructor() { }
 
   ngOnInit() {}
 
-  onChange(consumerName: string) {
-    this.consumerNameChange.emit(consumerName);
-  }
+
 
 }

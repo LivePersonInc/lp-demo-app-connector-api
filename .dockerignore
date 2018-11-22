@@ -1,2 +1,7 @@
-node_modules
+node_modules/
+.git/
+dist/
+.idea/
+docs/
+coverage/
 npm-debug.log

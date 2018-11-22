@@ -1,6 +1,6 @@
 {
   "name": "lp-demo-app-connector-api",
-  "description": "Web app that allows to stablish a conversation as consumer with UMS trought the SendAPI",
+  "description": "A web app that allows establishings a conversation as a consumer with UMS through the SendAPI",
   "version": "0.0.1",
   "license": "MIT",
   "author": {
@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod && NODE_ENV=prod node app",
+    "start": "NODE_ENV=prod node app",
     "start-local": "ng build && node app",
     "build": "ng build --prod",
     "test": "ng test",

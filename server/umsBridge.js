@@ -23,6 +23,8 @@ router.post("/openconv/:id", (req, res, next) => {
   args.headers['content-type'] = req.header('content-type');
   args.headers['authorization'] = req.header('authorization');
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
+  args.headers['Client-Properties'] = req.header('Client-Properties');
+
   args.data = JSON.stringify(req.body);
 
   sendApiConnector
@@ -53,6 +55,8 @@ router.post("/sendraw/:id", (req, res, next) => {
   args.headers['content-type'] = req.header('content-type');
   args.headers['authorization'] = req.header('authorization');
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
+  args.headers['Client-Properties'] = req.header('Client-Properties');
+
   args.data = JSON.stringify(req.body);
 
 
@@ -81,6 +85,8 @@ router.post("/close/:id/conv/:convId", (req, res, next) => {
   args.headers['content-type'] = req.header('content-type');
   args.headers['authorization'] = req.header('authorization');
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
+  args.headers['Client-Properties'] = req.header('Client-Properties');
+
 
   sendApiConnector
     .closeConversation(brandID, convID, args, req.header('LP-DOMAIN'))

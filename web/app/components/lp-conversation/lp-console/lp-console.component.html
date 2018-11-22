@@ -1,5 +1,6 @@
+<div class="wh-title">Webhooks notifications</div>
 <div class="container-custom"  #notifications>
-<mat-accordion *ngIf="conversation">
+  <mat-accordion *ngIf="conversation">
   <mat-expansion-panel *ngFor="let n of conversation.serverNotifications">
     <mat-expansion-panel-header>
       <mat-panel-title>

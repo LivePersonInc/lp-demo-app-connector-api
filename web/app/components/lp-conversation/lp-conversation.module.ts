@@ -6,14 +6,17 @@ import {LpChatBoxComponent} from "./lp-chat-box/lp-chat-box.component";
 import {LpChatBoxFooterComponent} from "./lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component";
 import {LpChatBoxMessageComponent} from "./lp-chat-box/lp-chat-box-message/lp-chat-box-message.component";
 import {MaterialModule} from "../../material.module";
-import {FormsModule} from '@angular/forms';
-import { LpConversationFormComponent } from './lp-conversation-form/lp-conversation-form.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {LpConversationFormComponent } from './lp-conversation-form/lp-conversation-form.component';
+import {LpRequestsConsoleComponent} from "./lp-requests-console/lp-requests-console.component";
+import {LpAdvancedOptionsFormComponent} from "./lp-advanced-options-form/lp-advanced-options-form.component";
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     LpConversationComponent,
@@ -21,14 +24,19 @@ import { LpConversationFormComponent } from './lp-conversation-form/lp-conversat
     LpChatBoxComponent,
     LpChatBoxFooterComponent,
     LpChatBoxMessageComponent,
-    LpConversationFormComponent
+    LpConversationFormComponent,
+    LpAdvancedOptionsFormComponent,
+    LpRequestsConsoleComponent
   ],
   exports: [
     LpConversationComponent,
     LpConsoleComponent,
     LpChatBoxComponent,
     LpChatBoxFooterComponent,
-    LpChatBoxMessageComponent
+    LpChatBoxMessageComponent,
+    LpConversationFormComponent,
+    LpAdvancedOptionsFormComponent,
+    LpRequestsConsoleComponent
   ]
 })
 export class LpConversationModule { }

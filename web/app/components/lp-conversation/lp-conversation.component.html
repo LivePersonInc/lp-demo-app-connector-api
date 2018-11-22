@@ -1,33 +1,33 @@
 <div class="container-fluid">
   <div class="row h-100">
 
-    <div class="col-md-12" *ngIf="conversation && !conversation.isConvStarted && conversation.messages.length > 0">
-      <p class="conv-closed-info text-info">
-        INFO: This conversation is closed. Please type a new message and press enter to start a new conversation
-      </p>
-    </div>
-
-    <div class="col-md-5 text-center">
-      <!--<div *ngIf="conversation && !conversation.isConvStarted" class="alert-danger"> Conversation was already closed</div>-->
+    <div class="col-lg-3  text-center">
+      <button mat-raised-button
+              (click)="closeConversation()"
+              color="primary"
+              class="close-conv-btn"
+              [disabled]="conversation && !conversation.isConvStarted || !conversation">
+        Close conversation
+      </button>
       <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"  [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"></lp-chat-box>
     </div>
-    <div class="col-md-7 text-left">
+    <div class="col-lg-9 text-left">
+      <div class="row">
+        <div class="col-lg-6">
+          <lp-conversation-form [conversation]="conversation"></lp-conversation-form>
+        </div>
+        <div class="col-lg-6">
+          <lp-advances-options-form [conversation]="conversation" (conversationChange)="onConversationChange($event)"></lp-advances-options-form>
+        </div>
+      </div>
 
-      <lp-conversation-form [conversation]="conversation" (consumerNameChange)="onConsumerName($event)"></lp-conversation-form>
-
-      <div class="container-fluid  text-right">
+      <div class="text-right">
         <div class="row">
-          <div class="col-sm-12 console-container">
+          <div class="col-lg-6  console-container">
             <lp-console [conversation]="conversation"></lp-console>
           </div>
-          <div class="col-sm-12">
-            <button mat-raised-button
-                    (click)="closeConversation()"
-                    color="primary"
-                    class="btn-left"
-                    [disabled]="conversation && !conversation.isConvStarted || !conversation">
-              Close conversation
-            </button>
+          <div class="col-lg-6   console-container">
+            <lp-requests-console [conversation]="conversation"></lp-requests-console>
           </div>
         </div>
       </div>

@@ -1,32 +1,27 @@
-<div class="container-fluid">
+<div class="container-fluid conv-container">
   <div class="row" *ngIf="conversation">
-    <div class="col-sm-6">
-      <strong>Consumer Name: </strong>
-      <mat-form-field  class="full-width" color="accent">
-        <input matInput placeholder="You can add a new consumer name" required [(ngModel)]="_conversation.userName"
-               [disabled]="_conversation && _conversation.isConvStarted"
-               (ngModelChange)="onChange($event)"
-               [ngModelOptions]="{standalone: true}">
-      </mat-form-field>
-    </div>
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       <strong>Brand Id: </strong>
       <div> {{_conversation.branId}}</div>
     </div>
-    <div class="col-sm-6">
-      <strong>Installation Id: </strong>
-      <div> {{_conversation.appKey}}</div>
-      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
-    </div>
-    <div class="col-sm-6">
-      <strong>Secret: </strong>
-      <div> {{_conversation.appSecret}}</div>
-      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
+    <div class="col-sm-12">
+      <strong>Consumer Id: </strong>
+      <div> {{_conversation.ext_consumer_id}}</div>
     </div>
     <div class="col-sm-12">
       <strong>Conversation Id: </strong>
       <div> {{_conversation.conversationId}}</div>
       <div *ngIf="!_conversation.conversationId" class="alert-info"> Type a message and press enter to start a new conversation</div>
+    </div>
+    <div class="col-sm-12">
+      <strong>Installation Id: </strong>
+      <div> {{_conversation.appKey}}</div>
+      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
+    </div>
+    <div class="col-sm-12">
+      <strong>Secret: </strong>
+      <div> {{_conversation.appSecret}}</div>
+      <div *ngIf="!_conversation.appKey" class="alert-danger"> Please select an installed app!</div>
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ import {EventSourcePolyfill} from 'ng-event-source';
 import {Deserializable} from "../deserializable.model";
 import {getNonAotConfig} from "@angular/cli/models/webpack-configs";
 import {ChatState} from "../send-api/EventChatState.model";
+import {SentRequest} from "./sentRequest.model";
 
 export class Conversation implements Deserializable<Conversation> {
   isConvStarted: boolean;
@@ -18,7 +19,13 @@ export class Conversation implements Deserializable<Conversation> {
   eventSource: EventSourcePolyfill;
   messages: Array<ChatMessage>;
   serverNotifications: Array<any>;
+  sentRequests: Array<SentRequest>;
   chatState: ChatState;
+  features: Array<string>;
+  skillId: string;
+  campaignId: number;
+  engagementId:number ;
+  context_name: string;
 
   constructor( brandId:string, appKey: string, appSecret: string,  userName: string) {
     this.branId = brandId;
@@ -30,6 +37,14 @@ export class Conversation implements Deserializable<Conversation> {
     this.serverNotifications = [];
     this.ext_consumer_id = Math.random().toString();
     this.consumerId = "";
+    this.sentRequests = [];
+    this.features = [];
+    this.skillId = "-1";
+    this.features = [];
+    this.context_name = "SharkContext";
+    this.campaignId = 2894629312;
+    this.engagementId = 2894629412;
+
   }
 
   deserialize(input: any): Conversation {
@@ -45,6 +60,9 @@ export class Conversation implements Deserializable<Conversation> {
     this.userName = input.userName;
     this.eventSource = null;
     this.chatState = ChatState.ACTIVE;
+    this.features = input.features;
+    this.skillId = input.skillId;
+    this.context_name = input.context_name;
 
     if(input.messages){
       this.messages = [];

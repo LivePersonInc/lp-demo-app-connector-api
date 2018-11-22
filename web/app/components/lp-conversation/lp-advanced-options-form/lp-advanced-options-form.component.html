@@ -1,0 +1,32 @@
+<div class="container-fluid conv-container">
+  <div class="row" *ngIf="conversation">
+      <div class="col-sm-5">
+        <strong>Features:</strong>
+        <ul class="features-list" >
+          <li *ngFor="let option of checkOptions">
+            <mat-checkbox  [disabled]="isConvStarted()" (change)="onChange($event)" [(ngModel)]="option.value" color="primary">{{option.name}}</mat-checkbox>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-7">
+        <mat-form-field style="padding-top: 10px" class="full-width">
+          <input matInput placeholder="Consumer name" required [(ngModel)]="options.userName"
+                 [disabled]="isConvStarted()"
+                 (ngModelChange)="onChange($event)"
+                 [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input  [disabled]="isConvStarted()" (ngModelChange)="onChange($event)" matInput placeholder="Skill id" [(ngModel)]="options.skillId" >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input  [disabled]="isConvStarted()" (keypress)="onValidateNumber($event)" (ngModelChange)="onChange($event)"matInput placeholder="Engagement id" [(ngModel)]="options.engagementId" >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input  [disabled]="isConvStarted()" (keypress)="onValidateNumber($event)" (ngModelChange)="onChange($event); " matInput placeholder="Campaign id" [(ngModel)]="options.campaignId" >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input [disabled]="true"  (ngModelChange)="onChange($event)" matInput placeholder="Context" [(ngModel)]="options.context_name" >
+        </mat-form-field>
+      </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {InstallationService} from "../../core/services/istallation.service";
 import {ISubscription} from "rxjs/Subscription";
+import {Options} from "../../shared/models/conversation/options.model";
 
 @Component({
   selector: 'lp-conversation',
@@ -16,7 +17,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   public appKey: string;
   public appSecret: string;
   public userName: string;
-
+  public options: Options;
   public conversation: Conversation;
   private conversationSubscription: ISubscription;
 
@@ -67,7 +68,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public startConversation(initialMessage: string) {
-    this.conversationService.openConversation(this.brandId, this.appKey, this.appSecret, this.userName, initialMessage);
+    this.conversationService.openConversation(this.brandId, this.appKey, this.appSecret, this.userName, initialMessage, this.options);
   }
 
   public closeConversation() {
@@ -83,8 +84,10 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onConsumerName(consumerName) {
-    this.userName = consumerName;
+  public onConversationChange(conversationChange: Options) {
+    this.userName = conversationChange.userName;
+    this.options = conversationChange;
+
   }
 
   public isConversationDisabled(): boolean {

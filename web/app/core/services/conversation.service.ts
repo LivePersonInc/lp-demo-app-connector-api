@@ -9,14 +9,15 @@ import {Conversation} from "../../shared/models/conversation/conversation.model"
 import {Router} from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
-import {ConversationManager} from "../helpers/conversation-manager";
-import {StateStorage} from "../helpers/state-storage";
+import {ConversationManager} from "../util/conversation-manager";
+import {StateStorage} from "../util/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {HistoryService} from "./history.service";
 import {InstallationService} from "./istallation.service";
+import {Options} from "../../shared/models/conversation/options.model";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -67,8 +68,15 @@ export class ConversationService extends HttpService {
     });
   }
 
-  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string) {
+  public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string, options: Options) {
     this.conversation = new Conversation(brandId, appKey, appSecret, userName);
+
+    this.conversation.context_name = options.context_name;
+    this.conversation.skillId = options.skillId;
+    this.conversation.engagementId = options.engagementId;
+    this.conversation.campaignId = options.campaignId;
+    this.conversation.features = options.features;
+
     this.conversationManager.openConversation(this.conversation).subscribe(res => {
       this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));

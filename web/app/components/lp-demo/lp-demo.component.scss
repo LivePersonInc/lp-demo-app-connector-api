@@ -3,17 +3,18 @@
   padding-bottom: 60px;
   display: block;
 }
-
-// Small devices (landscape phones, 576px and up)
-@media (max-width: 1024px) {
-
-  :host{
-    margin-top: 5px;
+@media (min-width: 1200px) {
+  .container-fluid {
+    max-width: 1450px;
   }
-
-  .container{
-    padding-right: 0 !important;
+}
+@media (max-width: 800px) {
+  .container-fluid {
     padding-left: 0 !important;
-    max-width: 1024px;
+    padding-right: 0 !important;
+  }
+  .lp-card {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

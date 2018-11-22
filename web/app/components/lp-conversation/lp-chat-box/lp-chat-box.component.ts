@@ -1,7 +1,7 @@
 import {
   AfterViewChecked,
   AfterViewInit,
-  Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges,
+  Component, ElementRef, EventEmitter, Input, OnInit, Output,
   ViewChild
 } from '@angular/core';
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
@@ -54,6 +54,10 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
     } catch(err) {
 
     }
+  }
+
+  public isConversationClosed(): boolean {
+    return this.conversation && !this.conversation.isConvStarted && this.conversation.messages.length > 0;
   }
 
   public  checkTyping(isTyping) {

@@ -23,6 +23,7 @@ import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/con
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
+import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 
 
 @Injectable()
@@ -56,19 +57,19 @@ export class ConversationManager {
   }
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
-      return this.sendMessageRequest(message, conversation).map(res => {
-        let sequence;
-        if(res && res.body && res.body.hasOwnProperty('sequence')){
-          sequence = res.body.sequence;
-        }
-        conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
+    return this.sendMessageRequest(message, conversation).map(res => {
+      let sequence;
+      if(res && res.body && res.body.hasOwnProperty('sequence')){
+        sequence = res.body.sequence;
+      }
+      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
 
-        this.updateState(conversation);
-      });
+      this.updateState(conversation);
+    });
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
@@ -121,35 +122,37 @@ export class ConversationManager {
   }
 
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
   private openConversationRequest(conversation: Conversation): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
-    const body = JSON.stringify(this.getOpenConvRequestBody(conversation.userName, conversation.branId));
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
+    const body = JSON.stringify(this.getOpenConvRequestBody(conversation));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
 
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
-    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS);
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getEventAcceptStatusRequestBody(conversation, event, sequenceList));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
-  private addSendRawEndpointHeaders (appJWT, consumerJWS): any {
+  private addSendRawEndpointHeaders (appJWT, consumerJWS, features): any {
+    console.log("CFEG");
     return {
       'headers': {
         'content-type': 'application/json',
         'Authorization': appJWT,
-        'x-lp-on-behalf': consumerJWS
+        'x-lp-on-behalf': consumerJWS,
+        'Client-Properties': JSON.stringify({"type":".ClientProperties","features":features})
       }
     };
   }
@@ -231,7 +234,7 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
-     try {
+    try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
@@ -278,21 +281,23 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getOpenConvRequestBody(userName: string, brandId: string): any {
-    let campaignInfo = new CampaignInfo("99999", "888888");
+  private getOpenConvRequestBody(conversation: Conversation): any {
+    let campaignInfo = new CampaignInfo(conversation.campaignId, conversation.engagementId);
+    let conversationContext = new ConversationContext(conversation.context_name, conversation.features);
     let requestBody = new ConsumerRequestConversation(
       "CUSTOM",
       campaignInfo,
       "MESSAGING",
-       brandId,
-      "-1"
+      conversation.branId,
+      conversation.skillId,
+      conversationContext
     );
     let requestConversationPayload = new Request("req", "1,", "cm.ConsumerRequestConversation", requestBody);
 
     let pushNotificationData = new PushNotificationData("Service", "CertName", "TOKEN");
     let privateData = new PrivateData("1750345346", "test@email.com", pushNotificationData);
     let setUserProfileBody = new SetUserProfile(
-      userName || "WEB UI USER",
+      conversation.userName || "WEB UI USER",
       "",
       "http://avatarurl.com",
       "consumer",
