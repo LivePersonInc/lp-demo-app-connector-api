@@ -3,6 +3,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const chaiHttp = require('chai-http');
 const app = require('../app');
+var EventSource = require('eventsource')
 
 
 const wait = ms => new Promise(resolve => {
@@ -54,12 +55,16 @@ describe('Notifications tests', () => {
     }).timeout(timeout);
 
     it('Should return 200 when notification contains the conversation id and is subcscribed', async () => {
-      requester.get('/notifications/subscribe/' +  conversationID).then();
-
-      //await wait(4000);
+     // requester.get('/notifications/subscribe/' +  conversationID).then();
+      var es = new EventSource('http://localhost:8282/notifications/subscribe/' +  conversationID);
+      es.addEventListener('message', function (e) {
+        console.log(e);
+      });
+         await wait(1000);
 
       let response = await requester.post('/notifications/event')
         .send(webhookNotification);
+      await wait(1000);
 
       expect(response.statusCode).to.be.equal(200);
 
