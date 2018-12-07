@@ -9,10 +9,10 @@ const app = require('../app');
 describe('Notifications tests', () => {
   chai.use(chaiHttp);
   const timeout = 4000;
-  const conversationID = 'c32e8382-06b4-4b82-ae8a-84fc6a17d673';
-
+  const conversationID = '69d7026e-67e7-47ab-8dcb-ec14dfcdd31d';
+  const appKey = 'abce35egjop2035236004egewgewgewagew';
+  const appSecret = 'e4vt53s0kafe2o7h7ck51cvra9';
   const webhookNotification = {"kind":"notification","body":{"changes":[{"type":"UPSERT","result":{"convId":"69d7026e-67e7-47ab-8dcb-ec14dfcdd31d","effectiveTTR":1544179332214,"conversationDetails":{"skillId":"-1","participants":[{"id":"5c40c7731ad3f3d49a4a7cdd90e01dd33ab95446a7451884a76ab3079a757a5c","role":"CONSUMER"}],"dialogs":[{"dialogId":"69d7026e-67e7-47ab-8dcb-ec14dfcdd31d","participantsDetails":[{"id":"5c40c7731ad3f3d49a4a7cdd90e01dd33ab95446a7451884a76ab3079a757a5c","role":"CONSUMER"}],"dialogType":"MAIN","channelType":"MESSAGING","state":"OPEN","creationTs":1544178732211,"metaDataLastUpdateTs":1544178732211}],"brandId":"42257269","state":"OPEN","stage":"OPEN","startTs":1544178732211,"metaDataLastUpdateTs":1544178732211,"ttr":{"ttrType":"PRIORITIZED","value":600}}}}]},"type":"cqm.ExConversationChangeNotification"};
-  ;
 
   before( () => {
 
@@ -32,7 +32,7 @@ describe('Notifications tests', () => {
 
     }).timeout(timeout);
 
-    it('Health check should return 200', async () => {
+    it('Health check should return 200 when notification contains the conversation id', async () => {
       //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
       let response = await chai.request(app).post('/notifications/event')
         .send(webhookNotification);
