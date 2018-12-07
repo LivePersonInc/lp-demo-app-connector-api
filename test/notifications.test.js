@@ -13,9 +13,9 @@ const wait = ms => new Promise(resolve => {
 
 describe('Notifications tests', () => {
   chai.use(chaiHttp);
-  const requester = chai.request(app).keepOpen()
+  const requester = chai.request(app).keepOpen();
 
-  const timeout = 4000;
+  const timeout = 7000;
   const conversationID = '69d7026e-67e7-47ab-8dcb-ec14dfcdd31d';
   const appKey = 'abce35egjop2035236004egewgewgewagew';
   const appSecret = 'e4vt53s0kafe2o7h7ck51cvra9';
@@ -35,23 +35,16 @@ describe('Notifications tests', () => {
       expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
 
-
-    it('Health check should return 200', async () => {
-      let response = await requester.get('/domains/csds/' +  conversationID);
-      expect(response.statusCode).to.be.equal(200);
-
-    }).timeout(timeout);
-
-    it('Health check should return 200 when notification contains the conversation id', async () => {
+    it('Should return 400 when notification contains the conversation id but is not subscribed', async () => {
       //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
       let response = await requester.post('/notifications/event')
         .send(webhookNotification);
 
-      expect(response.statusCode).to.be.equal(200);
+      expect(response.statusCode).to.be.equal(400);
 
     }).timeout(timeout);
 
-    it('Health check should return 400 when notification does not contains the conversation id', async () => {
+    it('Should return 400 when notification does not contains the conversation id', async () => {
       //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
       let response = await requester.post('/notifications/event')
         .send({"tste":3, "errr": "sdg"});
@@ -60,9 +53,10 @@ describe('Notifications tests', () => {
 
     }).timeout(timeout);
 
-    it('Health check should return 400 when notification does not contains the conversation id', async () => {
-      requester.get('/notifications/subscribe/' +  conversationID);
-      await wait(2000);
+    it('Should return 200 when notification contains the conversation id and is subcscribed', async () => {
+      requester.get('/notifications/subscribe/' +  conversationID).then();
+
+      //await wait(4000);
 
       let response = await requester.post('/notifications/event')
         .send(webhookNotification);
@@ -72,6 +66,7 @@ describe('Notifications tests', () => {
     }).timeout(timeout);
 
   });
+
 
 
 
