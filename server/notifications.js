@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const SSE = require('sse-nodejs');
 const logger = require('./util/logger');
-const hmacsha1 = require('hmacsha1');
+//const hmacsha1 = require('hmacsha1');
 const HttpStatus = require('http-status-codes');
 
 const subscriptions = [];
@@ -49,10 +49,10 @@ function getNotificationConversationId(notificationBody) {
 }
 
 
-function validateNotification(event, signature, appSecret) {
+/*function validateNotification(event, signature, appSecret) {
   const decoded = 'sha1=' + hmacsha1(appSecret,event);
   if(decoded === signature) return true;
   return false;
-}
+}*/
 
 module.exports = router;

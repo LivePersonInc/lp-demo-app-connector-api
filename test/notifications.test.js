@@ -64,6 +64,8 @@ describe('Notifications tests', () => {
 
       let response = await requester.post('/notifications/event')
         .send(webhookNotification);
+
+      es.close();
       await wait(1000);
 
       expect(response.statusCode).to.be.equal(200);
