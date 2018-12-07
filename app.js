@@ -13,8 +13,14 @@ const historyBridge = require('./server/convHistoryBridge');
 const loginBridge = require('./server/loginBridge');
 const bodyParser = require('body-parser');
 const logger = require('./server/util/logger');
+const router = express.Router();
 
 app.use(cors());
+
+router.get("/", (req, res, next) => {
+  res.json({status: 'UP'});
+});
+app.use("/health", router);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
