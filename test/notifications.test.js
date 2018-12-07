@@ -41,6 +41,15 @@ describe('Notifications tests', () => {
 
     }).timeout(timeout);
 
+    it('Health check should return 400 when notification does not contains the conversation id', async () => {
+      //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
+      let response = await chai.request(app).post('/notifications/event')
+        .send({"tste":3, "errr": "sdg"});
+
+      expect(response.statusCode).to.be.equal(400);
+
+    }).timeout(timeout);
+
   });
 
 

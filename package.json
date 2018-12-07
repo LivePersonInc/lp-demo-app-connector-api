@@ -87,6 +87,6 @@
   "devDependencies": {
     "karma-phantomjs-launcher": "^1.0.4",
     "mocha": "^5.2.0",
-    "phantomjs-prebuilt": "^2.1.16",
+    "phantomjs-prebuilt": "^2.1.16"
   }
 }
