@@ -20,7 +20,7 @@ router.get("/subscribe/:convid/:appKey", (req, res, next) => {
 router.post("/event", function (req, res, next) {
   let convId = getNotificationConversationId(req.body);
   if(subscriptions[convId]){
-    subscriptions[convId].send(req.body);
+    subscriptions[convId][0].send(req.body);
   }
   res.json('OK');
 });
