@@ -12,6 +12,7 @@ export class StateStorage {
   }
 
   public getLastStoredStateByBrand(brandId: string): State {
+    console.log("RESTIR STATE  BY brand");
     let serializedState = localStorage.getItem(brandId);
     let state = new State();
     if(serializedState) {

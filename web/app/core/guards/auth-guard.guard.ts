@@ -3,24 +3,28 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '
 import { Observable } from 'rxjs/Observable';
 import {AuthenticationService} from "../services/authentication.service";
 import { map } from 'rxjs/operators'
+import {StateRecoveryService} from "../services/state-recovery.service";
 
 @Injectable()
 export class AuthGuardGuard implements CanActivate {
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor(private authenticationService: AuthenticationService,
+              private stateRecoveryService: StateRecoveryService,
+              private router: Router) {}
 
   canActivate()  {
-    console.log("Can activate");
     if(this.authenticationService.isLoggedIn) {
-
       return true;
     }
     return this.authenticationService.isAuthenticated().pipe(map(res => {
       if(res) {
-        this.authenticationService.setLoggedIn(true)
+        this.authenticationService.setLoggedIn(true);
+        if(!this.stateRecoveryService.isStateLoaded){
+          this.stateRecoveryService.loadCurrentSessionState();
+        }
         return true
       } else {
-        this.router.navigate(['login'])
+        this.router.navigate(['login']);
         return false
       }
     }))

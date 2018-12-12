@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthenticationService extends HttpService {
   private _user: User;
-  private loggedInStatus = false
+  private loggedInStatus = false;
 
   public userLoggedSubject = new Subject<string>();
 
@@ -52,7 +52,6 @@ export class AuthenticationService extends HttpService {
          this.errorResponse("Problem with Authentication");
        });
   }
-
   public logout() {
     //TODO: check
     this.loadingService.startLoading();
@@ -71,6 +70,10 @@ export class AuthenticationService extends HttpService {
 
   get user(): User {
     return this._user ;
+  }
+
+  set user(user: User) {
+    this._user = user;
   }
 
 

@@ -106,11 +106,4 @@ export class LpLoginComponent implements OnInit {
     this.router.navigateByUrl('demo');
   }
 
-  public isConversationRestored(): boolean {
-    if (this.conversationService.conversation) {
-      return true;
-    }
-    return false;
-  }
-
 }

@@ -42,25 +42,10 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userName = 'Kim';
-
-    if(this.authenticationService.user) {
-      this.brandId = this.authenticationService.user.brandId || "";
-    }
-
-    if(this.installationService.selectedApp){
-      this.appKey = this.installationService.selectedApp.client_id || "";
-      this.appSecret = this.installationService.selectedApp.client_secret || "";
-    }
-
-    if(this.conversationService.conversation){
-      this.conversation = this.conversationService.conversation;
-    }else  {
-      this.conversation = new Conversation(this.brandId,this.appKey,this.appSecret, this.userName);
-    }
-
-    this.subscribeToConversationEvents();
-
+    this.init();
+    this.conversationService.conversationRestoredSubject.subscribe( event => {
+      this.init();
+    });
   }
 
   ngOnDestroy(){
@@ -104,6 +89,27 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
       }
     });
+  }
+
+  private init(): void {
+    this.userName = 'Kim';
+
+    if(this.authenticationService.user) {
+      this.brandId = this.authenticationService.user.brandId || "";
+    }
+
+    if(this.installationService.selectedApp){
+      this.appKey = this.installationService.selectedApp.client_id || "";
+      this.appSecret = this.installationService.selectedApp.client_secret || "";
+    }
+
+    if(this.conversationService.conversation){
+      this.conversation = this.conversationService.conversation;
+    }else  {
+      this.conversation = new Conversation(this.brandId,this.appKey,this.appSecret, this.userName);
+    }
+
+    this.subscribeToConversationEvents();
   }
 
   private stopNotificationSent = false;

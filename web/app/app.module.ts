@@ -30,6 +30,7 @@ import {LpLoginComponent} from './components/lp-login/lp-login.component';
 import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
 import {HistoryService} from "./core/services/history.service";
 import {RequestConsoleInterceptor} from "./core/interceptors/request-console.interceptor";
+import {StateRecoveryService} from "./core/services/state-recovery.service";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {RequestConsoleInterceptor} from "./core/interceptors/request-console.int
     ConversationManager,
     StateStorage,
     HistoryService,
+    StateRecoveryService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: DomainHeaderInterceptor,

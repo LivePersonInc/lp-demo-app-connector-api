@@ -7,7 +7,6 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
-import {StateStorage} from "../util/state-storage";
 
 @Injectable()
 export class AccountConfigService extends HttpService {
@@ -25,7 +24,6 @@ export class AccountConfigService extends HttpService {
               protected snackBar: MatSnackBar,
               protected http: HttpClient,
               protected loadingService:LoadingService,
-              protected stateManager:StateStorage,
               protected router: Router) {
     super(snackBar,http, loadingService,router);
 

@@ -39,7 +39,6 @@ passport.use(authLocalStrategy());
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
   console.log('Inside serializeUser callback. User id is save to the session file store here');
-  console.log('Inside serializeUser callback. User id is save to the session file store here');
 
   //Here i have to save the user data in the format I want
   done(null, user);
@@ -108,6 +107,10 @@ app.get('/logout', (req, res, next) => {
   req.logOut();
   //TODO: logout does not work
   res.status(200)
+});
+
+app.get('/getSession', function(req, res) {
+  res.send(req.session);
 });
 
 app.get('/isAuthenticated',(req, res, next) => {
