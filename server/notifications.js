@@ -7,10 +7,12 @@ const HttpStatus = require('http-status-codes');
 
 const subscriptions = [];
 
-router.get("/subscribe/:convid", (req, res, next) => {
-  subscriptions[req.params.convid] = SSE(res);
+router.get("/subscribe/:convid/:appKey", (req, res, next) => {
+  let sub = [SSE(res), req.params.appKey];
+  //TODO: get app secret given the appKey needed for notifications vailidation
+  subscriptions[req.params.convid] = sub;
   logger.debug("Client subscribed width: " + req.params.convid);
-  subscriptions[req.params.convid].disconnect(function () {
+  subscriptions[req.params.convid][0].disconnect(function () {
     subscriptions.splice(req.params.convid,1);
     logger.debug("Client unsubscribed width: " + req.params.convid);
   });
@@ -24,9 +26,8 @@ router.post("/event", function (req, res, next) {
   }else {
 
       logger.debug("convId: " + convId);
-      subscriptions[convId].send(req.body);
+      subscriptions[convId][0].send(req.body);
       res.json('OK');
-
   }
 
 });
