@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const SSE = require('sse-nodejs');
 const logger = require('./util/logger');
+//const hmacsha1 = require('hmacsha1');
+const HttpStatus = require('http-status-codes');
 
 const subscriptions = [];
 
@@ -19,10 +21,14 @@ router.get("/subscribe/:convid/:appKey", (req, res, next) => {
 //webhooks notifications
 router.post("/event", function (req, res, next) {
   let convId = getNotificationConversationId(req.body);
-  if(subscriptions[convId]){
+  if(!convId || !subscriptions[convId]) {
+    res.status(HttpStatus.BAD_REQUEST).send({error: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST)});
+  }else {
+
+    logger.debug("convId: " + convId);
     subscriptions[convId][0].send(req.body);
+    res.json('OK');
   }
-  res.json('OK');
 });
 
 function getNotificationConversationId(notificationBody) {
