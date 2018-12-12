@@ -18,7 +18,14 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const authLocalStrategy = require('./server/auth/authLocalStrategy');
+const router = express.Router();
 
+app.use(cors());
+
+router.get("/", (req, res, next) => {
+  res.json({status: 'UP'});
+});
+app.use("/health", router);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

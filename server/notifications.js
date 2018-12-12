@@ -5,15 +5,15 @@ const logger = require('./util/logger');
 
 const subscriptions = [];
 
-router.get("/subscribe/:convid", (req, res, next) => {
-    subscriptions[req.params.convid] = SSE(res);
-    logger.debug("Client subscribed width: " + req.params.convid);
-    let convId = req.params.convid;
-    subscriptions[convId].disconnect(function () {
-      console.log(convId);
-      subscriptions.splice(convId,1);
-      logger.debug("Client unsubscribed width: " + convId);
-    });
+router.get("/subscribe/:convid/:appKey", (req, res, next) => {
+  let sub = [SSE(res), req.params.appKey];
+  //TODO: get app secret given the appKey needed for notifications vailidation
+  subscriptions[req.params.convid] = sub;
+  logger.debug("Client subscribed width: " + req.params.convid);
+  subscriptions[req.params.convid][0].disconnect(function () {
+    subscriptions.splice(req.params.convid,1);
+    logger.debug("Client unsubscribed width: " + req.params.convid);
+  });
 });
 
 //webhooks notifications
@@ -42,5 +42,11 @@ function getNotificationConversationId(notificationBody) {
   return noConversationId;
 }
 
+
+/*function validateNotification(event, signature, appSecret) {
+  const decoded = 'sha1=' + hmacsha1(appSecret,event);
+  if(decoded === signature) return true;
+  return false;
+}*/
 
 module.exports = router;
