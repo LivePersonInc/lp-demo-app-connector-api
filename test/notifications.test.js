@@ -62,7 +62,6 @@ describe('Notifications tests', () => {
     }).timeout(timeout);
 
     it('Should return 400 when notification contains the conversation id but is not subscribed', async () => {
-      //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
       let response = await requester.post('/notifications/event')
         .send(webhookNotification);
 
@@ -71,7 +70,6 @@ describe('Notifications tests', () => {
     }).timeout(timeout);
 
     it('Should return 400 when notification does not contains the conversation id', async () => {
-      //await chai.request(app).get('/notifications/subscribe/' +  conversationID);
       let response = await requester.post('/notifications/event')
         .send({"tste":3, "errr": "sdg"});
 
@@ -80,8 +78,7 @@ describe('Notifications tests', () => {
     }).timeout(timeout);
 
     it('Should return 200 when notification contains the conversation id and is subcscribed', async () => {
-     // requester.get('/notifications/subscribe/' +  conversationID).then();
-      var es = new EventSource(`http://localhost:8282/notifications/subscribe/${conversationID}/${appKey}`, { 'x-secret': appSecret});
+      var es = new EventSource(`http://localhost:8282/notifications/subscribe/${conversationID}/${appKey}`);
 
       es.addEventListener('message', function (e) {
         console.log(e);
@@ -102,7 +99,7 @@ describe('Notifications tests', () => {
 
 
     it('Should return 200 when notification ms.MessagingEventNotification contains the conversation id and is subcscribed', async () => {
-      var es = new EventSource(`http://localhost:8282/notifications/subscribe/${conversationID}/${appKey}`,  { 'x-secret': appSecret});
+      var es = new EventSource(`http://localhost:8282/notifications/subscribe/${conversationID}/${appKey}`);
 
       es.addEventListener('message', function (e) {
         console.log(e);
