@@ -20,65 +20,25 @@ import {ConversationEvent} from "../../shared/models/conversation/conversationEv
 })
 export class LpHomeComponent implements OnInit, OnDestroy {
   public brandId: string;
-  public isAuthenticated: boolean;
   public userName: string;
-  public password: string;
   public authenticationService: AuthenticationService;
 
-  private loginSubscription: ISubscription;
-  private domainSubscription: ISubscription;
   private dialogRefSubscription: ISubscription;
 
   constructor(private _authenticationService: AuthenticationService,
-              private installationService: InstallationService,
-              private domainsService: DomainsService,
               private router: Router,
               private conversationService: ConversationService,
-              private accountConfigService: AccountConfigService,
               public dialog: MatDialog) {
     this.authenticationService = _authenticationService;
   }
 
   ngOnInit() {
-  /*  if(this.authenticationService.user){
-      this.isAuthenticated = true;
-    }
-    this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
-      if (event === 'LOGGED-IN') {
-        this.isAuthenticated = true;
-        this.installationService.init();
-        this.conversationService.init();
-        this.accountConfigService.init();
 
-        this.goToStartConfigPage();
-
-      }
-      if (event === 'LOGGED-OUT') {
-        this.isAuthenticated = false;
-      }
-    });
-
-
-    this.conversationService.conversationRestoredSubject.subscribe( event => {
-      if (event === 'RESTORED') {
-          this.goToStartDemoPage();
-      }
-    });
-    this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
-      if(event === 'READY') {
-        this.authenticationService.login(this.brandId, this.userName, this.password);
-      }
-    });
-  */
   }
 
   ngOnDestroy() {
-    if(this.loginSubscription) this.loginSubscription.unsubscribe();
-    if(this.domainSubscription) this.domainSubscription.unsubscribe();
     if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
   }
-
-
 
   public goToStartConfigPage() {
     this.router.navigateByUrl('settings/start');

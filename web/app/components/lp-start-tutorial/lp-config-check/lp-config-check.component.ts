@@ -28,15 +28,10 @@ export class LpConfigCheckComponent implements OnInit, OnDestroy {
     this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
 
     this.installationSubscription = this.installationService.installationSubject.subscribe(event => {
-      if( event === 'APP_SELECTED'){
+      if( event === 'APP_SELECTED' || event === 'UPDATE_APP'  || event === 'APP_SECRET_FOUND') {
         this.currentAppInstallation = this.installationService.selectedApp;
         this.initWebhooks();
       }
-      if( event === 'UPDATE_APP'){
-        this.currentAppInstallation = this.installationService.selectedApp;
-        this.initWebhooks();
-      }
-
     });
 
     this.acSubscription = this.accountConfigService.acSubject.subscribe( event => {
