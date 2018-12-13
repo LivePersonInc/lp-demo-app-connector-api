@@ -8,14 +8,21 @@ const HttpStatus = require('http-status-codes');
 const subscriptions = [];
 
 router.get("/subscribe/:convid/:appKey", (req, res, next) => {
-  let sub = [SSE(res), req.params.appKey];
-  //TODO: get app secret given the appKey needed for notifications vailidation
-  subscriptions[req.params.convid] = sub;
-  logger.debug("Client subscribed width: " + req.params.convid);
-  subscriptions[req.params.convid][0].disconnect(function () {
-    subscriptions.splice(req.params.convid,1);
-    logger.debug("Client unsubscribed width: " + req.params.convid);
-  });
+  console.log("Check if is authenticated: " + req.isAuthenticated());
+  if(req.isAuthenticated()){
+    let sub = [SSE(res), req.params.appKey];
+    //TODO: get app secret given the appKey needed for notifications vailidation
+    subscriptions[req.params.convid] = sub;
+    logger.debug("Client subscribed width: " + req.params.convid);
+    subscriptions[req.params.convid][0].disconnect(function () {
+      subscriptions.splice(req.params.convid,1);
+      logger.debug("Client unsubscribed width: " + req.params.convid);
+    });
+  }else{
+    logger.error("Client is NOT authenticated");
+    res.status(401).send("ERROR");
+  }
+
 });
 
 //webhooks notifications

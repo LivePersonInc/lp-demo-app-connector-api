@@ -30,9 +30,6 @@ app.use("/health", router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//receive webhooks notifications
-app.use("/notifications", notifications);
-
 // configure passport.js to use the local strategy
 passport.use(authLocalStrategy());
 
@@ -57,7 +54,7 @@ app.use(cors());
 app.use(session({
   genid: (req) => { return uuid()},
   store: new FileStore(),
-  secret: 'keyboard cat', //ADD ENVIRONMENT VAR
+  secret: 'keyboard cat', //TODO: ADD ENVIRONMENT VAR
   resave: true,
   cookie: {
     secure: false,
@@ -71,6 +68,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//receive webhooks notifications
+app.use("/notifications", notifications);
+
 app.use('/demo', function (req, res, next) {
   if(req.isAuthenticated()) {
     next();
@@ -78,6 +78,7 @@ app.use('/demo', function (req, res, next) {
     res.status(401).send("ERROR");
   }
 });
+
 app.use("/demo/installation", installationBridge);
 app.use("/demo/account", accountConfBridge);
 app.use("/demo/ums", umsBridge);
