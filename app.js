@@ -42,7 +42,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('Inside deserializeUser callback. id ' + user),
+  console.log('Inside deserializeUser callback. id ' + user);
 
   done(null, user);
 });
@@ -51,14 +51,16 @@ nconf.file({file: "settings.json"});
 
 app.use(session({
   genid: (req) => { return uuid()},
-  store: new FileStore(),
+  store: new FileStore({
+    checkPeriod: 86400000
+  }),
   secret: 'keyboard cat', //TODO: ADD ENVIRONMENT VAR
-  resave: true,
+  resave: false,
   cookie: {
     secure: false,
-    maxAge: 124000,
+    maxAge: 824000,
     httpOnly: false,
-    overwrite: false,
+    overwrite: true,
   },
   saveUninitialized: true
 }));
@@ -88,7 +90,6 @@ app.use("/domains", csdsBridge);
 
 //app.use("/authentication", loginBridge);
 app.post('/login', (req, res, next) => {
-
   passport.authenticate('local', (err, user, info) => {
     console.log('Inside passport.authenticate() callback');
     if(info) {return res.send(info.message)}
@@ -107,7 +108,7 @@ app.get('/logout', (req, res, next) => {
       res.status(500).send("LOG OUT ERROR");
     }
   });
-  res.status(200).send("OK");
+  res.json({status: 'OK'});
 });
 
 app.get('/getSession', function(req, res) {
@@ -116,9 +117,9 @@ app.get('/getSession', function(req, res) {
 
 app.get('/isAuthenticated',(req, res, next) => {
   if(req.isAuthenticated()) {
-    res.status(200).send(true);
+    res.send(true);
   } else {
-    res.status(200).send(false);
+    res.send(false);
   }
 });
 

@@ -33,14 +33,16 @@ export class InstallationService extends HttpService {
   }
 
   public init() {
-    this.brandId = this.authenticationService.user.brandId;
-    this.headers = {'headers':
-      {
-        'Authorization': `Bearer ${this.authenticationService.user.token}`,
-        'content-type': 'application/json',
-      }
-    };
-    this.restoreState();
+    if(this.authenticationService && this.authenticationService.user) {
+      this.brandId = this.authenticationService.user.brandId;
+      this.headers = {'headers':
+        {
+          'Authorization': `Bearer ${this.authenticationService.user.token}`,
+          'content-type': 'application/json',
+        }
+      };
+      this.restoreState();
+    }
   }
 
   get selectedApp(): AppInstall {

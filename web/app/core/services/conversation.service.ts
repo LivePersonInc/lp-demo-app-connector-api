@@ -41,31 +41,33 @@ export class ConversationService extends HttpService {
   }
 
   public init() {
-    this.brandId = this.authenticationService.user.brandId;
+    if(this.authenticationService && this.authenticationService.user) {
+      this.brandId = this.authenticationService.user.brandId;
 
-    this.historyService.init();
+      this.historyService.init();
 
-    this.historyService.historySubject.subscribe( event => {
-      if(event === 'GET_CONV_HISTORY'){
-        this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
-      }
-    });
+      this.historyService.historySubject.subscribe( event => {
+        if(event === 'GET_CONV_HISTORY'){
+          this.conversationManager.addHistoryMessageToCurrentState(this.conversation);
+        }
+      });
 
-    this.installationService.installationSubject.subscribe( event => {
-      if(event === 'APP_SECRET_FOUND') {
-        this.restoreStoredState();
-      }
-    });
+      this.installationService.installationSubject.subscribe( event => {
+        if(event === 'APP_SECRET_FOUND') {
+          this.restoreStoredState();
+        }
+      });
 
-    this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
-      if(event.event === ConvEvent.EVENT_RECEIVED ) {
-        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.EVENT_RECEIVED));
-      } else if(event.event === ConvEvent.MSG_RECEIVED ) {
-        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.MSG_RECEIVED));
+      this.conversationManager.conversationEventSubject.subscribe( (event: ConversationEvent) => {
+        if(event.event === ConvEvent.EVENT_RECEIVED ) {
+          this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.EVENT_RECEIVED));
+        } else if(event.event === ConvEvent.MSG_RECEIVED ) {
+          this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId,ConvEvent.MSG_RECEIVED));
 
-        this.notifyMessageWasAccepted(this.conversation.messages[this.conversation.messages.length-1].sequence);
-      }
-    });
+          this.notifyMessageWasAccepted(this.conversation.messages[this.conversation.messages.length-1].sequence);
+        }
+      });
+    }
   }
 
   public openConversation(brandId: string, appKey: string, appSecret, userName: string, initialMessage: string, options: Options) {

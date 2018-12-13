@@ -50,13 +50,14 @@ export class HttpService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${JSON.stringify(error.status)}, ` +
-        `body was: ${error.error}`);
-      console.log(error);
+      if (error.status > 299) {
+        console.error(
+          `Backend returned code ${JSON.stringify(error.status)}, ` +
+          `body was: ${error.error}`);
+       }
     }
     // return an ErrorObservable with a user-facing error message
-    return new ErrorObservable(
+   return new ErrorObservable(
       error || 'An error occurred, please try again later'
     );
   }

@@ -29,10 +29,8 @@ export class StateRecoveryService extends HttpService{
 
     super(snackBar,http, loadingService,router);
 
-    this.domainsService.domainsSubject.subscribe( event => {
-
+    domainsService.domainsSubject.subscribe( event => {
       this.initializeState();
-
     });
   }
 
@@ -40,16 +38,13 @@ export class StateRecoveryService extends HttpService{
     return this.
     doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, true)
       .subscribe(res => {
-        console.log(res);
         const user = new User();
         user.brandId = res.passport.user.csdsCollectionResponse.baseURIs[0].account; //TODO: check in server
         user.userName =  res.passport.user.config.loginName;
         user.token = res.passport.user.bearer;
         this.authenticationService.user = user;
 
-        //
         this.domainsService.getDomainList(user.brandId);
-
 
       }, error => {
         this.errorResponse("Problem with getting session object");
@@ -70,11 +65,12 @@ export class StateRecoveryService extends HttpService{
   }
 
   public initializeState() {
-    this.installationService.init();
-    this.conversationService.init();
-    this.accountConfigService.init();
-
-    this.accountConfigService.getAccountConfigPropertiesList();
+    if(this.authenticationService && this.authenticationService.user) {
+      this.installationService.init();
+      this.conversationService.init();
+      this.accountConfigService.init();
+      this.accountConfigService.getAccountConfigPropertiesList();
+    }
   }
 
 }

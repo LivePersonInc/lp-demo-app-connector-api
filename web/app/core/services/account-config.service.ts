@@ -30,12 +30,14 @@ export class AccountConfigService extends HttpService {
   }
 
   public init() {
+    if(this.authenticationService && this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId;
       this.headers = {
         'headers': {
           'Authorization': `Bearer ${this.authenticationService.user.token}`,
         }
-      };
+      }
+    }
   }
 
   public getAccountConfigPropertiesList() {
