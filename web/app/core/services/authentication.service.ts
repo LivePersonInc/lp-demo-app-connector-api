@@ -53,14 +53,15 @@ export class AuthenticationService extends HttpService {
        });
   }
   public logout() {
-    //TODO: check
-    this.loadingService.startLoading();
-    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},false).subscribe(res => {
+    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).subscribe(res => {
       this._user = null;
       this.setLoggedIn(false);
       this.userLoggedSubject.next('LOGGED-OUT');
+      console.log("SEHEHEHEHEHEH");
+      this.loadingService.stopLoading();
     }, error => {
       this.errorResponse("Problem with Authentication");
+      this.loadingService.stopLoading();
     });
   }
 

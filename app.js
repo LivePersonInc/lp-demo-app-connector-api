@@ -102,14 +102,12 @@ app.post('/login', (req, res, next) => {
 });
 
 app.get('/logout', (req, res, next) => {
-  console.log("LOG OUT");
   req.session.destroy(function(error) {
     if(error) {
-      res.status(500);
+      res.status(500).send("LOG OUT ERROR");
     }
   });
-  //TODO: logout does not work
-  res.status(200);
+  res.status(200).send("OK");
 });
 
 app.get('/getSession', function(req, res) {

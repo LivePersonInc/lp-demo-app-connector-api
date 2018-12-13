@@ -9,6 +9,8 @@ import {Subject} from "rxjs/Subject";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Router} from "@angular/router";
 import {StateStorage} from "../util/state-storage";
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class InstallationService extends HttpService {
