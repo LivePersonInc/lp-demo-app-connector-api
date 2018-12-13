@@ -49,8 +49,6 @@ passport.deserializeUser((user, done) => {
 
 nconf.file({file: "settings.json"});
 
-app.use(cors());
-
 app.use(session({
   genid: (req) => { return uuid()},
   store: new FileStore(),
@@ -105,9 +103,12 @@ app.post('/login', (req, res, next) => {
 
 app.get('/logout', (req, res, next) => {
   console.log("LOG OUT");
-  req.session.destroy(function(err) {
-    res.status(500);
-  })  //TODO: logout does not work
+  req.session.destroy(function(error) {
+    if(error) {
+      res.status(500);
+    }
+  });
+  //TODO: logout does not work
   res.status(200);
 });
 
