@@ -40,24 +40,14 @@ export class LpLoginComponent implements OnInit {
       'password': new FormControl('', [Validators.required],)
     });
 
-    /*if(this.authenticationService.user){
-      this.isAuthenticated = true;
-    }*/
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
-        //this.isAuthenticated = true;
         this.installationService.init();
         this.conversationService.init();
         this.accountConfigService.init();
-
         this.goToStartConfigPage();
-
-      }
-      if (event === 'LOGGED-OUT') {
-        //this.isAuthenticated = false;
       }
     });
-
 
     this.conversationService.conversationRestoredSubject.subscribe( event => {
       if (event === 'RESTORED') {

@@ -4,7 +4,6 @@ import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {environment} from '../../../environments/environment';
-import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../../shared/models/user.model";
@@ -15,7 +14,6 @@ import {DomainsService} from "./domains.service";
 
 @Injectable()
 export class StateRecoveryService extends HttpService{
-  public domainsSubject = new Subject();
   public domains = [];
   public isStateLoaded: boolean;
 
@@ -33,11 +31,7 @@ export class StateRecoveryService extends HttpService{
 
     this.domainsService.domainsSubject.subscribe( event => {
 
-      this.installationService.init();
-      this.conversationService.init();
-      this.accountConfigService.init();
-
-      this.accountConfigService.getAccountConfigPropertiesList();
+      this.initializeState();
 
     });
   }
@@ -73,6 +67,14 @@ export class StateRecoveryService extends HttpService{
 
   public goToStartDemoPage() {
     this.router.navigateByUrl('demo');
+  }
+
+  public initializeState() {
+    this.installationService.init();
+    this.conversationService.init();
+    this.accountConfigService.init();
+
+    this.accountConfigService.getAccountConfigPropertiesList();
   }
 
 }
