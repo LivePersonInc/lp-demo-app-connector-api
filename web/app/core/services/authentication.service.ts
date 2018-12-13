@@ -53,11 +53,11 @@ export class AuthenticationService extends HttpService {
        });
   }
   public logout() {
+    this.loggedInStatus = false;
     return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).subscribe(res => {
       this._user = null;
-      this.setLoggedIn(false);
+     // this.setLoggedIn(false);
       this.userLoggedSubject.next('LOGGED-OUT');
-      console.log("SEHEHEHEHEHEH");
       this.loadingService.stopLoading();
     }, error => {
       this.errorResponse("Problem with Authentication");
@@ -79,7 +79,7 @@ export class AuthenticationService extends HttpService {
 
 
   get isLoggedIn() {
-    return this.loggedInStatus
+    return this.loggedInStatus;
   }
 
 }

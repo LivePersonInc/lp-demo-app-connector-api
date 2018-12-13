@@ -13,10 +13,12 @@ export class AuthGuardGuard implements CanActivate {
               private router: Router) {}
 
   canActivate()  {
+    console.log("CAN ACTIVATE");
     if(this.authenticationService.isLoggedIn) {
       return true;
     }
     return this.authenticationService.isAuthenticated().pipe(map(res => {
+      console.log(res);
       if(res) {
         this.authenticationService.setLoggedIn(true);
         if(!this.stateRecoveryService.isStateLoaded){
