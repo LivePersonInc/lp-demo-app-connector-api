@@ -61,9 +61,9 @@ app.use(session({
   resave: true,
   cookie: {
     secure: false,
-    maxAge: 2160000000,
+    maxAge: 124000,
     httpOnly: false,
-    overwrite: true,
+    overwrite: false,
   },
   saveUninitialized: true
 }));
@@ -104,9 +104,10 @@ app.post('/login', (req, res, next) => {
 
 app.get('/logout', (req, res, next) => {
   console.log("LOG OUT");
-  req.logOut();
-  //TODO: logout does not work
-  res.status(200)
+  req.session.destroy(function(err) {
+    res.status(500);
+  })  //TODO: logout does not work
+  res.status(200);
 });
 
 app.get('/getSession', function(req, res) {

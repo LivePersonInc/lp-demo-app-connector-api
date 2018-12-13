@@ -37,20 +37,14 @@ export class StateRecoveryService extends HttpService{
       this.conversationService.init();
       this.accountConfigService.init();
 
-      //this.goToStartConfigPage();
       this.accountConfigService.getAccountConfigPropertiesList();
 
-      this.conversationService.conversationRestoredSubject.subscribe( event => {
-       /* if (event === 'RESTORED') {
-          this.goToStartDemoPage();
-        }*/
-      });
     });
   }
 
   public getSession(): any{
     return this.
-    doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, false)
+    doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, true)
       .subscribe(res => {
         console.log(res);
         const user = new User();
