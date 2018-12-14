@@ -18,25 +18,19 @@ const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const authLocalStrategy = require('./server/auth/authLocalStrategy');
 const router = express.Router();
-
-app.use(cors());
-
 const subscriptionsHandler = require('./server/util/subscriptionsHandler');
 
-router.get("/", (req, res, next) => {
-  res.json({status: 'UP'});
-});
-app.use("/health", router);
+app.use(cors());
+nconf.file({file: "settings.json"});
+router.get("/", (req, res) => res.json({status: 'UP'}));
 
+app.use("/health", router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 //receive webhooks notifications
 app.use("/notifications", notifications);
-
 // configure passport.js to use the local strategy
 passport.use(authLocalStrategy());
-
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
   //Here i have to save the user data in the format I want
@@ -45,8 +39,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
-
-nconf.file({file: "settings.json"});
 
 const halfHour =  1800 * 1000;
 app.use(session({
@@ -62,25 +54,14 @@ app.use(session({
   },
   saveUninitialized: true
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/subscribe/notifications/:convid/:appKey", (req, res) => {
-  if(req.isAuthenticated()){
-    subscriptionsHandler.handleSubscriptionRequest(req, res);
-  }else{
-    logger.error("Client is NOT authenticated");
-    res.status(401).send("ERROR");
-  }
+  req.isAuthenticated() ? subscriptionsHandler.handleSubscriptionRequest(req, res) : res.status(401).send("Unauthorized");
 });
-
 app.use('/demo', function (req, res, next) {
-  if(req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(401).send("ERROR");
-  }
+  req.isAuthenticated ? next() : res.status(401).send("Unauthorized");
 });
 
 app.use("/demo/installation", installationBridge);
@@ -95,38 +76,22 @@ app.post('/login', (req, res, next) => {
     if(info) {return res.send(info.message)}
     if (err) { return next(err); }
     if (!user) { return res.redirect('/#/settings'); }
-    req.login(user, (err) => {
-      return res.send({bearer: user.bearer});
-    })
+    req.login(user, (err) => res.send({bearer: user.bearer}));
   })(req, res, next);
 });
 
 app.get('/logout', (req, res, next) => {
-  req.session.destroy(function(error) {
-    if(error) {
-      res.status(500).send("LOG OUT ERROR");
-    }
+  req.session.destroy((error) => {
+    if(error) { res.status(500).send("LOG OUT ERROR");}
   });
   res.json({status: 'OK'});
 });
-
-app.get('/getSession', function(req, res) {
-  res.send(req.session);
-});
-
-app.get('/isAuthenticated',(req, res, next) => {
-  if(req.isAuthenticated()) {
-    res.send(true);
-  } else {
-    res.send(false);
-  }
-});
-
+app.get('/getSession', (req, res) => res.send(req.session));
+app.get('/isAuthenticated',(req, res, next) => res.send(req.isAuthenticated()));
 //Serve our UI
 app.use(express.static('dist'));
-
 //http server
-app.listen(nconf.get("SERVER_HTTP_PORT"), function () {
+app.listen(nconf.get("SERVER_HTTP_PORT"), () => {
   logger.info("listening");
   app.isReady = true;
   app.emit("ready", true);
