@@ -52,13 +52,13 @@ export class AuthenticationService extends HttpService {
          this.errorResponse("Problem with Authentication");
        });
   }
-  public logout() {
+  public logout(message: string) {
     this.loggedInStatus = false;
     return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).subscribe(res => {
       this._user = null;
       this.loggedInStatus = false;
       this.userLoggedSubject.next('LOGGED-OUT');
-      this.customResponse("User logged out");
+      this.customResponse(message);
     }, error => {
       this.errorResponse("Logout problem");
     });

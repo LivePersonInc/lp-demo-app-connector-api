@@ -9,7 +9,7 @@ export class LogoutGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   canActivate() {
-    this.authenticationService.logout();
+    this.authenticationService.logout("Logged out");
     this.router.navigate(['login']);
     //location.reload();
     //TODO: check
