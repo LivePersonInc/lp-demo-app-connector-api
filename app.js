@@ -21,6 +21,8 @@ const router = express.Router();
 
 app.use(cors());
 
+const subscriptionsHandler = require('./server/util/subscriptionsHandler');
+
 router.get("/", (req, res, next) => {
   res.json({status: 'UP'});
 });
@@ -28,6 +30,9 @@ app.use("/health", router);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//receive webhooks notifications
+app.use("/notifications", notifications);
 
 // configure passport.js to use the local strategy
 passport.use(authLocalStrategy());
@@ -42,14 +47,15 @@ passport.deserializeUser((user, done) => {
 });
 
 nconf.file({file: "settings.json"});
+
 const halfHour =  1800 * 1000;
 app.use(session({
   genid: (req) => { return uuid()},
   store: new FileStore(),
-  secret: 'keyboard cat', //TODO: ADD ENVIRONMENT VAR
+  secret: process.env.secret || '582e3ed11562c6ed3808e3325fd',
   resave: true,
   cookie: {
-    secure: false,
+    secure: 'auto',
     maxAge: halfHour,
     httpOnly: false,
     overwrite: false,
@@ -60,8 +66,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//receive webhooks notifications
-app.use("/notifications", notifications);
+app.get("/subscribe/notifications/:convid/:appKey", (req, res) => {
+  if(req.isAuthenticated()){
+    subscriptionsHandler.handleSubscriptionRequest(req, res);
+  }else{
+    logger.error("Client is NOT authenticated");
+    res.status(401).send("ERROR");
+  }
+});
 
 app.use('/demo', function (req, res, next) {
   if(req.isAuthenticated()) {
