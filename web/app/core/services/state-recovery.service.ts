@@ -52,7 +52,6 @@ export class StateRecoveryService extends HttpService{
   }
 
   public loadCurrentSessionState(): any {
-    console.log("7 STATE FOR CURREN SESSION");
     this.getSession();
   }
 

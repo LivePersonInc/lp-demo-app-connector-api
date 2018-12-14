@@ -31,7 +31,7 @@ export class AuthenticationService extends HttpService {
   setLoggedIn(value: boolean) {
     this.loggedInStatus = value
   }
-  //Bearer Token
+
   public login(brandId: string, username: string, password: string): any {
     this.loadingService.startLoading();
      return this.
@@ -58,9 +58,9 @@ export class AuthenticationService extends HttpService {
       this._user = null;
       this.loggedInStatus = false;
       this.userLoggedSubject.next('LOGGED-OUT');
-      this.successResponse("LOGGER OUT SUccesfully");
+      this.customResponse("User logged out");
     }, error => {
-      this.errorResponse("Problem with logout: ");
+      this.errorResponse("Logout problem");
     });
   }
 

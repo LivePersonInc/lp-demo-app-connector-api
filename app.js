@@ -35,15 +35,11 @@ passport.use(authLocalStrategy());
 
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here');
-
   //Here i have to save the user data in the format I want
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('Inside deserializeUser callback. id ' + user);
-
   done(null, user);
 });
 
@@ -51,16 +47,14 @@ nconf.file({file: "settings.json"});
 
 app.use(session({
   genid: (req) => { return uuid()},
-  store: new FileStore({
-    checkPeriod: 86400000
-  }),
+  store: new FileStore(),
   secret: 'keyboard cat', //TODO: ADD ENVIRONMENT VAR
-  resave: false,
+  resave: true,
   cookie: {
     secure: false,
-    maxAge: 824000,
+    maxAge: 124000,
     httpOnly: false,
-    overwrite: true,
+    overwrite: false,
   },
   saveUninitialized: true
 }));
@@ -73,8 +67,11 @@ app.use("/notifications", notifications);
 
 app.use('/demo', function (req, res, next) {
   if(req.isAuthenticated()) {
+    console.log("AUTHENTICATED");
     next();
   } else {
+    console.log("NO AUTHENTICATED: 401");
+
     res.status(401).send("ERROR");
   }
 });

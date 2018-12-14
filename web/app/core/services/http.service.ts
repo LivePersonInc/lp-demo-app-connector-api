@@ -83,6 +83,12 @@ export class HttpService {
     this.snackBar.open('Request successfully SENT: ' + message, null, this.snackBarConfig);
   }
 
+  public customResponse(message: string) {
+    this.loadingService.stopLoading();
+    this.snackBarConfig.duration = 2000;
+    this.snackBar.open(message, null, this.snackBarConfig);
+  }
+
   public deactivateLoadingService(){
     this.loadingService.deactivateLoadingService();
   }
