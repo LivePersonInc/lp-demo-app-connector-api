@@ -77,7 +77,7 @@ describe('Notifications tests', () => {
 
     }).timeout(timeout);
 
-    it('Should return 200 when notification contains the conversation id and is subcscribed', async () => {
+    /*it('Should return 200 when notification contains the conversation id and is subcscribed', async () => {
       var es = new EventSource(`http://localhost:8282/notifications/subscribe/${conversationID}/${appKey}`);
 
       es.addEventListener('message', function (e) {
@@ -116,7 +116,7 @@ describe('Notifications tests', () => {
 
       expect(response.statusCode).to.be.equal(200);
 
-    }).timeout(timeout);
+    }).timeout(timeout);*/
 
   });
 

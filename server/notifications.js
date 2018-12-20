@@ -7,7 +7,7 @@ const subscriptionsHandler = require('./util/subscriptionsHandler');
 
 //webhooks notifications
 router.post("/event", function (req, res, next) {
-  let convId = subscriptionsHandler.getNotificationConversationId(req.body);
+  const convId = subscriptionsHandler.getNotificationConversationId(req.body);
   if(!convId || !subscriptionsHandler.subscriptions[convId]) {
     res.status(HttpStatus.BAD_REQUEST).send({error: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST)});
   }else {
