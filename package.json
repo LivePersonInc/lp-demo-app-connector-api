@@ -22,7 +22,7 @@
     "tc-test": "ng test --single-run=true --browsers PhantomJS --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server-test": "nyc mocha --exit"
+    "server-test": "NODE_ENV=test nyc mocha --exit"
   },
   "private": true,
   "dependencies": {
@@ -72,12 +72,11 @@
     "morgan": "^1.9.0",
     "nconf": "^0.10.0",
     "ng-event-source": "^1.0.9",
-    "nock": "^10.0.3",
     "node-fetch": "^2.1.1",
     "node-rest-client": "^3.1.0",
+    "nyc": "^13.1.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "nyc": "^13.1.0",
     "protractor": "~5.1.2",
     "rxjs": "^5.5.6",
     "session-file-store": "^1.2.0",
@@ -93,6 +92,7 @@
   "devDependencies": {
     "karma-phantomjs-launcher": "^1.0.4",
     "mocha": "^5.2.0",
-    "phantomjs-prebuilt": "^2.1.16"
+    "phantomjs-prebuilt": "^2.1.16",
+    "nock": "^10.0.3"
   }
 }
