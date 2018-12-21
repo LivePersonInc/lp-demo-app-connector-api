@@ -14,11 +14,13 @@ const wait = ms => new Promise(resolve => {
 
 describe('Notifications tests', () => {
   chai.use(chaiHttp);
+
   const requester = chai.request(app).keepOpen();
   const timeout = 7000;
-  const conversationID = '69d7026e-67e7-47ab-8dcb-ec14dfcdd31d';
-  const appKey = 'abce35egjop2035236004egewgewgewagew';
-  const appSecret = 'e4vt53s0kafe2o7h7ck51cvra9';
+  const brandId = '42257269';
+  const conversationID = 'b8b83fe9-75f0-46f2-baaa-2930f7192cfb';
+  const appKey = '81fad476-88af-4d08-bc0e-20bc69439ed4';
+  const appSecret = 'rl9hacst6kqilbofup64n11ga3';
 
   //MOCK http response
   const mockHttpResponse = new http.OutgoingMessage();
@@ -52,24 +54,34 @@ describe('Notifications tests', () => {
       expect(response.statusCode).to.be.equal(400);
     }).timeout(timeout);
 
-    it('Should return 200 when notification type is cqm.ExConversationChangeNotification, contains the conversation id and is subscribed', async () => {
+    it('Should return 200 when notification type is ms.MessagingEventNotification, contains the conversation id and is subscribed', async () => {
       //GIVEN
-      subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey];
+      const event = {"kind":"notification","body":{"changes":[{"originatorId":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","originatorMetadata":{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"},"event":{"type":"ChatStateEvent","chatState":"PAUSE"},"conversationId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","dialogId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb"}]},"type":"ms.MessagingEventNotification"};
+
+      subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey, appSecret, brandId];
       //WHEN
       let response = await requester.post('/notifications/event')
-        .send(webhookNotification);
+        .set('x-liveperson-account-id', '42257269')
+        .set('x-liveperson-client-id', '81fad476-88af-4d08-bc0e-20bc69439ed4')
+        .set('x-liveperson-signature', 'sha1=e/TfS0wv1HbvEsMqcBMmFLcMslI=')
+        .send(event);
       //THEN
       expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
 
-    it('Should return 200 when notification type is ms.MessagingEventNotification, contains the conversation id and is subscribed', async () => {
-      //GIVEN
-      subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey];
-      //WHEN
-      let response = await requester.post('/notifications/event')
-        .send(webhookNotification_second_type);
-      //THEN
-      expect(response.statusCode).to.be.equal(200);
+   it('Should return 200 when notification type is  cqm.ExConversationChangeNotification, contains the conversation id and is subscribed', async () => {
+     //GIVEN
+     const event = {"kind":"notification","body":{"changes":[{"type":"UPSERT","result":{"convId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","effectiveTTR":-1,"conversationDetails":{"skillId":"-1","participants":[{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"},{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"}],"dialogs":[{"dialogId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","participantsDetails":[{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"},{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"}],"dialogType":"MAIN","channelType":"MESSAGING","state":"CLOSE","creationTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"closedBy":"CONSUMER"}],"brandId":"42257269","state":"CLOSE","stage":"CLOSE","closeReason":"CONSUMER","startTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"ttr":{"ttrType":"PRIORITIZED","value":600}}}}]},"type":"cqm.ExConversationChangeNotification"}
+
+     subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey, appSecret, brandId];
+     //WHEN
+     let response = await requester.post('/notifications/event')
+       .set('x-liveperson-account-id', '42257269')
+       .set('x-liveperson-client-id', '81fad476-88af-4d08-bc0e-20bc69439ed4')
+       .set('x-liveperson-signature', 'sha1=CKiT6u4nb4Mpi0tdbCbgBXKAF1E=')
+       .send(event);
+     //THEN
+     expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
   });
 });

@@ -1,23 +1,23 @@
 'use strict';
 const SSE = require('sse-nodejs');
 const logger = require('./logger');
-const subscriptionsHandler = {};
 const hmacsha1 = require('hmacsha1');
 const AppInstallationService = require("../services/AppInstallationService");
 const handleStatusCode = require('./handleStatusCode');
-
 const nconf = require("nconf");
-nconf.file({file: "./settings.json"});
 
+nconf.file({file: "./settings.json"});
 const appInstallationService = new AppInstallationService(nconf);
+
 const installationDomainName = 'accountConfigReadWrite';
+
+const subscriptionsHandler = {};
 
 subscriptionsHandler.subscriptions = [];
 
 subscriptionsHandler.getNotificationConversationId = (notificationBody) => {
   logger.debug(JSON.stringify(notificationBody));
   const noConversationId = "";
-
   try {
     if(notificationBody.body.changes[0].hasOwnProperty("conversationId")) {
       return notificationBody.body.changes[0].conversationId;
@@ -66,7 +66,7 @@ subscriptionsHandler.validateWebhooksEventRequestSignature = (req, convId) => {
 };
 
 function isValidNotificationSignature(event, reqSignature, appSecret){
-  logger.debug(`[Calculated signature]: sha1=${hmacsha1(appSecret,JSON.stringify(event))},  [reqSignature]: ${reqSignature}`);
+  logger.debug(`[Calculated signature]: sha1=${hmacsha1(appSecret,JSON.stringify(event))},[reqSignature]: ${reqSignature}`);
   return ('sha1=' + hmacsha1(appSecret, JSON.stringify(event)) === reqSignature);
 }
 
