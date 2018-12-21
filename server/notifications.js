@@ -10,10 +10,13 @@ router.post("/event", function (req, res, next) {
   const convId = subscriptionsHandler.getNotificationConversationId(req.body);
   if(!convId || !subscriptionsHandler.subscriptions[convId]) {
     res.status(HttpStatus.BAD_REQUEST).send({error: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST)});
-  }else {
+  }else if(subscriptionsHandler.validateWebhooksEventRequestSignature(req, convId)){
     logger.debug("convId: " + convId);
     subscriptionsHandler.subscriptions[convId][0].send(req.body);
     res.json('OK');
+  } else {
+    logger.error(`Webhooks event request with convID: ${convId} is not valid: UNAUTHORIZED`);
+    res.status(HttpStatus.UNAUTHORIZED).send({error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED)});
   }
 });
 
