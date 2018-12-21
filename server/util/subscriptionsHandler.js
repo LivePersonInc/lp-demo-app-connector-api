@@ -35,7 +35,7 @@ subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
   const authorization = 'Bearer ' + req.session.passport.user.bearer;
   if(domainOBject !== {} ) {
     getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
-      subscriptionsHandler.subscriptions[req.params.convid] = [SSE(res), req.params.appKey,result.client_secret];
+      subscriptionsHandler.subscriptions[req.params.convid] = [SSE(res), req.params.appKey,result.client_secret, domainOBject.account];
       logger.debug("Client subscribed width: " + req.params.convid);
       subscriptionsHandler.subscriptions[req.params.convid][0].disconnect(function () {
         subscriptionsHandler.subscriptions.splice(req.params.convid,1);
@@ -61,6 +61,7 @@ subscriptionsHandler.validateWebhooksEventRequestSignature = (req, convId) => {
 
   return (reqAccountId && reqAppKey && reqSignature && appSecret
     && reqAppKey ===  subscriptionsHandler.subscriptions[convId][1]
+    && reqAccountId === subscriptionsHandler.subscriptions[convId][3]
     && isValidNotificationSignature(req.body, reqSignature, appSecret))
 };
 
