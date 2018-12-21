@@ -146,7 +146,6 @@ export class ConversationManager {
   }
 
   private addSendRawEndpointHeaders (appJWT, consumerJWS, features): any {
-    console.log("CFEG");
     return {
       'headers': {
         'content-type': 'application/json',
