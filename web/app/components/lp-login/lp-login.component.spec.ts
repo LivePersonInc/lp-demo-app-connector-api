@@ -1,3 +1,4 @@
+/*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpLoginComponent } from './lp-login.component';
 import {MaterialModule} from "../../material.module";
@@ -25,4 +26,4 @@ describe('LpLoginComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
+*/

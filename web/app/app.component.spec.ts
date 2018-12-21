@@ -10,6 +10,7 @@ import {LpStartTutorialModule} from "./components/lp-start-tutorial/lp-start-tut
 import {LpConversationModule} from "./components/lp-conversation/lp-conversation.module";
 import {APP_BASE_HREF} from "@angular/common";
 import {AuthenticationService} from "./core/services/authentication.service";
+import {LpLoginComponent} from "./components/lp-login/lp-login.component";
 describe('AppComponent', () => {
   beforeEach(async(() => {
     const authenticationService = jasmine.createSpy('AuthenticationService');
@@ -19,6 +20,7 @@ describe('AppComponent', () => {
         AppComponent,
         LpHomeComponent,
         LpDemoComponent,
+        LpLoginComponent
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
