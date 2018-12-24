@@ -5,6 +5,7 @@ const hmacsha1 = require('hmacsha1');
 const AppInstallationService = require("../services/AppInstallationService");
 const handleStatusCode = require('./handleStatusCode');
 const nconf = require("nconf");
+const Subscription = require('../models/Subscription');
 
 nconf.file({file: "./settings.json"});
 const appInstallationService = new AppInstallationService(nconf);
@@ -14,6 +15,28 @@ const installationDomainName = 'accountConfigReadWrite';
 const subscriptionsHandler = {};
 
 subscriptionsHandler.subscriptions = [];
+
+subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
+  const domainOBject = getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
+  const authorization = 'Bearer ' + req.session.passport.user.bearer;
+  if(domainOBject !== {} ) {
+    getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
+      const subscription = new Subscription(SSE(res), req.params.appKey,result.client_secret, domainOBject.account);
+      subscriptionsHandler.subscriptions[req.params.convid] = subscription;
+      logger.debug("Client subscribed width: " + req.params.convid);
+      subscriptionsHandler.subscriptions[req.params.convid].sseObject.disconnect(function () {
+        subscriptionsHandler.subscriptions.splice(req.params.convid,1);
+        logger.debug("Client unsubscribed width: " + req.params.convid);
+      });
+    }).catch((error) => {
+      logger.error("ERROR: Promise rejected", error);
+      res.status(500);
+    });
+
+  }else {
+    res.status(500);
+  }
+};
 
 subscriptionsHandler.getNotificationConversationId = (notificationBody) => {
   logger.debug(JSON.stringify(notificationBody));
@@ -30,38 +53,17 @@ subscriptionsHandler.getNotificationConversationId = (notificationBody) => {
   return noConversationId;
 };
 
-subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
-  const domainOBject = getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
-  const authorization = 'Bearer ' + req.session.passport.user.bearer;
-  if(domainOBject !== {} ) {
-    getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
-      subscriptionsHandler.subscriptions[req.params.convid] = [SSE(res), req.params.appKey,result.client_secret, domainOBject.account];
-      logger.debug("Client subscribed width: " + req.params.convid);
-      subscriptionsHandler.subscriptions[req.params.convid][0].disconnect(function () {
-        subscriptionsHandler.subscriptions.splice(req.params.convid,1);
-        logger.debug("Client unsubscribed width: " + req.params.convid);
-      });
-    }).catch((error) => {
-      logger.error("ERROR: Promise rejected", error);
-      res.status(500);
-    });
-
-  }else {
-    res.status(500);
-  }
-};
-
 subscriptionsHandler.validateWebhooksEventRequestSignature = (req, convId) => {
   const reqAccountId = req.header('X-Liveperson-Account-Id');
   const reqAppKey = req.header('X-Liveperson-Client-Id');
   const reqSignature = req.header('X-Liveperson-Signature');
-  const appSecret = subscriptionsHandler.subscriptions[convId][2];
+  const appSecret = subscriptionsHandler.subscriptions[convId].appSecret;
 
   logger.debug(`Validating webhooks notification  [accuntId]: ${reqAccountId}, [appKey]: ${reqAppKey}, [reqSignature]: ${reqSignature} , [appSecret]: ${appSecret} `);
 
   return (reqAccountId && reqAppKey && reqSignature && appSecret
-    && reqAppKey ===  subscriptionsHandler.subscriptions[convId][1]
-    && reqAccountId === subscriptionsHandler.subscriptions[convId][3]
+    && reqAppKey ===  subscriptionsHandler.subscriptions[convId].appKey
+    && reqAccountId === subscriptionsHandler.subscriptions[convId].brandId
     && isValidNotificationSignature(req.body, reqSignature, appSecret))
 };
 

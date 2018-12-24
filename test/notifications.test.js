@@ -5,6 +5,7 @@ const app = require('../app');
 const subscriptionsHandler = require('../server/util/subscriptionsHandler');
 const SSE = require('sse-nodejs');
 const http = require('http');
+const Subscription = require('../server/models/Subscription');
 
 const wait = ms => new Promise(resolve => {
   console.log(`... wait for ${ms / 1000}s ...`);
@@ -54,7 +55,9 @@ describe('Notifications tests', () => {
     it('Should return 200 when notification type is ms.MessagingEventNotification, contains the conversation id and is subscribed', async () => {
       //GIVEN
       const event = {"kind":"notification","body":{"changes":[{"originatorId":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","originatorMetadata":{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"},"event":{"type":"ChatStateEvent","chatState":"PAUSE"},"conversationId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","dialogId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb"}]},"type":"ms.MessagingEventNotification"};
-      subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey, appSecret, brandId];
+
+      const subscription = new Subscription(SSE(mockHttpResponse), appKey, appSecret, brandId);
+      subscriptionsHandler.subscriptions[conversationID] = subscription;
       //WHEN
       const response = await requester.post('/notifications/event')
         .set('x-liveperson-account-id', '42257269')
@@ -67,8 +70,11 @@ describe('Notifications tests', () => {
 
    it('Should return 200 when notification type is  cqm.ExConversationChangeNotification, contains the conversation id and is subscribed', async () => {
      //GIVEN
-     const event = {"kind":"notification","body":{"changes":[{"type":"UPSERT","result":{"convId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","effectiveTTR":-1,"conversationDetails":{"skillId":"-1","participants":[{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"},{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"}],"dialogs":[{"dialogId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","participantsDetails":[{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"},{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"}],"dialogType":"MAIN","channelType":"MESSAGING","state":"CLOSE","creationTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"closedBy":"CONSUMER"}],"brandId":"42257269","state":"CLOSE","stage":"CLOSE","closeReason":"CONSUMER","startTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"ttr":{"ttrType":"PRIORITIZED","value":600}}}}]},"type":"cqm.ExConversationChangeNotification"}
-     subscriptionsHandler.subscriptions[conversationID] = [SSE(mockHttpResponse), appKey, appSecret, brandId];
+     const event = {"kind":"notification","body":{"changes":[{"type":"UPSERT","result":{"convId":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","effectiveTTR":-1,"conversationDetails":{"skillId":"-1","participants":[{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"},{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"}],"dialogs":[{"dialogIdn":"b8b83fe9-75f0-46f2-baaa-2930f7192cfb","participantsDetails":[{"id":"2969e404f3be1c8cdda63f0b72d205ab5afb3fe3e3d7d72ab58245f564fdfd91","role":"CONSUMER"},{"id":"52e05c00-d5e4-5823-acf7-62570b939a63","role":"CONTROLLER"}],"dialogType":"MAIN","channelType":"MESSAGING","state":"CLOSE","creationTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"closedBy":"CONSUMER"}],"brandId":"42257269","state":"CLOSE","stage":"CLOSE","closeReason":"CONSUMER","startTs":1545398580042,"endTs":1545399379370,"metaDataLastUpdateTs":1545399379370,"ttr":{"ttrType":"PRIORITIZED","value":600}}}}]},"type":"cqm.ExConversationChangeNotification"}
+
+     const subscription = new Subscription(SSE(mockHttpResponse), appKey, appSecret, brandId);
+
+     subscriptionsHandler.subscriptions[conversationID] = subscription;
      //WHEN
      const response = await requester.post('/notifications/event')
        .set('x-liveperson-account-id', '42257269')

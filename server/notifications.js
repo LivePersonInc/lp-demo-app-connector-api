@@ -12,7 +12,7 @@ router.post("/event", function (req, res, next) {
     res.status(HttpStatus.BAD_REQUEST).send({error: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST)});
   }else if(subscriptionsHandler.validateWebhooksEventRequestSignature(req, convId)){
     logger.debug("convId: " + convId);
-    subscriptionsHandler.subscriptions[convId][0].send(req.body);
+    subscriptionsHandler.subscriptions[convId].sseObject.send(req.body);
     res.json('OK');
   } else {
     logger.error(`Webhooks event request with convID: ${convId} is not valid: UNAUTHORIZED`);
