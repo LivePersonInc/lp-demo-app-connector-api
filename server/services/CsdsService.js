@@ -10,9 +10,10 @@ class CsdsService {
     }
 
     getDomainList(brandId) {
+        const csdDomain = brandId.toString().toLowerCase().startsWith('le')? this.nconf.get('CSDS_DOMAIN_QA'): this.nconf.get('CSDS_DOMAIN');
         return new Promise((resolve, reject) => {
             return this.client
-                .get(`http://${this.nconf.get('CSDS_DOMAIN')}/api/account/${brandId}/service/baseURI.json?version=${this.nconf.get("CSDS_VERSION")}`,
+                .get(`http://${csdDomain}/api/account/${brandId}/service/baseURI.json?version=${this.nconf.get("CSDS_VERSION")}`,
                     {},
                     function (data, response) {
                         resolve([data, response]);
