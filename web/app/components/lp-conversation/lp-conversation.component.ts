@@ -25,19 +25,12 @@ export class LpConversationComponent implements OnInit, OnDestroy {
               private authenticationService: AuthenticationService,
               private installationService: InstallationService) { }
 
-
- @HostListener('window:focus', ['$event'])
+ @HostListener('document:visibilitychange', ['$event'])
   onFocus(event: any): void {
-    if(this.conversation && this.conversation.isConvStarted) {
-      this.conversationService.notifyAgentConsumerIsInTheChat();
-      this.conversationService.notifyMessagesWasRead();
-    }
-  }
-
-  @HostListener('window:blur', ['$event'])
-  onBlur(event: any): void {
-    if(this.conversation && this.conversation.isConvStarted){
-      this.conversationService.notifyAgentConsumerIsNotInTheChat();
+    if(document.hidden) {
+      this.onHidden();
+    } else {
+      this.onVisible();
     }
   }
 
@@ -138,5 +131,17 @@ export class LpConversationComponent implements OnInit, OnDestroy {
 
   }
 
+  private onVisible(): void {
+    if(this.conversation && this.conversation.isConvStarted) {
+      this.conversationService.notifyAgentConsumerIsInTheChat();
+      this.conversationService.notifyMessagesWasRead();
+    }
+  }
+
+  private onHidden(): void {
+    if(this.conversation && this.conversation.isConvStarted){
+      this.conversationService.notifyAgentConsumerIsNotInTheChat();
+    }
+  }
 
 }
