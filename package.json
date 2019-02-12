@@ -19,7 +19,7 @@
     "start-local": "ng build && node app",
     "build": "ng build --prod",
     "test": "ng test",
-    "tc-test": "ng test --single-run=true --browsers PhantomJS --watch=false",
+    "tc-test": "ng test --browsers PhantomJS --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server-test": "NODE_ENV=test nyc mocha --exit"
