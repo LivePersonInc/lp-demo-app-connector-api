@@ -1,0 +1,140 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "lp-demo-app-connector-api-upgrade": {
+      "root": "",
+      "sourceRoot": "web",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "sass"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lp-demo-app-connector-api-upgrade",
+            "index": "web/index.html",
+            "main": "web/main.ts",
+            "polyfills": "web/polyfills.ts",
+            "tsConfig": "web/tsconfig.app.json",
+            "assets": [
+              "web/favicon.ico",
+              "web/assets"
+            ],
+            "styles": [
+              "web/styles.scss"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "web/environments/environment.ts",
+                  "with": "web/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "lp-demo-app-connector-api-upgrade:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lp-demo-app-connector-api-upgrade:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lp-demo-app-connector-api-upgrade:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "web/test.ts",
+            "polyfills": "web/polyfills.ts",
+            "tsConfig": "web/tsconfig.spec.json",
+            "karmaConfig": "web/karma.conf.js",
+            "styles": [
+              "web/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "web/favicon.ico",
+              "web/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "web/tsconfig.app.json",
+              "web/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-demo-app-connector-api-upgrade-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "lp-demo-app-connector-api-upgrade:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "lp-demo-app-connector-api-upgrade:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "lp-demo-app-connector-api-upgrade"
+}
