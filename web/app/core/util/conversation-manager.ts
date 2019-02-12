@@ -14,8 +14,6 @@ import {SetUserProfile} from "../../shared/models/send-api/SetUserProfile.model"
 import {Request} from "../../shared/models/send-api/Request.model";
 import {Event} from "../../shared/models/send-api/Event.model";
 import {PublishContentEvent} from "../../shared/models/send-api/PublishContentEvent.model";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 import {StateStorage} from "./state-storage";
 import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
@@ -23,7 +21,7 @@ import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAccep
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
-import { map, filter, catchError, mergeMap } from "rxjs/operators";
+import {map, flatMap} from "rxjs/operators";
 
 
 @Injectable()
@@ -36,28 +34,28 @@ export class ConversationManager {
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
-    return this.authenticate(conversation).flatMap((res: any) => {
-      return this.openConversationRequest(conversation).map((res: any) => {
+    return this.authenticate(conversation).pipe(flatMap((res: any) => {
+      return this.openConversationRequest(conversation).pipe( map((res: any) => {
         conversation.conversationId = res["convId"];
         conversation.isConvStarted = true;
         this.subscribeToMessageNotifications(conversation);
-      });
-    })
+      }));
+    }))
   }
 
   public authenticate(conversation: Conversation): Observable<any> {
-    return this.getAppJWT(conversation)
-      .flatMap((res: any) => {
+    return this.getAppJWT(conversation).pipe(
+        flatMap((res: any) => {
         conversation.appJWT = res['access_token'];
-        return this.getConsumerJWS(conversation)
-          .map((res: any) => {
+        return this.getConsumerJWS(conversation).pipe(
+          map((res: any) => {
             conversation.consumerJWS = res['token'];
-          })
-      });
+          }))
+      }));
   }
 
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
-    return this.sendMessageRequest(message, conversation).map(res => {
+    return this.sendMessageRequest(message, conversation).pipe(map(res => {
       let sequence;
       if(res && res.body && res.body.hasOwnProperty('sequence')){
         sequence = res.body.sequence;
@@ -65,16 +63,17 @@ export class ConversationManager {
       conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
 
       this.updateState(conversation);
-    });
+    }));
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
-    return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).map(res => {
+    return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
+      map(res => {
       this.unSubscribeToMessageNotifications(conversation);
       conversation.isConvStarted = false;
       this.updateState(conversation);
-    });
+    }));
 
   }
 

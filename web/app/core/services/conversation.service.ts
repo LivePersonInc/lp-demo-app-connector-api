@@ -7,8 +7,6 @@ import {Subject} from "rxjs";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {Router} from "@angular/router";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
 import {ConversationManager} from "../util/conversation-manager";
 import {StateStorage} from "../util/state-storage";
 import {AuthenticationService} from "./authentication.service";

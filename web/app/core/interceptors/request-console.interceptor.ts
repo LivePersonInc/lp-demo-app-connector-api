@@ -6,8 +6,7 @@ import {
 import {ConversationService} from "../services/conversation.service";
 import {SentRequest} from "../../shared/models/conversation/sentRequest.model";
 import { Observable } from  'rxjs';
-import 'rxjs/add/operator/do';
-import { tap} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 
 @Injectable()
 export class RequestConsoleInterceptor implements HttpInterceptor {
