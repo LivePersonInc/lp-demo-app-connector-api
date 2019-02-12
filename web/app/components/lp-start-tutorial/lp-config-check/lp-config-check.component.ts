@@ -3,7 +3,7 @@ import {AccountConfigService} from "../../../core/services/account-config.servic
 import {InstallationService} from "../../../core/services/istallation.service";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'lp-config-check',
@@ -18,8 +18,8 @@ export class LpConfigCheckComponent implements OnInit, OnDestroy {
   public currentAppInstallation:AppInstall;
   public webhooks: Webhooks;
 
-  private installationSubscription:ISubscription;
-  private acSubscription:ISubscription;
+  private installationSubscription:Subscription;
+  private acSubscription:Subscription;
 
   constructor(private accountConfigService:AccountConfigService, private  installationService: InstallationService) { }
 

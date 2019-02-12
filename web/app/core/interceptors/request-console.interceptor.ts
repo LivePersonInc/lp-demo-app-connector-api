@@ -5,8 +5,9 @@ import {
 } from '@angular/common/http';
 import {ConversationService} from "../services/conversation.service";
 import {SentRequest} from "../../shared/models/conversation/sentRequest.model";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from  'rxjs';
 import 'rxjs/add/operator/do';
+import { tap} from "rxjs/operators";
 
 @Injectable()
 export class RequestConsoleInterceptor implements HttpInterceptor {
@@ -19,7 +20,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
 
     this.setConsoleRequestBeforeResponse(reportingRequest, consoleRequest);
 
-    return next.handle(reportingRequest).do((event: HttpResponse<any>) => {
+    return next.handle(reportingRequest).pipe(tap((event: HttpResponse<any>) => {
 
       this.setConsoleRequestAfterResponse(event, consoleRequest);
 
@@ -28,7 +29,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
         consoleRequest.status = err.status;
         this.conversationService.conversation.sentRequests.push(consoleRequest);
       }
-    });
+    }));
   }
 
   private setConsoleRequestBeforeResponse(reportingRequest: HttpRequest<any>,consoleRequest: SentRequest, ) {

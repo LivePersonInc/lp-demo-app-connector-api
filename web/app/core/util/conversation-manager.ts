@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {SendApiService} from "../services/send-api.service";
 import {HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs/Observable";
+import {Observable, Subject} from "rxjs";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {ChatMessage, MessageType} from "../../shared/models/conversation/chatMessage.model";
@@ -18,12 +18,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {StateStorage} from "./state-storage";
 import {ChatState, EventChatState} from "../../shared/models/send-api/EventChatState.model";
-import {Subject} from "rxjs/Subject";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
+import { map, filter, catchError, mergeMap } from "rxjs/operators";
 
 
 @Injectable()

@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
 import {ConversationService} from "../../core/services/conversation.service";
 import {AccountConfigService} from "../../core/services/account-config.service";
 import {MatDialog} from "@angular/material";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'lp-login',
@@ -20,9 +20,9 @@ export class LpLoginComponent implements OnInit {
   public password: string;
   public loginForm: FormGroup;
 
-  private loginSubscription: ISubscription;
-  private domainSubscription: ISubscription;
-  private dialogRefSubscription: ISubscription;
+  private loginSubscription: Subscription;
+  private domainSubscription: Subscription;
+  private dialogRefSubscription: Subscription;
 
   constructor(private fromBuilder: FormBuilder,
               private authenticationService: AuthenticationService,

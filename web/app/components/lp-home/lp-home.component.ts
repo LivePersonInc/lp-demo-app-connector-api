@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fadeInAnimation} from "../../shared/animations/lp-animations";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {InstallationService} from "../../core/services/istallation.service";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
@@ -23,7 +23,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   public userName: string;
   public authenticationService: AuthenticationService;
 
-  private dialogRefSubscription: ISubscription;
+  private dialogRefSubscription: Subscription;
 
   constructor(private _authenticationService: AuthenticationService,
               private router: Router,

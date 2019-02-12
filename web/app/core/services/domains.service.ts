@@ -4,7 +4,7 @@ import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {environment} from '../../../environments/environment';
-import {Subject} from "rxjs/Subject";
+import {Subject} from "rxjs";
 import {Router} from "@angular/router";
 
 @Injectable()

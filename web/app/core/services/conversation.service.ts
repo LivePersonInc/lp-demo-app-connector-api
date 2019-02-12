@@ -3,7 +3,7 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs/Subject";
+import {Subject} from "rxjs";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {Router} from "@angular/router";

@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
 import {InstallationService} from '../../../core/services/istallation.service';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {environment} from "../../../../environments/environment.prod";
 import {Endpoint} from "../../../shared/models/app-installation/endpoint.model";
 
@@ -22,7 +22,7 @@ export class LpWebhooksConfigComponent implements OnInit, OnDestroy {
   public currentURL = "https://" + this.server + "/notifications/event";
   public isChanged = false;
 
-  private installationSubscription: ISubscription;
+  private installationSubscription: Subscription;
 
   constructor(private _installationService: InstallationService) {
     this.installationService = _installationService;

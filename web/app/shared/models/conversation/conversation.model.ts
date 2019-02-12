@@ -1,7 +1,6 @@
 import {ChatMessage} from "./chatMessage.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {Deserializable} from "../deserializable.model";
-import {getNonAotConfig} from "@angular/cli/models/webpack-configs";
 import {ChatState} from "../send-api/EventChatState.model";
 import {SentRequest} from "./sentRequest.model";
 

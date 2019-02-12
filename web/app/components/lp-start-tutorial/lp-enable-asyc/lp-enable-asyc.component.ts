@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
 import {AccountConfigService} from "../../../core/services/account-config.service";
 import {InstallationService} from "../../../core/services/istallation.service";
 import {Router} from "@angular/router";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../core/services/authentication.service";
 
 @Component({
@@ -15,7 +15,7 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   @Output()
   public completed = new EventEmitter();
   public accountConfigService:AccountConfigService;
-  private acSubscripton: ISubscription;
+  private acSubscripton: Subscription;
 
   constructor(private _accountConfigService: AccountConfigService,
               private  installationService: InstallationService,

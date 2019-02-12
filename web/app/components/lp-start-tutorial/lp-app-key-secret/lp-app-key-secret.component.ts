@@ -3,7 +3,7 @@ import {InstallationService} from "../../../core/services/istallation.service";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {MatSelectChange} from "@angular/material";
 import {Router} from "@angular/router";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {LoadingService} from "../../../core/services/loading.service";
 
 @Component({
@@ -20,7 +20,7 @@ export class LpAppKeySecretComponent implements OnInit, OnDestroy {
   public appList = [];
   public isLoading: boolean;
 
-  private installationSubscription:ISubscription;
+  private installationSubscription:Subscription;
 
   constructor(
     private installationService:InstallationService,

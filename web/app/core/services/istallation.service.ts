@@ -5,12 +5,12 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
-import {Subject} from "rxjs/Subject";
+import {Subject} from "rxjs";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Router} from "@angular/router";
 import {StateStorage} from "../util/state-storage";
 import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from  'rxjs';
 
 @Injectable()
 export class InstallationService extends HttpService {

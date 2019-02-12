@@ -4,7 +4,7 @@ import {ConversationService} from "../../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {InstallationService} from "../../core/services/istallation.service";
-import {ISubscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {Options} from "../../shared/models/conversation/options.model";
 
 @Component({
@@ -19,7 +19,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   public userName: string;
   public options: Options;
   public conversation: Conversation;
-  private conversationSubscription: ISubscription;
+  private conversationSubscription: Subscription;
 
   constructor(private conversationService: ConversationService,
               private authenticationService: AuthenticationService,

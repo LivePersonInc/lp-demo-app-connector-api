@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from  'rxjs';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
-import {ErrorObservable} from "rxjs/observable/ErrorObservable";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
 
@@ -43,7 +42,7 @@ export class HttpService {
       );
   }
 
-  protected handleError(error: HttpErrorResponse) {
+  protected handleError(error: any): any {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -57,9 +56,9 @@ export class HttpService {
        }
     }
     // return an ErrorObservable with a user-facing error message
-   return new ErrorObservable(
+   /*return new ErrorObservable(
       error || 'An error occurred, please try again later'
-    );
+    );*/
   }
 
   public errorResponse(error: (string | HttpErrorResponse)) {
