@@ -134,7 +134,7 @@ To run the application using the dev server instead of a built project:
 
 - Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
 The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
-- Web app: Angular 5 project.
+- Web app: Angular 7 project.
 
 ### Sending and handling conversation events
 
