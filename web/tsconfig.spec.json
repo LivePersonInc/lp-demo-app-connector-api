@@ -10,10 +10,14 @@
     ]
   },
   "files": [
-    "test.ts"
+    "test.ts",
+    ".ts"
+
   ],
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"
   ]
 }
+
+
