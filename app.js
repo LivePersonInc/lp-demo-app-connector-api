@@ -75,15 +75,11 @@ app.use("/domains", csdsBridge);
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if(info) {
-      console.log("info");
       return res.status(HttpStatus.UNAUTHORIZED).send(info.message)}
     if (err) {
-      console.log("err");
       return next(err); }
     if (!user) {
-      console.log("nO user");
       return res.status(HttpStatus.UNAUTHORIZED).redirect('/#/settings'); }
-
     req.login(user, (err) => res.send({bearer: user.bearer}));
   })(req, res, next);
 });
