@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
+import {throwError} from "rxjs";
 
 @Injectable()
 export class HttpService {
@@ -42,7 +43,7 @@ export class HttpService {
       );
   }
 
-  protected handleError(error: any): any {
+  protected handleError(error: any): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -55,10 +56,7 @@ export class HttpService {
           `body was: ${error.error}`);
        }
     }
-    // return an ErrorObservable with a user-facing error message
-   /*return new ErrorObservable(
-      error || 'An error occurred, please try again later'
-    );*/
+    return throwError(new Error(error || 'An error occurred, please try again later'));
   }
 
   public errorResponse(error: (string | HttpErrorResponse)) {
