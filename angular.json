@@ -27,7 +27,8 @@
               "web/assets"
             ],
             "styles": [
-              "web/styles.scss"
+              "web/styles.scss",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
