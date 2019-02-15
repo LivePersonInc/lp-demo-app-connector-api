@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lp-demo-app-connector-api-upgrade",
+            "outputPath": "dist",
             "index": "web/index.html",
             "main": "web/main.ts",
             "polyfills": "web/polyfills.ts",
