@@ -67,6 +67,8 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
       consoleRequest.title = "Get Consumer JWS";
     } else if (this.isAPPJWTRequest(reportingRequest.url)) {
       consoleRequest.title = "Get APP JWT";
+    }else if(this.isConsumerHistoryRequest(reportingRequest.url)) {
+      consoleRequest.title = "Get Consumer History";
     }else {
       consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
     }
@@ -99,7 +101,11 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isCloseConversation(stringUrl: string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] === 'close' ;
+    return new URL(stringUrl).pathname.split('/')[3] === 'close' ;
+  }
+
+  private isConsumerHistoryRequest(stringUrl: string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] === 'history' ;
   }
 
   private isAnHttpErrorResponseAndConversationExists(err: any) {
