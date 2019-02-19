@@ -31,6 +31,10 @@ export class SendApiService extends HttpService {
     return this.doPost(`https://${this.domainsService.getDomainByServiceName('idp')}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions);
   }
 
+  public uploadFile(relativePath: string, tempUrlSig:string, tempUrlExpires: string, body: any): Observable<Object> {
+    return this.doPut(`https://${this.domainsService.getDomainByServiceName('swift')}${relativePath}?temp_url_sig=${tempUrlSig}&temp_url_expires=${tempUrlExpires}`, body, {});
+  }
+
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
     return this.doPost(`${this.baseURI}openconv/${brandId}`, body, headers);
   }

@@ -152,6 +152,12 @@ export class ConversationManager {
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
 
+  public uploadFileRequest(file: any, relativePath: string, tempUrlSig:string, tempUrlExpires: string, conversation: Conversation): Observable<any> {
+    //const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
+    console.log(file);
+    return this.sendApiService.uploadFile(relativePath, tempUrlSig, tempUrlExpires, file);
+  }
+
 
   private addSendRawEndpointHeaders (appJWT, consumerJWS, features): any {
     return {

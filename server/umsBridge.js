@@ -66,9 +66,7 @@ router.post("/sendraw/:id", (req, res, next) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
       } else {
-        console.log(resolve);
         res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
-
       }
     }).catch((error) => {
     logger.error("ERROR: Promise rejected", error);
