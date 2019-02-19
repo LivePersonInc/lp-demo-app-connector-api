@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FileChangeEvent} from "@angular/compiler-cli/src/perform_watch";
 
 @Component({
   selector: 'lp-chat-box-footer',
@@ -8,6 +9,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class LpChatBoxFooterComponent implements OnInit {
   @Output() onSendMessage = new EventEmitter<string>();
   @Output() onIsTyping = new EventEmitter<boolean>();
+  @Output() onFileSelected = new EventEmitter<Event>();
+
 
   @Input() disabled: boolean;
   public messageText: string;
@@ -38,5 +41,9 @@ export class LpChatBoxFooterComponent implements OnInit {
   }
   public onTypeChange(event) {
     this.onIsTyping.emit(true);
+  }
+
+  public onAction(event) {
+    this.onFileSelected.emit(event);
   }
 }

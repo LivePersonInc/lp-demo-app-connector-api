@@ -24,3 +24,13 @@ a:hover{
 .mat-simple-snackbar-action{
   color: #f37f8a;
 }
+
+.file-drop-custom {
+  z-index: 50;
+  position: absolute;
+  width: 500px;
+  height: calc(100% - 55px);
+  height: -webkit-calc(100% - 104px);
+  background-color: #00ffff36;
+
+}

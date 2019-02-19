@@ -19,15 +19,47 @@
     /* WebKit */
     width: -webkit-calc(100% - 88px);
     /* Standard */
-    width: calc(100% - 88px);
-    float: left;
+    width: calc(100% -  136px);
     height: 45px;
     padding: 5px;
+    float: inherit;
   }
   button{
     height:100%;
     float: right;
     border-left: 1px solid  #d6d6d6;
+  }
+
+
+  .ng2-file-input {
+    margin-bottom: 10px !important;
+  }
+  .ng2-file-input-drop-container{
+    display: none !important;
+  }
+  .ng2-file-input .ng2-file-input-invalid{
+    color:red !important;
+  }
+  .inputfile + label {
+    cursor: pointer;
+  }
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  .left-btn{
+    float: right;
+  }
+  .small-font{
+    font-size: 12px;
+  }
+
+  .file-upload-btn{
+    float: left;
   }
 }
 
