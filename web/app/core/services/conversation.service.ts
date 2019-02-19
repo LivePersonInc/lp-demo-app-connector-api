@@ -101,6 +101,24 @@ export class ConversationService extends HttpService {
     }
   };
 
+  public sendFile(file: any, message: string) {
+    console.log(file);
+    console.log(typeof file);
+    const fileSize = file.size;
+    const fileType = file.type;
+    const response = this.conversationManager.sendUploadUrlRequest(fileSize,fileType, this.conversation).subscribe(res => {
+      this.successResponse("Upload URL successfully Requested");
+      console.log(res);
+      //TODO UPLOAD FILE
+    }, error => {
+      console.log(error);
+
+      this.loadingService.stopLoading();
+      this.errorResponse(error);
+    });
+
+  }
+
   public closeConversation() {
     this.conversationManager.closeConversation(this.conversation).subscribe(res => {
       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));

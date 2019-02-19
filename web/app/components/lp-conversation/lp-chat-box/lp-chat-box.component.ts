@@ -20,6 +20,7 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
   @Output() onSendMessage = new EventEmitter<string>();
   @Output() onIsTyping = new EventEmitter<boolean>();
   @Output() onUploadFile = new EventEmitter<string>();
+  @Output() onFileSelected = new EventEmitter<Event>();
 
   public isDragged:Boolean;
 
@@ -101,12 +102,12 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
   public sendFile(event) {
-    console.log("EVENT FILE");
-    console.log(event);
+    this.onFileSelected.emit(event);
+
+    /*console.log(event);
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      console.log(file);
-    }
+    }*/
   }
 
 }

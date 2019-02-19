@@ -62,6 +62,16 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     }
   }
 
+  public sendFile(event) {
+    const supportedTypes = ["image/png"];
+    //const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      //TODO: Check supported types
+      const file = event.target.files[0];
+      this.conversationService.sendFile(file,"");
+    }
+  }
+
   public onConversationChange(conversationChange: Options) {
     this.userName = conversationChange.userName;
     this.options = conversationChange;

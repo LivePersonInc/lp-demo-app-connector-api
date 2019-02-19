@@ -9,7 +9,10 @@
               [disabled]="conversation && !conversation.isConvStarted || !conversation">
         Close conversation
       </button>
-      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"  [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"></lp-chat-box>
+      <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"
+                   [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"
+                   (onFileSelected)="sendFile($event)"
+      ></lp-chat-box>
     </div>
     <div class="col-lg-9 text-left">
       <div class="row">
