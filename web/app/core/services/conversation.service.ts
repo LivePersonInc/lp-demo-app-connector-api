@@ -102,40 +102,46 @@ export class ConversationService extends HttpService {
   };
 
   public sendFile(file: any, message: string) {
-    //const fileSize = file.size;
-    //const fileType = file.type;
-    const response = this.conversationManager.sendUploadUrlRequest(file.size,file.type, this.conversation).subscribe(res => {
-      this.successResponse("Upload URL successfully Requested");
-      const responseBody = res;
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-
-        this.conversationManager
-          .uploadFileRequest(
-            file,
-            responseBody.body.relativePath,
-            responseBody.body.queryParams.temp_url_sig,
-            responseBody.body.queryParams.temp_url_expires,
-            this.conversation).subscribe(res => {
+    const fileType = this.getFileTypeFromSupportedTypes(file.type);
+    console.log(fileType);
+    if(fileType) {
+      const response = this.conversationManager.sendUploadUrlRequest(file.size,fileType, this.conversation).subscribe(res => {
+        this.successResponse("Upload URL successfully Requested");
+        const responseBody = res;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          return this.conversationManager
+            .uploadFileRequest(
+              file,
+              responseBody.body.relativePath,
+              responseBody.body.queryParams.temp_url_sig,
+              responseBody.body.queryParams.temp_url_expires,
+              this.conversation).subscribe(res => {
               this.successResponse("File was successfully uploaded in the server");
-              this.conversationManager.sendMessageWithUploadedFileRequest(file.name,responseBody.body.relativePath,"PNG",reader.result,this.conversation).subscribe(res => {
-               console.log(res);
-               this.loadingService.stopLoading();
 
-           })
+              return this.conversationManager.sendMessageWithImage(reader.result,fileType,responseBody.body.relativePath,message ? message: file.name,this.conversation).subscribe(res => {
+                console.log(res);
+                this.successResponse("Message with file send succesfuly");
+                this.loadingService.stopLoading();
 
-        });
-      };
+              },error2 => {
+                this.loadingService.stopLoading();
+                this.errorResponse(error2);
+              });
 
-    }, error => {
-      console.log(error);
+            });
+        };
 
-      this.loadingService.stopLoading();
-      this.errorResponse(error);
-    });
+      }, error => {
+        console.log(error);
 
+        this.loadingService.stopLoading();
+        this.errorResponse(error);
+      });
+    }else{
+     this.errorResponse("File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported");
+    }
   }
 
   public closeConversation() {
@@ -254,6 +260,17 @@ export class ConversationService extends HttpService {
       }
 
     }
+  }
+
+  private getFileTypeFromSupportedTypes(fileType:string):string {
+    const supportedFiles = ["PNG","JPEG","JPG","GIF"];
+    if(fileType) {
+      const type = fileType.toLocaleUpperCase().split("/")[1];
+      if(supportedFiles.filter(t => t === type).length){
+        return type;
+      }
+    }
+    return "";
   }
 
 }

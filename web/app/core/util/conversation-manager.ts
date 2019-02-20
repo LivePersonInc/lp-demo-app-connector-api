@@ -66,10 +66,21 @@ export class ConversationManager {
     }));
   }
 
-  public sendMessageWithImage(message: string, conversation: Conversation): Observable<any> {
-    //TODO;
+  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
 
-    return null;
+    const preview = file;//TODO: get preview:
+
+    return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
+      let sequence;
+      if(res && res.body && res.body.hasOwnProperty('sequence')){
+        sequence = res.body.sequence;
+      }
+      const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
+      msg.file = preview;
+      conversation.messages.push(msg);
+
+      this.updateState(conversation);
+    }));
   }
 
   public closeConversation(conversation: Conversation): Observable<any> {
