@@ -103,7 +103,6 @@ export class ConversationService extends HttpService {
 
   public sendFile(file: any, message: string) {
     const fileType = this.getFileTypeFromSupportedTypes(file.type);
-    console.log(fileType);
     if(fileType) {
       const response = this.conversationManager.sendUploadUrlRequest(file.size,fileType, this.conversation).subscribe(res => {
         this.successResponse("Upload URL successfully Requested");
@@ -119,23 +118,20 @@ export class ConversationService extends HttpService {
               responseBody.body.queryParams.temp_url_expires,
               this.conversation).subscribe(res => {
               this.successResponse("File was successfully uploaded in the server");
-
               return this.conversationManager.sendMessageWithImage(reader.result,fileType,responseBody.body.relativePath,message ? message: file.name,this.conversation).subscribe(res => {
-                console.log(res);
                 this.successResponse("Message with file send succesfuly");
                 this.loadingService.stopLoading();
-
-              },error2 => {
+              },error => {
                 this.loadingService.stopLoading();
-                this.errorResponse(error2);
+                this.errorResponse(error);
               });
 
+            },error => {
+              this.loadingService.stopLoading();
+              this.errorResponse(error);
             });
         };
-
       }, error => {
-        console.log(error);
-
         this.loadingService.stopLoading();
         this.errorResponse(error);
       });

@@ -442,15 +442,20 @@ export class ConversationManager {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
-        conversation.messages.push(
-          new ChatMessage(
-            messageType,
-            record.timeL,
-            record.messageData.msg.text,
-            userName,
-            true,
-            record.seq,
-          ));
+
+        let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq);
+
+        switch (record.type) {
+          case "TEXT_PLAIN":
+            message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq);
+            break;
+          case  "HOSTED_FILE":
+            message = new ChatMessage(messageType, record.timeL, record.messageDatafile.caption, userName, true, record.seq);
+            message.file =record.messageData.file.preview;
+            break;
+        }
+
+        conversation.messages.push(message);
       });
 
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
