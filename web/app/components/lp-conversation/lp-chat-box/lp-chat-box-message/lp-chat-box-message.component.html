@@ -13,6 +13,7 @@
     </div>
   </div>
   <div class="message">
+    <img *ngIf="message.file" src="{{message.file}}" alt="Smiley face" height="42" width="42">
     {{message.message}}
   </div>
 </div>

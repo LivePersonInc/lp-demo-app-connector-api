@@ -102,31 +102,29 @@ export class ConversationService extends HttpService {
   };
 
   public sendFile(file: any, message: string) {
-    console.log(file);
-    console.log(typeof file);
-    const fileSize = file.size;
-    const fileType = file.type;
-    const response = this.conversationManager.sendUploadUrlRequest(fileSize,fileType, this.conversation).subscribe(res => {
+    //const fileSize = file.size;
+    //const fileType = file.type;
+    const response = this.conversationManager.sendUploadUrlRequest(file.size,file.type, this.conversation).subscribe(res => {
       this.successResponse("Upload URL successfully Requested");
-      console.log(res);
       const responseBody = res;
       const reader = new FileReader();
-      console.log(reader.result);
-      reader.readAsArrayBuffer(file);
+
+      reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log(responseBody.body.queryParams.temp_url_expires);
-        console.log(responseBody.body.queryParams.temp_url_sig);
-        console.log(responseBody.body.relativePath);
 
         this.conversationManager
           .uploadFileRequest(
             file,
             responseBody.body.relativePath,
             responseBody.body.queryParams.temp_url_sig,
-            responseBody.body.queryParams.temp_url_expires, this.conversation).subscribe(res => {
+            responseBody.body.queryParams.temp_url_expires,
+            this.conversation).subscribe(res => {
+              this.successResponse("File was successfully uploaded in the server");
+              this.conversationManager.sendMessageWithUploadedFileRequest(file.name,responseBody.body.relativePath,"PNG",reader.result,this.conversation).subscribe(res => {
+               console.log(res);
+               this.loadingService.stopLoading();
 
-              console.log(res);
-           this.successResponse("Upload Filet successfull");
+           })
 
         });
       };

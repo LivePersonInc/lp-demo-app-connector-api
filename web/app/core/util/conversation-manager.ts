@@ -66,6 +66,12 @@ export class ConversationManager {
     }));
   }
 
+  public sendMessageWithImage(message: string, conversation: Conversation): Observable<any> {
+    //TODO;
+
+    return null;
+  }
+
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
@@ -141,14 +147,12 @@ export class ConversationManager {
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getEventAcceptStatusRequestBody(conversation, event, sequenceList));
-    console.log(body)
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
   }
 
   public sendUploadUrlRequest(fileSize: string, fileType: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getUploadURLRequestBody(fileSize,fileType));
-    console.log(body);
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
 
@@ -158,6 +162,12 @@ export class ConversationManager {
     return this.sendApiService.uploadFile(relativePath, tempUrlSig, tempUrlExpires, file);
   }
 
+  public sendMessageWithUploadedFileRequest(caption: string, relativePath:string, fileType:string, preview:any, conversation: Conversation): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
+    const message = {"caption": caption, "relativePath": relativePath, "fileType":fileType, "preview": preview};
+    const body = JSON.stringify(this.getMessageWithFileRequestBody(message,conversation.conversationId));
+    return this.sendApiService.sendMessage(conversation.branId, body, headers);
+  }
 
   private addSendRawEndpointHeaders (appJWT, consumerJWS, features): any {
     return {
@@ -288,6 +298,11 @@ export class ConversationManager {
   private getMessageRequestBody(message: string, conversationId: string) {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
       new Event("ContentEvent", "text/plain", message)));
+  }
+
+  private getMessageWithFileRequestBody(message: Object, conversationId: string) {
+    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
+      new Event("ContentEvent", "hosted/file", message)));
   }
 
   private getUploadURLRequestBody(fileSize: string, fileType: string) {

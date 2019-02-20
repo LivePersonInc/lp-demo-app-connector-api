@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from  'rxjs';
+import {Observable, throwError} from  'rxjs';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
-import {throwError} from "rxjs";
 
 @Injectable()
 export class HttpService {

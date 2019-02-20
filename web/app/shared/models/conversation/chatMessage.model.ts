@@ -8,6 +8,7 @@ export class ChatMessage {
   sequence: number;
   accepted: boolean;
   read:boolean;
+  file:any;
 
   constructor(type, timestamp, message, userName, showUser, sequence) {
     this.type = type;
@@ -18,6 +19,7 @@ export class ChatMessage {
     this.sequence = sequence;
     this.accepted = false;
     this.read = false;
+    this.file = null;
   }
 
 }
