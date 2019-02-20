@@ -450,7 +450,7 @@ export class ConversationManager {
             message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq);
             break;
           case  "HOSTED_FILE":
-            message = new ChatMessage(messageType, record.timeL, record.messageDatafile.caption, userName, true, record.seq);
+            message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq);
             message.file =record.messageData.file.preview;
             break;
         }
