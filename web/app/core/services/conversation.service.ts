@@ -97,15 +97,15 @@ export class ConversationService extends HttpService {
         this.errorResponse(error);
       });
     } else {
-      const msg = "A Conversation has to be intialized before send a message";
-      this.errorResponse(msg);
+      this.errorResponse("A Conversation has to be intialized before send a message");
     }
   };
 
   public sendFile(file: any, message: string) {
     const fileType = this.getFileTypeFromSupportedTypes(file.type);
     if(fileType) {
-        this.conversationManager.sendUploadUrlRequest(file.size, fileType, this.conversation).pipe(
+      //TODO: refactor observable staff to a best practices
+      this.conversationManager.sendUploadUrlRequest(file.size, fileType, this.conversation).pipe(
           flatMap(responseBody => {
             return this.conversationManager.uploadFileRequest(
               file,
@@ -276,6 +276,7 @@ export class ConversationService extends HttpService {
   }
 
   private getPreviewImage(file): Observable<any> {
+    //TODO: refactor observable staff to a best practices
     const width = 100; // For scaling relative to width
     const reader = new FileReader();
     reader.readAsDataURL(file);
