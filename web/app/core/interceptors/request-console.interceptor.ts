@@ -69,7 +69,9 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
       consoleRequest.title = "Get APP JWT";
     }else if(this.isConsumerHistoryRequest(reportingRequest.url)) {
       consoleRequest.title = "Get Consumer History";
-    }else {
+    }else if(this.isUploadFile(reportingRequest.url)) {
+      consoleRequest.title = "Upload File/image";
+    } else {
       consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
     }
   }
@@ -106,6 +108,10 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
 
   private isConsumerHistoryRequest(stringUrl: string): boolean {
     return new URL(stringUrl).pathname.split('/')[2] === 'history' ;
+  }
+
+  private isUploadFile(stringUrl: string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] === 'AUTH_async-images' ;
   }
 
   private isAnHttpErrorResponseAndConversationExists(err: any) {
