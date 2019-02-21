@@ -3,7 +3,7 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {HttpClient} from "@angular/common/http";
-import {Subject, throwError} from "rxjs";
+import {Observable, Subject, throwError} from "rxjs";
 import {mergeMap, map, catchError, flatMap} from "rxjs/operators";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
@@ -115,16 +115,22 @@ export class ConversationService extends HttpService {
               this.conversation).pipe(
               map(() => {
                 this.successResponse("File was successfully uploaded in the server");
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                  const prview = reader.result;
-                  this.conversationManager.sendMessageWithImage(prview, fileType, responseBody.body.relativePath, message ? message : file.name, this.conversation).pipe(
-                    map(() => {
-                      this.successResponse("Message with file was successfully sent");
-                    })
-                  ).subscribe();
-                }
+                this.getPreviewImage(file).subscribe(e => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(e);
+                  reader.onload = () => {
+                    const prview = reader.result;
+                    return this.conversationManager.sendMessageWithImage(prview, fileType, responseBody.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                      map(() => {
+                          this.successResponse("Message with file was successfully sent");
+                      }),
+                      catchError((error: any) => {
+                        this.loadingService.stopLoading();
+                        this.errorResponse(error);
+                        return throwError(new Error(error || 'An error occurred, please try again later'));
+                      })).subscribe();
+                    }
+                  });
               }),
             )
           }),
@@ -134,7 +140,8 @@ export class ConversationService extends HttpService {
             return throwError(new Error(error || 'An error occurred, please try again later'));
           })
         ).subscribe();
-
+    }else{
+      this.errorResponse("File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported");
     }
   }
 
@@ -265,6 +272,39 @@ export class ConversationService extends HttpService {
       }
     }
     return "";
+  }
+
+  private getPreviewImage(file): Observable<any> {
+    const width = 100; // For scaling relative to width
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return Observable.create(observer => {
+      reader.onload = ev => {
+        const img = new Image();
+        img.src = (ev.target as any).result;
+        (img.onload = () => {
+          const elem = document.createElement('canvas');
+          const scaleFactor = width / img.width;
+          elem.width = width;
+          elem.height = img.height * scaleFactor;
+          const ctx = <CanvasRenderingContext2D>elem.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+          ctx.canvas.toBlob(
+            blob => {
+              observer.next(
+                new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                }),
+              );
+            },
+            'image/jpeg',
+            1,
+          );
+        }),
+        (reader.onerror = error => observer.error(error));
+      };
+    });
   }
 
 
