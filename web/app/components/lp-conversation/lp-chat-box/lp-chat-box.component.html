@@ -1,12 +1,8 @@
 <div *ngIf="conversation.chatState == 3" class="text-left typing">typing...</div>
 
-<div class="messages-area" #messagearea (drop)="onDropped($event)" (dragover)="onDragOver($event)"
-     (dragleave)="onDragleave($event)">
-
+<div class="messages-area" #messagearea >
   <div class="conv-closed" *ngIf="isConversationClosed()">CLOSED</div>
   <div *ngIf="conversation">
-    <!--<file-drop customstyle="file-drop-custom" (onFileDrop)="dropped($event)">
-    </file-drop>-->
     <lp-chat-box-message  *ngFor="let message of conversation.messages" [message]="message"></lp-chat-box-message>
   </div>
 </div>
