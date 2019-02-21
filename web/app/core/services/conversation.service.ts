@@ -122,7 +122,8 @@ export class ConversationService extends HttpService {
                     const prview = reader.result;
                     return this.conversationManager.sendMessageWithImage(prview, fileType, responseBody.body.relativePath, message ? message : file.name, this.conversation).pipe(
                       map(() => {
-                          this.successResponse("Message with file was successfully sent");
+                        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
+                        this.successResponse("Message with file was successfully sent");
                       }),
                       catchError((error: any) => {
                         this.loadingService.stopLoading();
