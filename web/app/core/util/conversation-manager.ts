@@ -66,10 +66,7 @@ export class ConversationManager {
     }));
   }
 
-  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
-
-    const preview = file;//TODO: get preview:
-
+  public sendMessageWithImage(preview: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
     return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
       let sequence;
       if(res && res.body && res.body.hasOwnProperty('sequence')){

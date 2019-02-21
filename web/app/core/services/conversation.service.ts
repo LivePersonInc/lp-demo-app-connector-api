@@ -3,7 +3,8 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs";
+import {Subject, throwError} from "rxjs";
+import {mergeMap, map, catchError, flatMap} from "rxjs/operators";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {Router} from "@angular/router";
@@ -103,40 +104,34 @@ export class ConversationService extends HttpService {
 
   public sendFile(file: any, message: string) {
     const fileType = this.getFileTypeFromSupportedTypes(file.type);
+    const reader = new FileReader();
     if(fileType) {
-      const response = this.conversationManager.sendUploadUrlRequest(file.size,fileType, this.conversation).subscribe(res => {
-        this.successResponse("Upload URL successfully Requested");
-        const responseBody = res;
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          return this.conversationManager
-            .uploadFileRequest(
-              file,
-              responseBody.body.relativePath,
-              responseBody.body.queryParams.temp_url_sig,
-              responseBody.body.queryParams.temp_url_expires,
-              this.conversation).subscribe(res => {
+      reader.readAsDataURL(file);
+      this.conversationManager.sendUploadUrlRequest(file.size,fileType, this.conversation).pipe(
+        flatMap(responseBody => {
+          return this.conversationManager.uploadFileRequest(
+            file,
+            responseBody.body.relativePath,
+            responseBody.body.queryParams.temp_url_sig,
+            responseBody.body.queryParams.temp_url_expires,
+            this.conversation).pipe(
+            map((res) => {
               this.successResponse("File was successfully uploaded in the server");
-              return this.conversationManager.sendMessageWithImage(reader.result,fileType,responseBody.body.relativePath,message ? message: file.name,this.conversation).subscribe(res => {
-                this.successResponse("Message with file send succesfuly");
-                this.loadingService.stopLoading();
-              },error => {
-                this.loadingService.stopLoading();
-                this.errorResponse(error);
-              });
+              this.conversationManager.sendMessageWithImage(reader.result,fileType,responseBody.body.relativePath,message ? message: file.name,this.conversation).pipe(
+                map(res => {
+                  this.successResponse("Message with file was successfully sent");
+                })
+              ).subscribe();
+            }),
+          )
+        }),
+        catchError((error: any) => {
+          this.loadingService.stopLoading();
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe();
 
-            },error => {
-              this.loadingService.stopLoading();
-              this.errorResponse(error);
-            });
-        };
-      }, error => {
-        this.loadingService.stopLoading();
-        this.errorResponse(error);
-      });
-    }else{
-     this.errorResponse("File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported");
     }
   }
 
