@@ -107,31 +107,32 @@ export class ConversationService extends HttpService {
     const reader = new FileReader();
     if(fileType) {
       reader.readAsDataURL(file);
-      this.conversationManager.sendUploadUrlRequest(file.size,fileType, this.conversation).pipe(
-        flatMap(responseBody => {
-          return this.conversationManager.uploadFileRequest(
-            file,
-            responseBody.body.relativePath,
-            responseBody.body.queryParams.temp_url_sig,
-            responseBody.body.queryParams.temp_url_expires,
-            this.conversation).pipe(
-            map((res) => {
-              this.successResponse("File was successfully uploaded in the server");
-              this.conversationManager.sendMessageWithImage(reader.result,fileType,responseBody.body.relativePath,message ? message: file.name,this.conversation).pipe(
-                map(res => {
-                  this.successResponse("Message with file was successfully sent");
-                })
-              ).subscribe();
-            }),
-          )
-        }),
-        catchError((error: any) => {
-          this.loadingService.stopLoading();
-          this.errorResponse(error);
-          return throwError(new Error(error || 'An error occurred, please try again later'));
-        })
-      ).subscribe();
-
+      reader.onload = () => {
+        this.conversationManager.sendUploadUrlRequest(file.size, fileType, this.conversation).pipe(
+          flatMap(responseBody => {
+            return this.conversationManager.uploadFileRequest(
+              file,
+              responseBody.body.relativePath,
+              responseBody.body.queryParams.temp_url_sig,
+              responseBody.body.queryParams.temp_url_expires,
+              this.conversation).pipe(
+              map((res) => {
+                this.successResponse("File was successfully uploaded in the server");
+                this.conversationManager.sendMessageWithImage(reader.result, fileType, responseBody.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                  map(res => {
+                    this.successResponse("Message with file was successfully sent");
+                  })
+                ).subscribe();
+              }),
+            )
+          }),
+          catchError((error: any) => {
+            this.loadingService.stopLoading();
+            this.errorResponse(error);
+            return throwError(new Error(error || 'An error occurred, please try again later'));
+          })
+        ).subscribe();
+      }
     }
   }
 
@@ -263,5 +264,6 @@ export class ConversationService extends HttpService {
     }
     return "";
   }
+
 
 }
