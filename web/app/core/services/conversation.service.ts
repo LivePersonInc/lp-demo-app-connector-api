@@ -106,13 +106,8 @@ export class ConversationService extends HttpService {
     if(fileType) {
       //TODO: refactor observable staff to a best practices
       this.conversationManager.sendUploadUrlRequest(file.size, fileType, this.conversation).pipe(
-          flatMap(responseBody => {
-            return this.conversationManager.uploadFileRequest(
-              file,
-              responseBody.body.relativePath,
-              responseBody.body.queryParams.temp_url_sig,
-              responseBody.body.queryParams.temp_url_expires,
-              this.conversation).pipe(
+          flatMap(r => {
+            return this.conversationManager.uploadFileRequest(file, r.body.relativePath, r.body.queryParams.temp_url_sig, r.body.queryParams.temp_url_expires).pipe(
               map(() => {
                 this.successResponse("File was successfully uploaded in the server");
                 this.getPreviewImage(file).subscribe(e => {
@@ -120,7 +115,7 @@ export class ConversationService extends HttpService {
                   reader.readAsDataURL(e);
                   reader.onload = () => {
                     const prview = reader.result;
-                    return this.conversationManager.sendMessageWithImage(prview, fileType, responseBody.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                    return this.conversationManager.sendMessageWithImage(prview, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
                       map(() => {
                         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
                         this.successResponse("Message with file was successfully sent");
