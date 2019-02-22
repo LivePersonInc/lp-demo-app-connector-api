@@ -276,11 +276,10 @@ export class ConversationService extends HttpService {
   }
 
   private getPreviewImage(file): Observable<any> {
-    //TODO: refactor observable staff to a best practices
     const width = 100; // For scaling relative to width
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    return Observable.create(observer => {
+    return new Observable(observer => {
       reader.onload = ev => {
         const img = new Image();
         img.src = (ev.target as any).result;
