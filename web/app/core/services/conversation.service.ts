@@ -93,7 +93,6 @@ export class ConversationService extends HttpService {
         this.successResponse("Message successfully SENT to conversation with id " + this.conversation.conversationId);
         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
       }, error => {
-        this.loadingService.stopLoading();
         this.errorResponse(error);
       });
     } else {
