@@ -11,7 +11,7 @@ export class LpChatBoxFooterComponent implements OnInit {
   @Output() onIsTyping = new EventEmitter<boolean>();
   @Output() onFileSelected = new EventEmitter<Event>();
 
-
+  @Input() conversationStarted: boolean;
   @Input() disabled: boolean;
   public messageText: string;
   private isTyping = false;

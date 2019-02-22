@@ -7,4 +7,7 @@
   </div>
 </div>
 
-<lp-chat-box-footer (onFileSelected)="sendFile($event)" (onSendMessage)="sendMessage($event)" [disabled]="disabled" (onIsTyping)="checkTyping($event)"></lp-chat-box-footer>
+<lp-chat-box-footer (onFileSelected)="sendFile($event)" (onSendMessage)="sendMessage($event)"
+                    [disabled]="disabled" [conversationStarted]="conversation.isConvStarted"
+                    (onIsTyping)="checkTyping($event)">
+</lp-chat-box-footer>
