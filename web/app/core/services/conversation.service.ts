@@ -104,18 +104,16 @@ export class ConversationService extends HttpService {
   public sendFile(file: any, message: string) {
     const fileType = this.getFileTypeFromSupportedTypes(file.type);
     if(fileType) {
-      //TODO: refactor observable staff to a best practices
       this.conversationManager.sendUploadUrlRequest(file.size, fileType, this.conversation).pipe(
           flatMap(r => {
             return this.conversationManager.uploadFileRequest(file, r.body.relativePath, r.body.queryParams.temp_url_sig, r.body.queryParams.temp_url_expires).pipe(
-              map(() => {
+              flatMap(() => {
                 this.successResponse("File was successfully uploaded in the server");
-                this.getPreviewImage(file).subscribe(e => {
+                return this.getPreviewImage(file).pipe(map( filePreview => {
                   const reader = new FileReader();
-                  reader.readAsDataURL(e);
+                  reader.readAsDataURL(filePreview);
                   reader.onload = () => {
-                    const prview = reader.result;
-                    return this.conversationManager.sendMessageWithImage(prview, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                    return this.conversationManager.sendMessageWithImage(reader.result, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
                       map(() => {
                         this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
                         this.successResponse("Message with file was successfully sent");
@@ -126,7 +124,7 @@ export class ConversationService extends HttpService {
                         return throwError(new Error(error || 'An error occurred, please try again later'));
                       })).subscribe();
                     }
-                  });
+                  }));
               }),
             )
           }),
