@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {SendApiService} from "../services/send-api.service";
 import {HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, throwError} from "rxjs";
+import {mergeMap, map, catchError, flatMap} from "rxjs/operators";
 import {Conversation} from "../../shared/models/conversation/conversation.model";
 import {EventSourcePolyfill} from 'ng-event-source';
 import {ChatMessage, MessageType} from "../../shared/models/conversation/chatMessage.model";
@@ -21,7 +22,6 @@ import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAccep
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
-import {map, flatMap} from "rxjs/operators";
 
 
 @Injectable()
@@ -66,17 +66,19 @@ export class ConversationManager {
     }));
   }
 
-  public sendMessageWithImage(preview: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
-    return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
-      let sequence;
-      if(res && res.body && res.body.hasOwnProperty('sequence')){
-        sequence = res.body.sequence;
-      }
-      const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
-      msg.file = preview;
-      conversation.messages.push(msg);
+  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
+    return this.getPreviewImage(file).pipe(flatMap( preview => {
+      return this.sendMessageWithUploadedFileRequest(message, relativePath, preview, file, conversation).pipe(map(res => {
+        let sequence;
+        if (res && res.body && res.body.hasOwnProperty('sequence')) {
+          sequence = res.body.sequence;
+        }
+        const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
+        msg.file = preview;
+        conversation.messages.push(msg);
 
-      this.updateState(conversation);
+        this.updateState(conversation);
+      }));
     }));
   }
 
@@ -481,6 +483,45 @@ export class ConversationManager {
 
   private checkIfConversationWasClosedInHistroy(history): boolean {
     return history && history.info && history.info.status === 'CLOSE';
+  }
+
+  private getPreviewImage(file): Observable<any> {
+    const width = 100; // For scaling relative to width
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return new Observable(observer => {
+      reader.onload = ev => {
+        const img = new Image();
+        img.src = (ev.target as any).result;
+        (img.onload = () => {
+          const elem = document.createElement('canvas');
+          const scaleFactor = width / img.width;
+          elem.width = width;
+          elem.height = img.height * scaleFactor;
+          const ctx = <CanvasRenderingContext2D>elem.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+
+          ctx.canvas.toBlob(
+            blob => {
+              const reader = new FileReader();
+              reader.readAsDataURL(
+                new File([blob], file.name, {
+                type: 'image/jpeg',
+                lastModified: Date.now(),
+              }));
+              reader.onload = () => {
+                observer.next(
+                  reader.result
+                );
+              }
+            },
+            'image/jpeg',
+            1,
+          );
+        }),
+          (reader.onerror = error => observer.error(error));
+      };
+    });
   }
 
 }

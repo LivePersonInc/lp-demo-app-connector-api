@@ -108,28 +108,15 @@ export class ConversationService extends HttpService {
           flatMap(r => {
             return this.conversationManager.uploadFileRequest(file, r.body.relativePath, r.body.queryParams.temp_url_sig, r.body.queryParams.temp_url_expires).pipe(
               flatMap(() => {
-                this.successResponse("File was successfully uploaded in the server");
-                return this.getPreviewImage(file).pipe(map( filePreview => {
-                  const reader = new FileReader();
-                  reader.readAsDataURL(filePreview);
-                  reader.onload = () => {
-                    return this.conversationManager.sendMessageWithImage(reader.result, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
-                      map(() => {
-                        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
-                        this.successResponse("Message with file was successfully sent");
-                      }),
-                      catchError((error: any) => {
-                        this.loadingService.stopLoading();
-                        this.errorResponse(error);
-                        return throwError(new Error(error || 'An error occurred, please try again later'));
-                      })).subscribe();
-                    }
+                return this.conversationManager.sendMessageWithImage(file, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                  map(() => {
+                    this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
+                    this.successResponse("Message with file was successfully sent");
                   }));
               }),
             )
           }),
           catchError((error: any) => {
-            this.loadingService.stopLoading();
             this.errorResponse(error);
             return throwError(new Error(error || 'An error occurred, please try again later'));
           })
@@ -268,38 +255,7 @@ export class ConversationService extends HttpService {
     return "";
   }
 
-  private getPreviewImage(file): Observable<any> {
-    const width = 100; // For scaling relative to width
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    return new Observable(observer => {
-      reader.onload = ev => {
-        const img = new Image();
-        img.src = (ev.target as any).result;
-        (img.onload = () => {
-          const elem = document.createElement('canvas');
-          const scaleFactor = width / img.width;
-          elem.width = width;
-          elem.height = img.height * scaleFactor;
-          const ctx = <CanvasRenderingContext2D>elem.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-          ctx.canvas.toBlob(
-            blob => {
-              observer.next(
-                new File([blob], file.name, {
-                  type: 'image/jpeg',
-                  lastModified: Date.now(),
-                }),
-              );
-            },
-            'image/jpeg',
-            1,
-          );
-        }),
-        (reader.onerror = error => observer.error(error));
-      };
-    });
-  }
+
 
 
 }
