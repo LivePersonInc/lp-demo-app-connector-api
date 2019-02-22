@@ -68,7 +68,7 @@ export class ConversationManager {
 
   public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap( preview => {
-      return this.sendMessageWithUploadedFileRequest(message, relativePath, preview, file, conversation).pipe(map(res => {
+      return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
         let sequence;
         if (res && res.body && res.body.hasOwnProperty('sequence')) {
           sequence = res.body.sequence;
@@ -171,6 +171,8 @@ export class ConversationManager {
   }
 
   public sendMessageWithUploadedFileRequest(caption: string, relativePath:string, fileType:string, preview:any, conversation: Conversation): Observable<any> {
+    console.log(preview);
+
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const message = {"caption": caption, "relativePath": relativePath, "fileType":fileType, "preview": preview};
     const body = JSON.stringify(this.getMessageWithFileRequestBody(message,conversation.conversationId));
