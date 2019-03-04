@@ -7,6 +7,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {throwError, Observable} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class AccountConfigService extends HttpService {
@@ -41,23 +43,31 @@ export class AccountConfigService extends HttpService {
   }
 
   public getAccountConfigPropertiesList() {
-    this.doGet(`${this.baseURI}${this.brandId}`, this.headers,true).subscribe(data => {
-      this.accountConfigPropList = data;
-      this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
-      this.loadingService.stopLoading();
-      this.acSubject.next('GET_LIST');
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers,true).pipe(
+      map(data => {
+        this.accountConfigPropList = data;
+        this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
+        this.loadingService.stopLoading();
+        this.acSubject.next('GET_LIST');
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public updateAccountConfigProperties() {
-    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).subscribe(data => {
-      this.loadingService.stopLoading();
-      this.acSubject.next('UPDATED');
-    },error => {
-      this.errorResponse(error);
-    });
+    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).pipe(
+      map(data => {
+        this.loadingService.stopLoading();
+        this.acSubject.next('UPDATED');
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public reset(){
