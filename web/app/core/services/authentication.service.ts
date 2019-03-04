@@ -8,7 +8,8 @@ import {User} from "../../shared/models/user.model";
 import {DomainsService} from "./domains.service";
 import {Router} from "@angular/router";
 import {environment} from '../../../environments/environment';
-import { Observable } from  'rxjs';
+import {throwError, Observable} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class AuthenticationService extends HttpService {
@@ -35,32 +36,38 @@ export class AuthenticationService extends HttpService {
     this.loadingService.startLoading();
      return this.
         doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
-       {username:  brandId + "-" + username, password: password }, {})
-       .subscribe(res => {
-         this._user = new User();
-         this._user.token = res.bearer;
-         this._user.userName = username;
-         this._user.brandId = brandId;
-         this.successResponse('Authentication was successful ');
-         this.setLoggedIn(true);
-         setTimeout(()=>{
-           this.userLoggedSubject.next('LOGGED-IN');
-         }, 1500);
-
-      }, error => {
-         this.errorResponse("Problem with Authentication");
-       });
+       {username:  brandId + "-" + username, password: password }, {}).pipe(
+         map(res => {
+           this._user = new User();
+           this._user.token = res.bearer;
+           this._user.userName = username;
+           this._user.brandId = brandId;
+           this.successResponse('Authentication was successful ');
+           this.setLoggedIn(true);
+           setTimeout(()=>{
+             this.userLoggedSubject.next('LOGGED-IN');
+           }, 1500);
+      }),
+       catchError(error => {
+         this.errorResponse("Logout problem");
+         return throwError(new Error(error || 'An error occurred, please try again later'));
+       })
+     ).subscribe();
   }
   public logout(message: string) {
     this.loggedInStatus = false;
-    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).subscribe(res => {
-      this._user = null;
-      this.loggedInStatus = false;
-      this.userLoggedSubject.next('LOGGED-OUT');
-      this.customResponse(message);
-    }, error => {
-      this.errorResponse("Logout problem");
-    });
+    return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/logout`, {},true).pipe(
+      map((res) => {
+        this._user = null;
+        this.loggedInStatus = false;
+        this.userLoggedSubject.next('LOGGED-OUT');
+        this.customResponse(message);
+      }),
+      catchError(error => {
+        this.errorResponse("Logout problem");
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public isAuthenticated(): Observable<boolean> {
