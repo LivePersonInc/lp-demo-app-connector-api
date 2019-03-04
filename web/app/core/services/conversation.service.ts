@@ -81,23 +81,31 @@ export class ConversationService extends HttpService {
     this.conversation.campaignId = options.campaignId;
     this.conversation.features = options.features;
 
-    this.conversationManager.openConversation(this.conversation).subscribe(res => {
-      this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
-      this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
-      this.sendMessage(initialMessage);
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.conversationManager.openConversation(this.conversation).pipe(
+      map(res => {
+        this.successResponse("Conversation OPEN successfully with id " + this.conversation.conversationId);
+        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.OPEN));
+        this.sendMessage(initialMessage);
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe()
   }
 
   public sendMessage(message: string) {
     if (this.conversation.isConvStarted) {
-      this.conversationManager.sendMessage(message, this.conversation).subscribe(res => {
-        this.successResponse("Message successfully SENT to conversation with id " + this.conversation.conversationId);
-        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
-      }, error => {
-        this.errorResponse(error);
-      });
+      this.conversationManager.sendMessage(message, this.conversation).pipe(
+        map(res => {
+          this.successResponse("Message successfully SENT to conversation with id " + this.conversation.conversationId);
+          this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
+        }),
+        catchError(error => {
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe()
     } else {
       this.errorResponse("A Conversation has to be intialized before send a message");
     }
@@ -136,7 +144,6 @@ export class ConversationService extends HttpService {
           window.open(`https://${this.domainsService.getDomainByServiceName('swift')}${r.body.relativePath}?temp_url_sig=${r.body.queryParams.temp_url_sig}&temp_url_expires=${r.body.queryParams.temp_url_expires}`);
         }),
         catchError((error: any) => {
-          console.log(error);
           this.errorResponse(error);
           return throwError(new Error(error || 'An error occurred, please try again later'));
       })
@@ -145,12 +152,16 @@ export class ConversationService extends HttpService {
   }
 
   public closeConversation() {
-    this.conversationManager.closeConversation(this.conversation).subscribe(res => {
-      this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
-      this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.conversationManager.closeConversation(this.conversation).pipe(
+      map(res => {
+        this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
+        this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public reset() {
@@ -164,51 +175,69 @@ export class ConversationService extends HttpService {
 
   public notifyAgentConsumerIsInTheChat() {
     this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.ACTIVE).subscribe(res => {
-      this.activateLoadingService();
-    },error => {
-      this.errorResponse(error);
-
-    });
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.ACTIVE).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public notifyAgentConsumerIsNotInTheChat() {
     this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.GONE).subscribe(res => {
-      this.activateLoadingService();
-    },error => {
-      this.errorResponse(error);
-
-    });
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.GONE).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public notifyAgentThatUserIsTyping() {
     this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.COMPOSING).subscribe(res => {
-      this.activateLoadingService();
-    },error => {
-      this.errorResponse(error);
-    });
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.COMPOSING).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public notifyAgentThatUserStopsTyping() {
     this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.PAUSE).subscribe(res => {
-      this.activateLoadingService();
-    },error => {
-      this.errorResponse(error);
-    });
+    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.PAUSE).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   public notifyMessagesWasRead() {
     let sequenceList = this.getLastReadMessages();
     if(sequenceList.length > 0) {
       this.deactivateLoadingService();
-      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.READ, sequenceList).subscribe(res => {
-        this.activateLoadingService();
-      },error => {
-        this.errorResponse(error);
-      });
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.READ, sequenceList).pipe(
+        map(res => {
+          this.activateLoadingService();
+        }),
+        catchError(error => {
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe();
     }
   }
 
@@ -216,11 +245,15 @@ export class ConversationService extends HttpService {
     let sequenceList = [sequence];
     if(sequenceList.length > 0) {
       this.deactivateLoadingService();
-      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.ACCEPT, sequenceList).subscribe(res => {
-        this.activateLoadingService();
-      },error => {
-        this.errorResponse(error);
-      });
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.ACCEPT, sequenceList).pipe(
+        map(res => {
+          this.activateLoadingService();
+        }),
+        catchError(error => {
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe();
     }
   }
 
@@ -258,7 +291,6 @@ export class ConversationService extends HttpService {
           this.errorResponse(error);
         });
       }
-
     }
   }
 
@@ -272,8 +304,5 @@ export class ConversationService extends HttpService {
     }
     return "";
   }
-
-
-
 
 }

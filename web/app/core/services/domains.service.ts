@@ -21,7 +21,7 @@ export class DomainsService extends HttpService{
     this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/domains/csds/${brandId}`, {}, true).pipe(
       map( (data) => {
         const length = data.baseURIs.length;
-        for(const i=0; i < length; i++) {
+        for(let i=0; i < length; i++) {
           this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
         }
         this.domainsSubject.next('READY');
