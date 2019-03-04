@@ -6,6 +6,8 @@ import {LoadingService} from "./loading.service";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class DomainsService extends HttpService{
@@ -16,17 +18,18 @@ export class DomainsService extends HttpService{
   }
 
   public getDomainList(brandId: string) {
-    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/domains/csds/${brandId}`, {}, true).subscribe((data) => {
-      let length = data.baseURIs.length;
-      for(let i=0; i < length; i++) {
-        this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
-      }
-      this.domainsSubject.next('READY');
-      //this.loadingService.stopLoading();
-    }, error => {
-      console.log(error);
-      this.errorResponse(error);
-    });
+    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/domains/csds/${brandId}`, {}, true).pipe(
+      map( (data) => {
+        const length = data.baseURIs.length;
+        for(const i=0; i < length; i++) {
+          this.domains[data.baseURIs[i].service] = data.baseURIs[i].baseURI;
+        }
+        this.domainsSubject.next('READY');
+    }),catchError((error: any) => {
+        this.errorResponse("Problem with getting session object");
+        return throwError(new Error(error || 'Problem with getting session object'));
+      })
+    ).subscribe();
   }
 
   public getDomainByServiceName(serviceName: string) {
