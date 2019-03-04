@@ -9,8 +9,8 @@ import {Subject} from "rxjs";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Router} from "@angular/router";
 import {StateStorage} from "../util/state-storage";
-import { map } from 'rxjs/operators'
-import { Observable } from  'rxjs';
+import {throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class InstallationService extends HttpService {
@@ -56,43 +56,56 @@ export class InstallationService extends HttpService {
   }
 
   public getAppListList() {
-    this.doGet(`${this.baseURI}${this.brandId}`, this.headers, true).subscribe((data: Array<any>) => {
-      this.appList = data.map( app => new AppInstall().deserialize(app)).filter( app => this.isValid(app));
-      this.loadingService.stopLoading();
-      this.installationSubject.next('GET_APP_LIST');
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doGet(`${this.baseURI}${this.brandId}`, this.headers, true).pipe(
+      map((data: Array<any>) => {
+        this.appList = data.map( app => new AppInstall().deserialize(app)).filter( app => this.isValid(app));
+        this.loadingService.stopLoading();
+        this.installationSubject.next('GET_APP_LIST');
+      }),
+      catchError((error: any) => {
+        this.errorResponse("Problem with getting session object");
+        return throwError(new Error(error || 'Problem with getting session object'));
+      })
+    ).subscribe();
   }
 
   public installApp(app: AppInstall) {
-    this.doPost(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
-      this.loadingService.stopLoading();
-      this.installationSubject.next('INSTALL_APP');
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doPost(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).pipe(
+      map(data => {
+        this.loadingService.stopLoading();
+        this.installationSubject.next('INSTALL_APP');
+      }),
+      catchError((error: any) => {
+        this.errorResponse("Problem with getting session object");
+        return throwError(new Error(error || 'Problem with getting session object'));
+      })
+    ).subscribe();
   }
 
   public updateApp(app: AppInstall) {
-    this.doPut(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).subscribe(data => {
-      //this.loadingService.stopLoading();
-      this.installationSubject.next('UPDATE_APP');
-      this.successResponse('This app was successfully updated');
-      this.getAppListList();
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doPut(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).pipe(
+      map(data => {
+        this.installationSubject.next('UPDATE_APP');
+        this.successResponse('This app was successfully updated');
+        this.getAppListList();
+    }),catchError((error: any) => {
+      this.errorResponse("Problem with getting session object");
+      return throwError(new Error(error || 'Problem with getting session object'));
+    })
+    ).subscribe();
   }
 
   public getAppByAppId(appId: string) {
-    this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers, true).subscribe(app => {
-      this._selectedApp = app;
-      this.installationSubject.next('APP_SECRET_FOUND');
-      this.loadingService.stopLoading();
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers, true).pipe(
+      map(app => {
+        this._selectedApp = app;
+        this.installationSubject.next('APP_SECRET_FOUND');
+        this.loadingService.stopLoading();
+    }),catchError((error: any) => {
+        this.errorResponse("Problem with getting session object");
+        return throwError(new Error(error || 'Problem with getting session object'));
+      })
+    ).subscribe();
   }
 
   public reset() {

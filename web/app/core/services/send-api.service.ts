@@ -13,7 +13,6 @@ export class SendApiService extends HttpService {
 
   private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/ums/`;
 
-
   constructor(protected snackBar: MatSnackBar,
               protected http: HttpClient,
               protected loadingService:LoadingService,
