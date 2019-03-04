@@ -12,8 +12,8 @@
       </span>
     </div>
   </div>
-  <div class="message" [ngClass]="{'hasImage': message.file}">
-    <img *ngIf="message.file" src="{{message.file}}" alt="Smiley face">
+  <div class="message" [ngClass]="{'hasImage': message.file && message.file.preview}">
+    <img *ngIf="message.file" src="{{message.file.preview}}" alt="Smiley face" (click)="onDownload($event)">
     <div>{{message.message}}</div>
   </div>
 </div>

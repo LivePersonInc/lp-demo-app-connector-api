@@ -1,7 +1,8 @@
 /*import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { LpChatBoxFooterComponent } from './lp-chat-box-footer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatIcon} from "@angular/material";
+import {LpInputFileButtonComponent} from "./lp-input-file-button/lp-input-file-button.component";
 
 describe('LpChatBoxFooterComponent', () => {
   let component: LpChatBoxFooterComponent;
@@ -10,7 +11,7 @@ describe('LpChatBoxFooterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
-      declarations: [ LpChatBoxFooterComponent, MatIcon ]
+      declarations: [ LpChatBoxFooterComponent, LpInputFileButtonComponent]
     })
     .compileComponents();
   }));

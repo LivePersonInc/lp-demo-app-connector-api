@@ -6,7 +6,6 @@
     background-color: #f0f9ff;
     margin: 5px;
     border-radius: 5px;
-
     .username{
       display: inline-grid;
       font-weight: bold;
@@ -29,7 +28,6 @@
       display: inline-grid;
     }
   }
-
   .sent{
     color: darkslategray;
   }
@@ -41,10 +39,12 @@
     background-color: #efe0ef;
 
   }
-
   .hasImage{
     img {
       margin-bottom: 10px;
+      height: 70px;
+      max-width: 200px;
+      cursor: pointer;
     }
   }
 }

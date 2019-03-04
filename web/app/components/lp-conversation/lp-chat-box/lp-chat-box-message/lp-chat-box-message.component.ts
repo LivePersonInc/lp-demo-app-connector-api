@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {ChatMessage, MessageType} from "../../../../shared/models/conversation/chatMessage.model";
+import {FileMessage} from "../../../../shared/models/conversation/fileMessage.model";
 
 @Component({
   selector: 'lp-chat-box-message',
@@ -8,6 +9,8 @@ import {ChatMessage, MessageType} from "../../../../shared/models/conversation/c
 })
 export class LpChatBoxMessageComponent implements OnInit {
   @Input() public message: ChatMessage;
+  @Output() download = new EventEmitter<FileMessage>();
+
   public messageType: string;
 
   constructor() {}
@@ -32,6 +35,10 @@ export class LpChatBoxMessageComponent implements OnInit {
     return (messageDate.getFullYear() === today.getFullYear())  &&
       (messageDate.getMonth() === today.getMonth()) &&
       (messageDate.getDay() === today.getDay()-1);
+  }
+
+  public onDownload() {
+     this.download.emit(this.message.file);
   }
 
 }

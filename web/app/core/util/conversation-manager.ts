@@ -22,6 +22,7 @@ import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAccep
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
+import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
 
 
 @Injectable()
@@ -66,7 +67,7 @@ export class ConversationManager {
     }));
   }
 
-  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
+  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, fileName: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap( preview => {
       return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
         let sequence;
@@ -74,7 +75,7 @@ export class ConversationManager {
           sequence = res.body.sequence;
         }
         const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
-        msg.file = preview;
+        msg.file = new FileMessage(fileName, preview, relativePath);
         conversation.messages.push(msg);
 
         this.updateState(conversation);
@@ -166,13 +167,26 @@ export class ConversationManager {
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
 
+  public getDownloadUrl(relativePath: string, conversation: Conversation): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
+    const body = JSON.stringify(this.getDownloadURLRequestBody(relativePath));
+
+    if(!conversation.isConvStarted) {
+      console.log("No authenticated");
+      return this.authenticate(conversation).pipe(
+        flatMap(r => {
+          return this.sendApiService.sendMessage(conversation.branId, body, headers);
+        })
+      )
+    }
+    return this.sendApiService.sendMessage(conversation.branId, body, headers);
+  }
+
   public uploadFileRequest(file: any, relativePath: string, tempUrlSig:string, tempUrlExpires: string): Observable<any> {
     return this.sendApiService.uploadFile(relativePath, tempUrlSig, tempUrlExpires, file);
   }
 
   public sendMessageWithUploadedFileRequest(caption: string, relativePath:string, fileType:string, preview:any, conversation: Conversation): Observable<any> {
-    console.log(preview);
-
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const message = {"caption": caption, "relativePath": relativePath, "fileType":fileType, "preview": preview};
     const body = JSON.stringify(this.getMessageWithFileRequestBody(message,conversation.conversationId));
@@ -305,23 +319,29 @@ export class ConversationManager {
     return res;
   }
 
-  private getMessageRequestBody(message: string, conversationId: string) {
+  private getShowUserValue(userName: string, conversation: Conversation): boolean {
+    return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
+  }
+
+  private getMessageRequestBody(message: string, conversationId: string): Request {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
       new Event("ContentEvent", "text/plain", message)));
   }
 
-  private getMessageWithFileRequestBody(message: Object, conversationId: string) {
+  private getMessageWithFileRequestBody(message: Object, conversationId: string): Request {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
       new Event("ContentEvent", "hosted/file", message)));
   }
 
-  private getUploadURLRequestBody(fileSize: string, fileType: string) {
+  private getUploadURLRequestBody(fileSize: string, fileType: string): Request {
     const body = {"fileSize": ""+fileSize+"", "fileType": "PNG"};
     return new Request("req", "3", "ms.GenerateURLForUploadFile", body);
   }
 
-  private getShowUserValue(userName: string, conversation: Conversation): boolean {
-    return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
+  private getDownloadURLRequestBody(relativePath: string): Request {
+    const body = {"relativePath": ""+relativePath+""};
+
+    return new Request("req", "3", "ms.GenerateURLForDownloadFile", body);
   }
 
   private getOpenConvRequestBody(conversation: Conversation): any {
@@ -450,7 +470,7 @@ export class ConversationManager {
             break;
           case  "HOSTED_FILE":
             message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq);
-            message.file =record.messageData.file.preview;
+            message.file = new FileMessage(record.messageData.file.caption, record.messageData.file.preview, record.messageData.file.relativePath);
             break;
         }
 

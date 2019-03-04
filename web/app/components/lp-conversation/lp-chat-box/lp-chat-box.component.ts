@@ -8,6 +8,7 @@ import {
 import {Conversation} from "../../../shared/models/conversation/conversation.model";
 import {ConversationService} from "../../../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../../../shared/models/conversation/conversationEvent.model";
+import {FileMessage} from "../../../shared/models/conversation/fileMessage.model";
 
 @Component({
   selector: 'lp-chat-box',
@@ -72,5 +73,9 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
   public sendFile(event) {
     this.onFileSelected.emit(event);
   }
+
+  public onDownload(file: FileMessage) {
+    this.conversationService.downloadFile(file);
+  };
 
 }

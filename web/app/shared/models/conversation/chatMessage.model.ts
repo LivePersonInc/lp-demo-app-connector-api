@@ -1,4 +1,6 @@
 
+import {FileMessage} from "./fileMessage.model";
+
 export class ChatMessage {
   type: MessageType;
   timestamp: string;
@@ -8,7 +10,8 @@ export class ChatMessage {
   sequence: number;
   accepted: boolean;
   read:boolean;
-  file:any;
+  file: FileMessage
+  ;
 
   constructor(type, timestamp, message, userName, showUser, sequence) {
     this.type = type;

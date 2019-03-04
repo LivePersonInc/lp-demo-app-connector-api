@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LpConversationFormComponent } from './lp-conversation-form/lp-conversation-form.component';
 import {LpRequestsConsoleComponent} from "./lp-requests-console/lp-requests-console.component";
 import {LpAdvancedOptionsFormComponent} from "./lp-advanced-options-form/lp-advanced-options-form.component";
+import { LpInputFileButtonComponent } from './lp-chat-box/lp-chat-box-footer/lp-input-file-button/lp-input-file-button.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {LpAdvancedOptionsFormComponent} from "./lp-advanced-options-form/lp-adva
     LpChatBoxMessageComponent,
     LpConversationFormComponent,
     LpAdvancedOptionsFormComponent,
-    LpRequestsConsoleComponent
+    LpRequestsConsoleComponent,
+    LpInputFileButtonComponent
   ],
   exports: [
     LpConversationComponent,

@@ -3,7 +3,7 @@
 <div class="messages-area" #messagearea >
   <div class="conv-closed" *ngIf="isConversationClosed()">CLOSED</div>
   <div *ngIf="conversation">
-    <lp-chat-box-message  *ngFor="let message of conversation.messages" [message]="message"></lp-chat-box-message>
+    <lp-chat-box-message  *ngFor="let message of conversation.messages" [message]="message" (download)="onDownload($event)"></lp-chat-box-message>
   </div>
 </div>
 
