@@ -11,7 +11,8 @@ import {InstallationService} from "./istallation.service";
 import {ConversationService} from "./conversation.service";
 import {AccountConfigService} from "./account-config.service";
 import {DomainsService} from "./domains.service";
-
+import {throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 @Injectable()
 export class StateRecoveryService extends HttpService{
   public domains = [];
@@ -34,25 +35,21 @@ export class StateRecoveryService extends HttpService{
     });
   }
 
-  public getSession(): any{
-    return this.
-    doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, true)
-      .subscribe(res => {
+  public loadCurrentSessionState() {
+    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, true).pipe(
+      map(res => {
         const user = new User();
-        user.brandId = res.passport.user.csdsCollectionResponse.baseURIs[0].account; //TODO: check in server
+        user.brandId = res.passport.user.csdsCollectionResponse.baseURIs[0].account;
         user.userName =  res.passport.user.config.loginName;
         user.token = res.passport.user.bearer;
         this.authenticationService.user = user;
-
         this.domainsService.getDomainList(user.brandId);
-
-      }, error => {
+      }),
+      catchError((error: any) => {
         this.errorResponse("Problem with getting session object");
-      });
-  }
-
-  public loadCurrentSessionState(): any {
-    this.getSession();
+        return throwError(new Error(error || 'Problem with getting session object'));
+      })
+    ).subscribe();
   }
 
   public goToStartConfigPage() {
