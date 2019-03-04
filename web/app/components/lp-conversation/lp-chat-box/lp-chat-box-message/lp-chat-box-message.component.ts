@@ -34,4 +34,10 @@ export class LpChatBoxMessageComponent implements OnInit {
       (messageDate.getDay() === today.getDay()-1);
   }
 
+  public onDownload(event) {
+    console.log("Download");
+    console.log(this.message.file.preview);
+    //TODO:
+  }
+
 }

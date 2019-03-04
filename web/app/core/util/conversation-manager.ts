@@ -22,6 +22,7 @@ import {EventAcceptStatus, Status} from "../../shared/models/send-api/EventAccep
 import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
+import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
 
 
 @Injectable()
@@ -74,7 +75,7 @@ export class ConversationManager {
           sequence = res.body.sequence;
         }
         const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
-        msg.file = preview;
+        msg.file = new FileMessage(message, preview, relativePath);
         conversation.messages.push(msg);
 
         this.updateState(conversation);
