@@ -172,89 +172,61 @@ export class ConversationService extends HttpService {
     this.conversationEventSubject.next(new ConversationEvent("", ConvEvent.RESET));
   }
 
-
   public notifyAgentConsumerIsInTheChat() {
-    this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.ACTIVE).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+    this.notifyAgentConsumerChatState(ChatState.ACTIVE);
   }
 
   public notifyAgentConsumerIsNotInTheChat() {
-    this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.GONE).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+    this.notifyAgentConsumerChatState(ChatState.GONE);
   }
 
   public notifyAgentThatUserIsTyping() {
-    this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.COMPOSING).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+    this.notifyAgentConsumerChatState(ChatState.COMPOSING);
   }
 
   public notifyAgentThatUserStopsTyping() {
-    this.deactivateLoadingService();
-    this.conversationManager.sendChatStateEventRequest(this.conversation, ChatState.PAUSE).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+    this.notifyAgentConsumerChatState(ChatState.PAUSE);
   }
+
 
   public notifyMessagesWasRead() {
     let sequenceList = this.getLastReadMessages();
     if(sequenceList.length > 0) {
-      this.deactivateLoadingService();
-      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.READ, sequenceList).pipe(
-        map(res => {
-          this.activateLoadingService();
-        }),
-        catchError(error => {
-          this.errorResponse(error);
-          return throwError(new Error(error || 'An error occurred, please try again later'));
-        })
-      ).subscribe();
+      this.notifyMessageStatus(Status.READ, sequenceList);
     }
   }
 
   public notifyMessageWasAccepted(sequence: number) {
     let sequenceList = [sequence];
     if(sequenceList.length > 0) {
-      this.deactivateLoadingService();
-      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, Status.ACCEPT, sequenceList).pipe(
-        map(res => {
-          this.activateLoadingService();
-        }),
-        catchError(error => {
-          this.errorResponse(error);
-          return throwError(new Error(error || 'An error occurred, please try again later'));
-        })
-      ).subscribe();
+      this.notifyMessageStatus(Status.ACCEPT, sequenceList);
     }
+  }
+
+  private notifyAgentConsumerChatState(chatState: ChatState) {
+    this.deactivateLoadingService();
+    this.conversationManager.sendChatStateEventRequest(this.conversation, chatState).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
+  }
+
+  private notifyMessageStatus(status: Status, sequenceList){
+    this.deactivateLoadingService();
+    this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
+      map(res => {
+        this.activateLoadingService();
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
   }
 
   private getLastReadMessages(): Array<number> {
@@ -266,6 +238,17 @@ export class ConversationService extends HttpService {
       }
     });
     return lastReadSequenceList;
+  }
+
+  private getFileTypeFromSupportedTypes(fileType:string):string {
+    const supportedFiles = ["PNG","JPEG","JPG","GIF"];
+    if(fileType) {
+      const type = fileType.toLocaleUpperCase().split("/")[1];
+      if(supportedFiles.filter(t => t === type).length){
+        return type;
+      }
+    }
+    return "";
   }
 
   public restoreStoredState() {
@@ -292,17 +275,6 @@ export class ConversationService extends HttpService {
         });
       }
     }
-  }
-
-  private getFileTypeFromSupportedTypes(fileType:string):string {
-    const supportedFiles = ["PNG","JPEG","JPG","GIF"];
-    if(fileType) {
-      const type = fileType.toLocaleUpperCase().split("/")[1];
-      if(supportedFiles.filter(t => t === type).length){
-        return type;
-      }
-    }
-    return "";
   }
 
 }
