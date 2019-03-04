@@ -1,10 +1,6 @@
 <div class="footer-container">
-
   <lp-input-file-button [btnDisabled]="conversationStarted"  (fileSelected)="onSelectFile($event)"></lp-input-file-button>
-
   <input (keydown)="keyDownFunction($event)"  [(ngModel)]="messageText" placeholder="Type your message..." (input)="onTypeChange($event)">
-
-
   <button  mat-button (click)="sendMessage()" [disabled]="messageText.length === 0 || disabled">
     <i class="material-icons">send</i>
   </button>
