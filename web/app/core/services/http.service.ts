@@ -25,7 +25,6 @@ export class HttpService {
   }
 
   public doPut(url:string, body:any, httpOptions: any ):  Observable<any> {
-    console.log(url);
     this.loadingService.startLoading();
     return this.http.put(url, body, httpOptions)
       .pipe(

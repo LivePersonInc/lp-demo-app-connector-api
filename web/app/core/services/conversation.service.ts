@@ -17,6 +17,8 @@ import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {HistoryService} from "./history.service";
 import {InstallationService} from "./istallation.service";
 import {Options} from "../../shared/models/conversation/options.model";
+import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
+import {DomainsService} from "./domains.service";
 
 @Injectable()
 export class ConversationService extends HttpService {
@@ -35,6 +37,7 @@ export class ConversationService extends HttpService {
               protected authenticationService: AuthenticationService,
               protected stateManager: StateStorage,
               protected installationService: InstallationService,
+              protected domainsService: DomainsService,
               protected historyService: HistoryService) {
     super(snackBar, http, loadingService, router);
   }
@@ -122,6 +125,22 @@ export class ConversationService extends HttpService {
         ).subscribe();
     }else{
       this.errorResponse("File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported");
+    }
+  }
+
+  public downloadFile(file: FileMessage) {
+    if(file){
+      this.conversationManager.getDownloadUrl(file.relativePath, this.conversation).pipe(
+        map(r => {
+          this.successResponse("Download URL was successfully requested");
+          window.open(`https://${this.domainsService.getDomainByServiceName('swift')}${r.body.relativePath}?temp_url_sig=${r.body.queryParams.temp_url_sig}&temp_url_expires=${r.body.queryParams.temp_url_expires}`);
+        }),
+        catchError((error: any) => {
+          console.log(error);
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+      ).subscribe();
     }
   }
 

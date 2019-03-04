@@ -63,7 +63,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
 
   public sendFile(event) {
-    console.log(event);
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       this.conversationService.sendFile(file,"");
