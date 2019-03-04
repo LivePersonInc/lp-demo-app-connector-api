@@ -43,7 +43,7 @@ export class LpChatBoxFooterComponent implements OnInit {
     this.onIsTyping.emit(true);
   }
 
-  public onAction(event) {
+  public onSelectFile(event) {
     this.onFileSelected.emit(event);
   }
 }

@@ -1,12 +1,6 @@
 <div class="footer-container">
 
-  <input #fileInput type="file" name="file" id="file" class="inputfile" (change)="onAction($event)"/>
-  <label for="file" class="file-upload-btn">
-    <a mat-icon-button color="accent" [disabled]="!conversationStarted"
-       class="small-font"><mat-icon class="material-icons md-18">file_upload
-    </mat-icon>
-    </a>
-  </label>
+  <lp-input-file-button [btnDisabled]="conversationStarted"  (fileSelected)="onSelectFile($event)"></lp-input-file-button>
 
   <input (keydown)="keyDownFunction($event)"  [(ngModel)]="messageText" placeholder="Type your message..." (input)="onTypeChange($event)">
 
