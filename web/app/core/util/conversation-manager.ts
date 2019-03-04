@@ -67,7 +67,7 @@ export class ConversationManager {
     }));
   }
 
-  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, conversation: Conversation): Observable<any> {
+  public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, fileName: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap( preview => {
       return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
         let sequence;
@@ -75,7 +75,7 @@ export class ConversationManager {
           sequence = res.body.sequence;
         }
         const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
-        msg.file = new FileMessage(message, preview, relativePath);
+        msg.file = new FileMessage(fileName, preview, relativePath);
         conversation.messages.push(msg);
 
         this.updateState(conversation);
@@ -451,7 +451,7 @@ export class ConversationManager {
             break;
           case  "HOSTED_FILE":
             message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq);
-            message.file =record.messageData.file.preview;
+            message.file = new FileMessage(record.messageData.file.caption, record.messageData.file.preview, record.messageData.file.relativePath);
             break;
         }
 

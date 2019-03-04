@@ -36,8 +36,8 @@ export class LpChatBoxMessageComponent implements OnInit {
 
   public onDownload(event) {
     console.log("Download");
-    console.log(this.message.file.preview);
-    //TODO:
+    console.log(this.message.file);
+    //TODO: request download URL
   }
 
 }

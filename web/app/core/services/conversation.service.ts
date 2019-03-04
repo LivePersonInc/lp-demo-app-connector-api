@@ -107,7 +107,7 @@ export class ConversationService extends HttpService {
           flatMap(r => {
             return this.conversationManager.uploadFileRequest(file, r.body.relativePath, r.body.queryParams.temp_url_sig, r.body.queryParams.temp_url_expires).pipe(
               flatMap(() => {
-                return this.conversationManager.sendMessageWithImage(file, fileType, r.body.relativePath, message ? message : file.name, this.conversation).pipe(
+                return this.conversationManager.sendMessageWithImage(file, fileType, r.body.relativePath, message ? message : file.name, file.name, this.conversation).pipe(
                   map(() => {
                     this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
                     this.successResponse("Message with file was successfully sent");
