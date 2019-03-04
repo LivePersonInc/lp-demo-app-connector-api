@@ -29,17 +29,6 @@
     float: right;
     border-left: 1px solid  #d6d6d6;
   }
-
-
-  .ng2-file-input {
-    margin-bottom: 10px !important;
-  }
-  .ng2-file-input-drop-container{
-    display: none !important;
-  }
-  .ng2-file-input .ng2-file-input-invalid{
-    color:red !important;
-  }
   .inputfile + label {
     cursor: pointer;
   }
@@ -51,16 +40,11 @@
     position: absolute;
     z-index: -1;
   }
-  .left-btn{
-    float: right;
-  }
-  .small-font{
-    font-size: 12px;
-  }
-
   .file-upload-btn{
     float: left;
     margin-top: 5px;
+    .small-font{
+      font-size: 12px;
+    }
   }
 }
-
