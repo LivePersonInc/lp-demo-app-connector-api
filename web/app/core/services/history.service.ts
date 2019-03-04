@@ -7,6 +7,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class HistoryService extends HttpService {
@@ -32,13 +34,16 @@ export class HistoryService extends HttpService {
   }
 
   public getHistoryByConsumerId(consumerId: string) {
-    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, this.headers, true).subscribe((data: Array<any>) => {
-      this.history = data;
-      this.loadingService.stopLoading();
-      this.historySubject.next('GET_CONV_HISTORY');
-    }, error => {
-      this.errorResponse(error);
-    });
+    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, this.headers,true).pipe(
+      map((data: Array<any>) => {
+        this.history = data;
+        this.loadingService.stopLoading();
+        this.historySubject.next('GET_CONV_HISTORY');
+    }),catchError((error: any) => {
+        this.errorResponse("Problem with getting session object");
+        return throwError(new Error(error || 'Problem with getting session object'));
+    })
+    ).subscribe();
   }
 
 }
