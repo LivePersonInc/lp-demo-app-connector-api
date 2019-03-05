@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable, throwError} from  'rxjs';
+import {Observable} from  'rxjs';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";
 
@@ -31,22 +30,6 @@ export class HttpService {
     }
     return this.http.get(url, httpOptions);
   }
-
-  /*protected handleError(error: any): Observable<never> {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      if (error.status > 299) {
-        console.error(
-          `Backend returned code ${JSON.stringify(error.status)}, ` +
-          `body was: ${error.error}`);
-       }
-    }
-    return throwError(new Error(error || 'An error occurred, please try again later'));
-  }*/
 
   public errorResponse(error: (any | HttpErrorResponse)) {
     this.snackBarConfig.duration = null;
