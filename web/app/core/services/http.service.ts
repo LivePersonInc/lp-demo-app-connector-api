@@ -15,34 +15,24 @@ export class HttpService {
     this.snackBarConfig.horizontalPosition = 'right';
   }
 
-
   public doPost(url:string, body:any, httpOptions: any ):  Observable<any> {
     this.loadingService.startLoading();
-    return this.http.post(url, body, httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.post(url, body, httpOptions);
   }
 
   public doPut(url:string, body:any, httpOptions: any ):  Observable<any> {
     this.loadingService.startLoading();
-    return this.http.put(url, body, httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.put(url, body, httpOptions);
   }
 
   public doGet(url:string, httpOptions: any, loading: boolean ):  Observable<any> {
     if(loading) {
       this.loadingService.startLoading();
     }
-    return this.http.get(url, httpOptions)
-      .pipe(
-        catchError(this.handleError),
-      );
+    return this.http.get(url, httpOptions);
   }
 
-  protected handleError(error: any): Observable<never> {
+  /*protected handleError(error: any): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -56,9 +46,9 @@ export class HttpService {
        }
     }
     return throwError(new Error(error || 'An error occurred, please try again later'));
-  }
+  }*/
 
-  public errorResponse(error: (string | HttpErrorResponse)) {
+  public errorResponse(error: (any | HttpErrorResponse)) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
     if (error instanceof HttpErrorResponse) {
@@ -67,6 +57,7 @@ export class HttpService {
         this.router.navigateByUrl('/logout');
       }
     }else {
+      console.log(JSON.stringify(error));
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
     }
     this.loadingService.stopLoading();
