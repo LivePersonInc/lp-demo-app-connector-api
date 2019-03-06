@@ -15,8 +15,19 @@ import {map, catchError} from "rxjs/operators";
 export class AuthenticationService extends HttpService {
   private _user: User;
   private loggedInStatus = false;
-
   public userLoggedSubject = new Subject<string>();
+
+  get user(): User {
+    return this._user ;
+  }
+
+  set user(user: User) {
+    this._user = user;
+  }
+
+  get isLoggedIn() {
+    return this.loggedInStatus;
+  }
 
   constructor(protected http: HttpClient,
               protected snackBar: MatSnackBar,
@@ -33,9 +44,7 @@ export class AuthenticationService extends HttpService {
   }
 
   public login(brandId: string, username: string, password: string): any {
-    this.loadingService.startLoading();
-     return this.
-        doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
+     return this.doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
        {username:  brandId + "-" + username, password: password }, {}).pipe(
          map(res => {
            this._user = new User();
@@ -72,19 +81,6 @@ export class AuthenticationService extends HttpService {
 
   public isAuthenticated(): Observable<boolean> {
     return this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/isAuthenticated`, {}, false);
-  }
-
-  get user(): User {
-    return this._user ;
-  }
-
-  set user(user: User) {
-    this._user = user;
-  }
-
-
-  get isLoggedIn() {
-    return this.loggedInStatus;
   }
 
 }
