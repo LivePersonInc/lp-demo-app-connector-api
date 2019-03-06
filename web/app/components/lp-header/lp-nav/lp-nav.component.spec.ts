@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {Router} from "@angular/router";
 import { LpNavComponent } from './lp-nav.component';
 import {MaterialModule} from "../../../material.module";
 import {AuthenticationService} from "../../../core/services/authentication.service";
+import {MatDialog} from "@angular/material";
+
 
 describe('LpNavComponent', () => {
   let component: LpNavComponent;
@@ -10,11 +12,16 @@ describe('LpNavComponent', () => {
 
   beforeEach(async(() => {
     const authenticationService = jasmine.createSpy('AuthenticationService');
+    const router = jasmine.createSpy( 'Router');
+    const matDialog = jasmine.createSpy( 'MatDialog');
+
     TestBed.configureTestingModule({
       imports: [MaterialModule],
       declarations: [ LpNavComponent ],
       providers: [
-        {provide:AuthenticationService, useValue: authenticationService}
+        {provide:AuthenticationService, useValue: authenticationService},
+        {provide:MatDialog, useValue: matDialog},
+        {provide:Router, useValue: router}
       ]
     })
     .compileComponents();

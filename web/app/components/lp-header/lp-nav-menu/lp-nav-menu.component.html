@@ -5,6 +5,7 @@
   <mat-menu #menu="matMenu" >
     <a mat-menu-item  routerLink="/settings" >Settings</a>
     <a mat-menu-item  routerLink="/demo">Demo</a>
-    <!--<a mat-menu-item  routerLink="/demo"><i class="material-icons">settings</i></a>-->
+    <a mat-menu-item  (click)="openConfirmationDialog()" >Logout</a>
+
   </mat-menu>
 </div>

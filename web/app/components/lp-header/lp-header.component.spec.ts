@@ -4,6 +4,7 @@ import {LpNavComponent} from "./lp-nav/lp-nav.component";
 import {LpNavMenuComponent} from "./lp-nav-menu/lp-nav-menu.component";
 import {MaterialModule} from "../../material.module";
 import {AuthenticationService} from "../../core/services/authentication.service";
+import {Router} from "@angular/router";
 
 describe('LpHeaderComponent', () => {
   let component: LpHeaderComponent;
@@ -11,11 +12,15 @@ describe('LpHeaderComponent', () => {
 
   beforeEach(async(() => {
     const authenticationService = jasmine.createSpy('AuthenticationService');
+    const router = jasmine.createSpy( 'Router');
 
     TestBed.configureTestingModule({
       imports: [MaterialModule],
       declarations: [ LpHeaderComponent, LpNavComponent, LpNavMenuComponent ],
-      providers: [{provide: AuthenticationService, useValue: authenticationService}]
+      providers: [
+        {provide: AuthenticationService, useValue: authenticationService},
+        {provide:Router, useValue: router}
+      ]
     })
     .compileComponents();
   }));
