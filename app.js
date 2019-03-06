@@ -85,10 +85,11 @@ app.post('/login', (req, res, next) => {
 });
 
 app.get('/logout', (req, res, next) => {
+  req.logOut();
   req.session.destroy((error) => {
     if(error) { res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("LOG OUT ERROR");}
+    res.json({status: 'OK'});
   });
-  res.json({status: 'OK'});
 });
 app.get('/getSession', (req, res) => res.send(req.session));
 app.get('/isAuthenticated',(req, res, next) => res.send(req.isAuthenticated()));
