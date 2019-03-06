@@ -99,7 +99,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isOpenConversation(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] === 'openconv' ;
+    return new URL(stringUrl).pathname.split('/')[3] === 'openconv' ;
   }
 
   private isCloseConversation(stringUrl: string): boolean {
