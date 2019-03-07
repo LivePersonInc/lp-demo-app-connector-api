@@ -52,7 +52,7 @@ app.use(session({
   cookie: {
     secure: process.env.NODE_ENV === 'prod' ? true: false,
     maxAge: halfHour,
-    httpOnly: true,
+    httpOnly: false,
     overwrite: false,
   },
   saveUninitialized: true
