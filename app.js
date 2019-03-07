@@ -42,10 +42,12 @@ passport.deserializeUser((user, done) => {
 });
 
 const halfHour =  1800 * 1000;
+const secret = process.env.secret || '582e3ed11562c6ed3808e3325fd';
+
 app.use(session({
   genid: (req) => { return uuid()},
-  store: new FileStore(),
-  secret: process.env.secret || '582e3ed11562c6ed3808e3325fd',
+  secret: secret,
+  store: new FileStore({secret: secret}),
   resave: true,
   cookie: {
     secure: 'auto',
