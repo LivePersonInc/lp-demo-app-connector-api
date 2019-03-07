@@ -50,9 +50,9 @@ app.use(session({
   store: new FileStore({secret: secret}),
   resave: true,
   cookie: {
-    secure: process.env.NODE_ENV === 'prod' ? true: false,
+    secure: true,
     maxAge: halfHour,
-    httpOnly: false,
+    httpOnly: true,
     overwrite: false,
   },
   saveUninitialized: true
