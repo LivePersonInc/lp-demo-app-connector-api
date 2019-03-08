@@ -50,12 +50,12 @@ app.use(session({
   store: new FileStore({secret: secret}),
   resave: true,
   cookie: {
-    secure: true,
+    secure: 'auto',
     maxAge: halfHour,
     httpOnly: true,
     overwrite: false,
   },
-  saveUninitialized: true
+  saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
