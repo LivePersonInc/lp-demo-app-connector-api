@@ -1,45 +1,47 @@
 const express = require("express");
 const router = express.Router();
-const nconf = require("nconf");
+const logger = require('./util/logger');
+const handleStatusCode = require('./util/handleStatusCode');
+const HttpStatus = require('http-status-codes');
+const AuthenticationConnector = require("./services/AuthenticationService");
+const getDomainObjectByServiceName = require('./util/subscriptionsHandler.js').getDomainObjectByServiceName;
 
+const authConnector = new AuthenticationConnector();
 
-nconf.file({file: "./settings.json"});
+router.post("/JWTtoken/:id", (req, res) => {
+	const brandId = req.params.id;
+	const appKey = req.query.client_id;
+	const appSecret = req.query.client_secret;
+	const domain = getDomainObjectByServiceName(
+		'sentinel',
+		req.session.passport.user.csdsCollectionResponse).baseURI;
 
-router.get("/JWTtoken/:id", (req, res, next) => {
+	let args = {};
+	args.headers = {};
+	args.headers['content-type'] = req.header('content-type');
 
-  console.log("GET JWT: ", req.sessionID);
+	authConnector
+		.getAppJWT(brandId, appKey, appSecret, domain, args)
+		.then(resolve => {
+			const statusCode = resolve['1'].statusCode;
+			if (handleStatusCode(statusCode)) {
+				const accessToken = resolve['0']['access_token'];
+				const tokenType = resolve['0']['token_type'];
+				res.status(statusCode).send({
+					'access_token': accessToken,
+					'token': tokenType
+				});
+			} else {
+				res.status(statusCode).send(resolve[1].statusMessage);
+			}
 
-  let brandID = req.params.id;
-
-  /*let args = {};
-  args.data = {};
-  args.headers = {};
-  args.headers['content-type'] = req.header('content-type');
-  args.headers['authorization'] = req.header('authorization');
-  args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
-  args.headers['Client-Properties'] = req.header('Client-Properties');
-
-  args.data = JSON.stringify(req.body);
-
-  sendApiConnector
-    .openConversation(brandID, args, req.header('LP-DOMAIN'))
-    .then((resolve) => {
-
-      if (handleStatusCode(resolve[1].statusCode)) {
-        let conversationId = resolve[0][1].body.conversationId;
-        res.send({"convId": conversationId});
-      } else {
-        res.status(resolve[1].statusCode).send(resolve[1].statusMessage);
-      }
-
-    }).catch((error) => {
-    logger.error("ERROR: Promise rejected", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-  });*/
-});
-
-router.get("/JWTtoken", (req, res, next) => {
-  res.send("Hello JWT!!!!");
+		}).catch(err => {
+			logger.error(err);
+			res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.send({
+					error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
+				});
+	});
 });
 
 module.exports = router;

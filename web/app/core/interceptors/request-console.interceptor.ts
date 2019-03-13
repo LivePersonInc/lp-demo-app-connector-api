@@ -95,7 +95,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isAPPJWTRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[1] === 'sentinel' ;
+    return new URL(stringUrl).pathname.split('/')[2] === 'authentication' ;
   }
 
   private isOpenConversation(stringUrl:string): boolean {

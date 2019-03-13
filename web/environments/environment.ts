@@ -8,5 +8,6 @@ export const environment = {
   installation:"accountConfigReadWrite",
   ums:"asyncMessagingEnt",
   account: "accountConfigReadWrite",
-  history: "msgHist"
+  history: "msgHist",
+  sentinel: "sentinel"
 };
