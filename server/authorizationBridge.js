@@ -3,13 +3,13 @@ const router = express.Router();
 const logger = require('./util/logger');
 const handleStatusCode = require('./util/handleStatusCode');
 const HttpStatus = require('http-status-codes');
-const AuthenticationConnector = require("./services/AuthenticationService");
+const AuthorizationConnector = require("./services/AuthorizationService");
 const getDomainObjectByServiceName = require('./util/subscriptionsHandler.js').getDomainObjectByServiceName;
 
-const authConnector = new AuthenticationConnector();
+const authConnector = new AuthorizationConnector();
 
-router.post("/JWTtoken/:id", (req, res) => {
-	const brandId = req.params.id;
+router.post('/JWTtoken/:brandId', (req, res) => {
+	const brandId = req.params.brandId;
 	const appKey = req.query.client_id;
 	const appSecret = req.query.client_secret;
 	const domain = getDomainObjectByServiceName(
@@ -32,6 +32,40 @@ router.post("/JWTtoken/:id", (req, res) => {
 					'token': tokenType
 				});
 			} else {
+				res.status(statusCode).send(resolve['1'].statusMessage);
+			}
+		}).catch(err => {
+			logger.error(err);
+			res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.send({
+					error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
+				});
+	});
+});
+
+
+router.post('/JWTsignature/:brandId', (req, res) => {
+	const brandId = req.params.brandId;
+	const domain = getDomainObjectByServiceName(
+		'idp',
+		req.session.passport.user.csdsCollectionResponse).baseURI;
+
+	let args = {};
+	args.headers = {};
+	args.headers['content-type'] = req.header('content-type');
+	args.headers['Authorization'] = req.header('Authorization');
+	args.data = JSON.stringify(req.body);
+
+	authConnector
+		.signJWT(brandId, domain, args)
+		.then(resolve => {
+			const statusCode = resolve[1].statusCode;
+			if (handleStatusCode(statusCode)) {
+				const token = resolve[0].token;
+				res.status(statusCode).send({
+					'token': token
+				});
+			} else {
 				res.status(statusCode).send(resolve[1].statusMessage);
 			}
 
@@ -43,5 +77,4 @@ router.post("/JWTtoken/:id", (req, res) => {
 				});
 	});
 });
-
 module.exports = router;

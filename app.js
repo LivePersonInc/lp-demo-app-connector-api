@@ -10,7 +10,7 @@ const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
-const authenticationBridge = require('./server/authenticationBridge');
+const authorizationBridge = require('./server/authorizationBridge');
 const bodyParser = require('body-parser');
 const logger = require('./server/util/logger');
 const uuid = require('uuid/v4');
@@ -72,7 +72,7 @@ app.use("/demo/installation", installationBridge);
 app.use("/demo/account", accountConfBridge);
 app.use("/demo/ums", umsBridge);
 app.use("/demo/history", historyBridge);
-app.use("/demo/authentication", authenticationBridge);
+app.use("/demo/authorization", authorizationBridge);
 //CSDS
 app.use("/domains", csdsBridge);
 

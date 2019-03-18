@@ -9,5 +9,6 @@ export const environment = {
   ums:"asyncMessagingEnt",
   account: "accountConfigReadWrite",
   history: "msgHist",
-  sentinel: "sentinel"
+  sentinel: "sentinel",
+  idp: "idp"
 };

@@ -23,12 +23,12 @@ export class SendApiService extends HttpService {
   }
 
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
-      const url = `${this.baseURI}/authentication/JWTtoken/${brandId}?client_id=${appKey}&client_secret=${appSecret}`;
+      const url = `${this.baseURI}/authorization/JWTtoken/${brandId}?client_id=${appKey}&client_secret=${appSecret}`;
       return this.doPost(url, null, httpOptions);
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
-    return this.doPost(`https://${this.domainsService.getDomainByServiceName('idp')}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions);
+    return this.doPost(`${this.baseURI}/authorization/JWTsignature/${brandId}`, body, httpOptions);
   }
 
   public uploadFile(relativePath: string, tempUrlSig:string, tempUrlExpires: string, body: any): Observable<Object> {

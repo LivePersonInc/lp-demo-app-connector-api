@@ -2,7 +2,7 @@
 
 const Client = require("node-rest-client").Client;
 
-class AuthenticationService {
+class AuthorizationService {
 	constructor() {
 		this.client = new Client();
 	}
@@ -27,6 +27,24 @@ class AuthenticationService {
 				});
 		});
 	}
+
+	signJWT(brandId, domain, args) {
+		const url = `https://${domain}/api/account/${brandId}/consumer`;
+		args.parameters = {};
+		args.parameters = {
+			'v': '1.0'
+		};
+
+		return new Promise((resolve, reject) => {
+			return this.client
+				.post(url, args, function (data, response) {
+					resolve([data, response]);
+				})
+				.on('error', e => {
+					reject(e);
+				});
+		});
+	}
 }
 
-module.exports = AuthenticationService;
+module.exports = AuthorizationService;
