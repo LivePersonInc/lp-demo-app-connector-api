@@ -28,7 +28,7 @@ class AuthorizationService {
 		});
 	}
 
-	signJWT(brandId, domain, args) {
+	getConsumerJWS(brandId, domain, args) {
 		const url = `https://${domain}/api/account/${brandId}/consumer`;
 		args.parameters = {};
 		args.parameters = {

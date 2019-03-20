@@ -44,7 +44,7 @@ router.post('/JWTtoken/:brandId', (req, res) => {
 });
 
 
-router.post('/JWTsignature/:brandId', (req, res) => {
+router.post('/consumerJWS/:brandId', (req, res) => {
 	const brandId = req.params.brandId;
 	const domain = getDomainObjectByServiceName(
 		'idp',
@@ -57,7 +57,7 @@ router.post('/JWTsignature/:brandId', (req, res) => {
 	args.data = JSON.stringify(req.body);
 
 	authConnector
-		.signJWT(brandId, domain, args)
+		.getConsumerJWS(brandId, domain, args)
 		.then(resolve => {
 			const statusCode = resolve[1].statusCode;
 			if (handleStatusCode(statusCode)) {

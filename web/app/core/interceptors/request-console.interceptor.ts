@@ -93,7 +93,7 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isConsumerJWSRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[3] === 'JWTsignature' ;
+    return new URL(stringUrl).pathname.split('/')[3] === 'consumerJWS' ;
   }
 
   private isAPPJWTRequest(stringUrl:string): boolean {

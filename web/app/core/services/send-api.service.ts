@@ -28,7 +28,7 @@ export class SendApiService extends HttpService {
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
-    return this.doPost(`${this.baseURI}/authorization/JWTsignature/${brandId}`, body, httpOptions);
+    return this.doPost(`${this.baseURI}/authorization/consumerJWS/${brandId}`, body, httpOptions);
   }
 
   public uploadFile(relativePath: string, tempUrlSig:string, tempUrlExpires: string, body: any): Observable<Object> {
