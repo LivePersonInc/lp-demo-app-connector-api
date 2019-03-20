@@ -71,6 +71,8 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
       consoleRequest.title = "Get Consumer History";
     }else if(this.isUploadFile(reportingRequest.url)) {
       consoleRequest.title = "Upload File/image";
+    } else if (this.isAccountConfigProperties(reportingRequest.url)) {
+      consoleRequest.title = "Get AC properties";
     } else {
       consoleRequest.title = this.getServiceNameByUrl(reportingRequest.url); //default
     }
@@ -91,11 +93,11 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
   }
 
   private isConsumerJWSRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[2] === 'account' ;
+    return new URL(stringUrl).pathname.split('/')[3] === 'consumerJWS' ;
   }
 
   private isAPPJWTRequest(stringUrl:string): boolean {
-    return new URL(stringUrl).pathname.split('/')[1] === 'sentinel' ;
+    return new URL(stringUrl).pathname.split('/')[3] === 'JWTtoken' ;
   }
 
   private isOpenConversation(stringUrl:string): boolean {
@@ -112,6 +114,10 @@ export class RequestConsoleInterceptor implements HttpInterceptor {
 
   private isUploadFile(stringUrl: string): boolean {
     return new URL(stringUrl).pathname.split('/')[2] === 'AUTH_async-images' ;
+  }
+
+  private isAccountConfigProperties(stringUrl: string): boolean {
+    return new URL(stringUrl).pathname.split('/')[2] === 'account' ;
   }
 
   private isAnHttpErrorResponseAndConversationExists(err: any) {

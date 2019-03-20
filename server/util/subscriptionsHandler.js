@@ -17,7 +17,7 @@ const subscriptionsHandler = {};
 subscriptionsHandler.subscriptions = [];
 
 subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
-  const domainOBject = getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
+  const domainOBject = subscriptionsHandler.getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
   const authorization = 'Bearer ' + req.session.passport.user.bearer;
   if(domainOBject !== {} ) {
     getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
@@ -97,7 +97,7 @@ function getAppInstallation(appkey, brandId, authorization, domain) {
 }
 
 
-function getDomainObjectByServiceName(serviceName, csdsCollectionResponse) {
+subscriptionsHandler.getDomainObjectByServiceName = (serviceName, csdsCollectionResponse) => {
   let service = {};
   csdsCollectionResponse.baseURIs.forEach( obj => {
     if(obj.service === serviceName){
