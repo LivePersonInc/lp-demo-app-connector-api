@@ -21,7 +21,11 @@ subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
   const authorization = 'Bearer ' + req.session.passport.user.bearer;
   if(domainOBject !== {} ) {
     getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
-      const subscription = new Subscription(SSE(res), req.params.appKey,result.client_secret, domainOBject.account);
+      const ssev = SSE(res);
+      ssev.sendEvent('time', function () {
+        return new Date //needed to keep alive the subscription
+      },10000);
+      const subscription = new Subscription(ssev, req.params.appKey,result.client_secret, domainOBject.account);
       subscriptionsHandler.subscriptions[req.params.convid] = subscription;
       logger.debug("Client subscribed width: " + req.params.convid);
       subscriptionsHandler.subscriptions[req.params.convid].sseObject.disconnect(function () {
