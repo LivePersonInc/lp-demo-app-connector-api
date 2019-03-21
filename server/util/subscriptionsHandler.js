@@ -17,11 +17,15 @@ const subscriptionsHandler = {};
 subscriptionsHandler.subscriptions = [];
 
 subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
-  const domainOBject = getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
+  const domainOBject = subscriptionsHandler.getDomainObjectByServiceName(installationDomainName, req.session.passport.user.csdsCollectionResponse);
   const authorization = 'Bearer ' + req.session.passport.user.bearer;
   if(domainOBject !== {} ) {
     getAppInstallation(req.params.appKey,domainOBject.account, authorization, domainOBject.baseURI).then(result => {
-      const subscription = new Subscription(SSE(res), req.params.appKey,result.client_secret, domainOBject.account);
+      const ssev = SSE(res);
+      ssev.sendEvent('time', function () {
+        return new Date //needed to keep alive the subscription
+      },10000);
+      const subscription = new Subscription(ssev, req.params.appKey,result.client_secret, domainOBject.account);
       subscriptionsHandler.subscriptions[req.params.convid] = subscription;
       logger.debug("Client subscribed width: " + req.params.convid);
       subscriptionsHandler.subscriptions[req.params.convid].sseObject.disconnect(function () {
@@ -97,7 +101,7 @@ function getAppInstallation(appkey, brandId, authorization, domain) {
 }
 
 
-function getDomainObjectByServiceName(serviceName, csdsCollectionResponse) {
+subscriptionsHandler.getDomainObjectByServiceName = (serviceName, csdsCollectionResponse) => {
   let service = {};
   csdsCollectionResponse.baseURIs.forEach( obj => {
     if(obj.service === serviceName){

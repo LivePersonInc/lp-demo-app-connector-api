@@ -10,11 +10,12 @@ const accountConfBridge = require('./server/accountConfBridge');
 const notifications = require('./server/notifications');
 const csdsBridge = require('./server/csdsBridge');
 const historyBridge = require('./server/convHistoryBridge');
+const authorizationBridge = require('./server/authorizationBridge');
 const bodyParser = require('body-parser');
 const logger = require('./server/util/logger');
 const uuid = require('uuid/v4');
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+const MemoryStore = require('memorystore')(session);
 const passport = require('passport');
 const authLocalStrategy = require('./server/auth/authLocalStrategy');
 const router = express.Router();
@@ -45,9 +46,11 @@ const halfHour =  1800 * 1000;
 const secret = process.env.secret || '582e3ed11562c6ed3808e3325fd';
 
 app.use(session({
-  genid: (req) => { return uuid()},
+  genid: () => { return uuid()},
   secret: secret,
-  store: new FileStore({secret: secret}),
+  store: new MemoryStore({
+    checkPeriod: 86400000
+  }),
   resave: true,
   cookie: {
     secure: 'auto',
@@ -71,6 +74,7 @@ app.use("/demo/installation", installationBridge);
 app.use("/demo/account", accountConfBridge);
 app.use("/demo/ums", umsBridge);
 app.use("/demo/history", historyBridge);
+app.use("/demo/authorization", authorizationBridge);
 //CSDS
 app.use("/domains", csdsBridge);
 
