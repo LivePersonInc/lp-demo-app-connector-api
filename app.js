@@ -49,7 +49,7 @@ app.use(session({
   genid: () => { return uuid()},
   secret: secret,
   store: new MemoryStore({
-    checkPeriod: 86400000
+    checkPeriod: halfHour
   }),
   resave: true,
   cookie: {
