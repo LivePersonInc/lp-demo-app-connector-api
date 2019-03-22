@@ -3,7 +3,6 @@ process.title = "demoapp";
 const express = require('express');
 const app = express();
 const nconf = require("nconf");
-//const cors = require('cors');
 const umsBridge = require('./server/umsBridge');
 const installationBridge = require('./server/appInstallationBridge');
 const accountConfBridge = require('./server/accountConfBridge');
@@ -21,8 +20,10 @@ const authLocalStrategy = require('./server/auth/authLocalStrategy');
 const router = express.Router();
 const subscriptionsHandler = require('./server/util/subscriptionsHandler');
 const HttpStatus = require('http-status-codes');
+const helmet = require('helmet')
 
-//app.use(cors());
+app.use(helmet());
+
 nconf.file({file: "settings.json"});
 router.get("/", (req, res) => res.json({status: 'UP'}));
 
