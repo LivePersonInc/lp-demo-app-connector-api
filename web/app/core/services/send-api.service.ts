@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 @Injectable()
 export class SendApiService extends HttpService {
 
-  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/ums/`;
+  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo`;
 
   constructor(protected snackBar: MatSnackBar,
               protected http: HttpClient,
@@ -23,11 +23,12 @@ export class SendApiService extends HttpService {
   }
 
   public getAppJWT(brandId: string, appKey: string, appSecret: string, httpOptions: any): Observable<Object> {
-    return this.doPost(`https://${this.domainsService.getDomainByServiceName('sentinel') || 'ca-a.sentinel.liveperson.net'}/sentinel/api/account/${brandId}/app/token?v=1.0&grant_type=client_credentials&client_id=${appKey}&client_secret=${appSecret}`, null, httpOptions);
+      const url = `${this.baseURI}/authorization/JWTtoken/${brandId}?client_id=${appKey}&client_secret=${appSecret}`;
+      return this.doPost(url, null, httpOptions);
   }
 
   public getConsumerJWS(brandId: string, body: any, httpOptions: any): Observable<Object> {
-    return this.doPost(`https://${this.domainsService.getDomainByServiceName('idp')}/api/account/${brandId}/consumer?v=1.0`, body, httpOptions);
+    return this.doPost(`${this.baseURI}/authorization/consumerJWS/${brandId}`, body, httpOptions);
   }
 
   public uploadFile(relativePath: string, tempUrlSig:string, tempUrlExpires: string, body: any): Observable<Object> {
@@ -35,15 +36,15 @@ export class SendApiService extends HttpService {
   }
 
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`${this.baseURI}openconv/${brandId}`, body, headers);
+    return this.doPost(`${this.baseURI}/ums/openconv/${brandId}`, body, headers);
   }
 
   public sendMessage(brandId: string, body: any, headers: any): Observable<Object> {
-    return this.doPost(`${this.baseURI}sendraw/${brandId}`, body, headers);
+    return this.doPost(`${this.baseURI}/ums/sendraw/${brandId}`, body, headers);
   }
 
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
-    return this.doPost(`${this.baseURI}close/${brandId}/conv/${convId}`, null, headers);
+    return this.doPost(`${this.baseURI}/ums/close/${brandId}/conv/${convId}`, null, headers);
   }
 
 }
