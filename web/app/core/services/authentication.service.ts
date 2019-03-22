@@ -58,7 +58,7 @@ export class AuthenticationService extends HttpService {
            }, 1500);
       }),
        catchError(error => {
-         this.errorResponse("Logout problem");
+         this.errorResponse("Wrong credentials!!");
          return throwError(new Error(error || 'An error occurred, please try again later'));
        })
      ).subscribe();
@@ -73,7 +73,7 @@ export class AuthenticationService extends HttpService {
         this.customResponse(message);
       }),
       catchError(error => {
-        this.errorResponse("Logout problem");
+        this.errorResponse("Logout error");
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
