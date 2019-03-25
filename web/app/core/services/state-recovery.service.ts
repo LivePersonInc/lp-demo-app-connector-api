@@ -41,7 +41,6 @@ export class StateRecoveryService extends HttpService{
         const user = new User();
         user.brandId = res.passport.user.csdsCollectionResponse.baseURIs[0].account;
         user.userName =  res.passport.user.config.loginName;
-        user.token = res.passport.user.bearer;
         this.authenticationService.user = user;
         this.domainsService.getDomainList(user.brandId);
       }),

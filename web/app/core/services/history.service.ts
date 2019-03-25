@@ -16,7 +16,6 @@ export class HistoryService extends HttpService {
   public historySubject = new Subject<any>();
   public history;
   public brandId;
-  private headers = {};
   private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/history/`;
 
 
@@ -26,15 +25,10 @@ export class HistoryService extends HttpService {
 
   public init() {
     this.brandId = this.authenticationService.user.brandId;
-    this.headers = {'headers':
-      {
-        'Authorization': `Bearer ${this.authenticationService.user.token}`,
-      }
-    };
   }
 
   public getHistoryByConsumerId(consumerId: string) {
-    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, this.headers,true).pipe(
+    this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, {}, true).pipe(
       map((data: Array<any>) => {
         this.history = data;
         this.loadingService.stopLoading();

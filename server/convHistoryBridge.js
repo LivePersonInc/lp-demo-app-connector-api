@@ -15,7 +15,7 @@ router.get("/:brandId/consumer/:conversationId", function (req, res, next) {
   args.data = {};
   args.headers = {};
   args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
 
   convHistoryService
     .getHistoryByConsumerId(conversationId, brandId, args, req.header('LP-DOMAIN'))

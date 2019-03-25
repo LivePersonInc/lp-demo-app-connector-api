@@ -87,7 +87,15 @@ app.post('/login', (req, res, next) => {
       return next(err); }
     if (!user) {
       return res.status(HttpStatus.UNAUTHORIZED).redirect('/#/settings'); }
-    req.login(user, (err) => res.send({bearer: user.bearer}));
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.send({
+          'userId': user.config.userId,
+          'sessionTTl': user.sessionTTl
+      });
+    });
   })(req, res, next);
 });
 

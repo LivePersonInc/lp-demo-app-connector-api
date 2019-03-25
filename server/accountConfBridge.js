@@ -15,7 +15,7 @@ router.get("/properties/:id", (req, res, next) => {
   let args = {};
 
   args.headers = {};
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
   args.headers['Accept'] = 'application/json';
 
   accountConfigService

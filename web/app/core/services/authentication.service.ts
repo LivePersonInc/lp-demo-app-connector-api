@@ -48,7 +48,6 @@ export class AuthenticationService extends HttpService {
        {username:  brandId + "-" + username, password: password }, {}).pipe(
          map(res => {
            this._user = new User();
-           this._user.token = res.bearer;
            this._user.userName = username;
            this._user.brandId = brandId;
            this.successResponse('Authentication was successful ');
