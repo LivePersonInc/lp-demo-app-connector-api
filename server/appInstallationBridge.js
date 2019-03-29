@@ -16,7 +16,7 @@ router.get("/:brandId", (req, res, next) => {
   args.data = {};
   args.headers = {};
   args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
 
   appInstallationService
     .getAppsForBrandId(brandId, args, req.header('LP-DOMAIN'))
@@ -41,7 +41,7 @@ router.get("/:brandId/:appId", (req, res, next) => {
   args.data = {};
   args.headers = {};
   args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
 
   appInstallationService
     .getAppById(appId, brandId, args, req.header('LP-DOMAIN'))
@@ -66,7 +66,7 @@ router.post("/:brandId", (req, res, next) => {
   args.data = {};
   args.headers = {};
   args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
   args.data = JSON.stringify(req.body);
 
   appInstallationService.installNewApp(brandId, args, req.header('LP-DOMAIN'))
@@ -91,7 +91,7 @@ router.put("/:brandId/:appId", (req, res, next) => {
   let args = {};
   args.data = {};
   args.headers = {};
-  args.headers['authorization'] = req.header('authorization');
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
   args.data = JSON.stringify(req.body);
 
   appInstallationService.getAppById(appId, brandId, args, req.header('LP-DOMAIN')).then((data) => {

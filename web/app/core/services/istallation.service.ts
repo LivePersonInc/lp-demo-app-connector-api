@@ -37,7 +37,6 @@ export class InstallationService extends HttpService {
       this.brandId = this.authenticationService.user.brandId;
       this.headers = {'headers':
         {
-          'Authorization': `Bearer ${this.authenticationService.user.token}`,
           'content-type': 'application/json',
         }
       };

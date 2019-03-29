@@ -17,7 +17,6 @@ export class AccountConfigService extends HttpService {
   public accountConfigPropList:any;
   public isAsyncMessagingActive:boolean;
   public brandId = "";
-  private headers = {};
 
   private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/account/properties/`;
 
@@ -34,16 +33,11 @@ export class AccountConfigService extends HttpService {
   public init() {
     if(this.authenticationService && this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId;
-      this.headers = {
-        'headers': {
-          'Authorization': `Bearer ${this.authenticationService.user.token}`,
-        }
-      }
     }
   }
 
   public getAccountConfigPropertiesList() {
-    this.doGet(`${this.baseURI}${this.brandId}`, this.headers,true).pipe(
+    this.doGet(`${this.baseURI}${this.brandId}`, {},true).pipe(
       map(data => {
         this.accountConfigPropList = data;
         this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
@@ -58,7 +52,7 @@ export class AccountConfigService extends HttpService {
   }
 
   public updateAccountConfigProperties() {
-    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList),this.headers).pipe(
+    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList), {}).pipe(
       map(data => {
         this.loadingService.stopLoading();
         this.acSubject.next('UPDATED');
@@ -74,7 +68,6 @@ export class AccountConfigService extends HttpService {
     this.accountConfigPropList = null;
     this.isAsyncMessagingActive = false;
     this.brandId = "";
-    this.headers = {};
   }
 
   private checkIsAsyncMessagingActive(): boolean {
