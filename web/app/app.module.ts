@@ -19,7 +19,6 @@ import {ConversationService} from './core/services/conversation.service';
 import {LpConfirmationDialogComponent} from './components/lp-confirmation-dialog/lp-confirmation-dialog.component';
 import {DomainsService} from './core/services/domains.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {DomainHeaderInterceptor} from './core/interceptors/domain-header.interceptor';
 import {LpHeaderModule} from './components/lp-header/lp-header.module';
 import {LpConversationModule} from './components/lp-conversation/lp-conversation.module';
 import {LpStartTutorialModule} from './components/lp-start-tutorial/lp-start-tutorial.module';
@@ -69,11 +68,6 @@ import {StateRecoveryService} from "./core/services/state-recovery.service";
     StateStorage,
     HistoryService,
     StateRecoveryService,
-    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: DomainHeaderInterceptor,
-    multi: true,
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestConsoleInterceptor,
