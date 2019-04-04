@@ -5,11 +5,14 @@ const SendApiConnector = require("./services/SendApiConnectorService");
 const HttpStatus = require('http-status-codes');
 const handleStatusCode = require('./util/handleStatusCode');
 const logger = require('./util/logger');
+const getDomainObjectByServiceName = require('./util/subscriptionsHandler.js').getDomainObjectByServiceName;
 
 
 nconf.file({file: "./settings.json"});
 
 const sendApiConnector = new SendApiConnector(nconf);
+
+const serviceName = 'asyncMessagingEnt';
 
 router.post("/openconv/:id", (req, res, next) => {
 
@@ -27,8 +30,10 @@ router.post("/openconv/:id", (req, res, next) => {
 
   args.data = JSON.stringify(req.body);
 
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
+
   sendApiConnector
-    .openConversation(brandID, args, req.header('LP-DOMAIN'))
+    .openConversation(brandID, args, domain)
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {
@@ -59,9 +64,10 @@ router.post("/sendraw/:id", (req, res, next) => {
 
   args.data = JSON.stringify(req.body);
 
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
   sendApiConnector
-    .sendRaw(brandID, args, req.header('LP-DOMAIN'))
+    .sendRaw(brandID, args, domain)
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
@@ -86,9 +92,10 @@ router.post("/close/:id/conv/:convId", (req, res, next) => {
   args.headers['X-LP-ON-BEHALF'] = req.header('X-LP-ON-BEHALF');
   args.headers['Client-Properties'] = req.header('Client-Properties');
 
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
   sendApiConnector
-    .closeConversation(brandID, convID, args, req.header('LP-DOMAIN'))
+    .closeConversation(brandID, convID, args, domain)
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {

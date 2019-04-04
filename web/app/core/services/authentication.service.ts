@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Subject} from "rxjs";
 import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
@@ -44,8 +44,12 @@ export class AuthenticationService extends HttpService {
   }
 
   public login(brandId: string, username: string, password: string): any {
+      const domain = this.domainsService.getDomainByServiceName('agentVep');
+      const httpOptions = {
+          headers: new HttpHeaders({'LP-DOMAIN': domain})
+      };
      return this.doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
-       {username:  brandId + "-" + username, password: password }, {}).pipe(
+       {username:  brandId + "-" + username, password: password }, httpOptions).pipe(
          map(res => {
            this._user = new User();
            this._user.userName = username;

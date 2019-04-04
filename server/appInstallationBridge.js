@@ -5,10 +5,13 @@ const HttpStatus = require('http-status-codes');
 const handleStatusCode = require('./util/handleStatusCode');
 const nconf = require("nconf");
 const logger = require('./util/logger');
+const getDomainObjectByServiceName = require('./util/subscriptionsHandler.js').getDomainObjectByServiceName;
 
 nconf.file({file: "./settings.json"});
 
 const appInstallationService = new AppInstallationService(nconf);
+
+const serviceName = 'accountConfigReadWrite';
 
 router.get("/:brandId", (req, res, next) => {
   let brandId = req.params.brandId;
@@ -16,10 +19,11 @@ router.get("/:brandId", (req, res, next) => {
   args.data = {};
   args.headers = {};
   args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`;
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
   appInstallationService
-    .getAppsForBrandId(brandId, args, req.header('LP-DOMAIN'))
+    .getAppsForBrandId(brandId, args, domain)
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {
@@ -42,9 +46,10 @@ router.get("/:brandId/:appId", (req, res, next) => {
   args.headers = {};
   args.headers['content-type'] = 'application/json';
   args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
   appInstallationService
-    .getAppById(appId, brandId, args, req.header('LP-DOMAIN'))
+    .getAppById(appId, brandId, args, domain)
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {
@@ -68,8 +73,9 @@ router.post("/:brandId", (req, res, next) => {
   args.headers['content-type'] = 'application/json';
   args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
   args.data = JSON.stringify(req.body);
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
-  appInstallationService.installNewApp(brandId, args, req.header('LP-DOMAIN'))
+  appInstallationService.installNewApp(brandId, args, domain)
     .then((resolve) => {
 
       if (handleStatusCode(resolve[1].statusCode)) {
@@ -93,27 +99,27 @@ router.put("/:brandId/:appId", (req, res, next) => {
   args.headers = {};
   args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
   args.data = JSON.stringify(req.body);
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
-  appInstallationService.getAppById(appId, brandId, args, req.header('LP-DOMAIN')).then((data) => {
-    args.headers['If-Match'] = data[1].headers['ac-revision'];
-    args.headers['X-HTTP-Method-Override'] = 'PUT';
-    args.headers['content-type'] = 'application/json';
+  appInstallationService.getAppById(appId, brandId, args, domain)
+    .then((data) => {
+      args.headers['If-Match'] = data[1].headers['ac-revision'];
+      args.headers['X-HTTP-Method-Override'] = 'PUT';
+      args.headers['content-type'] = 'application/json';
 
-    return appInstallationService.update(appId, brandId, args, req.header('LP-DOMAIN'))
-      .then((resolve) => {
+      return appInstallationService.update(appId, brandId, args, domain)
+        .then((resolve) => {
 
-        if (handleStatusCode(resolve[1].statusCode)) {
-          res.json('OK');
-        } else {
-          res.status(resolve[1].statusCode).send({error: "Something was wrong"});
-        }
-
-      })
-
-  }).catch((error) => {
-    logger.error("ERROR: Promise rejected", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-  });
+          if (handleStatusCode(resolve[1].statusCode)) {
+            res.json('OK');
+          } else {
+            res.status(resolve[1].statusCode).send({error: "Something was wrong"});
+          }
+        })
+    }).catch((error) => {
+      logger.error("ERROR: Promise rejected", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+    });
 });
 
 

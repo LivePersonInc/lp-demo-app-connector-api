@@ -4,8 +4,11 @@ const HttpStatus = require('http-status-codes');
 const ConvHistoryService = require("./services/ConvHistoryService");
 const handleStatusCode = require('./util/handleStatusCode');
 const logger = require('./util/logger');
+const getDomainObjectByServiceName = require('./util/subscriptionsHandler.js').getDomainObjectByServiceName;
 
 const convHistoryService = new ConvHistoryService();
+
+const serviceName = 'msgHist';
 
 router.get("/:brandId/consumer/:conversationId", function (req, res, next) {
   let brandId = req.params.brandId;
@@ -16,9 +19,10 @@ router.get("/:brandId/consumer/:conversationId", function (req, res, next) {
   args.headers = {};
   args.headers['content-type'] = 'application/json';
   args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
   convHistoryService
-    .getHistoryByConsumerId(conversationId, brandId, args, req.header('LP-DOMAIN'))
+    .getHistoryByConsumerId(conversationId, brandId, args, domain)
     .then((resolve) => {
       if (handleStatusCode(resolve[1].statusCode)) {
         res.send(resolve[0]);
