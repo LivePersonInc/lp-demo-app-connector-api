@@ -85,9 +85,10 @@ export class ConversationManager {
 
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
+    //TODO: shouls be done with sendRaw endopoin (sendMessage) wiht the right payload
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
       map(res => {
-      this.unSubscribeToMessageNotifications(conversation);
+      this.unSubscribeToMessageNotifications(conversation); //TODO: this line should be removed for PCS
       conversation.isConvStarted = false;
       this.updateState(conversation);
     }));
@@ -206,6 +207,8 @@ export class ConversationManager {
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
 
+    //TODO: HERE the webhooks notification are handled,  a new method like checSkurvey.. sould be created
+
     this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.EVENT_RECEIVED));
 
     let data = JSON.parse(notification.data);
@@ -281,6 +284,7 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
+    //TODO: this metod should be refactored and check for stat and stage CLOSE
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {

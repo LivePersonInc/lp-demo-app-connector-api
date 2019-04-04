@@ -45,6 +45,7 @@ subscriptionsHandler.handleSubscriptionRequest = (req, res) => {
 subscriptionsHandler.getNotificationConversationId = (notificationBody) => {
   logger.debug(JSON.stringify(notificationBody));
   const noConversationId = "";
+  //TODO: The conversation ID need for the notifications received in event related to the survey need to be parsed propertly
   try {
     if(notificationBody.body.changes[0].hasOwnProperty("conversationId")) {
       return notificationBody.body.changes[0].conversationId;

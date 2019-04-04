@@ -10,8 +10,7 @@ export class ChatMessage {
   sequence: number;
   accepted: boolean;
   read:boolean;
-  file: FileMessage
-  ;
+  file: FileMessage;
 
   constructor(type, timestamp, message, userName, showUser, sequence) {
     this.type = type;

@@ -8,6 +8,8 @@ class SendApiConnectorService {
     constructor(nconf) {
         this.nconf = nconf;
         this.client = new Client();
+
+        //TODO: Needs to be removed
         this.closeConversationField = {
           "field": "ConversationStateField",
           "conversationState": "CLOSE"
@@ -45,6 +47,7 @@ class SendApiConnectorService {
         });
     }
 
+    //TODO Should be removed  and the right payload should be passer from the UI app, Send Raw will send the CLose conv Payload
     closeConversation(brandId, conversationId, args, domain) {
       args.data = JSON.stringify(this.createCloseConversationPayload(conversationId));
       return new Promise((resolve, reject) => {
@@ -61,6 +64,7 @@ class SendApiConnectorService {
         });
     }
 
+  //TODO Should be removed  and the right payload should be passer from the UI app
   createCloseConversationPayload(conversationId) {
     const update = new UpdateConversationField(conversationId, this.closeConversationField);
     return new Request("req", "1,", "cm.UpdateConversationField", update);
