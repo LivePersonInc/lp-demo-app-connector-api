@@ -96,7 +96,7 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 ``https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
 1. After updating the webhooks endpoints you will be redirected to the chat window.
 1. Type any message in order to start a conversation.
-1. You can login with you account in LiveEngage platform (Better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications and play with it. 
+1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications and play with it. 
 
 ![alt text](docs/gifs/example.gif)
 
