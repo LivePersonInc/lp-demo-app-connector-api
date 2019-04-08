@@ -98,6 +98,8 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 1. Type any message in order to start a conversation.
 1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications and play with it. 
 
+[Note!!] Before starting a conversation, you can select some headers that will be sent in every request, It can be use for example, to activate the Auto-messages feature. Also you can modify the Campaign Id or Skill.
+
 ![alt text](docs/gifs/example.gif)
 
 ## Settings
