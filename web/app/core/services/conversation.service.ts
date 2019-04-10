@@ -164,6 +164,20 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
+  //TODO: Seb - new closeConversation method that also triggers PCS
+  public closeConversationWithPCS() {
+    this.conversationManager.closeConversationWithPCS(this.conversation).pipe(
+      map(res => {
+       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
+       this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
+  }
+
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
       // this.closeConversation();

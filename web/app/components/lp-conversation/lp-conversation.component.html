@@ -9,6 +9,13 @@
               [disabled]="conversation && !conversation.isConvStarted || !conversation">
         Close conversation
       </button>
+      <button mat-raised-button
+              (click)="closeConversationWithPCS()"
+              color="primary"
+              class="close-conv-btn"
+              [disabled]="conversation && !conversation.isConvStarted || !conversation">
+        Close conversation with PCS
+      </button>
       <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"
                    [disabled]="isConversationDisabled()" (onIsTyping)="handleTypingEvent($event)"
                    (onFileSelected)="sendFile($event)"

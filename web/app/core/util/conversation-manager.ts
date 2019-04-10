@@ -24,11 +24,20 @@ import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
 
+//TODO: Seb - Import ConversationService so I could access conversation data globally? Also so that I could dynamically add a field named dialogId??
+
 
 @Injectable()
 export class ConversationManager {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
+
+  //TODO: Seb - added post survey id and its setter
+  private postSurveyId;
+
+  public setPostSurveyId(postSurveyId: string) {
+    this.postSurveyId = postSurveyId;
+  }
 
   constructor(private sendApiService:SendApiService,
               protected stateManager: StateStorage,
@@ -67,6 +76,8 @@ export class ConversationManager {
     }));
   }
 
+
+
   public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, fileName: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap( preview => {
       return this.sendMessageWithUploadedFileRequest(message, relativePath, type, preview, conversation).pipe(map(res => {
@@ -93,6 +104,31 @@ export class ConversationManager {
       this.updateState(conversation);
     }));
 
+  }
+
+  //TODO: Seb - Close conversation with the PCS payload added...
+  public closeConversationWithPCS(conversation: Conversation): Observable<any> {
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
+    const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
+    return this.sendApiService.sendMessage(conversation.branId, body, headers);
+  }
+
+
+  //TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
+  private getCloseConversationWithPCSBody(conversation: Conversation): Request {
+    const body = {
+      "conversationId": conversation.conversationId,
+      "conversationField":{
+          "field":"DialogChange",
+          "type":"UPDATE",
+          "dialog":
+          {
+            "dialogId": conversation.conversationId,
+            "state": "CLOSE"
+          }
+      }
+    };
+    return new Request("req", null, "cm.UpdateConversationField", body);
   }
 
   public subscribeToMessageNotifications(conversation: Conversation) {
@@ -138,9 +174,11 @@ export class ConversationManager {
     return this.sendApiService.getConsumerJWS(conversation.branId, body, httpOptions);
   }
 
+  //TODO: Seb - this method needs to pass dialogId as a parameter in the getMessageRequestbody().
+  // Added a postSurveyId parameter to be passed.
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
-    const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
+    const body = JSON.stringify(this.getMessageRequestBody(message, this.postSurveyId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
@@ -205,6 +243,26 @@ export class ConversationManager {
     };
   }
 
+  //TODO: Seb - Check is survey is open
+  private checkIfSurveyOpen(data: any, conversation: Conversation) {
+    console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
+    try {
+      if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
+        && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType === 'POST_SURVEY'
+        ) {
+          const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
+          this.setPostSurveyId(postSurveyDialogId);
+          console.log("Post survey id :" + this.postSurveyId);
+          console.log("SURVEY IS OPEN");
+
+          //Send raw request with a body containing the postSurveyId
+
+        }
+      } catch (error) {
+        console.error("ERROR parsing notification", error);
+      }
+    }
+
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
 
     //TODO: HERE the webhooks notification are handled,  a new method like checSkurvey.. sould be created
@@ -219,6 +277,10 @@ export class ConversationManager {
 
     this.checkAndFilterIncomingTextMessages(data, conversation);
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
+
+    //TODO: Seb - checking if survey is open
+    this.checkIfSurveyOpen(data, conversation);
+
     this.checkIfConversationWasClosed(data, conversation);
     this.checkConsumerGeneratedId(data, conversation);
 
@@ -287,7 +349,16 @@ export class ConversationManager {
     //TODO: this metod should be refactored and check for stat and stage CLOSE
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
-        && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
+        && data.body.changes[0].result.conversationDetails.state  === 'CLOSE'
+        //TODO: Seb - Extra logic condition to only unsubscribe if the conversation has fully closed
+        //currently not working as expected. Might need to fully understand how it works
+        && data.body.changes[0].result.conversationDetails.stage === 'CLOSE'
+        ) {
+
+        //Seb - console log check
+        console.log("CHECK IF CONVERSATION CLOSED IS TRIGGERED");
+        console.log("****** CHECK IF CONVERSATION WAS CLOSED: " + JSON.stringify(data.body.changes[0], null, 2));
+
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
@@ -327,10 +398,23 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getMessageRequestBody(message: string, conversationId: string): Request {
-    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
-      new Event("ContentEvent", "text/plain", message)));
+  // private getMessageRequestBody(message: string, conversationId: string): Request {
+  //   return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
+  //     new Event("ContentEvent", "text/plain", message)));
+  // }
+
+  //TODO: Seb - added dialogId field that will be used to pass the postSurveyID
+  //might ned to add a 'dialogId' field to PublishContentEvent() model. Next step is pass dialogId in the sendMessageRequest() method
+  private getMessageRequestBody(message: string, dialogId: string, conversationId: string): Request {
+    const body = {
+      "dialogId" : this.postSurveyId || conversationId,
+      "conversationId" : conversationId,
+      "event" : new Event("ContentEvent", "text/plain", message)
+    }
+    return new Request("req", "3", "ms.PublishEvent", body);
   }
+
+
 
   private getMessageWithFileRequestBody(message: Object, conversationId: string): Request {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
