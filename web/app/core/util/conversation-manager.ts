@@ -362,6 +362,8 @@ export class ConversationManager {
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
+        //Seb - Setting the postSurveyID to null after the conversation closed
+        this.setPostSurveyId(null);
         this.updateState(conversation);
       }
     } catch (error) {
@@ -461,6 +463,7 @@ export class ConversationManager {
     return [setUserProfilePayload,requestConversationPayload];
   }
 
+  //TODO: the below might require an additional 'dialogId' field that contains the survye id
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
     let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
