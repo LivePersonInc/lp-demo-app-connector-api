@@ -44,6 +44,9 @@ export class ConversationManager {
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
+    //TODO: Seb - Ensuring that every new conversation has its postSurveyId reset...
+    //this solves the issue where postSurveyId does not reset upon opening a new conversation right after closing the conversation while the PCS is running
+    this.setPostSurveyId(null);
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
       return this.openConversationRequest(conversation).pipe( map((res: any) => {
         conversation.conversationId = res["convId"];
@@ -250,10 +253,11 @@ export class ConversationManager {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType === 'POST_SURVEY'
         ) {
+          console.log("SURVEY IS OPEN");
           const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
           this.setPostSurveyId(postSurveyDialogId);
           console.log("Post survey id :" + this.postSurveyId);
-          console.log("SURVEY IS OPEN");
+
 
           //Send raw request with a body containing the postSurveyId
 
