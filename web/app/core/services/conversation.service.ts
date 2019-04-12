@@ -217,7 +217,15 @@ export class ConversationService extends HttpService {
     }
   }
 
+  //TODO: Seb - if postSurvey is running, don't send those notifications to the agent...
+  //It does stop the 400 errors, but not instantly
   private notifyAgentConsumerChatState(chatState: ChatState) {
+
+    console.log("*** postSurveyId value:" + this.conversationManager.getPostSurveyId());
+    if(this.conversationManager.getPostSurveyId()) {
+      return;
+    }
+
     this.deactivateLoadingService();
     this.conversationManager.sendChatStateEventRequest(this.conversation, chatState).pipe(
       map(res => {
@@ -230,17 +238,17 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
-  private notifyMessageStatus(status: Status, sequenceList){
-    this.deactivateLoadingService();
-    this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+    private notifyMessageStatus(status: Status, sequenceList){
+      this.deactivateLoadingService();
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
+        map(res => {
+          this.activateLoadingService();
+        }),
+        catchError(error => {
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe();
   }
 
   private getLastReadMessages(): Array<number> {

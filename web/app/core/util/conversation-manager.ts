@@ -32,11 +32,15 @@ export class ConversationManager {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
 
-  //TODO: Seb - added post survey id and its setter
+  //TODO: Seb - added post survey id and its setter and getter
   private postSurveyId;
 
   public setPostSurveyId(postSurveyId: string) {
     this.postSurveyId = postSurveyId;
+  }
+
+  public getPostSurveyId(): string {
+    return this.postSurveyId;
   }
 
   constructor(private sendApiService:SendApiService,
@@ -194,7 +198,13 @@ export class ConversationManager {
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
-    return this.sendApiService.sendMessage(conversation.branId,body, headers);
+    // return this.sendApiService.sendMessage(conversation.branId,body, headers);
+
+    //TODO: Seb - Only send chat state events if the post survey is not open
+
+      return this.sendApiService.sendMessage(conversation.branId,body, headers);
+
+
   }
 
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
@@ -251,7 +261,8 @@ export class ConversationManager {
     console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
-        && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType === 'POST_SURVEY'
+        && data.body.changes[0].result.conversationDetails.dialogs[1].hasOwnProperty('dialogType')
+        && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
         ) {
           console.log("SURVEY IS OPEN");
           const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
@@ -468,6 +479,7 @@ export class ConversationManager {
   }
 
   //TODO: the below might require an additional 'dialogId' field that contains the survye id
+  // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
     let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
