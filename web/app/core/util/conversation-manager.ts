@@ -494,9 +494,18 @@ export class ConversationManager {
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
+  //TODO: Seb - adding conversationId/postSurvey ID to avoid 400 errors upon ACCEPT. The body creation needs a model refactoring
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
     let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
-    let requestBody = new PublishContentEvent(conversation.conversationId, eventAcceptStatus);
+
+    // let requestBody = new PublishContentEvent(conversation.conversationId, eventAcceptStatus);
+
+    let requestBody = {
+      "dialogId" : this.postSurveyId || conversation.conversationId,
+      "conversationId" : conversation.conversationId,
+      "event" : eventAcceptStatus
+    };
+
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
