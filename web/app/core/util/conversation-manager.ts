@@ -32,20 +32,11 @@ export class ConversationManager {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
 
-  //TODO: Seb - added post survey id and its setter and getter
-  private postSurveyId;
+  //TODO: Seb - need to find a way to remove the isPostSurveyStarted
   private isPostSurveyStarted = false;
 
   public getIsPostSurveyStarted(): boolean {
     return this.isPostSurveyStarted;
-  }
-
-  public setPostSurveyId(postSurveyId: string) {
-    this.postSurveyId = postSurveyId;
-  }
-
-  public getPostSurveyId(): string {
-    return this.postSurveyId;
   }
 
   constructor(private sendApiService:SendApiService,
@@ -55,11 +46,15 @@ export class ConversationManager {
   public openConversation(conversation: Conversation): Observable<any> {
     //TODO: Seb - Ensuring that every new conversation has its postSurveyId reset...
     //this solves the issue where postSurveyId does not reset upon opening a new conversation right after closing the conversation while the PCS is running
-    this.setPostSurveyId(null);
-    this.isPostSurveyStarted = false;
+    // this.postSurveyId = null;
+    // this.isPostSurveyStarted = false;
+    conversation.isPostSurveyStarted = false;
+
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
       return this.openConversationRequest(conversation).pipe( map((res: any) => {
         conversation.conversationId = res["convId"];
+        // Seb - New conversation dialogId is same as conversationId
+        conversation.dialogId = res["convId"];
         conversation.isConvStarted = true;
         this.subscribeToMessageNotifications(conversation);
       }));
@@ -121,7 +116,9 @@ export class ConversationManager {
 
   //TODO: Seb - Close conversation with the PCS payload added...
   public closeConversationWithPCS(conversation: Conversation): Observable<any> {
-    this.isPostSurveyStarted = true;
+    //TODO: isPostSurveyStarted should be a property of the conversation object eg. conversation.isPostSurveyStarted = true?
+    // this.isPostSurveyStarted = true;
+    conversation.isPostSurveyStarted = true;
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
@@ -192,7 +189,7 @@ export class ConversationManager {
   // Added a postSurveyId parameter to be passed.
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
-    const body = JSON.stringify(this.getMessageRequestBody(message, this.postSurveyId, conversation.conversationId));
+    const body = JSON.stringify(this.getMessageRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
@@ -248,7 +245,7 @@ export class ConversationManager {
   public sendMessageWithUploadedFileRequest(caption: string, relativePath:string, fileType:string, preview:any, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const message = {"caption": caption, "relativePath": relativePath, "fileType":fileType, "preview": preview};
-    const body = JSON.stringify(this.getMessageWithFileRequestBody(message,conversation.conversationId));
+    const body = JSON.stringify(this.getMessageWithFileRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
 
@@ -273,9 +270,10 @@ export class ConversationManager {
         ) {
           console.log("SURVEY IS OPEN");
           const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
-          this.postSurveyId = postSurveyDialogId;
+          // this.postSurveyId = postSurveyDialogId;
+          conversation.dialogId = postSurveyDialogId;
 
-          console.log("Post survey id :" + this.postSurveyId);
+          console.log("conversation.dialogID :" + conversation.dialogId);
 
 
           //Send raw request with a body containing the postSurveyId
@@ -385,8 +383,10 @@ export class ConversationManager {
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
-        //Seb - Setting the postSurveyID to null after the conversation closed
-        this.setPostSurveyId(null);
+        //Seb - Setting the dialogId to conversationId
+        conversation.dialogId = conversation.conversationId;
+        conversation.isPostSurveyStarted = false;
+
         this.updateState(conversation);
       }
     } catch (error) {
@@ -423,26 +423,17 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  // private getMessageRequestBody(message: string, conversationId: string): Request {
-  //   return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
-  //     new Event("ContentEvent", "text/plain", message)));
-  // }
-
   //TODO: Seb - added dialogId field that will be used to pass the postSurveyID
   //might ned to add a 'dialogId' field to PublishContentEvent() model. Next step is pass dialogId in the sendMessageRequest() method
   private getMessageRequestBody(message: string, dialogId: string, conversationId: string): Request {
-    const body = {
-      "dialogId" : this.postSurveyId || conversationId,
-      "conversationId" : conversationId,
-      "event" : new Event("ContentEvent", "text/plain", message)
-    }
+    let body = new PublishContentEvent(dialogId, conversationId, new Event("ContentEvent", "text/plain", message));
     return new Request("req", "3", "ms.PublishEvent", body);
   }
 
 
 
-  private getMessageWithFileRequestBody(message: Object, conversationId: string): Request {
-    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
+  private getMessageWithFileRequestBody(message: Object, dialogId: string, conversationId: string): Request {
+    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(dialogId, conversationId,
       new Event("ContentEvent", "hosted/file", message)));
   }
 
@@ -490,7 +481,7 @@ export class ConversationManager {
   // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
-    let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
+    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventChatState);
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
@@ -498,13 +489,7 @@ export class ConversationManager {
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
     let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
 
-    // let requestBody = new PublishContentEvent(conversation.conversationId, eventAcceptStatus);
-
-    let requestBody = {
-      "dialogId" : this.postSurveyId || conversation.conversationId,
-      "conversationId" : conversation.conversationId,
-      "event" : eventAcceptStatus
-    };
+    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventAcceptStatus);
 
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }

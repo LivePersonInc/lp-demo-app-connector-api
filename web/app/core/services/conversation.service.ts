@@ -178,11 +178,6 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
-  //TODO: Seb - get is survey started
-  public getIsSurveyStarted() {
-    return this.conversationManager.getIsPostSurveyStarted();
-  }
-
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
       // this.closeConversation();
@@ -223,9 +218,10 @@ export class ConversationService extends HttpService {
   }
 
   //TODO: Seb - if postSurvey is running, don't send those notifications to the agent...
-  //It does stop the 400 errors, but not instantly
+  //It does stop the 400 errors
   private notifyAgentConsumerChatState(chatState: ChatState) {
 
+    // This needs to be passed as PCS cannot accep ChatStateEvents.
     if(this.conversationManager.getIsPostSurveyStarted()) {
       return;
     }

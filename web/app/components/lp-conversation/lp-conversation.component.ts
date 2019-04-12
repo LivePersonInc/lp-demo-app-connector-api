@@ -83,10 +83,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     return !this.userName || !this.brandId || !this.appSecret || !this.appSecret
   }
 
-  public isSurveyStarted(): boolean {
-    return this.conversationService.getIsSurveyStarted();
-  }
-
   private subscribeToConversationEvents() {
     this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe( (event:ConversationEvent) => {
       if(this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId) {

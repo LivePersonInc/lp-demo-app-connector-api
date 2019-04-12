@@ -13,7 +13,7 @@
               (click)="closeConversationWithPCS()"
               color="primary"
               class="close-conv-btn"
-              [disabled]="conversation && !conversation.isConvStarted || !conversation || isSurveyStarted()">
+              [disabled]="conversation && !conversation.isConvStarted || !conversation || conversation.isPostSurveyStarted">
         Close conversation with PCS
       </button>
       <lp-chat-box #chatbox (onSendMessage)="sendMessage($event)" [conversation]="conversation"
