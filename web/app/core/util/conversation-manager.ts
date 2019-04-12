@@ -34,10 +34,10 @@ export class ConversationManager {
 
   //TODO: Seb - added post survey id and its setter and getter
   private postSurveyId;
-  private isPostSurveyOpen = false;
+  private isPostSurveyStarted = false;
 
-  public getIsPostSurveyOpen(): boolean {
-    return this.isPostSurveyOpen;
+  public getIsPostSurveyStarted(): boolean {
+    return this.isPostSurveyStarted;
   }
 
   public setPostSurveyId(postSurveyId: string) {
@@ -56,7 +56,7 @@ export class ConversationManager {
     //TODO: Seb - Ensuring that every new conversation has its postSurveyId reset...
     //this solves the issue where postSurveyId does not reset upon opening a new conversation right after closing the conversation while the PCS is running
     this.setPostSurveyId(null);
-    this.isPostSurveyOpen = false;
+    this.isPostSurveyStarted = false;
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
       return this.openConversationRequest(conversation).pipe( map((res: any) => {
         conversation.conversationId = res["convId"];
@@ -121,7 +121,7 @@ export class ConversationManager {
 
   //TODO: Seb - Close conversation with the PCS payload added...
   public closeConversationWithPCS(conversation: Conversation): Observable<any> {
-    this.isPostSurveyOpen = true;
+    this.isPostSurveyStarted = true;
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);

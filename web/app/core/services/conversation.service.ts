@@ -178,6 +178,11 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
+  //TODO: Seb - get is survey started
+  public getIsSurveyStarted() {
+    return this.conversationManager.getIsPostSurveyStarted();
+  }
+
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
       // this.closeConversation();
@@ -221,7 +226,7 @@ export class ConversationService extends HttpService {
   //It does stop the 400 errors, but not instantly
   private notifyAgentConsumerChatState(chatState: ChatState) {
 
-    if(this.conversationManager.getIsPostSurveyOpen()) {
+    if(this.conversationManager.getIsPostSurveyStarted()) {
       return;
     }
 
