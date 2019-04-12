@@ -78,7 +78,7 @@ export class ConversationManager {
       if(res && res.body && res.body.hasOwnProperty('sequence')){
         sequence = res.body.sequence;
       }
-      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
+      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false));
 
       this.updateState(conversation);
     }));
@@ -93,7 +93,7 @@ export class ConversationManager {
         if (res && res.body && res.body.hasOwnProperty('sequence')) {
           sequence = res.body.sequence;
         }
-        const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
+        const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false);
         msg.file = new FileMessage(fileName, preview, relativePath);
         conversation.messages.push(msg);
 
@@ -297,6 +297,9 @@ export class ConversationManager {
     conversation.serverNotifications.push(data);
 
     this.checkAndFilterIncomingTextMessages(data, conversation);
+
+    this.checkAndFilterIncomingRichContextMessages(data, conversation);
+
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
 
     //TODO: Seb - checking if survey is open
@@ -323,6 +326,35 @@ export class ConversationManager {
               data.body.changes[0].originatorMetadata.role,
               true, // this.getShowUserValue("Agent", conversation)
               data.body.changes[0].sequence,
+              false
+            )
+          );
+
+          this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+
+        }
+      }
+    } catch (error) {
+      console.error("ERROR parsing notification", error);
+    }
+  }
+
+  private checkAndFilterIncomingRichContextMessages(data: any, conversation: Conversation) {
+    try {
+      if (data.body.changes[0].originatorMetadata &&
+        data.body.changes[0].originatorMetadata.role != "CONSUMER") {
+
+        if (data.body.changes[0].event.type && data.body.changes[0].event.type === "RichContentEvent"  ) {
+
+          conversation.messages.push(
+            new ChatMessage(
+              MessageType.RECEIVED,
+              data.body.changes[0].serverTimestamp,
+              data.body.changes[0].event,
+              data.body.changes[0].originatorMetadata.role,
+              true, // this.getShowUserValue("Agent", conversation)
+              data.body.changes[0].sequence,
+              true
             )
           );
 
@@ -570,15 +602,15 @@ export class ConversationManager {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
-
-        let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq);
+        //TODO epl: check if is rich contend
+        let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq,false);
 
         switch (record.type) {
           case "TEXT_PLAIN":
-            message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq);
+            message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq,false);
             break;
           case  "HOSTED_FILE":
-            message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq);
+            message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq,false);
             message.file = new FileMessage(record.messageData.file.caption, record.messageData.file.preview, record.messageData.file.relativePath);
             break;
         }
