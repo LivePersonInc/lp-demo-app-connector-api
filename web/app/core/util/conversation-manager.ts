@@ -109,8 +109,6 @@ export class ConversationManager {
 
   //TODO: Seb - Close conversation with the PCS payload added...
   public closeConversationWithPCS(conversation: Conversation): Observable<any> {
-    //TODO: isPostSurveyStarted should be a property of the conversation object eg. conversation.isPostSurveyStarted = true?
-    // this.isPostSurveyStarted = true;
     conversation.isPostSurveyStarted = true;
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
@@ -179,7 +177,6 @@ export class ConversationManager {
   }
 
   //TODO: Seb - this method needs to pass dialogId as a parameter in the getMessageRequestbody().
-  // Added a postSurveyId parameter to be passed.
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getMessageRequestBody(message, conversation.dialogId, conversation.conversationId));
@@ -195,11 +192,7 @@ export class ConversationManager {
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
-    // return this.sendApiService.sendMessage(conversation.branId,body, headers);
-
-    //TODO: Seb - Only send chat state events if the post survey is not open
-
-      return this.sendApiService.sendMessage(conversation.branId,body, headers);
+    return this.sendApiService.sendMessage(conversation.branId,body, headers);
 
 
   }
@@ -255,25 +248,22 @@ export class ConversationManager {
 
   //TODO: Seb - Check is survey is open
   private checkIfSurveyOpen(data: any, conversation: Conversation) {
-    console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
+    // console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
     try {
+      // Seb - the below code might need review
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.dialogs[1].hasOwnProperty('dialogType')
         && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
         ) {
           console.log("SURVEY IS OPEN");
           const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
-          // this.postSurveyId = postSurveyDialogId;
           conversation.dialogId = postSurveyDialogId;
 
           console.log("conversation.dialogID :" + conversation.dialogId);
 
-
-          //Send raw request with a body containing the postSurveyId
-
         }
       } catch (error) {
-        console.error("ERROR parsing notification", error);
+        console.error("ERROR retrieving post survey", error);
       }
     }
 
@@ -392,18 +382,16 @@ export class ConversationManager {
   }
 
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
-    //TODO: this metod should be refactored and check for stat and stage CLOSE
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE'
         //TODO: Seb - Extra logic condition to only unsubscribe if the conversation has fully closed
-        //currently not working as expected. Might need to fully understand how it works
         && data.body.changes[0].result.conversationDetails.stage === 'CLOSE'
         ) {
 
         //Seb - console log check
         console.log("CHECK IF CONVERSATION CLOSED IS TRIGGERED");
-        console.log("****** CHECK IF CONVERSATION WAS CLOSED: " + JSON.stringify(data.body.changes[0], null, 2));
+        // console.log("****** CHECK IF CONVERSATION WAS CLOSED: " + JSON.stringify(data.body.changes[0], null, 2));
 
         console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
