@@ -221,8 +221,7 @@ export class ConversationService extends HttpService {
   //It does stop the 400 errors, but not instantly
   private notifyAgentConsumerChatState(chatState: ChatState) {
 
-    console.log("*** postSurveyId value:" + this.conversationManager.getPostSurveyId());
-    if(this.conversationManager.getPostSurveyId()) {
+    if(this.conversationManager.getIsPostSurveyOpen()) {
       return;
     }
 
