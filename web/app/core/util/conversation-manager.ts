@@ -32,13 +32,6 @@ export class ConversationManager {
 
   public conversationEventSubject = new Subject<ConversationEvent>();
 
-  //TODO: Seb - need to find a way to remove the isPostSurveyStarted
-  private isPostSurveyStarted = false;
-
-  public getIsPostSurveyStarted(): boolean {
-    return this.isPostSurveyStarted;
-  }
-
   constructor(private sendApiService:SendApiService,
               protected stateManager: StateStorage,
               protected historyService: HistoryService){}

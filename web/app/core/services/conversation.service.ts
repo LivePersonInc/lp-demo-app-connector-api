@@ -222,7 +222,7 @@ export class ConversationService extends HttpService {
   private notifyAgentConsumerChatState(chatState: ChatState) {
 
     // This needs to be passed as PCS cannot accep ChatStateEvents.
-    if(this.conversationManager.getIsPostSurveyStarted()) {
+    if(this.conversation.isPostSurveyStarted) {
       return;
     }
 
