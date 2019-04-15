@@ -248,6 +248,7 @@ export class ConversationManager {
           console.log("SURVEY IS OPEN");
           const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
           conversation.dialogId = postSurveyDialogId;
+          conversation.isPostSurveyStarted = true;
 
           console.log("conversation.dialogID :" + conversation.dialogId);
 
