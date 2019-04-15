@@ -24,6 +24,8 @@ import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
 import { UpdateConversationField } from 'web/app/shared/models/send-api/UpdateConversationField.model';
+import { DialogState } from 'web/app/shared/models/send-api/DialogState.model';
+import { DialogChange } from 'web/app/shared/models/send-api/DialogChange.model';
 
 
 @Injectable()
@@ -114,18 +116,11 @@ export class ConversationManager {
 
   //TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
   private getCloseConversationWithPCSBody(conversation: Conversation): Request {
-    const dialogChange =
-         {
-            "field":"DialogChange",
-            "type":"UPDATE",
-            "dialog": {
-              "dialogId": conversation.dialogId,
-              "state": "CLOSE"
-            }
-          };
+    const dialogState = new DialogState(conversation.dialogId, "CLOSE");
+    const dialogChange = new DialogChange("DialogChange", "UPDATE", dialogState);
     const body = new UpdateConversationField(conversation.conversationId, dialogChange);
 
-    return new Request("req", null, "cm.UpdateConversationField", body);
+    return new Request("req", "2", "cm.UpdateConversationField", body);
   }
 
   public subscribeToMessageNotifications(conversation: Conversation) {

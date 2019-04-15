@@ -1,5 +1,5 @@
 //TODO: Seb - new dialogChange model
-export  class ConversationField {
+export  class DialogChange {
   public field;
   public type;
   public dialog;
