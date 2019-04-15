@@ -2,8 +2,10 @@
 export  class DialogState {
   public dialogId;
   public state;
-  constructor(dialogId, state) {
+  public closedCause;
+  constructor(dialogId, state, closedCause) {
     this.dialogId = dialogId;
     this.state = state;
+    this.closedCause = closedCause;
   }
 }

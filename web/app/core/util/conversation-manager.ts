@@ -116,7 +116,7 @@ export class ConversationManager {
 
   //TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
   private getCloseConversationWithPCSBody(conversation: Conversation): Request {
-    const dialogState = new DialogState(conversation.dialogId, "CLOSE");
+    const dialogState = new DialogState(conversation.dialogId, "CLOSE", "Closed by consumer");
     const dialogChange = new DialogChange("DialogChange", "UPDATE", dialogState);
     const body = new UpdateConversationField(conversation.conversationId, dialogChange);
 
