@@ -241,12 +241,12 @@ export class ConversationManager {
     // console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
     try {
       // Seb - the below code might need review
-      if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
-        && data.body.changes[0].result.conversationDetails.dialogs[1].hasOwnProperty('dialogType')
-        && data.body.changes[0].result.conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
+      const conversationDetails = data.body.changes[0].result.conversationDetails;
+      if (data.body.changes[0].result && conversationDetails
+        && conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
         ) {
           console.log("SURVEY IS OPEN");
-          const postSurveyDialogId = data.body.changes[0].result.conversationDetails.dialogs[1].dialogId;
+          const postSurveyDialogId = conversationDetails.dialogs[1].dialogId;
           conversation.dialogId = postSurveyDialogId;
           conversation.isPostSurveyStarted = true;
 
