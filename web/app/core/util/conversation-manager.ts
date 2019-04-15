@@ -23,8 +23,7 @@ import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
-
-//TODO: Seb - Import ConversationService so I could access conversation data globally? Also so that I could dynamically add a field named dialogId??
+import { UpdateConversationField } from 'web/app/shared/models/send-api/UpdateConversationField.model';
 
 
 @Injectable()
@@ -37,10 +36,7 @@ export class ConversationManager {
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
-    //TODO: Seb - Ensuring that every new conversation has its postSurveyId reset...
-    //this solves the issue where postSurveyId does not reset upon opening a new conversation right after closing the conversation while the PCS is running
-    // this.postSurveyId = null;
-    // this.isPostSurveyStarted = false;
+    //TODO: Seb - ensure that close convo with pcs button is ungreyed when starting a
     conversation.isPostSurveyStarted = false;
 
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
@@ -118,18 +114,17 @@ export class ConversationManager {
 
   //TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
   private getCloseConversationWithPCSBody(conversation: Conversation): Request {
-    const body = {
-      "conversationId": conversation.conversationId,
-      "conversationField":{
-          "field":"DialogChange",
-          "type":"UPDATE",
-          "dialog":
-          {
-            "dialogId": conversation.conversationId,
-            "state": "CLOSE"
-          }
-      }
-    };
+    const dialogChange =
+         {
+            "field":"DialogChange",
+            "type":"UPDATE",
+            "dialog": {
+              "dialogId": conversation.dialogId,
+              "state": "CLOSE"
+            }
+          };
+    const body = new UpdateConversationField(conversation.conversationId, dialogChange);
+
     return new Request("req", null, "cm.UpdateConversationField", body);
   }
 
