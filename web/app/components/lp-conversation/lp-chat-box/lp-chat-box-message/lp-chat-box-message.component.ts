@@ -32,9 +32,10 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    //TODO: Seb
+    //TODO: Seb - structured content
     if(this.message.message.content) {
       //Mind that this doesn't work for quick replies.
+      //Also clicking on buttons doesn't do any action
       this.addElement(this.message.message.content)
     }
   }
