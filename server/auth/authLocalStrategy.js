@@ -12,7 +12,7 @@ function authLocalStrategy() {
       nconf.file({file: "./settings.json"});
       const idpService = new IdpService(nconf);
       const idpDomain = req.header('LP-DOMAIN');
-      let aux = username.split('-');
+      let aux = username.split(':');
       let brandId = aux[0];
       let email = aux[1];
       let user = {};
