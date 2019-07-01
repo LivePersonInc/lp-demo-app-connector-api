@@ -62,6 +62,8 @@ export class Conversation implements Deserializable<Conversation> {
     this.features = input.features;
     this.skillId = input.skillId;
     this.context_name = input.context_name;
+    this.campaignId = input.campaignId;
+    this.engagementId = input.engagementId;
 
     if(input.messages){
       this.messages = [];

@@ -393,28 +393,27 @@ export class ConversationManager {
 
     if(!appState) {
       appState = new AppState();
-
-      appState.conversationId = conversation.conversationId;
-      appState.appId = conversation.appKey;
-      appState.ext_consumer_id = conversation.ext_consumer_id;
-      appState.userName = conversation.userName;
-
       state.states.push(appState);
-
-    } else{
-      appState.conversationId = conversation.conversationId;
-      appState.appId = conversation.appKey;
-      appState.ext_consumer_id = conversation.ext_consumer_id;
-      appState.userName = conversation.userName;
     }
-
+    
+    appState.conversationId = conversation.conversationId;
+    appState.appId = conversation.appKey;
+    appState.ext_consumer_id = conversation.ext_consumer_id;
+    appState.userName = conversation.userName;
+    appState.features = conversation.features;
+    appState.skillId = conversation.skillId;
+    appState.campaignId = conversation.campaignId;
+    appState.engagementId = conversation.engagementId;
+    
     this.stateManager.storeLastStateInLocalStorage(state, conversation.branId);
   }
 
   public fidAppById(states: Array<AppState>, appId: string): AppState {
-    for (let i=0; i < states.length; i ++) {
-      if(states[i].appId == appId){
+    if (states && states.length) {
+      for (let i = 0; i < states.length; i++) {
+      if (states[i].appId == appId) {
         return states[i];
+        }
       }
     }
     return null;

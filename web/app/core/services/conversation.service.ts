@@ -261,6 +261,10 @@ export class ConversationService extends HttpService {
         this.conversation.conversationId = appState.conversationId;
         this.conversation.ext_consumer_id = appState.ext_consumer_id;
         this.conversation.userName = appState.userName;
+        this.conversation.campaignId = appState.campaignId;
+        this.conversation.engagementId = appState.engagementId;
+        this.conversation.skillId = appState.skillId;
+        this.conversation.features = appState.features;
 
         this.conversationManager.authenticate(this.conversation).subscribe(res => {
           this.successResponse("Conversation authentication successfully");
