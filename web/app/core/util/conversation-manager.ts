@@ -574,7 +574,7 @@ export class ConversationManager {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
-        //TODO epl: check if is rich contend
+        
         let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq,false);
 
         switch (record.type) {
@@ -585,6 +585,16 @@ export class ConversationManager {
             message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq,false);
             message.file = new FileMessage(record.messageData.file.caption, record.messageData.file.preview, record.messageData.file.relativePath);
             break;
+          case "RICH_CONTENT":
+            if(record.messageData.richContent && record.messageData.richContent.content){
+              try {
+                const cc = JSON.parse(record.messageData.richContent.content);
+                message = new ChatMessage(messageType, record.timeL,cc.elements[0].text, userName, true, record.seq,false);
+              } catch (error) {
+                console.error("ERROR parsing rich content from history: ", error);
+              }
+            }
+            break;
         }
 
         conversation.messages.push(message);
@@ -592,8 +602,8 @@ export class ConversationManager {
 
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
 
-      conversation.messages.sort((a,b) =>{
-        return a.sequence - b.sequence;
+      conversation.messages.sort((a: ChatMessage,b :ChatMessage) => {
+        return ((new Date(a.timestamp).getTime()) - (new Date(b.timestamp).getTime()));
       });
 
       //this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
