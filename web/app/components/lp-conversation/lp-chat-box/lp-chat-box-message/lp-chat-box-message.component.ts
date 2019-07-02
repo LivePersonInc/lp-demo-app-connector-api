@@ -13,30 +13,48 @@ import * as JsonPollock from '../../../../../../node_modules/json-pollock/dist/j
 export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
   @Input() public message: ChatMessage;
   @Output() download = new EventEmitter<FileMessage>();
+  @Output() onSendMessage = new EventEmitter<string>();
 
   public messageType: string;
 
 
   @ViewChild('structuredContent') d1: ElementRef;
 
-  constructor (private renderer: Renderer2){
+  constructor (private renderer: Renderer2) {
 
   }
 
-  public addElement(content) {
+  public addRichContentTextElement(content) {
     const rooEl = JsonPollock.render(content);
     console.log(rooEl);
-
+    
     const structuredContentElement: HTMLParagraphElement = rooEl;
     this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
+    this.renderer.addClass(this.d1.nativeElement, "rich-content-text");
+    
+  }
+  
+  public addRichContentButtonElement(content) {
+    const rooEl = JsonPollock.render(content);
+    
+    const structuredContentElement: HTMLParagraphElement = rooEl;
+    this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
+    
+    const btnEl = this.d1.nativeElement.lastChild;
+    
+    this.renderer.listen(btnEl, 'click', (event) => {
+      this.onSendMessage.emit(btnEl.textContent);
+    });
   }
 
   ngAfterViewInit(): void {
-    //TODO: Seb - structured content
-    if(this.message.message.content) {
-      //Mind that this doesn't work for quick replies.
-      //Also clicking on buttons doesn't do any action
-      this.addElement(this.message.message.content)
+    if(this.message.isRichContent) {
+      this.addRichContentTextElement(this.message.message.content);
+      if(this.message.message && this.message.message.quickReplies && this.message.message.quickReplies.replies) {
+        this.message.message.quickReplies.replies.forEach( reply => {
+          this.addRichContentButtonElement(reply);
+        })
+      }
     }
   }
 

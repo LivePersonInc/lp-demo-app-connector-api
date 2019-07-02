@@ -47,5 +47,10 @@
       cursor: pointer;
     }
   }
+  .structuredContent{
+    display: flex;
+    align-content: space-around;
+    flex-wrap: wrap;
+  }
 }
 
