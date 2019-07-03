@@ -588,8 +588,7 @@ export class ConversationManager {
           case "RICH_CONTENT":
             if(record.messageData.richContent && record.messageData.richContent.content){
               try {
-                const cc = JSON.parse(record.messageData.richContent.content);
-                message = new ChatMessage(messageType, record.timeL,cc.elements[0].text, userName, true, record.seq,false);
+                message = new ChatMessage(messageType, record.timeL,record.messageData.richContent,userName, true, record.seq,true);
               } catch (error) {
                 console.error("ERROR parsing rich content from history: ", error);
               }

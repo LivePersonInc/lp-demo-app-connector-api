@@ -17,7 +17,6 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
 
   public messageType: string;
 
-
   @ViewChild('structuredContent') d1: ElementRef;
 
   constructor (private renderer: Renderer2) {
@@ -26,22 +25,16 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
 
   public addRichContentTextElement(content) {
     const rooEl = JsonPollock.render(content);
-    console.log(rooEl);
-    
     const structuredContentElement: HTMLParagraphElement = rooEl;
     this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
     this.renderer.addClass(this.d1.nativeElement, "rich-content-text");
-    
   }
   
   public addRichContentButtonElement(content) {
     const rooEl = JsonPollock.render(content);
-    
     const structuredContentElement: HTMLParagraphElement = rooEl;
     this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
-    
     const btnEl = this.d1.nativeElement.lastChild;
-    
     this.renderer.listen(btnEl, 'click', (event) => {
       this.onSendMessage.emit(btnEl.textContent);
     });
@@ -57,6 +50,8 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  
+  
 
   ngOnInit() {
     this.messageType = MessageType[this.message.type].toLocaleLowerCase();
