@@ -40,16 +40,16 @@ describe('Notifications tests', () => {
       expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
 
-    it('Should return 400 when notification contains the conversation id but is not subscribed', async () => {
+    it('Should return 200 when notification contains the conversation id but is not subscribed', async () => {
       const response = await requester.post('/notifications/event')
         .send(webhookNotification);
-      expect(response.statusCode).to.be.equal(400);
+      expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
 
-    it('Should return 400 when notification does not contains the conversation id', async () => {
+    it('Should return 200 when notification does not contains the conversation id', async () => {
       const response = await requester.post('/notifications/event')
         .send({"tste":3, "errr": "sdg"});
-      expect(response.statusCode).to.be.equal(400);
+      expect(response.statusCode).to.be.equal(200);
     }).timeout(timeout);
 
     it('Should return 200 when notification type is ms.MessagingEventNotification, contains the conversation id and is subscribed', async () => {
