@@ -30,7 +30,9 @@
               "web/styles.scss",
               "node_modules/material-design-icons/iconfont/material-icons.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/json-pollock/dist/json-pollock.bundle.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

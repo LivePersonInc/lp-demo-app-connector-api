@@ -1,7 +1,7 @@
 import {Component, Input, Output, OnInit, AfterViewInit, EventEmitter, Renderer, Renderer2, ElementRef, ViewChild} from '@angular/core';
 import {ChatMessage, MessageType} from '../../../../shared/models/conversation/chatMessage.model';
 import {FileMessage} from '../../../../shared/models/conversation/fileMessage.model';
-import * as JsonPollock from '../../../../../../node_modules/json-pollock/dist/json-pollock.bundle.min.js';
+import * as JsonPollock from '../../../../../../node_modules/json-pollock/dist/json-pollock.js';
 
 
 
