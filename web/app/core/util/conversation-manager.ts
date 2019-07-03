@@ -23,6 +23,9 @@ import {HistoryService} from "../services/history.service";
 import {AppState, State} from "../../shared/models/stored-state/AppState";
 import {ConversationContext} from "../../shared/models/send-api/ConversationContext.model";
 import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
+import { UpdateConversationField } from 'web/app/shared/models/send-api/UpdateConversationField.model';
+import { DialogState } from 'web/app/shared/models/send-api/DialogState.model';
+import { DialogChange } from 'web/app/shared/models/send-api/DialogChange.model';
 
 
 @Injectable()
@@ -35,9 +38,13 @@ export class ConversationManager {
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
+    conversation.isPostSurveyStarted = false;
+
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
       return this.openConversationRequest(conversation).pipe( map((res: any) => {
         conversation.conversationId = res["convId"];
+        // Seb - New conversation dialogId is same as conversationId
+        conversation.dialogId = res["convId"];
         conversation.isConvStarted = true;
         this.subscribeToMessageNotifications(conversation);
       }));
@@ -61,7 +68,7 @@ export class ConversationManager {
       if(res && res.body && res.body.hasOwnProperty('sequence')){
         sequence = res.body.sequence;
       }
-      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence));
+      conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false));
 
       this.updateState(conversation);
     }));
@@ -74,7 +81,7 @@ export class ConversationManager {
         if (res && res.body && res.body.hasOwnProperty('sequence')) {
           sequence = res.body.sequence;
         }
-        const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence);
+        const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false);
         msg.file = new FileMessage(fileName, preview, relativePath);
         conversation.messages.push(msg);
 
@@ -85,13 +92,32 @@ export class ConversationManager {
 
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
+    //TODO: shouls be done with sendRaw endopoin (sendMessage) wiht the right payload
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
       map(res => {
-      this.unSubscribeToMessageNotifications(conversation);
+      this.unSubscribeToMessageNotifications(conversation); //TODO: this line should be removed for PCS
       conversation.isConvStarted = false;
       this.updateState(conversation);
     }));
 
+  }
+
+  //TODO: Seb - Close conversation with the PCS payload added...
+  public closeConversationWithPCS(conversation: Conversation): Observable<any> {
+    conversation.isPostSurveyStarted = true;
+    const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
+    const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
+    return this.sendApiService.sendMessage(conversation.branId, body, headers);
+  }
+
+
+  //TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
+  private getCloseConversationWithPCSBody(conversation: Conversation): Request {
+    const dialogState = new DialogState(conversation.dialogId, "CLOSE", "Closed by consumer");
+    const dialogChange = new DialogChange("DialogChange", "UPDATE", dialogState);
+    const body = new UpdateConversationField(conversation.conversationId, dialogChange);
+
+    return new Request("req", "2", "cm.UpdateConversationField", body);
   }
 
   public subscribeToMessageNotifications(conversation: Conversation) {
@@ -139,7 +165,7 @@ export class ConversationManager {
 
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
-    const body = JSON.stringify(this.getMessageRequestBody(message,conversation.conversationId));
+    const body = JSON.stringify(this.getMessageRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   };
 
@@ -189,7 +215,7 @@ export class ConversationManager {
   public sendMessageWithUploadedFileRequest(caption: string, relativePath:string, fileType:string, preview:any, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const message = {"caption": caption, "relativePath": relativePath, "fileType":fileType, "preview": preview};
-    const body = JSON.stringify(this.getMessageWithFileRequestBody(message,conversation.conversationId));
+    const body = JSON.stringify(this.getMessageWithFileRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
 
@@ -205,7 +231,7 @@ export class ConversationManager {
   }
 
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
-
+    
     this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.EVENT_RECEIVED));
 
     let data = JSON.parse(notification.data);
@@ -215,13 +241,19 @@ export class ConversationManager {
     conversation.serverNotifications.push(data);
 
     this.checkAndFilterIncomingTextMessages(data, conversation);
+
+    this.checkAndFilterIncomingRichContextMessages(data, conversation);
+
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
+
+    this.checkIfSurveyOpen(data, conversation);
+
     this.checkIfConversationWasClosed(data, conversation);
     this.checkConsumerGeneratedId(data, conversation);
 
     this.updateState(conversation);
   }
-
+  
   private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -237,6 +269,7 @@ export class ConversationManager {
               data.body.changes[0].originatorMetadata.role,
               true, // this.getShowUserValue("Agent", conversation)
               data.body.changes[0].sequence,
+              false
             )
           );
 
@@ -248,7 +281,35 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
   }
+  
+  private checkAndFilterIncomingRichContextMessages(data: any, conversation: Conversation) {
+    try {
+      if (data.body.changes[0].originatorMetadata &&
+        data.body.changes[0].originatorMetadata.role != "CONSUMER") {
 
+        if (data.body.changes[0].event.type && data.body.changes[0].event.type === "RichContentEvent"  ) {
+
+          conversation.messages.push(
+            new ChatMessage(
+              MessageType.RECEIVED,
+              data.body.changes[0].serverTimestamp,
+              data.body.changes[0].event,
+              data.body.changes[0].originatorMetadata.role,
+              true, // this.getShowUserValue("Agent", conversation)
+              data.body.changes[0].sequence,
+              true
+            )
+          );
+
+          this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+
+        }
+      }
+    } catch (error) {
+      console.error("ERROR parsing notification", error);
+    }
+  }
+  
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -279,20 +340,40 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
   }
-
+  
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
-        && data.body.changes[0].result.conversationDetails.state  === 'CLOSE') {
-        console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
+        && data.body.changes[0].result.conversationDetails.state  === 'CLOSE'
+        && data.body.changes[0].result.conversationDetails.stage === 'CLOSE'
+        ) {
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
+        conversation.dialogId = conversation.conversationId;
+        conversation.isPostSurveyStarted = false;
         this.updateState(conversation);
       }
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
-
+  }
+  
+  private checkIfSurveyOpen(data: any, conversation: Conversation) {
+    try {
+      if(data.body.changes[0].result && data.body.changes[0].result.conversationDetails) {
+        const conversationDetails = data.body.changes[0].result.conversationDetails;
+        if (conversationDetails.dialogs
+          && conversationDetails.dialogs[1]
+          && conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
+        ) {
+          const postSurveyDialogId = conversationDetails.dialogs[1].dialogId;
+          conversation.dialogId = postSurveyDialogId;
+          conversation.isPostSurveyStarted = true;
+        }
+      }
+    } catch (error) {
+      console.error("ERROR retrieving post survey", error);
+    }
   }
 
   private checkConsumerGeneratedId(data: any, conversation: Conversation){
@@ -323,13 +404,15 @@ export class ConversationManager {
     return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
 
-  private getMessageRequestBody(message: string, conversationId: string): Request {
-    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
-      new Event("ContentEvent", "text/plain", message)));
+  //TODO: Seb - added dialogId field that will be used to pass the postSurveyID
+  //might ned to add a 'dialogId' field to PublishContentEvent() model. Next step is pass dialogId in the sendMessageRequest() method
+  private getMessageRequestBody(message: string, dialogId: string, conversationId: string): Request {
+    let body = new PublishContentEvent(dialogId, conversationId, new Event("ContentEvent", "text/plain", message));
+    return new Request("req", "3", "ms.PublishEvent", body);
   }
-
-  private getMessageWithFileRequestBody(message: Object, conversationId: string): Request {
-    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(conversationId,
+  
+  private getMessageWithFileRequestBody(message: Object, dialogId: string, conversationId: string): Request {
+    return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(dialogId, conversationId,
       new Event("ContentEvent", "hosted/file", message)));
   }
 
@@ -373,15 +456,18 @@ export class ConversationManager {
     return [setUserProfilePayload,requestConversationPayload];
   }
 
+  // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
-    let requestBody = new PublishContentEvent(conversation.conversationId, eventChatState);
+    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventChatState);
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
     let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
-    let requestBody = new PublishContentEvent(conversation.conversationId, eventAcceptStatus);
+
+    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventAcceptStatus);
+
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
@@ -460,16 +546,25 @@ export class ConversationManager {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
-
-        let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq);
+        
+        let message = new ChatMessage(messageType, record.timeL,"[ERROR] problem with record type!!", userName, true, record.seq,false);
 
         switch (record.type) {
           case "TEXT_PLAIN":
-            message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq);
+            message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq,false);
             break;
           case  "HOSTED_FILE":
-            message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq);
+            message = new ChatMessage(messageType, record.timeL, record.messageData.file.caption, userName, true, record.seq,false);
             message.file = new FileMessage(record.messageData.file.caption, record.messageData.file.preview, record.messageData.file.relativePath);
+            break;
+          case "RICH_CONTENT":
+            if(record.messageData.richContent && record.messageData.richContent.content){
+              try {
+                message = new ChatMessage(messageType, record.timeL,record.messageData.richContent,userName, true, record.seq,true);
+              } catch (error) {
+                console.error("ERROR parsing rich content from history: ", error);
+              }
+            }
             break;
         }
 
@@ -478,8 +573,8 @@ export class ConversationManager {
 
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
 
-      conversation.messages.sort((a,b) =>{
-        return a.sequence - b.sequence;
+      conversation.messages.sort((a: ChatMessage,b :ChatMessage) => {
+        return ((new Date(a.timestamp).getTime()) - (new Date(b.timestamp).getTime()));
       });
 
       //this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));

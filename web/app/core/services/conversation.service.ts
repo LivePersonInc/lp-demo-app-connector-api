@@ -164,6 +164,19 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
+  public closeConversationWithPCS() {
+    this.conversationManager.closeConversationWithPCS(this.conversation).pipe(
+      map(res => {
+       this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.CLOSE));
+       this.successResponse("Conversation CLOSED successfully with id " + this.conversation.conversationId);
+      }),
+      catchError(error => {
+        this.errorResponse(error);
+        return throwError(new Error(error || 'An error occurred, please try again later'));
+      })
+    ).subscribe();
+  }
+
   public reset() {
     if (this.conversation && this.conversation.isConvStarted) {
       // this.closeConversation();
@@ -204,6 +217,12 @@ export class ConversationService extends HttpService {
   }
 
   private notifyAgentConsumerChatState(chatState: ChatState) {
+
+    // A PCS cannot accept ChatStateEvents.
+    if(this.conversation.isPostSurveyStarted) {
+      return;
+    }
+
     this.deactivateLoadingService();
     this.conversationManager.sendChatStateEventRequest(this.conversation, chatState).pipe(
       map(res => {
@@ -216,17 +235,17 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
-  private notifyMessageStatus(status: Status, sequenceList){
-    this.deactivateLoadingService();
-    this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
-      map(res => {
-        this.activateLoadingService();
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
+  private notifyMessageStatus(status: Status, sequenceList) {
+      this.deactivateLoadingService();
+      this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
+        map(res => {
+          this.activateLoadingService();
+        }),
+        catchError(error => {
+          this.errorResponse(error);
+          return throwError(new Error(error || 'An error occurred, please try again later'));
+        })
+      ).subscribe();
   }
 
   private getLastReadMessages(): Array<number> {
@@ -259,6 +278,7 @@ export class ConversationService extends HttpService {
         this.conversation =
           new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
         this.conversation.conversationId = appState.conversationId;
+        this.conversation.dialogId = appState.conversationId;
         this.conversation.ext_consumer_id = appState.ext_consumer_id;
         this.conversation.userName = appState.userName;
         this.conversation.campaignId = appState.campaignId;

@@ -1,4 +1,4 @@
-<div class="message-container" *ngIf="message" [ngClass]="messageType">
+<div class="message-container" *ngIf="message && !message.isRichContent" [ngClass]="messageType">
   <div class="username">
     <div *ngIf="message.showUser">{{message.userName}}</div>
   </div>
@@ -15,5 +15,13 @@
   <div class="message" [ngClass]="{'hasImage': message.file && message.file.preview}">
     <img *ngIf="message.file" src="{{message.file.preview}}" alt="Smiley face" (click)="onDownload($event)">
     <div>{{message.message}}</div>
+  </div>
+</div>
+
+<div class="message-container" *ngIf="message && message.isRichContent" [ngClass]="messageType">
+  <div class="username">
+    <div *ngIf="message.showUser">{{message.userName}}</div>
+  </div>
+  <div class="structuredContent" #structuredContent>
   </div>
 </div>
