@@ -1,7 +1,7 @@
 {
   "name": "lp-demo-app-connector-api",
   "description": "A web app that establishings a conversation as a consumer with UMS through the SendAPI",
-  "version": "2.1.10",
+  "version": "2.2.0",
   "license": "MIT",
   "author": {
     "name": "LivePersonInc",
