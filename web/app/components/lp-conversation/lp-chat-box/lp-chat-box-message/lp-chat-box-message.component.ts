@@ -19,9 +19,7 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('structuredContent') d1: ElementRef;
 
-  constructor (private renderer: Renderer2) {
-
-  }
+  constructor (private renderer: Renderer2) { }
 
   public addRichContentTextElement(content) {
     const rooEl = JsonPollock.render(content);
@@ -50,10 +48,12 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  
-  
 
   ngOnInit() {
+    const linkCallback = (data) => {
+      window.open(data.actionData.uri,"_blank");
+    };
+    JsonPollock.registerAction('link', linkCallback);
     this.messageType = MessageType[this.message.type].toLocaleLowerCase();
   }
 
