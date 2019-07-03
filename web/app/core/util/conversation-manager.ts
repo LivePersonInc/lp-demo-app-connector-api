@@ -38,7 +38,6 @@ export class ConversationManager {
               protected historyService: HistoryService){}
 
   public openConversation(conversation: Conversation): Observable<any> {
-    //TODO: Seb - ensure that close convo with pcs button is ungreyed when starting a
     conversation.isPostSurveyStarted = false;
 
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
@@ -74,8 +73,6 @@ export class ConversationManager {
       this.updateState(conversation);
     }));
   }
-
-
 
   public sendMessageWithImage(file: any, type: string, relativePath: string, message: string, fileName: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap( preview => {
@@ -166,7 +163,6 @@ export class ConversationManager {
     return this.sendApiService.getConsumerJWS(conversation.branId, body, httpOptions);
   }
 
-  //TODO: Seb - this method needs to pass dialogId as a parameter in the getMessageRequestbody().
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getMessageRequestBody(message, conversation.dialogId, conversation.conversationId));
@@ -183,8 +179,6 @@ export class ConversationManager {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT,conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
     return this.sendApiService.sendMessage(conversation.branId,body, headers);
-
-
   }
 
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
@@ -236,32 +230,8 @@ export class ConversationManager {
     };
   }
 
-  //TODO: Seb - Check is survey is open
-  private checkIfSurveyOpen(data: any, conversation: Conversation) {
-    // console.log("***** CHECK SURVEY OPEN DATA BODY" + JSON.stringify(data.body, null, 2));
-    try {
-      // Seb - the below code might need review
-      const conversationDetails = data.body.changes[0].result.conversationDetails;
-      if (data.body.changes[0].result && conversationDetails
-        && conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
-        ) {
-          console.log("SURVEY IS OPEN");
-          const postSurveyDialogId = conversationDetails.dialogs[1].dialogId;
-          conversation.dialogId = postSurveyDialogId;
-          conversation.isPostSurveyStarted = true;
-
-          console.log("conversation.dialogID :" + conversation.dialogId);
-
-        }
-      } catch (error) {
-        console.error("ERROR retrieving post survey", error);
-      }
-    }
-
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
-
-    //TODO: HERE the webhooks notification are handled,  a new method like checSkurvey.. sould be created
-
+    
     this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.EVENT_RECEIVED));
 
     let data = JSON.parse(notification.data);
@@ -276,7 +246,6 @@ export class ConversationManager {
 
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
 
-    //TODO: Seb - checking if survey is open
     this.checkIfSurveyOpen(data, conversation);
 
     this.checkIfConversationWasClosed(data, conversation);
@@ -284,7 +253,7 @@ export class ConversationManager {
 
     this.updateState(conversation);
   }
-
+  
   private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -312,7 +281,7 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
   }
-
+  
   private checkAndFilterIncomingRichContextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -340,7 +309,7 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
   }
-
+  
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -371,32 +340,42 @@ export class ConversationManager {
       console.error("ERROR parsing notification", error);
     }
   }
-
+  
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
         && data.body.changes[0].result.conversationDetails.state  === 'CLOSE'
-        //TODO: Seb - Extra logic condition to only unsubscribe if the conversation has fully closed
         && data.body.changes[0].result.conversationDetails.stage === 'CLOSE'
         ) {
-
-        //Seb - console log check
-        console.log("CHECK IF CONVERSATION CLOSED IS TRIGGERED");
-        // console.log("****** CHECK IF CONVERSATION WAS CLOSED: " + JSON.stringify(data.body.changes[0], null, 2));
-
-        console.log("CONVERSATION was closed. closeReason: " +  data.body.changes[0].result.conversationDetails.closeReason);
         this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
-        //Seb - Setting the dialogId to conversationId
         conversation.dialogId = conversation.conversationId;
         conversation.isPostSurveyStarted = false;
-
         this.updateState(conversation);
       }
     } catch (error) {
       console.error("ERROR parsing notification", error);
     }
-
+  }
+  
+  //TODO: Seb - Check is survey is open
+  private checkIfSurveyOpen(data: any, conversation: Conversation) {
+    try {
+      // Seb - the below code might need review
+      if(data.body.changes[0].result && data.body.changes[0].result.conversationDetails) {
+        const conversationDetails = data.body.changes[0].result.conversationDetails;
+        if (conversationDetails.dialogs
+          && conversationDetails.dialogs[1]
+          && conversationDetails.dialogs[1].dialogType  === 'POST_SURVEY'
+        ) {
+          const postSurveyDialogId = conversationDetails.dialogs[1].dialogId;
+          conversation.dialogId = postSurveyDialogId;
+          conversation.isPostSurveyStarted = true;
+        }
+      }
+    } catch (error) {
+      console.error("ERROR retrieving post survey", error);
+    }
   }
 
   private checkConsumerGeneratedId(data: any, conversation: Conversation){
@@ -433,9 +412,7 @@ export class ConversationManager {
     let body = new PublishContentEvent(dialogId, conversationId, new Event("ContentEvent", "text/plain", message));
     return new Request("req", "3", "ms.PublishEvent", body);
   }
-
-
-
+  
   private getMessageWithFileRequestBody(message: Object, dialogId: string, conversationId: string): Request {
     return new Request("req", "3", "ms.PublishEvent", new PublishContentEvent(dialogId, conversationId,
       new Event("ContentEvent", "hosted/file", message)));

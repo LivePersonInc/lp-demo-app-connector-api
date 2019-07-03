@@ -164,7 +164,6 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
-  //TODO: Seb - new closeConversation method that also triggers PCS
   public closeConversationWithPCS() {
     this.conversationManager.closeConversationWithPCS(this.conversation).pipe(
       map(res => {
@@ -281,6 +280,7 @@ export class ConversationService extends HttpService {
         this.conversation =
           new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
         this.conversation.conversationId = appState.conversationId;
+        this.conversation.dialogId = appState.conversationId;
         this.conversation.ext_consumer_id = appState.ext_consumer_id;
         this.conversation.userName = appState.userName;
 
