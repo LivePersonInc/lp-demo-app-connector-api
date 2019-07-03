@@ -216,11 +216,9 @@ export class ConversationService extends HttpService {
     }
   }
 
-  //TODO: Seb - if postSurvey is running, don't send those notifications to the agent...
-  //It does stop the 400 errors
   private notifyAgentConsumerChatState(chatState: ChatState) {
 
-    // This needs to be passed as PCS cannot accep ChatStateEvents.
+    // A PCS cannot accept ChatStateEvents.
     if(this.conversation.isPostSurveyStarted) {
       return;
     }
@@ -237,7 +235,7 @@ export class ConversationService extends HttpService {
     ).subscribe();
   }
 
-    private notifyMessageStatus(status: Status, sequenceList){
+  private notifyMessageStatus(status: Status, sequenceList) {
       this.deactivateLoadingService();
       this.conversationManager.sendEventAcceptStatusRequest(this.conversation, status, sequenceList).pipe(
         map(res => {

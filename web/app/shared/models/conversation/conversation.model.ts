@@ -13,7 +13,6 @@ export class Conversation implements Deserializable<Conversation> {
   appSecret: string;
   ext_consumer_id: string;
   consumerId: string;
-  //TODO: Seb - added dialogId and isPostSurveyStarted as part of conversation
   dialogId: string;
   isPostSurveyStarted: boolean;
 

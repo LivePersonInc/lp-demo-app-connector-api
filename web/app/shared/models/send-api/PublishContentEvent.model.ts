@@ -1,6 +1,4 @@
 
-//TODO: Seb - need to add a 'conversationId' field here
-
 export class PublishContentEvent {
   public dialogId;
   public conversationId;

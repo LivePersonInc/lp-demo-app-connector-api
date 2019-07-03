@@ -358,10 +358,8 @@ export class ConversationManager {
     }
   }
   
-  //TODO: Seb - Check is survey is open
   private checkIfSurveyOpen(data: any, conversation: Conversation) {
     try {
-      // Seb - the below code might need review
       if(data.body.changes[0].result && data.body.changes[0].result.conversationDetails) {
         const conversationDetails = data.body.changes[0].result.conversationDetails;
         if (conversationDetails.dialogs
@@ -458,7 +456,6 @@ export class ConversationManager {
     return [setUserProfilePayload,requestConversationPayload];
   }
 
-  //TODO: the below might require an additional 'dialogId' field that contains the survye id
   // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     let eventChatState = new EventChatState(event);
@@ -466,7 +463,6 @@ export class ConversationManager {
     return new Request("req", "1,", "ms.PublishEvent", requestBody);
   }
 
-  //TODO: Seb - adding conversationId/postSurvey ID to avoid 400 errors upon ACCEPT. The body creation needs a model refactoring
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
     let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
 

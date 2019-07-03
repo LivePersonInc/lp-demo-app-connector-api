@@ -1,4 +1,3 @@
-//TODO: Seb - new dialogState model
 export  class DialogState {
   public dialogId;
   public state;

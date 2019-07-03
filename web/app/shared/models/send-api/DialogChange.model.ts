@@ -1,4 +1,3 @@
-//TODO: Seb - new dialogChange model
 export  class DialogChange {
   public field;
   public type;
