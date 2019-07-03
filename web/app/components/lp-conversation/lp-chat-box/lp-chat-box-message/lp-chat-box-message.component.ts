@@ -28,7 +28,7 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
     this.renderer.addClass(this.d1.nativeElement, "rich-content-text");
   }
   
-  public addRichContentButtonElement(content) {
+  public addRichContentQuickReplyButtonElement(content) {
     const rooEl = JsonPollock.render(content);
     const structuredContentElement: HTMLParagraphElement = rooEl;
     this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
@@ -43,7 +43,7 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
       this.addRichContentTextElement(this.message.message.content);
       if(this.message.message && this.message.message.quickReplies && this.message.message.quickReplies.replies) {
         this.message.message.quickReplies.replies.forEach( reply => {
-          this.addRichContentButtonElement(reply);
+          this.addRichContentQuickReplyButtonElement(reply);
         })
       }
     }
