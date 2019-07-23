@@ -1,0 +1,62 @@
+<form #createGeneralDetailsForm="ngForm" class="form-container" (submit)="addNewConfigDetails(createGeneralDetailsForm)">
+  <ng-template matStepLabel>General</ng-template>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <input name="clientName" matInput placeholder="Client name" [ngModel]="generalDetails.clientName" (ngModelChange)="generalDetails.clientName = $event" required>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="Choose the name for your Connector application" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <textarea name="description" matInput placeholder="Description" [ngModel]="generalDetails.description" (ngModelChange)="generalDetails.description = $event" required></textarea>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="App description" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <mat-chip-list #grantTypesList aria-label="Grant types">
+        <mat-chip *ngFor="let grantType of generalDetails.grantTypes" [selectable]="selectable"
+                  [removable]="removable" (removed)="removeGrantType(grantType)">
+          {{grantType}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New grant type..."
+               [matChipInputFor]="grantTypesList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="addGrantType($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <button type="button" mat-icon-button matTooltip="Authorization grant according to OAuth 2.0" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <input name="uri" matInput placeholder="Logo url" [ngModel]="generalDetails.uri" (ngModelChange)="generalDetails.uri = $event" required>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="URL string that references a logo for the client" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <input name="scope" #scope='ngModel' matInput placeholder="Scope" [ngModel]="generalDetails.scope" (ngModelChange)="generalDetails.scope = $event" appLpDetailsScopeValidation>
+      <mat-error *ngIf="scope.hasError('scope')">
+        {{scope.errors.scope.message}}
+      </mat-error>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="Space-separated list of scope values that the client can use when requesting access tokens" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div>
+    <button type="button" [disabled]="!createGeneralDetailsForm.valid" (click)="createGeneralDetails()" mat-button>Next</button>
+    <button type="reset" mat-button>Reset</button>
+  </div>
+</form>
