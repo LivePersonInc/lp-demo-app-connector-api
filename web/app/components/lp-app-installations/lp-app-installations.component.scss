@@ -1,0 +1,39 @@
+:host{
+  .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container > * {
+    width: 100%;
+  }
+
+  .form-container form {
+    margin-bottom: 20px;
+  }
+
+  .form-container form > * {
+    margin: 5px 0;
+    padding: 10px 10px 10px 10px;
+  }
+
+  .header-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .events-list > mat-expansion-panel {
+    margin-top: 25px;
+  }
+
+  .create-app-install-button {
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+
+  .push-elements-to-the-right {
+    // This fills the remaining space, by using flexbox.
+    // Every toolbar row uses a flexbox row layout.
+    flex: 1 1 auto;
+  }
+}
