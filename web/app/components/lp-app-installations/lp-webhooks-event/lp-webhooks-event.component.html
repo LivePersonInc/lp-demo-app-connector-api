@@ -1,0 +1,79 @@
+<form #createEventTypeForm="ngForm" class="form-container" (submit)="addNewEventType(createEventTypeForm)" *ngIf="createNewEvent"> <!--[formGroup]="eventForm" -->
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <mat-label>Event type</mat-label>
+      <mat-select matNativeControl #eventType='ngModel' name="type"  [ngModel]="composeEvent.type" (ngModelChange)="composeEvent.type = $event" required> <!--formControlName="eventType"-->
+        <mat-option *ngFor="let type of existingTypes" [value]="type" [disabled]="avaliableEventTypes[type] && avaliableEventTypes[type].disabled">{{type}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="Indicates the HTTPS configuration endpoint of your server to receive notifications of type ContentEvent/RichContentEvent/AcceptStatusEvent/ChatStateEvent/ExConversationChangeNotification." matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div class="row align-items-center">
+    <mat-form-field class="flex-fill">
+      <input matInput="url"  #eventEndpoint='ngModel' name="eventEndpoint" [ngModel]="composeEvent.endpoint" (ngModelChange)="composeEvent.endpoint = $event" placeholder="Endpoint"  appLpEndpointValidation  required> <!--formControlName="eventEndpoint"-->
+      <mat-error *ngIf="eventEndpoint.hasError('endpoint')">
+        {{eventEndpoint.errors.endpoint.message}}
+      </mat-error>
+    </mat-form-field>
+    <button type="button" mat-icon-button matTooltip="The url to send the notification to, including query parameters" matTooltipPosition="above">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+  </div>
+  <div  id="eventHeader" class="form-container flex align-items-center">
+    <div class="row align-items-center">
+      <button type="button" mat-icon-button matTooltip="List of http headers to add to the notification request" matTooltipPosition="above">
+        <mat-icon>help_outline</mat-icon>
+      </button>
+      <mat-panel-title><b>Headers</b></mat-panel-title>
+      <button type="button" mat-icon-button>
+        <mat-icon (click)="addNewEventHeaderRow()">add</mat-icon>
+      </button>
+    </div>
+    <br/>
+    <div class="header-container flex align-items-center" *ngFor="let h of composeEvent.headers">
+      <app-lp-webhooks-headers (headerRemoved)="removeHeaderFromEventArray($event)" [header]="h"></app-lp-webhooks-headers>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!createEventTypeForm.valid" mat-button>Add event</button>
+</form>
+
+
+<mat-expansion-panel *ngIf="!createNewEvent">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{event.type}}
+      </mat-panel-title>
+      <button type="button" mat-icon-button>
+        <mat-icon (click)="removeFromEvents(event)">delete_outline</mat-icon>
+      </button>
+      <button type="button" mat-icon-button *ngIf="event.endpointValidation === 'checking'">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </button>
+      <button type="button" mat-icon-button *ngIf="event.endpointValidation === 'valid'">
+        <mat-icon class="material-icons md-success">done_all</mat-icon>
+      </button>
+      <button type="button" mat-icon-button matTooltip="The endpoint is invalid or not reachable. Please correct the endpoint before continuing further." *ngIf="event.endpointValidation === 'invalid'">
+        <mat-icon class="material-icons md-error">error_outline</mat-icon>
+      </button>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput="url" #endpoint="ngModel" name="endpoint{{event.type}}" appLpEndpointValidation placeholder="Endpoint"  [ngModel]="event.endpoint" (ngModelChange)="event.endpoint = $event"  required>
+      <mat-error *ngIf="endpoint.hasError('endpoint')">
+        {{endpoint.errors.endpoint.message}}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="event-list form-container flex align-items-center">
+      <div class="row align-items-center">
+        <mat-panel-title><b>Headers</b></mat-panel-title>
+      </div>
+      <br/>
+      <div class="header-container flex align-items-center" *ngFor="let header of event.headers">
+        <app-lp-webhooks-headers (headerRemoved)="removeHeaderFromEventArray($event, eventTypes)" [header]="header"></app-lp-webhooks-headers>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
