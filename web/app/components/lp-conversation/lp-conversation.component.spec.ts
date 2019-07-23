@@ -8,7 +8,7 @@ import {LpChatBoxMessageComponent} from "./lp-chat-box/lp-chat-box-message/lp-ch
 import {LpChatBoxFooterComponent} from "./lp-chat-box/lp-chat-box-footer/lp-chat-box-footer.component";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {ConversationService} from "../../core/services/conversation.service";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LpConversationFormComponent} from "./lp-conversation-form/lp-conversation-form.component";
 

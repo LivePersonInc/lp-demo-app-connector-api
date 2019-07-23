@@ -3,7 +3,7 @@ import {Conversation} from "../../shared/models/conversation/conversation.model"
 import {ConversationService} from "../../core/services/conversation.service";
 import {ConversationEvent, ConvEvent} from "../../shared/models/conversation/conversationEvent.model";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {Subscription} from "rxjs";
 import {Options} from "../../shared/models/conversation/options.model";
 

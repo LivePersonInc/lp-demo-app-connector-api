@@ -5,7 +5,7 @@ import {LpConversationModule} from "../../../app/components/lp-conversation/lp-c
 import {FormsModule} from "@angular/forms";
 import {ConversationService} from "../../../app/core/services/conversation.service";
 import {AuthenticationService} from "../../../app/core/services/authentication.service";
-import {InstallationService} from "../../../app/core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {SendApiService} from "../../../app/core/services/send-api.service";
 import {LoadingService} from "../../../app/core/services/loading.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";

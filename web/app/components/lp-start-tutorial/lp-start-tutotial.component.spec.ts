@@ -10,7 +10,7 @@ import {LpConfigCheckComponent} from "./lp-config-check/lp-config-check.componen
 import {LpAppKeySecretComponent} from "./lp-app-key-secret/lp-app-key-secret.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AccountConfigService} from "../../../app/core/services/account-config.service";
-import {InstallationService} from "../../../app/core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 

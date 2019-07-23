@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LpAppKeySecretComponent } from './lp-app-key-secret.component';
 import {MaterialModule} from "../../../material.module";
-import {InstallationService} from "../../../core/services/istallation.service";
+import {InstallationService} from "../../../core/services/installation.service";
 import {Router} from "@angular/router";
 import {MatStepper} from "@angular/material";
 import {ChangeDetectorRef, ElementRef} from "@angular/core";

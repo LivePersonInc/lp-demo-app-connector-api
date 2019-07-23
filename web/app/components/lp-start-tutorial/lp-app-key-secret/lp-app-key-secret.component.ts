@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {InstallationService} from "../../../core/services/istallation.service";
+import {InstallationService} from "../../../core/services/installation.service";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {MatSelectChange} from "@angular/material";
 import {Router} from "@angular/router";

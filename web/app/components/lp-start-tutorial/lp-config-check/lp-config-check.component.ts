@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AccountConfigService} from "../../../core/services/account-config.service";
-import {InstallationService} from "../../../core/services/istallation.service";
+import {InstallationService} from "../../../core/services/installation.service";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
 import {Subscription} from "rxjs";

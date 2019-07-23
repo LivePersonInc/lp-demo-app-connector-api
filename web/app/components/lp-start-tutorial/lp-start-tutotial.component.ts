@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fadeInAnimation} from "../../shared/animations/lp-animations";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {ConversationService} from "../../core/services/conversation.service";
 
 @Component({

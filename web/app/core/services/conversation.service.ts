@@ -15,7 +15,7 @@ import {ChatState} from "../../shared/models/send-api/EventChatState.model";
 import {Status} from "../../shared/models/send-api/EventAcceptStatus.model";
 import {MessageType} from "../../shared/models/conversation/chatMessage.model";
 import {HistoryService} from "./history.service";
-import {InstallationService} from "./istallation.service";
+import {InstallationService} from "./installation.service";
 import {Options} from "../../shared/models/conversation/options.model";
 import {FileMessage} from "../../shared/models/conversation/fileMessage.model";
 import {DomainsService} from "./domains.service";

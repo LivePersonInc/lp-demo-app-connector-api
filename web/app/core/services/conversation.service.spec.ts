@@ -8,7 +8,7 @@ import {ConversationManager} from "../util/conversation-manager";
 import {StateStorage} from "../util/state-storage";
 import {AuthenticationService} from "./authentication.service";
 import {HistoryService} from "./history.service";
-import {InstallationService} from "./istallation.service";
+import {InstallationService} from "./installation.service";
 import {DomainsService} from "./domains.service";
 
 describe('ConversationService', () => {

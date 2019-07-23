@@ -5,7 +5,7 @@ import {MaterialModule} from "../../material.module";
 import {LpConfigCheckComponent} from "../lp-start-tutorial/lp-config-check/lp-config-check.component";
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {ConversationService} from "../../core/services/conversation.service";
 import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";

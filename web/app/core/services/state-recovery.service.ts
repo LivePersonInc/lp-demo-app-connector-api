@@ -7,7 +7,7 @@ import {environment} from '../../../environments/environment';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication.service";
 import {User} from "../../shared/models/user.model";
-import {InstallationService} from "./istallation.service";
+import {InstallationService} from "./installation.service";
 import {ConversationService} from "./conversation.service";
 import {AccountConfigService} from "./account-config.service";
 import {DomainsService} from "./domains.service";

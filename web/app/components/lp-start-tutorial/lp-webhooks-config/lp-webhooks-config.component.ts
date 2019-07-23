@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {InstallationService} from '../../../core/services/istallation.service';
+import {InstallationService} from '../../../core/services/installation.service';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
 import {Subscription} from "rxjs";
