@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../core/services/authentication.service";
 import {MatDialog} from "@angular/material";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {LpConfirmationDialogComponent} from "../../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {Subscription} from "rxjs";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'lp-nav-menu',
@@ -13,16 +14,50 @@ import {Subscription} from "rxjs";
 export class LpNavMenuComponent implements OnInit, OnDestroy {
 
   private dialogRefSubscription: Subscription;
+  private routerSubscription: Subscription;
+  private showHome: boolean;
+  private showSettings: boolean;
+  private showDemo: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+    router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      const url = event.url.toLocaleLowerCase();
+      if (url.indexOf('settings') !== -1) {
+        this.showHome = true;
+        this.showDemo = true;
+        this.showSettings = true;
+      } else if (url.indexOf('appinstall') !== -1) {
+        this.showHome = true;
+        this.showDemo = false;
+        this.showSettings = false;
+      } else if (url.indexOf('home') !== -1) {
+        this.showHome = true;
+        this.showDemo = false;
+        this.showSettings = false;
+      } else if (url.indexOf('demo') !== -1) {
+        this.showHome = true;
+        this.showDemo = true;
+        this.showSettings = true;
+      } else {
+        this.showHome = true;
+        this.showSettings = false;
+        this.showDemo = false;
+      }
+    });
+  }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
-    if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
+    if (this.dialogRefSubscription) {
+      this.dialogRefSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   isUserAuthenticated() {
