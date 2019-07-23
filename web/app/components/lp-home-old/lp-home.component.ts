@@ -7,13 +7,13 @@ import {MatDialog} from "@angular/material";
 import {ConversationService} from "../../core/services/conversation.service";
 
 @Component({
-  selector: 'lp-home',
+  selector: 'lp-home-old',
   templateUrl: './lp-home.component.html',
   styleUrls: ['./lp-home.component.scss'],
   animations: [fadeInAnimation],
   host: {'[@fadeInAnimation]': ''}
 })
-export class LpHomeComponent implements OnInit {
+export class LpHomeOldComponent implements OnInit {
   public brandId: string;
   public userName: string;
   public authenticationService: AuthenticationService;
