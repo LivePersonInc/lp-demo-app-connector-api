@@ -2,12 +2,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DomainsService} from "../../core/services/domains.service";
 import {AuthenticationService} from "../../core/services/authentication.service";
-import {InstallationService} from "../../core/services/istallation.service";
+import {InstallationService} from "../../core/services/installation.service";
 import {Router} from "@angular/router";
 import {ConversationService} from "../../core/services/conversation.service";
 import {AccountConfigService} from "../../core/services/account-config.service";
 import {MatDialog} from "@angular/material";
 import {Subscription} from "rxjs";
+import {AppInstallationsService} from "../../core/services/app-installations.service";
 
 @Component({
   selector: 'lp-login',
@@ -26,6 +27,7 @@ export class LpLoginComponent implements OnInit {
 
   constructor(private fromBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
+              private appInstallationService: AppInstallationsService,
               private installationService: InstallationService,
               private domainsService: DomainsService,
               private router: Router,
@@ -43,6 +45,7 @@ export class LpLoginComponent implements OnInit {
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
         this.installationService.init();
+        this.appInstallationService.init();
         this.conversationService.init();
         this.accountConfigService.init();
         this.goToStartConfigPage();
@@ -89,11 +92,11 @@ export class LpLoginComponent implements OnInit {
   }
 
   public goToStartConfigPage() {
-    this.router.navigateByUrl('settings/start');
+    this.router.navigateByUrl('home');
   }
 
   public goToStartDemoPage() {
-    this.router.navigateByUrl('demo');
+    this.router.navigateByUrl('home');
   }
 
 }
