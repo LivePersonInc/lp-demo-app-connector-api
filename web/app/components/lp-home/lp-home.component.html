@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-12">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar></div>
+          <mat-card-title class="blue-text">Configure</mat-card-title>
+          <mat-card-subtitle>Application Installations</mat-card-subtitle>
+        </mat-card-header>
+        <img class="card-icon" mat-card-image src="../../../assets/settings.svg" alt="Settings">
+        <mat-card-content>
+          <p>
+            LiveEngage Applications are a code layer developed on top of LiveEngage APIs which include an App_Install_Id parameter. This parameter is received when registering a dedicated configuration manifest that defines its scope and components.
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="row">
+          <a class="col-12" mat-raised-button color="primary" routerLink="/appinstalls">MANAGE APPLICATION INSTALLATIONS</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar></div>
+          <mat-card-title class="blue-text">Demo</mat-card-title>
+          <mat-card-subtitle>Webhooks</mat-card-subtitle>
+        </mat-card-header>
+        <img  mat-card-image src="../../../assets/chat.svg" alt="Demo App">
+        <mat-card-content>
+          <p>
+            With the Demo Sample App for the Connector API you can create a sample conversation between a consumer and an agent.
+            This will allow you to send messages and events, as well as visualize the incoming notifications for those messages and events.
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="row">
+          <a class="col-12" mat-raised-button color="primary"  routerLink="/settings/start">GO</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

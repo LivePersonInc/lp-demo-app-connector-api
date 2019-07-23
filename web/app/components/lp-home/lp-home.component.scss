@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+@import '../../../assets/lp-mat-theme';
+:host{
+  .orange-text {
+    color: mat-color($lp-app-primary);
+  }
+  .blue-text {
+    color: mat-color($lp-app-accent);
+  }
+  .card-icon {
+    font-size: 250px !important;
+    color: mat-color($lp-app-primary);
+  }
+  mat-card {
+    margin-bottom: 15px;
+  }
+}
