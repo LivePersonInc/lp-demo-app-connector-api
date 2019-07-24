@@ -38,11 +38,12 @@ export class SendApiService extends HttpService {
   public openConversation(brandId: string, body: any, headers: any): Observable<Object> {
     return this.doPost(`${this.baseURI}/ums/openconv/${brandId}`, body, headers);
   }
-
+  //TODO : should be rename to sendEvent or somehting similar
   public sendMessage(brandId: string, body: any, headers: any): Observable<Object> {
     return this.doPost(`${this.baseURI}/ums/sendraw/${brandId}`, body, headers);
   }
 
+  //TODO: should be removed
   public closeConversation(brandId: string, convId: string, headers: any): Observable<Object> {
     return this.doPost(`${this.baseURI}/ums/close/${brandId}/conv/${convId}`, null, headers);
   }

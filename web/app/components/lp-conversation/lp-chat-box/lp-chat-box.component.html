@@ -3,7 +3,7 @@
 <div class="messages-area" #messagearea >
   <div class="conv-closed" *ngIf="isConversationClosed()">CLOSED</div>
   <div *ngIf="conversation">
-    <lp-chat-box-message  *ngFor="let message of conversation.messages" [message]="message" (download)="onDownload($event)"></lp-chat-box-message>
+    <lp-chat-box-message  *ngFor="let message of conversation.messages" (onSendMessage)="sendMessage($event)" [message]="message" (download)="onDownload($event)"></lp-chat-box-message>
   </div>
 </div>
 
@@ -11,3 +11,4 @@
                     [disabled]="disabled" [conversationStarted]="conversation.isConvStarted"
                     (onIsTyping)="checkTyping($event)">
 </lp-chat-box-footer>
+

@@ -49,7 +49,7 @@ export class AuthenticationService extends HttpService {
           headers: new HttpHeaders({'LP-DOMAIN': domain})
       };
      return this.doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
-       {username:  brandId + "-" + username, password: password }, httpOptions).pipe(
+       {username:  brandId + ":" + username, password: password }, httpOptions).pipe(
          map(res => {
            this._user = new User();
            this._user.userName = username;

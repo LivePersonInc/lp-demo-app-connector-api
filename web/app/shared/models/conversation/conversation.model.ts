@@ -13,6 +13,9 @@ export class Conversation implements Deserializable<Conversation> {
   appSecret: string;
   ext_consumer_id: string;
   consumerId: string;
+  dialogId: string;
+  isPostSurveyStarted: boolean;
+
   conversationId: string;
   userName: string;
   eventSource: EventSourcePolyfill;
@@ -56,18 +59,25 @@ export class Conversation implements Deserializable<Conversation> {
     this.ext_consumer_id = input.ext_consumer_id;
     this.consumerId = input.consumerId;
     this.conversationId = input.conversationId;
+
+    //Seb - It seemed appropriate adding the new fields here
+    this.dialogId = input.postSurveyId;
+    this.isPostSurveyStarted = input.isPostSurveyStarted;
+
     this.userName = input.userName;
     this.eventSource = null;
     this.chatState = ChatState.ACTIVE;
     this.features = input.features;
     this.skillId = input.skillId;
     this.context_name = input.context_name;
+    this.campaignId = input.campaignId;
+    this.engagementId = input.engagementId;
 
     if(input.messages){
       this.messages = [];
       input.messages.forEach( message => {
         if(message){
-          let msg = new ChatMessage(message.type, message.timestamp, message.message, message.userName, message.showUser, message.sequence);
+          let msg = new ChatMessage(message.type, message.timestamp, message.message, message.userName, message.showUser, message.sequence, message.isRichContent);
           msg.accepted = message.accepted;
           msg.read = message.read;
           this.messages.push(msg);

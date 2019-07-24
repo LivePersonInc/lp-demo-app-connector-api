@@ -34,8 +34,7 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
     this.options.context_name = this.conversation.context_name;
     this.options.engagementId = this.conversation.engagementId;
     this.options.campaignId = this.conversation.campaignId;
-
-
+    
     this.onChange();
   };
 
@@ -72,6 +71,7 @@ export class LpAdvancedOptionsFormComponent implements OnInit {
 
     this.conversationChange.emit(this.options);
   }
+  
   onValidateNumber(event){
     const pattern = /[0-9]/;
 

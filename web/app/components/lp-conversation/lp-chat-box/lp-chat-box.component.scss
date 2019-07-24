@@ -22,8 +22,8 @@
     max-width: 500px;
     min-width: 200px;
     font-weight: bold;
+    z-index: 10;
   }
-
   .messages-area{
     width: 100%;
     height: -webkit-calc(100%- 55px);
@@ -45,7 +45,6 @@
     background-color: gold;
     opacity: 0.8;
   }
-
 }
 
 

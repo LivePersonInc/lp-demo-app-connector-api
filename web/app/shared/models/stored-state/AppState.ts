@@ -5,7 +5,11 @@ export class AppState implements Deserializable<AppState> {
   appId: string;
   ext_consumer_id:string;
   userName: string;
-
+  features: Array<string>;
+  skillId: string;
+  engagementId: number;
+  campaignId: number;
+  
   deserialize(input: any): AppState {
     Object.assign(this, input);
     return this;

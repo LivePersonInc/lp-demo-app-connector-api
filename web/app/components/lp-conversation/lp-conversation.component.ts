@@ -53,6 +53,10 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     this.conversationService.closeConversation();
   }
 
+  public closeConversationWithPCS() {
+    this.conversationService.closeConversationWithPCS();
+  }
+
   public sendMessage(messageText : string) {
     if(this.conversation &&  this.conversation.isConvStarted) {
       this.conversationService.notifyAgentThatUserStopsTyping();

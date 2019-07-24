@@ -15,7 +15,7 @@ export class AppInstall implements Deserializable<AppInstall>{
   client_secret: string;
   id: string;
   deleted: boolean;
-  //TODO: CHECK PROPERTIES
+
   deserialize(input: any): AppInstall {
     Object.assign(this, input);
     input.capabilities ? this.capabilities = new Capabilities().deserialize(input.capabilities): null;
