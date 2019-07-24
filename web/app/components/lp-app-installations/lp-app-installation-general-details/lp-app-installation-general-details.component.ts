@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {MatChipInputEvent, MatStepper} from '@angular/material';
 import {GeneralDetails} from './GeneralDetails';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -22,6 +22,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   @Output() detailsCreated = new EventEmitter<GeneralDetails>();
   @Input() createAppInstall: boolean;
+  @ViewChild('grantTypesList') grantTypesList;
 
   constructor(appInstallService: AppInstallationsService) {
     if (!this.createAppInstall) {
@@ -38,8 +39,6 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     }
   }
   ngOnInit() {
-    console.log('OnInit');
-    console.log(this.appInstall);
     this.generalDetails = {
       clientName: null,
       description: null,
@@ -55,21 +54,42 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
   }
 
   createGeneralDetails() {
-    this.detailsCreated.emit(this.generalDetails);
+    if (this.generalDetails.grantTypes.length === 0) {
+      this.grantTypesList.errorState = true;
+    } else {
+      this.detailsCreated.emit(this.generalDetails);
+    }
   }
   addGrantType(type: MatChipInputEvent) {
     if (!this.generalDetails.grantTypes) {
       this.generalDetails.grantTypes = [];
     }
-    if ((type.value || '').trim()) {
+    const value = (type.value || '').trim();
+    if (value && value !== '') {
       this.generalDetails.grantTypes.push(type.value.trim());
     }
     if (type.input) {
       type.input.value = '';
     }
+    if ( value && ['authorization_code', 'client_credentials', 'refresh_token'].indexOf(value) === -1) {
+      this.grantTypesList.errorState = true;
+    } else if (value) {
+      this.grantTypesList.errorState = false;
+    }
   }
   removeGrantType(type: string) {
     const index = this.generalDetails.grantTypes.indexOf(type);
+    let valid = true;
     this.generalDetails.grantTypes.splice(index, 1);
+    this.generalDetails.grantTypes.forEach(gt => {
+      if ( gt && ['authorization_code', 'client_credentials', 'refresh_token'].indexOf(gt) === -1) {
+        valid = false;
+      }
+    })
+    if (!valid || this.generalDetails.grantTypes.length === 0) {
+      this.grantTypesList.errorState = true;
+    } else {
+      this.grantTypesList.errorState = false;
+    }
   }
 }

@@ -18,18 +18,20 @@
   </div>
   <div class="row align-items-center">
     <mat-form-field class="flex-fill">
-      <mat-chip-list #grantTypesList aria-label="Grant types">
+      <mat-chip-list #grantTypesList aria-label="Grant types" required>
         <mat-chip *ngFor="let grantType of generalDetails.grantTypes" [selectable]="selectable"
                   [removable]="removable" (removed)="removeGrantType(grantType)">
           {{grantType}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input placeholder="New grant type..."
+        <input matInput name="grantType" placeholder="New grant type..."
                [matChipInputFor]="grantTypesList"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                [matChipInputAddOnBlur]="addOnBlur"
                (matChipInputTokenEnd)="addGrantType($event)">
       </mat-chip-list>
+      <mat-error>Please enter valid grant types. Possible values: authorization_code, client_credentials, refresh_token</mat-error>
+      <mat-hint>Possible values: authorization_code, client_credentials, refresh_token</mat-hint>
     </mat-form-field>
 
     <button type="button" mat-icon-button matTooltip="Authorization grant according to OAuth 2.0" matTooltipPosition="above">
