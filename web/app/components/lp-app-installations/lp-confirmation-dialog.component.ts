@@ -8,5 +8,5 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 export class LpConfirmationDialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<LpConfirmationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: string) {}
+    public dialogRef: MatDialogRef<LpConfirmationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 }

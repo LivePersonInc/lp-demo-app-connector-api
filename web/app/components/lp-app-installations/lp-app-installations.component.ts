@@ -21,12 +21,12 @@ import {error} from "util";
 })
 export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   private appInstallSubscription: Subscription;
-  private selectedAppInstall: AppInstall;
-  private avaliableApplicationInstallation: AppInstall[];
-  private generalDetails: GeneralDetails;
-  private eventsConfig: Event[];
-  private avaliableEventTypes: object;
-  private completed = false;
+  public selectedAppInstall: AppInstall;
+  public avaliableApplicationInstallation: AppInstall[];
+  public generalDetails: GeneralDetails;
+  public eventsConfig: Event[];
+  public avaliableEventTypes: object;
+  public completed = false;
   @Output() eventCreated = new EventEmitter<Event>();
   @ViewChild('tabs') tabs: MatTabGroup;
   @ViewChild('stepperCreate') stepperCreate: MatStepper;

@@ -15,7 +15,7 @@ import {Subscription} from "rxjs";
 export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestroy {
   private selectedAppInstallChangeSubscription: Subscription;
   private appInstall: AppInstall;
-  private generalDetails: GeneralDetails;
+  public generalDetails: GeneralDetails;
   selectable = true;
   removable = true;
   addOnBlur = true;

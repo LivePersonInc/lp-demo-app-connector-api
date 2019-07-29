@@ -2,7 +2,7 @@
   <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs>
     <mat-tab label="Create">
       <mat-vertical-stepper [linear]="true" #stepperCreate>
-        <mat-step [completed]="completed">
+        <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
           <app-lp-app-installation-general-details [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
         </mat-step>
@@ -15,7 +15,7 @@
               <button type="reset" mat-button>Reset</button>
             </div>
         </mat-step>
-        <mat-step [stepControl]="finish">
+        <mat-step>
             <ng-template matStepLabel>Finish</ng-template>
             <div class="row flex-fill">
               <button type="button" mat-button matStepperPrevious>Back</button>
@@ -29,11 +29,11 @@
     </mat-tab>
     <mat-tab label="Update">
       <mat-vertical-stepper [linear]="false" #stepperUpdate>
-        <mat-step [stepControl]="thirdFormGroup">
+        <mat-step>
           <ng-template matStepLabel>Select an application installation</ng-template>
             <mat-form-field>
               <mat-label>Application installations</mat-label>
-              <mat-select [value]="selected" [(ngModel)]="selectedAppInstall">
+              <mat-select [(ngModel)]="selectedAppInstall">
                 <mat-option *ngFor="let appInstall of avaliableApplicationInstallation" [value]="appInstall">
                   {{appInstall.client_name}}
                 </mat-option>
@@ -43,11 +43,11 @@
               <button mat-button matStepperNext (click)="setSelectedAppInstall()">Next</button>
             </div>
         </mat-step>
-        <mat-step [stepControl]="thirdFormGroup">
+        <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
           <app-lp-app-installation-general-details [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
         </mat-step>
-        <mat-step [stepControl]="fourFormGroup">
+        <mat-step>
           <ng-template matStepLabel>Webhook details</ng-template>
           <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes" (eventCreated)="addEvent($event)" [createNewEvent]="true"></app-lp-webhooks-event>
           <div>
@@ -56,7 +56,7 @@
             <button type="reset" mat-button>Reset</button>
           </div>
         </mat-step>
-        <mat-step [stepControl]="finish">
+        <mat-step>
           <ng-template matStepLabel>Finish</ng-template>
           <div class="row flex-fill">
             <button type="button" mat-button matStepperPrevious>Back</button>
