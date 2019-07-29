@@ -28,10 +28,16 @@
         <input matInput name="grantType"
                placeholder="New grant type..."
                [matChipInputFor]="grantTypesList"
+               [matAutocomplete]="auto"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                [matChipInputAddOnBlur]="addOnBlur"
                (matChipInputTokenEnd)="addGrantType($event)">
       </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGrandType($event)">
+        <mat-option *ngFor="let grantType of validGrandTypes" [value]="grantType">
+          {{grantType}}
+        </mat-option>
+      </mat-autocomplete>
       <mat-error>Please enter valid grant types. Possible values: authorization_code, client_credentials, refresh_token</mat-error>
       <mat-hint>Possible values: authorization_code, client_credentials, refresh_token</mat-hint>
     </mat-form-field>

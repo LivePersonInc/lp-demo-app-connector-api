@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { LpWebhooksEventComponent } from './lp-webhooks-event/lp-webhooks-event.component';
 import { LpWebhooksHeadersComponent } from './lp-webhooks-headers/lp-webhooks-headers.component';
 import {LpAppInstallationsComponent} from "./lp-app-installations.component";
-import {MatListModule, MatStepperModule, MatTooltipModule, MatChipsModule} from "@angular/material";
+import {
+  MatListModule, MatStepperModule, MatTooltipModule, MatChipsModule,
+  MatAutocompleteModule
+} from "@angular/material";
 import {BrowserModule} from "@angular/platform-browser";
 import {MaterialModule} from "../../material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -34,7 +37,8 @@ import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component"
     AppRoutingModule,
     MatListModule,
     MatTooltipModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule
   ]
 })
 export class LpAppInstallationsModule { }

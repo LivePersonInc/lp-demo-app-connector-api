@@ -4,8 +4,9 @@ import {GeneralDetails} from './GeneralDetails';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {AppInstallationsService} from "../../../core/services/app-installations.service";
-import {Router} from "@angular/router";
+import {map, startWith} from 'rxjs/operators';
 import {Subscription} from "rxjs";
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-lp-app-installation-general-details',
@@ -15,7 +16,8 @@ import {Subscription} from "rxjs";
 export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestroy {
   private selectedAppInstallChangeSubscription: Subscription;
   private appInstall: AppInstall;
-  public generalDetails: GeneralDetails;
+  validGrandTypes = ['authorization_code', 'client_credentials', 'refresh_token'];
+  generalDetails: GeneralDetails;
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -54,7 +56,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
       this.detailsCreated.emit(this.generalDetails);
     }
   }
-  addGrantType(type: MatChipInputEvent) {
+  addGrantType(type: MatChipInputEvent | any) {
     if (!this.generalDetails.grantTypes) {
       this.generalDetails.grantTypes = [];
     }
@@ -65,7 +67,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     if (type.input) {
       type.input.value = '';
     }
-    if ( value && ['authorization_code', 'client_credentials', 'refresh_token'].indexOf(value) === -1) {
+    if ( value && this.validGrandTypes.indexOf(value) === -1) {
       this.grantTypesList.errorState = true;
     } else if (value) {
       this.grantTypesList.errorState = false;
@@ -76,7 +78,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     let valid = true;
     this.generalDetails.grantTypes.splice(index, 1);
     this.generalDetails.grantTypes.forEach(gt => {
-      if ( gt && ['authorization_code', 'client_credentials', 'refresh_token'].indexOf(gt) === -1) {
+      if ( gt && this.validGrandTypes.indexOf(gt) === -1) {
         valid = false;
       }
     })
@@ -86,7 +88,10 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
       this.grantTypesList.errorState = false;
     }
   }
-  
+  selectedGrandType(event: MatAutocompleteSelectedEvent) {
+    let  ev = {"value": event.option.viewValue};
+    this.addGrantType(ev);
+  }
   reset(){
     this.generalDetails = {
       clientName: null,
