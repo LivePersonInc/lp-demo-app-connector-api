@@ -40,7 +40,7 @@
   </div>
   <div class="row align-items-center">
     <mat-form-field class="flex-fill">
-      <input name="uri" matInput placeholder="Logo url" [ngModel]="generalDetails.uri" (ngModelChange)="generalDetails.uri = $event" required>
+      <input name="uri" matInput placeholder="Logo url" [ngModel]="generalDetails.uri" (ngModelChange)="generalDetails.uri = $event" >
     </mat-form-field>
     <button type="button" mat-icon-button matTooltip="URL string that references a logo for the client" matTooltipPosition="above">
       <mat-icon>help_outline</mat-icon>
