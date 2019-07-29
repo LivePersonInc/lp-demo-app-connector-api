@@ -1,12 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
 import {MatChipInputEvent, MatStepper} from '@angular/material';
 import {GeneralDetails} from './GeneralDetails';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {AppInstallationsService} from "../../../core/services/app-installations.service";
 import {map, startWith} from 'rxjs/operators';
-import {Subscription} from "rxjs";
+import {Subscription,Observable} from "rxjs";
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
+import {FormControl} from '@angular/forms';
+import {inspectNativeElement} from "@angular/platform-browser/src/dom/debug/ng_probe";
 
 @Component({
   selector: 'app-lp-app-installation-general-details',
@@ -17,14 +19,20 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
   private selectedAppInstallChangeSubscription: Subscription;
   private appInstall: AppInstall;
   validGrandTypes = ['authorization_code', 'client_credentials', 'refresh_token'];
+  filteredGrandTypes = [...this.validGrandTypes];
+  grandTypesCtrl = new FormControl();
+  
   generalDetails: GeneralDetails;
   selectable = true;
   removable = true;
   addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: number[] = [ENTER,COMMA];
+  
   @Output() detailsCreated = new EventEmitter<GeneralDetails>();
   @Input() createAppInstall: boolean;
   @ViewChild('grantTypesList') grantTypesList;
+  @ViewChild('grantTypesInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(appInstallService: AppInstallationsService) {
     if (!this.createAppInstall) {
@@ -57,21 +65,23 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     }
   }
   addGrantType(type: MatChipInputEvent | any) {
-    if (!this.generalDetails.grantTypes) {
-      this.generalDetails.grantTypes = [];
-    }
-    const value = (type.value || '').trim();
-    if (value && value !== '') {
-      this.generalDetails.grantTypes.push(type.value.trim());
-    }
-    if (type.input) {
-      type.input.value = '';
-    }
-    if ( value && this.validGrandTypes.indexOf(value) === -1) {
-      this.grantTypesList.errorState = true;
-    } else if (value) {
-      this.grantTypesList.errorState = false;
-    }
+    //if (!this.matAutocomplete.isOpen) {
+     /* if (!this.generalDetails.grantTypes) {
+        this.generalDetails.grantTypes = [];
+      }
+      const value = (type.value || '').trim();
+      if (value && value !== '') {
+        this.generalDetails.grantTypes.push(type.value.trim());
+      }
+      if (type.input) {
+        type.input.value = '';
+      }
+      if (value && this.validGrandTypes.indexOf(value) === -1) {
+        this.grantTypesList.errorState = true;
+      } else if (value) {
+        this.grantTypesList.errorState = false;
+      }*/
+    //}
   }
   removeGrantType(type: string) {
     const index = this.generalDetails.grantTypes.indexOf(type);
@@ -89,9 +99,32 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     }
   }
   selectedGrandType(event: MatAutocompleteSelectedEvent) {
-    let  ev = {"value": event.option.viewValue};
-    this.addGrantType(ev);
+    if (!this.generalDetails.grantTypes) {
+      this.generalDetails.grantTypes = [];
+    }
+    const value = event.option.viewValue.trim();
+    this.fruitInput.nativeElement.value = '';
+    this.generalDetails.grantTypes.push(value);
+  
+    /*if (value && this.validGrandTypes.indexOf(value) === -1) {
+      this.grantTypesList.errorState = true;
+    } else if (value) {
+      this.grantTypesList.errorState = false;
+    }*/
+    this.grandTypesCtrl.setValue(null);
   }
+  
+   filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    
+    return this.validGrandTypes.filter(type => type.toLowerCase().indexOf(filterValue) === 0);
+  }
+  
+  filterGrandType(grandType ){
+    console.log(grandType);
+    this.filteredGrandTypes =  this.filter(grandType);
+  }
+
   reset(){
     this.generalDetails = {
       clientName: null,

@@ -26,7 +26,10 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
         <input matInput name="grantType"
+               #grantTypesInput
+               [formControl]="grandTypesCtrl"
                placeholder="New grant type..."
+               (ngModelChange)="filterGrandType($event)"
                [matChipInputFor]="grantTypesList"
                [matAutocomplete]="auto"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -34,7 +37,7 @@
                (matChipInputTokenEnd)="addGrantType($event)">
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGrandType($event)">
-        <mat-option *ngFor="let grantType of validGrandTypes" [value]="grantType">
+        <mat-option *ngFor="let grantType of filteredGrandTypes" [value]="grantType">
           {{grantType}}
         </mat-option>
       </mat-autocomplete>
