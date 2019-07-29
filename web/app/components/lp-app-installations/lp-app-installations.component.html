@@ -1,10 +1,10 @@
 <div class="container">
-  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs>
-    <mat-tab label="Create">
+  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="tabClick()">
+    <mat-tab label="Create" (selectedTabChange)="resetForms($event)">
       <mat-vertical-stepper [linear]="true" #stepperCreate>
         <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
-          <app-lp-app-installation-general-details [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
+          <app-lp-app-installation-general-details #appInstallGeneralDetails [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
         </mat-step>
         <mat-step [completed]="eventsConfig.length !== 0">
           <ng-template matStepLabel>Configure Webhooks</ng-template>

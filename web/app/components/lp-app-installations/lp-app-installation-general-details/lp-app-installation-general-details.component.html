@@ -1,4 +1,5 @@
-<form #createGeneralDetailsForm="ngForm" class="form-container">
+<form #createGeneralDetailsForm="ngForm"
+      class="form-container">
   <ng-template matStepLabel>General</ng-template>
   <div class="row align-items-center">
     <mat-form-field class="flex-fill">
@@ -24,7 +25,8 @@
           {{grantType}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input matInput name="grantType" placeholder="New grant type..."
+        <input matInput name="grantType"
+               placeholder="New grant type..."
                [matChipInputFor]="grantTypesList"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                [matChipInputAddOnBlur]="addOnBlur"
@@ -58,7 +60,7 @@
     </button>
   </div>
   <div>
-    <button type="button" [disabled]="!createGeneralDetailsForm.valid" (click)="createGeneralDetails()" mat-button>Next</button>
+    <button type="button" [disabled]="!createGeneralDetailsForm.valid || generalDetails.grantTypes.length === 0 || grantTypesList.errorState" (click)="createGeneralDetails()" mat-button>Next</button>
     <button type="reset" mat-button>Reset</button>
   </div>
 </form>

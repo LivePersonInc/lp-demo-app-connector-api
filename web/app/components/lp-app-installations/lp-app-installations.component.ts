@@ -31,6 +31,7 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   @ViewChild('tabs') tabs: MatTabGroup;
   @ViewChild('stepperCreate') stepperCreate: MatStepper;
   @ViewChild('stepperUpdate') stepperUpdate: MatStepper;
+  @ViewChild('appInstallGeneralDetails') appInstallGeneralDetails;
   constructor(public appInstallationService: AppInstallationsService, public loadingService: LoadingService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
@@ -224,5 +225,13 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   }
   setSelectedAppInstall() {
     this.appInstallationService.setSelectedAppInstall(this.selectedAppInstall);
+  }
+  
+  resetForms($event) {
+  
+  }
+  
+  tabClick() {
+    this.appInstallGeneralDetails.reset();
   }
 }

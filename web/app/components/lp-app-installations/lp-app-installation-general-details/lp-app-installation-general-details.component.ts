@@ -39,13 +39,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     }
   }
   ngOnInit() {
-    this.generalDetails = {
-      clientName: null,
-      description: null,
-      scope: null,
-      grantTypes: [],
-      uri: null
-    };
+    this.reset();
   }
   ngOnDestroy(): void {
     if (this.selectedAppInstallChangeSubscription) {
@@ -91,5 +85,15 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     } else {
       this.grantTypesList.errorState = false;
     }
+  }
+  
+  reset(){
+    this.generalDetails = {
+      clientName: null,
+      description: null,
+      scope: null,
+      grantTypes: [],
+      uri: null
+    };
   }
 }
