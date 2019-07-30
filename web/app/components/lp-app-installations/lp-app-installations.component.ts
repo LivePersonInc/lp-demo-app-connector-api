@@ -36,28 +36,7 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
               private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.avaliableEventTypes = {
-      'ms.MessagingEventNotification.ContentEvent' : {
-        type: 'ms.MessagingEventNotification.ContentEvent',
-        disabled: false,
-      },
-      'ms.MessagingEventNotification.RichContentEvent': {
-        type: 'ms.MessagingEventNotification.RichContentEvent',
-        disabled: false
-      },
-      'ms.MessagingEventNotification.AcceptStatusEvent': {
-        type: 'ms.MessagingEventNotification.AcceptStatusEvent',
-        disabled: false
-      },
-      'ms.MessagingEventNotification.ChatStateEvent': {
-        type: 'ms.MessagingEventNotification.ChatStateEvent',
-        disabled: false
-      },
-      'ms.MessagingEventNotification.ExConversationChangeNotification': {
-        type: 'ms.MessagingEventNotification.ExConversationChangeNotification',
-        disabled: false
-      }
-    }
+    this.initAvailableEventTypes();
     this.eventsConfig = [];
     this.generalDetails = {
       clientName: null,
@@ -238,11 +217,14 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
   resetForms(event) {
+    this.appInstallGeneralDetails.reset();
     this.eventsConfig = [];
     this.stepperCreate.reset();
     this.stepperUpdate.reset();
+    this.initAvailableEventTypes();
+  }
+  initAvailableEventTypes() {
     this.avaliableEventTypes = {
       'ms.MessagingEventNotification.ContentEvent' : {
         type: 'ms.MessagingEventNotification.ContentEvent',
@@ -266,8 +248,5 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
-  tabClick() {
-    this.appInstallGeneralDetails.reset();
-  }
+
 }
