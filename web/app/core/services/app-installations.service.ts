@@ -33,7 +33,6 @@ export class AppInstallationsService extends HttpService {
   }
 
   public init() {
-    console.log('in init');
     this.baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/installation/`;
     if (this.authenticationService && this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId;

@@ -69,6 +69,6 @@
   </div>
   <div>
     <button type="button" [disabled]="!createGeneralDetailsForm.valid || generalDetails.grantTypes.length === 0 || grantTypesList.errorState" (click)="createGeneralDetails()" mat-button>Next</button>
-    <button type="reset" mat-button>Reset</button>
+    <button (click)="reset()" mat-button>Reset</button>
   </div>
 </form>
