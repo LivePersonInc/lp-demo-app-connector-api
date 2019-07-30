@@ -64,9 +64,9 @@
             <button type="button" [disabled]="!generalDetails || eventsConfig.length === 0"
                     class="create-app-install-button" color="primary" mat-raised-button  matTooltip="Installing the application installation is enabling webhooks which means that the specified endoints are registered for receiving notifications. The endpoints should be always up and running, otherwise data loss could occur."
                     matTooltipPosition="below" (click)="openConfirmationDialog('Update')">Update</button>
-            <button type="button" [disabled]="!generalDetails || eventsConfig.length === 0"
+            <!--<button type="button" [disabled]="!generalDetails || eventsConfig.length === 0"
                     class="create-app-install-button" color="accent" mat-raised-button
-                    (click)="openConfirmationDialog('Disable')">Disable</button>
+                    (click)="openConfirmationDialog('Disable')">Disable</button>-->
           </div>
         </mat-step>
       </mat-vertical-stepper>
