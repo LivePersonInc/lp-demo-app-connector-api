@@ -229,8 +229,10 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
     this.appInstallationService.setSelectedAppInstall(this.selectedAppInstall);
   }
   
-  resetForms($event) {
-  
+  resetForms(event) {
+    this.eventsConfig = [];
+    this.stepperCreate.reset();
+    this.stepperUpdate.reset();
   }
   
   tabClick() {

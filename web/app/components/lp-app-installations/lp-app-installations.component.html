@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="tabClick()">
-    <mat-tab label="Create" (selectedTabChange)="resetForms($event)">
+  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="tabClick()" (selectedTabChange)="resetForms($event)">
+    <mat-tab label="Create">
       <mat-vertical-stepper [linear]="true" #stepperCreate>
         <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
