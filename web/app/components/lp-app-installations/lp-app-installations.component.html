@@ -33,7 +33,7 @@
           <ng-template matStepLabel>Select an application installation</ng-template>
             <mat-form-field>
               <mat-label>Application installations</mat-label>
-              <mat-select [(ngModel)]="selectedAppInstall">
+              <mat-select [(ngModel)]="selectedAppInstall" (selectionChange)="setSelectedAppInstall()">
                 <mat-option *ngFor="let appInstall of avaliableApplicationInstallation" [value]="appInstall">
                   {{appInstall.client_name}}
                 </mat-option>
