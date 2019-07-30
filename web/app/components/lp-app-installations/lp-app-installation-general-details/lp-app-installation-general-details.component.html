@@ -33,8 +33,7 @@
                [matChipInputFor]="grantTypesList"
                [matAutocomplete]="auto"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               [matChipInputAddOnBlur]="addOnBlur"
-               (matChipInputTokenEnd)="addGrantType($event)">
+               [matChipInputAddOnBlur]="addOnBlur">
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGrandType($event)">
         <mat-option *ngFor="let grantType of filteredGrandTypes" [value]="grantType">
@@ -59,7 +58,7 @@
   </div>
   <div class="row align-items-center">
     <mat-form-field class="flex-fill">
-      <input name="scope" #scope='ngModel' matInput placeholder="Scope" [ngModel]="generalDetails.scope" (ngModelChange)="generalDetails.scope = $event" appLpDetailsScopeValidation>
+      <input name="scope" #scope='ngModel' matInput placeholder="Scope" [ngModel]="generalDetails.scope" (ngModelChange)="generalDetails.scope = $event" appLpDetailsScopeValidation [readonly]="true" required>
       <mat-error *ngIf="scope.hasError('scope')">
         {{scope.errors.scope.message}}
       </mat-error>

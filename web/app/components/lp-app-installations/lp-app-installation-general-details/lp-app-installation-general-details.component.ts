@@ -56,32 +56,12 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
       this.selectedAppInstallChangeSubscription.unsubscribe();
     }
   }
-
   createGeneralDetails() {
     if (this.generalDetails.grantTypes.length === 0) {
       this.grantTypesList.errorState = true;
     } else {
       this.detailsCreated.emit(this.generalDetails);
     }
-  }
-  addGrantType(type: MatChipInputEvent | any) {
-    //if (!this.matAutocomplete.isOpen) {
-     /* if (!this.generalDetails.grantTypes) {
-        this.generalDetails.grantTypes = [];
-      }
-      const value = (type.value || '').trim();
-      if (value && value !== '') {
-        this.generalDetails.grantTypes.push(type.value.trim());
-      }
-      if (type.input) {
-        type.input.value = '';
-      }
-      if (value && this.validGrandTypes.indexOf(value) === -1) {
-        this.grantTypesList.errorState = true;
-      } else if (value) {
-        this.grantTypesList.errorState = false;
-      }*/
-    //}
   }
   removeGrantType(type: string) {
     const index = this.generalDetails.grantTypes.indexOf(type);
@@ -91,7 +71,7 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
       if ( gt && this.validGrandTypes.indexOf(gt) === -1) {
         valid = false;
       }
-    })
+    });
     if (!valid || this.generalDetails.grantTypes.length === 0) {
       this.grantTypesList.errorState = true;
     } else {
@@ -106,31 +86,28 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
     this.fruitInput.nativeElement.value = '';
     this.generalDetails.grantTypes.push(value);
   
-    /*if (value && this.validGrandTypes.indexOf(value) === -1) {
+    if (value && this.validGrandTypes.indexOf(value) === -1) {
       this.grantTypesList.errorState = true;
     } else if (value) {
       this.grantTypesList.errorState = false;
-    }*/
+    }
     this.grandTypesCtrl.setValue(null);
   }
-  
-   filter(value: string): string[] {
+  filter(value: string): string[] {
+    if(!value) value='';
     const filterValue = value.toLowerCase();
-    
     return this.validGrandTypes.filter(type => type.toLowerCase().indexOf(filterValue) === 0);
   }
-  
   filterGrandType(grandType ){
     console.log(grandType);
     this.filteredGrandTypes =  this.filter(grandType);
   }
-
   reset(){
     this.generalDetails = {
       clientName: null,
       description: null,
-      scope: null,
-      grantTypes: [],
+      scope: "msg.consumer",
+      grantTypes: ["client_credentials"],
       uri: null
     };
   }

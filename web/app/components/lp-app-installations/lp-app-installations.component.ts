@@ -76,7 +76,9 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   getAppInstallations() {
     this.appInstallSubscription = this.appInstallationService.getAppInstallations()
       .subscribe(appInstallations => {
-        this.avaliableApplicationInstallation = appInstallations;
+        if(appInstallations){
+          this.avaliableApplicationInstallation = appInstallations.filter( app => !(!app.enabled || (!app.scope || app.scope !== 'msg.consumer')));
+        }
         this.loadingService.stopLoading();
       });
   }
