@@ -33,7 +33,7 @@ export class LpStartTutotialComponent implements OnInit {
 
   public done() {
     this.conversationService.reset();
-    this.conversationService.restoreStoredState();
+    this.conversationService.restoreStoredState("");
     this.router.navigateByUrl('/demo');
   }
 

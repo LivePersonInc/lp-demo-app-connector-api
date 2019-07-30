@@ -56,7 +56,7 @@ export class ConversationService extends HttpService {
 
       this.installationService.installationSubject.subscribe( event => {
         if(event === 'APP_SECRET_FOUND') {
-          this.restoreStoredState();
+          this.restoreStoredState("RESTORED");
         }
       });
 
@@ -270,7 +270,7 @@ export class ConversationService extends HttpService {
     return "";
   }
 
-  public restoreStoredState() {
+  public restoreStoredState(eventName : string) {
     let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
     if(state.selectedAppId){
       let appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
@@ -291,7 +291,7 @@ export class ConversationService extends HttpService {
           this.conversationManager.subscribeToMessageNotifications(this.conversation);
           if(this.conversation.conversationId){
             this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
-            this.conversationRestoredSubject.next("RESTORED");
+            this.conversationRestoredSubject.next(eventName);
 
           }
         }, error => {
