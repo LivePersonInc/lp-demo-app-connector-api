@@ -183,6 +183,7 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
         this.snackBar.open(`Application installation was successfully updated`, '', {
           duration: 5000
         });
+        this.resetForms("");
       }, e => {
         this.loadingService.stopLoading();
         this.snackBar.open(`There was an error while updating the application installation. Please try again.`, 'Close', {
@@ -225,14 +226,45 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
         });
       });
   }
+  
   setSelectedAppInstall() {
     this.appInstallationService.setSelectedAppInstall(this.selectedAppInstall);
+    if(this.selectedAppInstall && this.selectedAppInstall.capabilities && this.selectedAppInstall.capabilities.webhooks) {
+      for(let key in this.selectedAppInstall.capabilities.webhooks){
+        this.avaliableEventTypes[key] = {
+          type: event.type,
+          disabled: true
+        };
+      }
+    }
   }
   
   resetForms(event) {
     this.eventsConfig = [];
     this.stepperCreate.reset();
     this.stepperUpdate.reset();
+    this.avaliableEventTypes = {
+      'ms.MessagingEventNotification.ContentEvent' : {
+        type: 'ms.MessagingEventNotification.ContentEvent',
+        disabled: false,
+      },
+      'ms.MessagingEventNotification.RichContentEvent': {
+        type: 'ms.MessagingEventNotification.RichContentEvent',
+        disabled: false
+      },
+      'ms.MessagingEventNotification.AcceptStatusEvent': {
+        type: 'ms.MessagingEventNotification.AcceptStatusEvent',
+        disabled: false
+      },
+      'ms.MessagingEventNotification.ChatStateEvent': {
+        type: 'ms.MessagingEventNotification.ChatStateEvent',
+        disabled: false
+      },
+      'ms.MessagingEventNotification.ExConversationChangeNotification': {
+        type: 'ms.MessagingEventNotification.ExConversationChangeNotification',
+        disabled: false
+      }
+    }
   }
   
   tabClick() {
