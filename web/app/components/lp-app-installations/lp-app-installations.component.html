@@ -31,13 +31,14 @@
       <mat-vertical-stepper [linear]="false" #stepperUpdate>
         <mat-step>
           <ng-template matStepLabel>Select an application installation</ng-template>
-            <mat-form-field>
+            <mat-form-field class="w-100">
               <mat-label>Application installations</mat-label>
               <mat-select [(ngModel)]="selectedAppInstall" (selectionChange)="setSelectedAppInstall()">
                 <mat-option *ngFor="let appInstall of avaliableApplicationInstallation" [value]="appInstall">
                   {{appInstall.client_name}}
                 </mat-option>
               </mat-select>
+              <mat-hint *ngIf="selectedAppInstall">Installation id: {{selectedAppInstall.client_id}}</mat-hint>
             </mat-form-field>
             <div>
               <button mat-button matStepperNext (click)="setSelectedAppInstall()">Next</button>
@@ -45,6 +46,12 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
+          <div *ngIf="selectedAppInstall && !selectedAppInstall.enabled" class="container-fluid disabled-ind-container">
+            <mat-chip class="disabled-ind"  disabled>
+              This app is disabled!
+              <mat-icon>warning</mat-icon>
+            </mat-chip>
+          </div>
           <app-lp-app-installation-general-details #updateAppInstallGeneralDeateils [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
         </mat-step>
         <mat-step>

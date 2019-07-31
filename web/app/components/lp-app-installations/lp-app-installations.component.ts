@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component";
 import {error} from "util";
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
   selector: 'app-lp-webhooks',
@@ -34,10 +35,17 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   @ViewChild('appInstallGeneralDetails') appInstallGeneralDetails;
   @ViewChild('updateAppInstallGeneralDeateils') updateAppInstallGeneralDeateils;
   
-  constructor(public appInstallationService: AppInstallationsService, public loadingService: LoadingService,
+  constructor(public appInstallationService: AppInstallationsService,
+              private authenticationService: AuthenticationService,
+              public loadingService: LoadingService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    //needed when browser refresh
+    this.authenticationService.userLoggedSubject.subscribe(ev => {
+      this.appInstallationService.init();
+      this.getAppInstallations();
+    });
     this.initAvailableEventTypes();
     this.eventsConfig = [];
     this.generalDetails = {
@@ -47,7 +55,9 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
       scope: null,
       uri: null
     };
-    this.getAppInstallations();
+    if(this.authenticationService.user) {
+      this.getAppInstallations();
+    }
   }
   ngOnDestroy() {
     if (this.appInstallSubscription) {

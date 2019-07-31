@@ -36,4 +36,14 @@
     // Every toolbar row uses a flexbox row layout.
     flex: 1 1 auto;
   }
+  .disabled-ind-container{
+    height: 52px;
+    .disabled-ind {
+      float: right;
+      margin: 10px;
+      margin-left: 0;
+      background-color:#f5e678;
+    }
+  }
+
 }

@@ -23,6 +23,7 @@ export class AuthenticationService extends HttpService {
 
   set user(user: User) {
     this._user = user;
+    this.userLoggedSubject.next('USER-SET');
   }
 
   get isLoggedIn() {
