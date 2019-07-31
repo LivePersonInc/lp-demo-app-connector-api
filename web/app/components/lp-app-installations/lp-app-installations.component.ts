@@ -32,6 +32,8 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
   @ViewChild('stepperCreate') stepperCreate: MatStepper;
   @ViewChild('stepperUpdate') stepperUpdate: MatStepper;
   @ViewChild('appInstallGeneralDetails') appInstallGeneralDetails;
+  @ViewChild('updateAppInstallGeneralDeateils') updateAppInstallGeneralDeateils;
+  
   constructor(public appInstallationService: AppInstallationsService, public loadingService: LoadingService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
@@ -205,9 +207,9 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
         });
       });
   }
-  
   setSelectedAppInstall() {
     this.appInstallationService.setSelectedAppInstall(this.selectedAppInstall);
+    this.saveGeneralDetails(this.updateAppInstallGeneralDeateils.getGeneralDetails());
     if(this.selectedAppInstall && this.selectedAppInstall.capabilities && this.selectedAppInstall.capabilities.webhooks) {
       for(let key in this.selectedAppInstall.capabilities.webhooks){
         this.avaliableEventTypes[key] = {
@@ -223,6 +225,7 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
     this.stepperCreate.reset();
     this.stepperUpdate.reset();
     this.initAvailableEventTypes();
+    this.completed = false;
   }
   initAvailableEventTypes() {
     this.avaliableEventTypes = {

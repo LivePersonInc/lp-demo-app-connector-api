@@ -63,6 +63,9 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
       this.detailsCreated.emit(this.generalDetails);
     }
   }
+  getGeneralDetails(): GeneralDetails{
+    return this.generalDetails;
+  }
   removeGrantType(type: string) {
     const index = this.generalDetails.grantTypes.indexOf(type);
     let valid = true;

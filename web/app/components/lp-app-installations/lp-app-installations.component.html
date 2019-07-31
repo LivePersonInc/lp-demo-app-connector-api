@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="tabClick()" (selectedTabChange)="resetForms($event)">
+  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="resetForms($event)">
     <mat-tab label="Create">
       <mat-vertical-stepper [linear]="true" #stepperCreate>
         <mat-step>
@@ -11,7 +11,7 @@
             <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes" (eventCreated)="addEvent($event)" [createNewEvent]="true"></app-lp-webhooks-event>
             <div>
               <button type="button" mat-button matStepperPrevious>Back</button>
-              <button #firstStepNextBtn type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
+              <button type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
               <button type="reset" mat-button>Reset</button>
             </div>
         </mat-step>
@@ -45,14 +45,14 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Application Installation Details</ng-template>
-          <app-lp-app-installation-general-details [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
+          <app-lp-app-installation-general-details #updateAppInstallGeneralDeateils [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Webhook details</ng-template>
           <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes" (eventCreated)="addEvent($event)" [createNewEvent]="true"></app-lp-webhooks-event>
           <div>
             <button type="button" mat-button matStepperPrevious>Back</button>
-            <button #firstStepNextBtn type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
+            <button type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
             <button type="reset" mat-button>Reset</button>
           </div>
         </mat-step>
