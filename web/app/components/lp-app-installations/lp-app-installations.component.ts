@@ -97,6 +97,8 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
         this.createAppInstallation();
       } else if (result && state.toLowerCase() === 'disable') {
         this.disableAppInstallation();
+      } else if (result && state.toLowerCase() === 'enable') {
+        this.enableAppInstallation();
       }
     });
   }
@@ -203,6 +205,41 @@ export class LpAppInstallationsComponent implements OnInit, OnDestroy {
       }, e => {
         this.loadingService.stopLoading();
         this.snackBar.open(`There was an error while disabling the application installation. Please try again.`, 'Close', {
+          duration: 5000
+        });
+      });
+  }
+  enableAppInstallation() {
+    const capabilities = new Capabilities();
+    const webhooks = new Webhooks();
+    // Construct webhooks object
+    this.eventsConfig.forEach(eventConfig => {
+      webhooks[eventConfig.type] = {
+        endpoint: eventConfig.endpoint,
+        headers: eventConfig.headers,
+        max_retries: 3
+      };
+    });
+    capabilities.webhooks = webhooks;
+    // Construct app installation
+    this.selectedAppInstall.client_name = this.generalDetails.clientName;
+    this.selectedAppInstall.description = this.generalDetails.description;
+    this.selectedAppInstall.enabled = true;
+    this.selectedAppInstall.grant_types = this.generalDetails.grantTypes;
+    this.selectedAppInstall.scope = this.generalDetails.scope;
+    this.selectedAppInstall.logo_uri = this.generalDetails.uri;
+    this.selectedAppInstall.capabilities = capabilities;
+    this.selectedAppInstall.enabled = true;
+    this.appInstallationService.updateAppInstallation(this.selectedAppInstall)
+      .subscribe(appInstallUpdated => {
+        this.getAppInstallations();
+        this.loadingService.stopLoading();
+        this.snackBar.open(`Application installation was successfully enabled`, '', {
+          duration: 5000
+        });
+      }, e => {
+        this.loadingService.stopLoading();
+        this.snackBar.open(`There was an error while enabling the application installation. Please try again.`, 'Close', {
           duration: 5000
         });
       });
