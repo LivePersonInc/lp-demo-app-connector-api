@@ -30,7 +30,12 @@ function authLocalStrategy() {
 
           if (handleStatusCode(resolve[1].statusCode)) {
             user = resolve[0];
-            return done(null, user);
+            if(user.config && user.config.isAdmin) {
+              return done(null, user);
+            } else {
+              logger.error("Unauthorized, Only admins users can login.");
+              return done(null, false, { message: 'Only admins users can login.\n' });
+            }
           } else {
             logger.error("Unauthorized");
             return done(null, false, { message: 'Invalid credentials.\n' });
