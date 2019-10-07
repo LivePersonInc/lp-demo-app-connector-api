@@ -68,7 +68,7 @@ export class LpNavComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(LpConfirmationDialogComponent);
 
     dialogRef.componentInstance.title = "Logout";
-    dialogRef.componentInstance.message = "You could lost your changes. Are you sure?";
+    dialogRef.componentInstance.message = "You could lose your changes. Are you sure you want to logout?";
 
     this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
