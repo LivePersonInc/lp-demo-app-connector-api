@@ -45,7 +45,7 @@ passport.deserializeUser((user, done) => {
 
 const halfHour =  1800 * 1000;
 const secret = process.env.secret || '582e3ed11562c6ed3808e3325fd';
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1); // trust first proxy
 app.use(session({
   genid: () => { return uuid()},
   secret: secret,
@@ -57,7 +57,7 @@ app.use(session({
     secure: 'auto',
     maxAge: halfHour,
     httpOnly: true,
-    overwrite: false,
+    overwrite: true,
   },
   saveUninitialized: false
 }));
@@ -87,15 +87,19 @@ app.post('/login', (req, res, next) => {
       return next(err); }
     if (!user) {
       return res.status(HttpStatus.UNAUTHORIZED).redirect('/#/settings'); }
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
-      }
-      return res.send({
+    req.session.regenerate(function(err) {
+      if (err) { return res.status(HttpStatus.UNAUTHORIZED).redirect('/#/settings'); }
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.send({
           'userId': user.config.userId,
           'sessionTTl': user.sessionTTl
+        });
       });
-    });
+    })
+
   })(req, res, next);
 });
 
