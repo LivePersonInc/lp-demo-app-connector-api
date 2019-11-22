@@ -45,7 +45,7 @@ passport.deserializeUser((user, done) => {
 
 const halfHour =  1800 * 1000;
 const secret = process.env.secret || '582e3ed11562c6ed3808e3325fd';
-
+app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   genid: () => { return uuid()},
   secret: secret,
