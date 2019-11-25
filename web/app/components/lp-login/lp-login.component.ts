@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DomainsService} from "../../core/services/domains.service";
 import {AuthenticationService} from "../../core/services/authentication.service";
@@ -58,9 +58,10 @@ export class LpLoginComponent implements OnInit {
       }
     });
     this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
-      if(event === 'READY') {
+      //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
+      /*if(event === 'READY') {
         this.authenticationService.login(this.brandId, this.userName, this.password);
-      }
+      }*/
     });
   }
 
@@ -69,26 +70,20 @@ export class LpLoginComponent implements OnInit {
     if(this.domainSubscription) this.domainSubscription.unsubscribe();
     if(this.dialogRefSubscription) this.dialogRefSubscription.unsubscribe();
   }
-
-
-  public authenticate() {
+  
+  public authenticate(event) {
     this.removedWhiteSpacesAtEndAndBeginning();
-    this.loadDomainsForBrand({'brandId':this.brandId,'userName':this.userName,'password':this.password});
-  }
-
-  public removedWhiteSpacesAtEndAndBeginning() {
-    this.brandId = this.brandId.trim();
-    this.userName = this.userName.trim();
-  }
-
-  public loadDomainsForBrand(event: any) {
     if(event && event.brandId && event.userName && event.password) {
       this.brandId = event.brandId;
       this.userName = event.userName;
       this.password = event.password;
     }
-    //First of all we need to know the domains
-    this.domainsService.getDomainList(this.brandId);
+    this.authenticationService.login(this.brandId, this.userName, this.password);
+  }
+
+  public removedWhiteSpacesAtEndAndBeginning() {
+    this.brandId = this.brandId.trim();
+    this.userName = this.userName.trim();
   }
 
   public goToStartConfigPage() {

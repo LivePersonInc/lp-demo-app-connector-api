@@ -5,7 +5,6 @@ import {MatSnackBar} from "@angular/material";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {User} from "../../shared/models/user.model";
-import {DomainsService} from "./domains.service";
 import {Router} from "@angular/router";
 import {environment} from '../../../environments/environment';
 import {throwError, Observable} from "rxjs";
@@ -32,7 +31,6 @@ export class AuthenticationService extends HttpService {
 
   constructor(protected http: HttpClient,
               protected snackBar: MatSnackBar,
-              protected domainsService: DomainsService,
               protected loadingService:LoadingService,
               protected router: Router,
   )
@@ -45,12 +43,8 @@ export class AuthenticationService extends HttpService {
   }
 
   public login(brandId: string, username: string, password: string): any {
-      const domain = this.domainsService.getDomainByServiceName('agentVep');
-      const httpOptions = {
-          headers: new HttpHeaders({'LP-DOMAIN': domain})
-      };
      return this.doPost(`${environment.protocol}://${environment.server}:${environment.port}/login`,
-       {username:  brandId + ":" + username, password: password }, httpOptions).pipe(
+       {username:  brandId + ":" + username, password: password }, {}).pipe(
          map(res => {
            this._user = new User();
            this._user.userName = username;

@@ -16,7 +16,7 @@ export class DomainsService extends HttpService{
   constructor(protected snackBar: MatSnackBar,protected http: HttpClient, protected loadingService:LoadingService, protected router: Router) {
     super(snackBar,http, loadingService,router);
   }
-
+  //Currently only needed for upload files
   public getDomainList(brandId: string) {
     this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/domains/csds/${brandId}`, {}, true).pipe(
       map( (data) => {

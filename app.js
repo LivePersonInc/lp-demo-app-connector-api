@@ -20,7 +20,7 @@ const authLocalStrategy = require('./server/auth/authLocalStrategy');
 const router = express.Router();
 const subscriptionsHandler = require('./server/util/subscriptionsHandler');
 const HttpStatus = require('http-status-codes');
-const helmet = require('helmet')
+const helmet = require('helmet');
 
 app.use(helmet());
 
