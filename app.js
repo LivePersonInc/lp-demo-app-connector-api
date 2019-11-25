@@ -111,17 +111,22 @@ app.get('/logout', (req, res, next) => {
   });
 });
 app.get('/getUserInfo', (req, res) => {
-  const user = {};
-  user.account = req.session.passport.user.csdsCollectionResponse.baseURIs[0].account;
-  user.loginName = req.session.passport.user.config.loginName;
-  res.send(user);
+  try {
+    const user = {};
+    user.account = req.session.passport.user.csdsCollectionResponse.baseURIs[0].account;
+    user.loginName = req.session.passport.user.config.loginName;
+    res.send(user);
+  }catch(error) {
+    logger.error("ERROR: " + error);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+  }
 });
 app.get('/isAuthenticated',(req, res, next) => res.send(req.isAuthenticated()));
 //Serve our UI
 app.use(express.static('dist'));
 //http server
 app.listen(nconf.get("SERVER_HTTP_PORT"), () => {
-  logger.info("listening");
+  logger.info("listening...");
   app.isReady = true;
   app.emit("ready", true);
 });
