@@ -59,9 +59,9 @@ export class LpLoginComponent implements OnInit {
     });
     this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
       //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
-      /*if(event === 'READY') {
+      if(event === 'READY') {
         this.authenticationService.login(this.brandId, this.userName, this.password);
-      }*/
+      }
     });
   }
 
@@ -72,13 +72,16 @@ export class LpLoginComponent implements OnInit {
   }
   
   public authenticate(event) {
+  
     this.removedWhiteSpacesAtEndAndBeginning();
     if(event && event.brandId && event.userName && event.password) {
       this.brandId = event.brandId;
       this.userName = event.userName;
       this.password = event.password;
     }
-    this.authenticationService.login(this.brandId, this.userName, this.password);
+    //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
+    this.domainsService.getDomainList(this.brandId);
+   // this.authenticationService.login(this.brandId, this.userName, this.password);
   }
 
   public removedWhiteSpacesAtEndAndBeginning() {
