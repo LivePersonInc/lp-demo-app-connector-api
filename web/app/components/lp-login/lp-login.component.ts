@@ -72,7 +72,6 @@ export class LpLoginComponent implements OnInit {
   }
   
   public authenticate(event) {
-  
     this.removedWhiteSpacesAtEndAndBeginning();
     if(event && event.brandId && event.userName && event.password) {
       this.brandId = event.brandId;
