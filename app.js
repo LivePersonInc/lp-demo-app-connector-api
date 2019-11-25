@@ -110,7 +110,12 @@ app.get('/logout', (req, res, next) => {
     res.json({status: 'OK'});
   });
 });
-app.get('/getSession', (req, res) => res.send(req.session));
+app.get('/getUserInfo', (req, res) => {
+  const user = {};
+  user.account = req.session.passport.user.csdsCollectionResponse.baseURIs[0].account;
+  user.loginName = req.session.passport.user.config.loginName;
+  res.send(user);
+});
 app.get('/isAuthenticated',(req, res, next) => res.send(req.isAuthenticated()));
 //Serve our UI
 app.use(express.static('dist'));

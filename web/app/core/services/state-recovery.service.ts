@@ -36,11 +36,11 @@ export class StateRecoveryService extends HttpService{
   }
 
   public loadCurrentSessionState() {
-    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/getSession`, {}, true).pipe(
+    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/getUserInfo`, {}, true).pipe(
       map(res => {
         const user = new User();
-        user.brandId = res.passport.user.csdsCollectionResponse.baseURIs[0].account;
-        user.userName =  res.passport.user.config.loginName;
+        user.brandId = res.account;
+        user.userName = res.loginName;
         this.authenticationService.user = user;
         this.domainsService.getDomainList(user.brandId);
       }),
