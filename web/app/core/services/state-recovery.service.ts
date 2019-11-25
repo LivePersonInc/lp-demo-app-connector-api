@@ -64,7 +64,7 @@ export class StateRecoveryService extends HttpService{
       this.installationService.init();
       this.conversationService.init();
       this.accountConfigService.init();
-      this.accountConfigService.getAccountConfigPropertiesList();
+      this.accountConfigService.getIsAsyncMessagingPropActive();
     }
   }
 

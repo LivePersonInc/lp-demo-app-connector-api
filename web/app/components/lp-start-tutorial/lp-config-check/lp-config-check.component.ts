@@ -35,7 +35,7 @@ export class LpConfigCheckComponent implements OnInit, OnDestroy {
     });
 
     this.acSubscription = this.accountConfigService.acSubject.subscribe( event => {
-      if( event === 'GET_LIST'){
+      if( event === 'DONE'){
         this.isAsyncMessagingActive = this.accountConfigService.isAsyncMessagingActive;
       }
     });

@@ -14,11 +14,10 @@ import {map, catchError} from "rxjs/operators";
 export class AccountConfigService extends HttpService {
 
   public acSubject = new Subject<string>();
-  public accountConfigPropList:any;
   public isAsyncMessagingActive:boolean;
   public brandId = "";
 
-  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/account/properties/`;
+  private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/property/asyncmsg/`;
 
 
   constructor(protected authenticationService: AuthenticationService,
@@ -36,13 +35,12 @@ export class AccountConfigService extends HttpService {
     }
   }
 
-  public getAccountConfigPropertiesList() {
+  public getIsAsyncMessagingPropActive() {
     this.doGet(`${this.baseURI}${this.brandId}`, {},true).pipe(
-      map(data => {
-        this.accountConfigPropList = data;
-        this.isAsyncMessagingActive = this.checkIsAsyncMessagingActive();
+      map(result => {
+        this.isAsyncMessagingActive = result;
         this.loadingService.stopLoading();
-        this.acSubject.next('GET_LIST');
+        this.acSubject.next('DONE');
       }),
       catchError(error => {
         this.errorResponse(error);
@@ -50,31 +48,10 @@ export class AccountConfigService extends HttpService {
       })
     ).subscribe();
   }
-
-  public updateAccountConfigProperties() {
-    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(this.accountConfigPropList), {}).pipe(
-      map(data => {
-        this.loadingService.stopLoading();
-        this.acSubject.next('UPDATED');
-      }),
-      catchError(error => {
-        this.errorResponse(error);
-        return throwError(new Error(error || 'An error occurred, please try again later'));
-      })
-    ).subscribe();
-  }
-
+  
   public reset(){
-    this.accountConfigPropList = null;
     this.isAsyncMessagingActive = false;
     this.brandId = "";
   }
-
-  private checkIsAsyncMessagingActive(): boolean {
-    let feature = this.accountConfigPropList.appDataList[0].accountList.accountList[0].itemsCollection.data
-      .filter( e => e.compoundFeatureID == "Common.Async_Messaging");
-    return feature[0].value.value;
-  }
-
 
 }

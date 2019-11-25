@@ -72,7 +72,7 @@ app.use('/demo', function (req, res, next) {
 });
 
 app.use("/demo/installation", installationBridge);
-app.use("/demo/account", accountConfBridge);
+app.use("/demo/property/", accountConfBridge);
 app.use("/demo/ums", umsBridge);
 app.use("/demo/history", historyBridge);
 app.use("/demo/authorization", authorizationBridge);

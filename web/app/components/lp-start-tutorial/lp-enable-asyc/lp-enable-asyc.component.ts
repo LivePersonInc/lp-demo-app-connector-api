@@ -20,18 +20,17 @@ export class LpEnableAsycComponent implements OnInit, OnDestroy {
   constructor(private _accountConfigService: AccountConfigService,
               private  installationService: InstallationService,
               private router: Router,
-              private authenticationService: AuthenticationService,
               ) {
     this.accountConfigService = _accountConfigService;
   }
 
   ngOnInit() {
     this.accountConfigService.acSubject.subscribe( event => {
-      if(event === 'GET_LIST'){
+      if(event === 'DONE'){
         this.completed.emit(true);
       }
     });
-    this.accountConfigService.getAccountConfigPropertiesList();
+    this.accountConfigService.getIsAsyncMessagingPropActive();
   }
 
   ngOnDestroy() {
