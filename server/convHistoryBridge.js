@@ -11,28 +11,32 @@ const convHistoryService = new ConvHistoryService();
 const serviceName = 'msgHist';
 
 router.get("/:brandId/consumer/:conversationId", function (req, res, next) {
-  let brandId = req.params.brandId;
-  let conversationId = req.params.conversationId;
+  try {
+    let brandId = req.params.brandId;
+    let conversationId = req.params.conversationId;
+    let args = {};
+    args.data = {};
+    args.headers = {};
+    args.headers['content-type'] = 'application/json';
+    args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+    const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
-  let args = {};
-  args.data = {};
-  args.headers = {};
-  args.headers['content-type'] = 'application/json';
-  args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
-  const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
-
-  convHistoryService
-    .getHistoryByConsumerId(conversationId, brandId, args, domain)
-    .then((resolve) => {
-      if (handleStatusCode(resolve[1].statusCode)) {
-        res.send(resolve[0]);
-      } else {
-        res.status(resolve[1].statusCode).send("Something wrong");
-      }
-    }).catch((error) => {
-    logger.error("ERROR: Promise rejected", error);
+    convHistoryService
+      .getHistoryByConsumerId(conversationId, brandId, args, domain)
+      .then((resolve) => {
+        if (handleStatusCode(resolve[1].statusCode)) {
+          res.send(resolve[0]);
+        } else {
+          res.status(resolve[1].statusCode).send("Something wrong");
+        }
+      }).catch((error) => {
+      logger.error("ERROR: Promise rejected", error);
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
+    });
+  } catch(error) {
+    logger.error("ERROR: " + error);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)});
-  });
+  }
 });
 
 module.exports = router;
