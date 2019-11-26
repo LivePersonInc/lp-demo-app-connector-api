@@ -45,8 +45,7 @@ passport.deserializeUser((user, done) => {
 
 const halfHour =  1800 * 1000;
 const secret = process.env.secret || '582e3ed11562c6ed3808e3325fd';
-app.set('trust proxy', 1); // trust first proxy
-app.use(session({
+const sess = {
   genid: () => { return uuid()},
   secret: secret,
   store: new MemoryStore({
@@ -54,13 +53,19 @@ app.use(session({
   }),
   resave: true,
   cookie: {
-    secure: 'auto',
     maxAge: halfHour,
     httpOnly: true,
     overwrite: true,
   },
   saveUninitialized: false
-}));
+};
+
+if(process.env.NODE_ENV === 'prod') {
+  app.set('trust proxy', 1); // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
 
