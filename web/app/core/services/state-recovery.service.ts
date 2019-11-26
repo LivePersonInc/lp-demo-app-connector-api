@@ -36,7 +36,7 @@ export class StateRecoveryService extends HttpService{
   }
 
   public loadCurrentSessionState() {
-    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/getUserInfo`, {}, true).pipe(
+    this.doGet(`${environment.protocol}://${environment.server}:${environment.port}/demo/getUserInfo`, {}, true).pipe(
       map(res => {
         const user = new User();
         user.brandId = res.account;

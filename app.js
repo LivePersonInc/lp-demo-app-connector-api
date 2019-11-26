@@ -73,7 +73,7 @@ app.get("/subscribe/notifications/:convid/:appKey", (req, res) => {
   req.isAuthenticated() ? subscriptionsHandler.handleSubscriptionRequest(req, res) : res.status(HttpStatus.UNAUTHORIZED).send("Unauthorized");
 });
 app.use('/demo', function (req, res, next) {
-  req.isAuthenticated ? next() : res.status(HttpStatus.UNAUTHORIZED).send("Unauthorized");
+  req.isAuthenticated() ? next() : res.status(HttpStatus.UNAUTHORIZED).send("Unauthorized");
 });
 
 app.use("/demo/installation", installationBridge);
@@ -115,7 +115,7 @@ app.get('/logout', (req, res, next) => {
     res.json({status: 'OK'});
   });
 });
-app.get('/getUserInfo', (req, res) => {
+app.get('/demo/getUserInfo', (req, res) => {
   try {
     const user = {};
     user.account = req.session.passport.user.csdsCollectionResponse.baseURIs[0].account;
