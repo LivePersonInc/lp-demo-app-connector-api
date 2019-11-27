@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
-import {MatChipInputEvent, MatStepper} from '@angular/material';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatStepper } from '@angular/material/stepper';
 import {GeneralDetails} from './GeneralDetails';
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
@@ -8,7 +9,6 @@ import {map, startWith} from 'rxjs/operators';
 import {Subscription,Observable} from "rxjs";
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import {FormControl} from '@angular/forms';
-import {inspectNativeElement} from "@angular/platform-browser/src/dom/debug/ng_probe";
 
 @Component({
   selector: 'app-lp-app-installation-general-details',
@@ -30,9 +30,9 @@ export class LpAppInstallationGeneralDetailsComponent implements OnInit, OnDestr
   
   @Output() detailsCreated = new EventEmitter<GeneralDetails>();
   @Input() createAppInstall: boolean;
-  @ViewChild('grantTypesList') grantTypesList;
-  @ViewChild('grantTypesInput') fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('grantTypesList', {static: false}) grantTypesList;
+  @ViewChild('grantTypesInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
   constructor(appInstallService: AppInstallationsService) {
     if (!this.createAppInstall) {

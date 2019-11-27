@@ -13,7 +13,7 @@ export class LpConsoleComponent implements OnInit, AfterViewInit, AfterViewCheck
   @Input()
   public conversation: Conversation;
 
-  @ViewChild('notifications') private notifications: ElementRef;
+  @ViewChild('notifications',  {static: false}) private notifications: ElementRef;
 
   private pendingEvent = false;
 

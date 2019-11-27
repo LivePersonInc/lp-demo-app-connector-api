@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from "./http.service";
-import {MatSnackBar} from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {environment} from '../../../environments/environment';

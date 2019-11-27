@@ -3,7 +3,7 @@ import {fadeInAnimation} from "../../shared/animations/lp-animations";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {Router} from "@angular/router";
 import {ConversationService} from "../../core/services/conversation.service";
-import {MatDialog} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'lp-home',

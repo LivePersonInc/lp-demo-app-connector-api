@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import { LpNavComponent } from './lp-nav.component';
 import {MaterialModule} from "../../../material.module";
 import {AuthenticationService} from "../../../core/services/authentication.service";
-import {MatDialog} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 
 
 describe('LpNavComponent', () => {

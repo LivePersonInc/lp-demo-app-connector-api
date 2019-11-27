@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import {SendApiService} from './send-api.service';
-import {MatSnackBar} from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {HttpClient} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {DomainsService} from "./domains.service";

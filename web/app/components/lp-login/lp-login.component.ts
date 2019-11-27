@@ -6,7 +6,7 @@ import {InstallationService} from "../../core/services/installation.service";
 import {Router} from "@angular/router";
 import {ConversationService} from "../../core/services/conversation.service";
 import {AccountConfigService} from "../../core/services/account-config.service";
-import {MatDialog} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import {Subscription} from "rxjs";
 import {AppInstallationsService} from "../../core/services/app-installations.service";
 

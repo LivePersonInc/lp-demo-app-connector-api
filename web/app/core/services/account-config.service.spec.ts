@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { AccountConfigService } from './account-config.service';
 import {AuthenticationService} from "./authentication.service";
 import {LoadingService} from "./loading.service";
-import {MatSnackBar} from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {StateStorage} from "../util/state-storage";

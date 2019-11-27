@@ -3,7 +3,7 @@ import { LpAppKeySecretComponent } from './lp-app-key-secret.component';
 import {MaterialModule} from "../../../material.module";
 import {InstallationService} from "../../../core/services/installation.service";
 import {Router} from "@angular/router";
-import {MatStepper} from "@angular/material";
+import { MatStepper } from "@angular/material/stepper";
 import {ChangeDetectorRef, ElementRef} from "@angular/core";
 import {LoadingService} from "../../../core/services/loading.service";
 

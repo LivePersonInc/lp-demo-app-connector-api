@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MatSnackBar} from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {LoadingService} from "./loading.service";
 import {HttpService} from "./http.service";
 import {HttpClient} from "@angular/common/http";

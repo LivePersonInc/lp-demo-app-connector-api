@@ -25,7 +25,7 @@ export class LpChatBoxComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   public isDragged:Boolean;
 
-  @ViewChild('messagearea') private messageArea: ElementRef;
+  @ViewChild('messagearea', {static: false}) private messageArea: ElementRef;
 
   private pendingEvent = false;
 

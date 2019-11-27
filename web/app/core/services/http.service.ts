@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from  'rxjs';
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LoadingService} from "./loading.service";
 import {Router} from "@angular/router";

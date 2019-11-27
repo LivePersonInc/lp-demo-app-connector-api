@@ -17,7 +17,7 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
 
   public messageType: string;
 
-  @ViewChild('structuredContent') d1: ElementRef;
+  @ViewChild('structuredContent', {static: false}) d1: ElementRef;
 
   constructor (private renderer: Renderer2) { }
 

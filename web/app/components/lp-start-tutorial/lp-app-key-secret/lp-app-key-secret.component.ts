@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {InstallationService} from "../../../core/services/installation.service";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
-import {MatSelectChange} from "@angular/material";
+import { MatSelectChange } from "@angular/material/select";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {LoadingService} from "../../../core/services/loading.service";

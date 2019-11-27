@@ -1,5 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatListModule, MatTooltipModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {NgModule} from '@angular/core';
 import { MaterialModule} from './material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';

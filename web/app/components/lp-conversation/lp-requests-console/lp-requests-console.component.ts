@@ -12,7 +12,7 @@ export class LpRequestsConsoleComponent implements OnInit {
 
   public lastLengthOfRequests  = 0;
 
-  @ViewChild('notifications') private notifications: ElementRef;
+  @ViewChild('notifications', {static: false}) private notifications: ElementRef;
 
   constructor() { }
 

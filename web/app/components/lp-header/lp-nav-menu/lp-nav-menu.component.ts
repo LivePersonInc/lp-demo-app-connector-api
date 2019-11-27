@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../core/services/authentication.service";
-import {MatDialog} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import {NavigationEnd, Router} from "@angular/router";
 import {LpConfirmationDialogComponent} from "../../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import {Subscription} from "rxjs";

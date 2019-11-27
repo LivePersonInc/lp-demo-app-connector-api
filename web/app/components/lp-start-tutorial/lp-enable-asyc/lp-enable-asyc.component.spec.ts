@@ -5,7 +5,7 @@ import {MaterialModule} from "../../../material.module";
 import {AccountConfigService} from "../../../core/services/account-config.service";
 import {Router} from "@angular/router";
 import {InstallationService} from "../../../core/services/installation.service";
-import {MatStepper} from "@angular/material";
+import { MatStepper } from "@angular/material/stepper";
 import {StateStorage} from "../../../core/util/state-storage";
 import {AuthenticationService} from "../../../core/services/authentication.service";
 

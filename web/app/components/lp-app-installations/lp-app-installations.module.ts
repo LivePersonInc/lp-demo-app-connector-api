@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { LpWebhooksEventComponent } from './lp-webhooks-event/lp-webhooks-event.component';
 import { LpWebhooksHeadersComponent } from './lp-webhooks-headers/lp-webhooks-headers.component';
 import {LpAppInstallationsComponent} from "./lp-app-installations.component";
-import {
-  MatListModule, MatStepperModule, MatTooltipModule, MatChipsModule,
-  MatAutocompleteModule
-} from "@angular/material";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatListModule } from "@angular/material/list";
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import {BrowserModule} from "@angular/platform-browser";
 import {MaterialModule} from "../../material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
