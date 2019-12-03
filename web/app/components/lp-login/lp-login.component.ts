@@ -57,12 +57,7 @@ export class LpLoginComponent implements OnInit {
         this.goToStartDemoPage();
       }
     });
-    this.domainSubscription = this.domainsService.domainsSubject.subscribe( event => {
-      //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
-      if(event === 'READY') {
-        this.authenticationService.login(this.brandId, this.userName, this.password);
-      }
-    });
+
   }
 
   ngOnDestroy() {
@@ -78,9 +73,9 @@ export class LpLoginComponent implements OnInit {
       this.userName = event.userName;
       this.password = event.password;
     }
-    //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
-    this.domainsService.getDomainList(this.brandId);
-   // this.authenticationService.login(this.brandId, this.userName, this.password);
+    this.domainsService.getDomainList(this.brandId); //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
+    
+    this.authenticationService.login(this.brandId, this.userName, this.password);
   }
 
   public removedWhiteSpacesAtEndAndBeginning() {
