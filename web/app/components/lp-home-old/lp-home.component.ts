@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import {ConversationService} from "../../core/services/conversation.service";
+import {LoadingService} from "../../core/services/loading.service";
 
 @Component({
   selector: 'lp-home-old',
