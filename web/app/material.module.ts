@@ -21,6 +21,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatHorizontalStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule,
     MatTabsModule,
     MatGridListModule,
+    MatListModule,
     MatDialogModule,
     MatSnackBarModule,
     MatStepperModule,
@@ -44,7 +47,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSliderModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -58,6 +62,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule,
     MatTabsModule,
     MatGridListModule,
+    MatListModule,
     MatDialogModule,
     MatSnackBarModule,
     MatStepperModule,
@@ -68,7 +73,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSliderModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule
   ]
 })
 export class MaterialModule {}

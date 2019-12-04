@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import {LpHeaderModule} from "./components/lp-header/lp-header.module";
 import {MaterialModule} from "./material.module";
 import {LoadingService} from "./core/services/loading.service";
-import {LpHomeOldComponent} from './components/lp-home-old/lp-home.component';
 import {LpHomeComponent} from './components/lp-home/lp-home.component';
 import {LpDemoComponent} from "./components/lp-demo/lp-demo.component";
 import {LpStartTutorialModule} from "./components/lp-start-tutorial/lp-start-tutorial.module";
@@ -21,7 +20,6 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         LpHomeComponent,
-        LpHomeOldComponent,
         LpDemoComponent,
         LpLoginComponent
       ],
