@@ -19,7 +19,7 @@ import {error} from "util";
 import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
-  selector: 'app-lp-webhooks',
+  selector: 'lp-app-installations',
   templateUrl: './lp-app-installations.component.html',
   styleUrls: ['./lp-app-installations.component.scss']
 })

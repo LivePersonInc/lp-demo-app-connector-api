@@ -1,9 +1,6 @@
 <div *ngIf="isUserAuthenticated()">
   <nav>
     <a mat-menu-item *ngIf="showHome" routerLink="/home"  routerLinkActive="active-link">Home</a>
-    <a mat-menu-item *ngIf="showSettings" routerLink="/settings"  routerLinkActive="active-link">Settings</a>
-    <a mat-menu-item *ngIf="showDemo" routerLink="/demo"  routerLinkActive="active-link">Demo</a>
     <a mat-menu-item (click)="openConfirmationDialog()"  routerLinkActive="active-link">Logout</a>
-
   </nav>
 </div>

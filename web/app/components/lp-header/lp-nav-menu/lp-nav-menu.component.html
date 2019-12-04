@@ -4,8 +4,6 @@
   </button>
   <mat-menu #menu="matMenu" >
     <a mat-menu-item *ngIf="showHome" routerLink="/home" >Home</a>
-    <a mat-menu-item *ngIf="showSettings" routerLink="/settings" >Settings</a>
-    <a mat-menu-item *ngIf="showDemo" routerLink="/demo">Demo</a>
     <a mat-menu-item  (click)="openConfirmationDialog()" >Logout</a>
   </mat-menu>
 </div>

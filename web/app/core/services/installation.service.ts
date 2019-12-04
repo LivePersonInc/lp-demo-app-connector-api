@@ -116,7 +116,7 @@ export class InstallationService extends HttpService {
   }
 
   private isValid(app: AppInstall): boolean{
-    return !(!app.enabled || (!app.scope || app.scope !== 'msg.consumer'));
+    return (app.scope && app.scope === 'msg.consumer');
   }
 
   private updateSelectedAppInState() {

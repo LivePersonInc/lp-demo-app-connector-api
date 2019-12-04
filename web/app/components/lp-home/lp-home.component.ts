@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import {fadeInAnimation} from "../../shared/animations/lp-animations";
 import { MatDialog } from "@angular/material/dialog";
-import {AppInstallationsService} from "../../core/services/app-installations.service";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {LoadingService} from "../../core/services/loading.service";
 import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
-
+import { LpInstallationDialogComponent } from '../lp-app-installations/lp-installation-dialog/lp-installation-dialog.component';
+import {InstallationService} from "../../core/services/installation.service";
 @Component({
   selector: 'lp-home',
   templateUrl: './lp-home.component.html',
@@ -18,23 +18,31 @@ import {Router} from "@angular/router";
 export class LpHomeComponent implements OnInit {
   public avaliableApplicationInstallation: AppInstall[];
   private appInstallSubscription: Subscription;
-  displayedColumns: string[] = ['name',"client_secret",  'enabled', "description", 'created_at', 'menu'];
+  displayedColumns: string[] = ['enabled', 'name',"client_secret", "description", 'created_at', 'menu'];
   
-  constructor(public appInstallationService: AppInstallationsService,
+  constructor(public installationService: InstallationService,
               private authenticationService: AuthenticationService,
               private router: Router,
+              private dialog: MatDialog,
               public loadingService: LoadingService) {}
 
   ngOnInit() {
     //needed when browser refresh
     this.authenticationService.userLoggedSubject.subscribe(ev => {
-      this.appInstallationService.init();
+      this.installationService.init();
       this.getAppInstallations();
     });
   
     if(this.authenticationService.user) {
       this.getAppInstallations();
     }
+    
+    this.appInstallSubscription = this.installationService.installationSubject.subscribe( val => {
+      if(val === 'GET_APP_LIST'){
+        this.avaliableApplicationInstallation = this.installationService.appList;
+      }
+    });
+
   }
   
   ngOnDestroy() {
@@ -44,20 +52,25 @@ export class LpHomeComponent implements OnInit {
   }
   
   getAppInstallations() {
-    this.appInstallSubscription = this.appInstallationService.getAppInstallations()
-      .subscribe(appInstallations => {
-        if(appInstallations){
-          console.log("SFSFSFSF");
-          this.avaliableApplicationInstallation = appInstallations.filter( app => (app.scope && app.scope === 'msg.consumer'));
-        }
-        this.loadingService.stopLoading();
-      });
+    this.installationService.getAppListList();
   }
   
   openDemo(appInstallation) {
     console.log(appInstallation);
-    this.appInstallationService.setSelectedAppInstall(appInstallation);
+    this.installationService.selectedApp = appInstallation;
     this.router.navigateByUrl('demo');
   }
   
+  openAppInstallationDialog(appInstallation) {
+    const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    
+    })
+  }
+  
+  isDemoApp(app: AppInstall):boolean{
+    return app.enabled;
+    //TODO:
+  }
 }

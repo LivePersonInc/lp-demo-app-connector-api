@@ -64,6 +64,7 @@ export class AppInstallationsService extends HttpService {
   }
 
   public setSelectedAppInstall(selectedAppInstall: AppInstall) {
+    this.selectedAppInstall = selectedAppInstall;
     this.selectedAppInstallChange.next(selectedAppInstall);
   }
 

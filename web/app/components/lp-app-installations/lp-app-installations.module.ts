@@ -18,13 +18,15 @@ import {LpEndpointValidationDirective} from "./lp-webhooks-event/lp-endpoint-val
 import { LpAppInstallationGeneralDetailsComponent } from './lp-app-installation-general-details/lp-app-installation-general-details.component';
 import { LpDetailsScopeValidationDirective } from './lp-app-installation-general-details/lp-details-scope-validation.directive';
 import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component";
+import { LpInstallationDialogComponent } from './lp-installation-dialog/lp-installation-dialog.component';
 
 @NgModule({
   entryComponents: [
-    LpConfirmationDialogComponent
+    LpConfirmationDialogComponent,
+    LpInstallationDialogComponent
   ],
   declarations: [LpAppInstallationsComponent, LpWebhooksEventComponent, LpWebhooksHeadersComponent, LpEndpointValidationDirective,
-    LpAppInstallationGeneralDetailsComponent, LpConfirmationDialogComponent,
+    LpAppInstallationGeneralDetailsComponent, LpConfirmationDialogComponent, LpInstallationDialogComponent,
     LpDetailsScopeValidationDirective],
   imports: [
     CommonModule,

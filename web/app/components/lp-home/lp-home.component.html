@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
         <div class="container-fluid mb-3 w-100 d-flex flex-row-reverse">
-          <button mat-raised-button  color="primary">
+          <button mat-raised-button  color="primary" (click)="openAppInstallationDialog()">
             <i class="material-icons">
               add_circle_outline
             </i>
@@ -13,8 +13,22 @@
 
       <table mat-table [dataSource]="avaliableApplicationInstallation"  class="w-100 mat-elevation-z1">
 
+        <ng-container matColumnDef="enabled">
+          <th mat-header-cell *matHeaderCellDef> Enabled </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.enabled; then enabled; else disabled">
+            </ng-container>
+            <ng-template #enabled>
+              <mat-icon style="color: #4c774c"> check </mat-icon>
+            </ng-template>
+            <ng-template #disabled>
+              <mat-icon style="color: #ea2020">highlight_off</mat-icon>
+            </ng-template>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Application Name && id </th>
+          <th mat-header-cell *matHeaderCellDef> Application Name & id </th>
           <td mat-cell *matCellDef="let element">
             <b>{{element.client_name}}</b>
             <br>
@@ -29,19 +43,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="enabled">
-          <th mat-header-cell *matHeaderCellDef> Enabled </th>
-          <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="element.enabled; then enabled; else disabled">
-            </ng-container>
-            <ng-template #enabled>
-              <mat-icon style="color: green"> check_circle_outline</mat-icon>
-            </ng-template>
-            <ng-template #disabled>
-              <mat-icon style="color: red">highlight_off</mat-icon>
-            </ng-template>
-          </td>
-        </ng-container>
 
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef> Description </th>
@@ -59,8 +60,8 @@
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
             <mat-menu #appMenu="matMenu">
-              <button mat-menu-item><mat-icon>edit</mat-icon> Edit </button>
-              <button (click)="openDemo(element)" mat-menu-item><mat-icon>play_arrow</mat-icon><span class="p-1" >Demo</span></button>
+              <button *ngIf="isDemoApp(element)" (click)="openDemo(element)" mat-menu-item><mat-icon>play_arrow</mat-icon><span class="p-1" >Demo</span></button>
+              <button (click)="openAppInstallationDialog(element)" mat-menu-item><mat-icon>edit</mat-icon> Edit </button>
               <button mat-menu-item><mat-icon >delete</mat-icon><span class="p-1"> Uninstall</span></button>
             </mat-menu>
 
