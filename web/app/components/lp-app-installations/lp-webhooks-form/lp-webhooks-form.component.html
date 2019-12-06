@@ -1,29 +1,27 @@
-<form [formGroup]="webhooksForm" (ngSubmit)="submit()">
-  <mat-accordion>
-    <lp-webhooks-endpoint
-      class="mb-1"
-      [endpointType]="'AcceptStatusEvent'"
-      [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent']">
-    </lp-webhooks-endpoint>
-    <lp-webhooks-endpoint
-      class="mb-1"
-      [endpointType]="'ChatStateEvent'"
-      [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ChatStateEvent']">
-    </lp-webhooks-endpoint>
-    <lp-webhooks-endpoint
-      class="mb-1"
-      [endpointType]="'ContentEvent'"
-      [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ContentEvent']">
-    </lp-webhooks-endpoint>
-    <lp-webhooks-endpoint
-      class="mb-1"
-      [endpointType]="'RichContentEvent'"
-      [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.RichContentEvent']">
-    </lp-webhooks-endpoint>
-    <lp-webhooks-endpoint
-      class="mb-1"
-      [endpointType]="'ExConversationChangeNotification'"
-      [(webhooksEndpoint)]="webhooks['cqm.ExConversationChangeNotification']">
-    </lp-webhooks-endpoint>
-  </mat-accordion>
-</form>
+<mat-accordion>
+  <lp-webhooks-endpoint
+    class="mb-1"
+    [endpointType]="'AcceptStatusEvent'"
+    [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent']">
+  </lp-webhooks-endpoint>
+  <lp-webhooks-endpoint
+    class="mb-1"
+    [endpointType]="'ChatStateEvent'"
+    [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ChatStateEvent']">
+  </lp-webhooks-endpoint>
+  <lp-webhooks-endpoint
+    class="mb-1"
+    [endpointType]="'ContentEvent'"
+    [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ContentEvent']">
+  </lp-webhooks-endpoint>
+  <lp-webhooks-endpoint
+    class="mb-1"
+    [endpointType]="'RichContentEvent'"
+    [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.RichContentEvent']">
+  </lp-webhooks-endpoint>
+  <lp-webhooks-endpoint
+    class="mb-1"
+    [endpointType]="'ExConversationChangeNotification'"
+    [(webhooksEndpoint)]="webhooks['cqm.ExConversationChangeNotification']">
+  </lp-webhooks-endpoint>
+</mat-accordion>
