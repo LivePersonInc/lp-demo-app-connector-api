@@ -7,6 +7,7 @@ export class Endpoint implements Deserializable<Endpoint>
   max_retries: number;
   constructor() {
     // this.endpoint = '';
+    this.headers = [];
   }
 
   deserialize(input: any): Endpoint {

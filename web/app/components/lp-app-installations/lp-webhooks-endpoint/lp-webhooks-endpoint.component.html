@@ -1,0 +1,52 @@
+<mat-expansion-panel class="lp-wh-endpoint">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{endpointType}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{endpointDescription}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <form>
+    <div class="row">
+      <div class="col-sm-12">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Endpoint"
+                 [(ngModel)]="webhooksEndpoint.endpoint"
+                 (ngModelChange)="webhookChange($event)"
+                 [formControl]="endpointFormControl">
+          <mat-error *ngIf="endpointFormControl.invalid">Endpoint is not valid, it must begin with https://</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-sm-12">
+      <strong>Headers</strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <table class="w-100" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field>
+                <input name="headerName" matInput placeholder="Header name" [(ngModel)]="headerName">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input name="headerValue"  matInput placeholder="Header Value" [(ngModel)]="headerValue">
+              </mat-form-field>
+            </td>
+            <td>
+              <button (click)="addHeader()"[disabled]="headerValue.length == 0 || headerName.length == 0" mat-button>
+                <mat-icon>add</mat-icon>
+                Add Header
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+</mat-expansion-panel>
