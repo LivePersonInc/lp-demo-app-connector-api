@@ -26,7 +26,6 @@ import {DomainsService} from './core/services/domains.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LpHeaderModule} from './components/lp-header/lp-header.module';
 import {LpConversationModule} from './components/lp-conversation/lp-conversation.module';
-import {LpStartTutorialModule} from './components/lp-start-tutorial/lp-start-tutorial.module';
 import {LogoutGuard} from './core/guards/logout.guard';
 import {ConversationManager} from './core/util/conversation-manager';
 import {StateStorage} from './core/util/state-storage';
@@ -46,13 +45,11 @@ import { LpInstallationDialogComponent } from './components/lp-app-installations
     LpConfirmationDialogComponent,
     LpLoginComponent,
     LpFooterComponent,
-    
   ],
   imports: [
     LpAppInstallationsModule,
     LpHeaderModule,
     LpConversationModule,
-    LpStartTutorialModule,
     BrowserModule,
     MaterialModule,
     BrowserAnimationsModule,
