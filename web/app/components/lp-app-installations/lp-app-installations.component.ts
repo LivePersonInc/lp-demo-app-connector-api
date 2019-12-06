@@ -56,6 +56,7 @@ export class LpAppInstallationsComponent implements OnInit {
   private initWebhooks() {
     this.webhooks = new Webhooks();
     this.webhooks.initEndpoints();
+    this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = "https://dsgsdgsdgsdhsd";
   }
   
   

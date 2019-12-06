@@ -20,6 +20,7 @@ import { LpDetailsScopeValidationDirective } from './lp-app-installation-general
 import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component";
 import { LpInstallationDialogComponent } from './lp-installation-dialog/lp-installation-dialog.component';
 import {LpWebhooksFormComponent} from "./lp-webhooks-form/lp-webhooks-form.component";
+import { LpWebhooksEndpointComponent } from './lp-webhooks-endpoint/lp-webhooks-endpoint.component';
 
 @NgModule({
   entryComponents: [
@@ -28,7 +29,8 @@ import {LpWebhooksFormComponent} from "./lp-webhooks-form/lp-webhooks-form.compo
   ],
   declarations: [LpAppInstallationsComponent, LpWebhooksHeadersComponent, LpEndpointValidationDirective,
     LpAppInstallationGeneralDetailsComponent, LpConfirmationDialogComponent, LpInstallationDialogComponent, LpWebhooksFormComponent,
-    LpDetailsScopeValidationDirective],
+    LpDetailsScopeValidationDirective,
+    LpWebhooksEndpointComponent],
   imports: [
     CommonModule,
     MatStepperModule,
