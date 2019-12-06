@@ -1,88 +1,58 @@
-<div class="container" style="width: 800px">
-  <mat-tab-group mat-stretch-tabs class="mat-elevation-z2" #tabs (selectedTabChange)="resetForms($event)">
-    <mat-tab label="Create">
-      <mat-vertical-stepper [linear]="true" #stepperCreate>
-        <mat-step>
-          <ng-template matStepLabel>Application Installation Details</ng-template>
-          <app-lp-app-installation-general-details #appInstallGeneralDetails [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
-        </mat-step>
-        <mat-step [completed]="eventsConfig.length !== 0">
-          <ng-template matStepLabel>Configure Webhooks</ng-template>
-            <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes" (eventCreated)="addEvent($event)" [createNewEvent]="true"></app-lp-webhooks-event>
-            <div>
-              <button type="button" mat-button matStepperPrevious>Back</button>
-              <button type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
-              <button type="reset" mat-button>Reset</button>
+<div class="container" style="width: 900px">
+    <mat-vertical-stepper [linear]="true" #stepperCreate>
+      <mat-step>
+        <ng-template matStepLabel>Application Installation Details</ng-template>
+          <form #createGeneralDetailsForm="ngForm" class="form-container">
+            <div class="row">
+              <div class="col-sm-8 align-items-center">
+                <mat-form-field class="w-100">
+                  <mat-label>Application name</mat-label>
+                  <input name="Application name" matInput placeholder="" required>
+                  <mat-hint align="start"><strong>Unique name for your app</strong></mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4 align-items-center mt-4">
+                <div class="container-fluid w-100 d-flex justify-content-end">
+                  <mat-checkbox  formControlName="demo" color="primary" matTooltip="Info about the action">Demo application</mat-checkbox>
+                </div>
+              </div>
             </div>
-        </mat-step>
-        <mat-step>
-            <ng-template matStepLabel>Finish</ng-template>
-            <div class="row flex-fill">
-              <button type="button" mat-button matStepperPrevious>Back</button>
-              <span class="push-elements-to-the-right"></span>
-              <button type="button" [disabled]="!generalDetails || eventsConfig.length === 0"
-                      class="create-app-install-button" color="primary" mat-raised-button  matTooltip="Installing the application installation is enabling webhooks which means that the specified endoints are registered for receiving notifications. The endpoints should be always up and running, otherwise data loss could occur."
-                      matTooltipPosition="below" (click)="openConfirmationDialog('Create')">Create new App Installation</button>
-            </div>
-        </mat-step>
-      </mat-vertical-stepper>
-    </mat-tab>
-    <mat-tab label="Update">
-      <mat-vertical-stepper [linear]="false" #stepperUpdate>
-        <mat-step>
-          <ng-template matStepLabel>Select an application installation</ng-template>
-            <mat-form-field class="w-100">
-              <mat-label>Application installations</mat-label>
-              <mat-select [(ngModel)]="selectedAppInstall" (selectionChange)="setSelectedAppInstall()">
-                <mat-option *ngFor="let appInstall of avaliableApplicationInstallation" [value]="appInstall">
-                  {{appInstall.client_name}}
-                </mat-option>
-              </mat-select>
-              <mat-hint *ngIf="selectedAppInstall">Installation id: {{selectedAppInstall.client_id}}</mat-hint>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperNext (click)="setSelectedAppInstall()">Next</button>
-            </div>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Application Installation Details</ng-template>
-          <div *ngIf="selectedAppInstall && !selectedAppInstall.enabled" class="container-fluid disabled-ind-container">
-            <mat-chip class="disabled-ind"  disabled>
-              This app is disabled!
-              <mat-icon>warning</mat-icon>
-            </mat-chip>
-          </div>
-          <app-lp-app-installation-general-details #updateAppInstallGeneralDeateils [createAppInstall]="false" (detailsCreated)="saveGeneralDetails($event)"></app-lp-app-installation-general-details>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Webhook details</ng-template>
-          <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes" (eventCreated)="addEvent($event)" [createNewEvent]="true"></app-lp-webhooks-event>
-          <div>
-            <button type="button" mat-button matStepperPrevious>Back</button>
-            <button type="button" [disabled]="eventsConfig.length === 0" mat-button matStepperNext>Next</button>
-            <button type="reset" mat-button>Reset</button>
-          </div>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Finish</ng-template>
-          <div class="row flex-fill">
-            <button type="button" mat-button matStepperPrevious>Back</button>
-            <span class="push-elements-to-the-right"></span>
-            <button type="button" [disabled]="!generalDetails || eventsConfig.length === 0"
-                    class="create-app-install-button" color="primary" mat-raised-button  matTooltip="Installing the application installation is enabling webhooks which means that the specified endoints are registered for receiving notifications. The endpoints should be always up and running, otherwise data loss could occur."
-                    matTooltipPosition="below" (click)="openConfirmationDialog('Update')">Update</button>
-            <button *ngIf="selectedAppInstall && selectedAppInstall.enabled" type="button" [disabled]="!generalDetails"
-                    class="create-app-install-button" color="accent" mat-raised-button
-                    (click)="openConfirmationDialog('Disable')">Disable</button>
-            <button *ngIf="selectedAppInstall && !selectedAppInstall.enabled"  type="button" [disabled]="!generalDetails"
-                    class="create-app-install-button" color="accent" mat-raised-button
-                    (click)="openConfirmationDialog('Enable')">Enable</button>
-          </div>
-        </mat-step>
-      </mat-vertical-stepper>
-    </mat-tab>
-  </mat-tab-group>
-  <div class="events-list" *ngIf="stepperCreate.selectedIndex === 1 || stepperUpdate.selectedIndex === 2">
-    <app-lp-webhooks-event [avaliableEventTypes]="avaliableEventTypes"  (eventRemoved)="removeEventFromArray($event)" [createNewEvent]="false" class="events-list" *ngFor="let event of eventsConfig" [event]="event"></app-lp-webhooks-event>
-  </div>
+            <div class="row align-items-center">
+                <div class="col-sm-12 align-items-center">
+                  <mat-form-field class="w-100 mt-2">
+                    <mat-label>Description</mat-label>
+                    <input #description maxlength="256" name="Description" matInput placeholder="">
+                    <mat-hint align="start"><strong>Short explanation of your app purpose</strong></mat-hint>
+                    <mat-hint align="end">{{description.value.length}} / 256</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="w-100 mt-2">
+                    <mat-label>TTL</mat-label>
+                    <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail">
+                      <mat-option *ngFor="let ttl of ttls" [value]="ttl.value">
+                        {{ttl.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-9">
+                  <mat-form-field class="w-100 mt-2">
+                    <mat-label>Webhooks endpoint</mat-label>
+                    <input name="Application name" matInput placeholder="">
+                    <mat-hint align="start"><strong>Your https server endpoint </strong></mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+          </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Advanced  configuration (Optional)</ng-template>
+        <h5>Webhooks configuration</h5>
+        <lp-webhooks-form [webhooks]="webhooks"></lp-webhooks-form>
+      </mat-step>
+    </mat-vertical-stepper>
 </div>

@@ -5,7 +5,7 @@ import {MaterialModule} from "../../../material.module";
 import {FormsModule} from "@angular/forms";
 import {AccountConfigService} from "../../../core/services/account-config.service";
 import {InstallationService} from "../../../core/services/installation.service";
-import {LpWebhooksInfoComponent} from "./lp-webhooks-info/lp-webhooks-info.component";
+import {LpWebhooksInfoComponent} from "../../lp-app-installations/lp-webhooks-info/lp-webhooks-info.component";
 
 describe('LpConfigCheckComponent', () => {
   let component: LpConfigCheckComponent;

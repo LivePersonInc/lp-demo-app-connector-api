@@ -24,5 +24,15 @@ export class LpInstallationDialogComponent implements OnInit {
   ngOnInit() {
   }
   
+  appCreated(appInstall){
+  
+  }
+  
+  installNewApp(){
+    if(this.appInstall){
+      this.dialogRef.close("appInstall");
+    }
+  }
+  
 
 }

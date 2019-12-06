@@ -65,7 +65,9 @@ export class LpHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
     dialogRef.afterClosed().subscribe(result => {
-    
+       console.log("CLOSE");
+       console.log(result);
+       //TODO:install the app returned in result
     })
   }
   
