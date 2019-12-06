@@ -1,9 +1,10 @@
 import {Deserializable} from "../deserializable.model";
+import {EndpointHeader} from "./endpointHeaders.model";
 
 export class Endpoint implements Deserializable<Endpoint>
 {
   endpoint: string;
-  headers: Array<any>;
+  headers: Array<EndpointHeader>;
   max_retries: number;
   constructor() {
     // this.endpoint = '';

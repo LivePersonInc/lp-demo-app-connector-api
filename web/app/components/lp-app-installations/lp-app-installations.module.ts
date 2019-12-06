@@ -27,8 +27,8 @@ import { LpWebhooksEndpointComponent } from './lp-webhooks-endpoint/lp-webhooks-
     LpConfirmationDialogComponent,
     LpInstallationDialogComponent
   ],
-  declarations: [LpAppInstallationsComponent, LpWebhooksHeadersComponent, LpEndpointValidationDirective,
-    LpAppInstallationGeneralDetailsComponent, LpConfirmationDialogComponent, LpInstallationDialogComponent, LpWebhooksFormComponent,
+  declarations: [LpAppInstallationsComponent, LpEndpointValidationDirective,
+    LpConfirmationDialogComponent, LpInstallationDialogComponent, LpWebhooksFormComponent,
     LpDetailsScopeValidationDirective,
     LpWebhooksEndpointComponent],
   imports: [

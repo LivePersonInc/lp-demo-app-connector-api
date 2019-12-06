@@ -5,8 +5,8 @@ export class EndpointHeader implements Deserializable<EndpointHeader> {
   header_value: string;
 
   constructor(header_name: string, header_value: string) {
-    this.header_value = header_name;
-    this.header_name = header_value;
+    this.header_name = header_name;
+    this.header_value = header_value;
   }
 
   deserialize(input: any): EndpointHeader {

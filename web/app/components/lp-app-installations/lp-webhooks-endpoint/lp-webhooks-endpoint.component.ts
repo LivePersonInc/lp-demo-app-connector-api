@@ -1,6 +1,7 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {Endpoint} from "../../../shared/models/app-installation/endpoint.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {EndpointHeader} from "../../../shared/models/app-installation/endpointHeaders.model";
 
 @Component({
   selector: 'lp-webhooks-endpoint',
@@ -32,10 +33,14 @@ export class LpWebhooksEndpointComponent implements OnInit {
   }
   
   addHeader(){
-    let header = {};
-    header.header_name = this.headerName;
-    header.header_value = this.headerValue;
-    this.webhooksEndpoint.headers.push(header)
+    let header: EndpointHeader = new EndpointHeader(this.headerName, this.headerValue);
+    this.webhooksEndpoint.headers.push(header);
+    console.log(this.webhooksEndpoint);
+  }
+  
+  removeHeader(i){
+    this.webhooksEndpoint.headers.splice(i,1)
+  
   }
 
 }

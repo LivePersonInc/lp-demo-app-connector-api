@@ -45,6 +45,23 @@
               </button>
             </td>
           </tr>
+          <tr *ngFor="let header of webhooksEndpoint.headers;  let i = index;">
+            <td>
+              <mat-form-field>
+                <input name="headerName_{{i}}" matInput placeholder="Header name"  [(ngModel)]="header.header_name">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input name="headerValue_{{i}}" matInput placeholder="Header Value" [(ngModel)]="header.header_value">
+              </mat-form-field>
+            </td>
+            <td>
+              <button mat-button>
+                <mat-icon (click)="removeHeader(i)" color="warn">remove</mat-icon>
+              </button>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
