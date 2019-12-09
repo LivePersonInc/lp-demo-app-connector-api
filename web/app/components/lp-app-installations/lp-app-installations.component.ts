@@ -67,14 +67,26 @@ export class LpAppInstallationsComponent implements OnInit {
     },);
     
     this.ttlValue = 3600;
+    this.onValueChanges();
+  
     this.initWebhooks();
+  }
+
+  onValueChanges(): void {
+    this.form.get('endpoint').valueChanges.subscribe(val=>{
+      console.log(val);
+      this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.form.controls['endpoint'].value;
+      this.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.form.controls['endpoint'].value;
+      this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.form.controls['endpoint'].value;
+      this.webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.form.controls['endpoint'].value;
+      this.webhooks['cqm.ExConversationChangeNotification'].endpoint = this.form.controls['endpoint'].value;
+    });
   }
   
   
   private initWebhooks() {
     this.webhooks = new Webhooks();
     this.webhooks.initEndpoints();
-    this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = "https://dsgsdgsdgsdhsd";
   }
   
   public toggleDemoAppServerEndpoint() {
@@ -100,14 +112,17 @@ export class LpAppInstallationsComponent implements OnInit {
       webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['cqm.ExConversationChangeNotification'].endpoint = this.form.controls['endpoint'].value;
+      appInstall.client_name = this.form.controls['appName'].value + '--Demo--';
+  
     } else {
       webhooks = this.webhooks;
+      appInstall.client_name = this.form.controls['appName'].value;
+  
     }
     webhooks.retry.retention_time = this.ttlValue;
     // Construct capabilities
     capabilities.webhooks = webhooks;
     // Construct app installation
-    appInstall.client_name = this.form.controls['appName'].value;
     appInstall.description = this.form.controls['description'].value;
     appInstall.enabled = true;
     appInstall.grant_types = ["client_credentials"];

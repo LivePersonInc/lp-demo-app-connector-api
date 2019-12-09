@@ -75,8 +75,8 @@ export class InstallationService extends HttpService {
         this.installationSubject.next('INSTALL_APP');
       }),
       catchError((error: any) => {
-        this.errorResponse("Problem with getting session object");
-        return throwError(new Error(error || 'Problem with getting session object'));
+        this.errorResponse("Installation server error");
+        return throwError(new Error(error || 'Installation server error'));
       })
     ).subscribe();
   }
@@ -88,8 +88,8 @@ export class InstallationService extends HttpService {
         this.successResponse('This app was successfully updated');
         this.getAppListList();
     }),catchError((error: any) => {
-      this.errorResponse("Problem with getting session object");
-      return throwError(new Error(error || 'Problem with getting session object'));
+      this.errorResponse("Installation server error during the aupdate");
+      return throwError(new Error(error || 'Installation server error during the aupdate'));
     })
     ).subscribe();
   }
