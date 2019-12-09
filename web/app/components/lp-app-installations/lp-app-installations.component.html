@@ -2,18 +2,26 @@
     <mat-vertical-stepper [linear]="true" #stepperCreate>
       <mat-step>
         <ng-template matStepLabel>Application Installation Details</ng-template>
-          <form #createGeneralDetailsForm="ngForm" class="form-container">
+          <form [formGroup]="form" class="form-container">
             <div class="row">
-              <div class="col-sm-8 align-items-center">
+              <div class="col-md-8 align-items-center">
                 <mat-form-field class="w-100">
                   <mat-label>Application name</mat-label>
-                  <input name="Application name" matInput placeholder="" required>
+                  <input formControlName="appName" matInput placeholder="" required>
                   <mat-hint align="start"><strong>Unique name for your app</strong></mat-hint>
                 </mat-form-field>
               </div>
-              <div class="col-sm-4 align-items-center mt-4">
+              <div class="col-md-4 align-items-center mt-4">
                 <div class="container-fluid w-100 d-flex justify-content-end">
-                  <mat-checkbox  formControlName="demo" color="primary" matTooltip="Info about the action">Demo application</mat-checkbox>
+                  <mat-checkbox
+                                 name="demo checked"
+                                 color="primary"
+                                 [(ngModel)]="isDemoChecked"
+                                 [ngModelOptions]="{standalone: true}"
+                                 (ngModelChange)="toggleDemoAppServerEndpoint()"
+                                 matTooltip="Demo applications are used only for testing propose and webhooks endpoints can be tested int this app">
+                    Demo application
+                  </mat-checkbox>
                 </div>
               </div>
             </div>
@@ -21,9 +29,9 @@
                 <div class="col-sm-12 align-items-center">
                   <mat-form-field class="w-100 mt-2">
                     <mat-label>Description</mat-label>
-                    <input #description maxlength="256" name="Description" matInput placeholder="">
+                    <input  maxlength="256"  formControlName="description" matInput placeholder="" required>
                     <mat-hint align="start"><strong>Short explanation of your app purpose</strong></mat-hint>
-                    <mat-hint align="end">{{description.value.length}} / 256</mat-hint>
+                    <!---<mat-hint align="end">{{form.getValue('description').length}} / 256</mat-hint>-->
                   </mat-form-field>
                 </div>
               </div>
@@ -31,8 +39,10 @@
                 <div class="col-md-3">
                   <mat-form-field class="w-100 mt-2">
                     <mat-label>TTL</mat-label>
-                    <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail">
-                      <mat-option *ngFor="let ttl of ttls" [value]="ttl.value">
+                    <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail"
+                                 [(ngModel)]="ttlValue"
+                                 [ngModelOptions]="{standalone: true}">
+                      <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required >
                         {{ttl.viewValue}}
                       </mat-option>
                     </mat-select>
@@ -42,14 +52,14 @@
                 <div class="col-md-9">
                   <mat-form-field class="w-100 mt-2">
                     <mat-label>Webhooks endpoint</mat-label>
-                    <input name="Application name" matInput placeholder="">
+                    <input formControlName="endpoint" matInput placeholder="">
                     <mat-hint align="start"><strong>Your https server endpoint </strong></mat-hint>
                   </mat-form-field>
                 </div>
               </div>
           </form>
       </mat-step>
-      <mat-step>
+      <mat-step *ngIf="!isDemoChecked">
         <ng-template matStepLabel>Advanced  webhooks configuration (Optional)</ng-template>
         <lp-webhooks-form [webhooks]="webhooks"></lp-webhooks-form>
       </mat-step>
