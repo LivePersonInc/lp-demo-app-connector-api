@@ -61,7 +61,7 @@
       </mat-step>
       <mat-step *ngIf="!isDemoChecked">
         <ng-template matStepLabel>Advanced  webhooks configuration (Optional)</ng-template>
-        <lp-webhooks-form [webhooks]="webhooks"></lp-webhooks-form>
+        <lp-webhooks-form [(webhooks)]="webhooks"></lp-webhooks-form>
       </mat-step>
     </mat-vertical-stepper>
 </div>

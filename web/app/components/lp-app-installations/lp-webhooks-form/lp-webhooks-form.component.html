@@ -3,30 +3,35 @@
     class="mb-1"
     [endpointType]="'AcceptStatusEvent'"
     [endpointDescription]="'Events like conversation Read, message arrive in server...'"
+    (webhooksEndpointChange) = "webhooksEnpointChange($event)"
     [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.AcceptStatusEvent']">
   </lp-webhooks-endpoint>
   <lp-webhooks-endpoint
     class="mb-1"
     [endpointType]="'ChatStateEvent'"
     [endpointDescription]="'Events like conversation Typing, Pause...'"
+    (webhooksEndpointChange) = "webhooksEnpointChange($event)"
     [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ChatStateEvent']">
   </lp-webhooks-endpoint>
   <lp-webhooks-endpoint
     class="mb-1"
     [endpointType]="'ContentEvent'"
     [endpointDescription]="'Text message events'"
+    (webhooksEndpointChange) = "webhooksEnpointChange($event)"
     [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.ContentEvent']">
   </lp-webhooks-endpoint>
   <lp-webhooks-endpoint
     class="mb-1"
     [endpointType]="'RichContentEvent'"
     [endpointDescription]="'Events with form, images, surveys..'"
+    (webhooksEndpointChange) = "webhooksEnpointChange($event)"
     [(webhooksEndpoint)]="webhooks['ms.MessagingEventNotification.RichContentEvent']">
   </lp-webhooks-endpoint>
   <lp-webhooks-endpoint
     class="mb-1"
     [endpointDescription]="'Conversation state events like OPEN, CLOSE...'"
     [endpointType]="'ExConversationChangeNotification'"
+    (webhooksEndpointChange) = "webhooksEnpointChange($event)"
     [(webhooksEndpoint)]="webhooks['cqm.ExConversationChangeNotification']">
   </lp-webhooks-endpoint>
 </mat-accordion>

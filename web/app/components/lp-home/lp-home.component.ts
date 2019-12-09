@@ -41,6 +41,9 @@ export class LpHomeComponent implements OnInit {
       if(val === 'GET_APP_LIST'){
         this.avaliableApplicationInstallation = this.installationService.appList;
       }
+      if(val === 'INSTALL_APP') {
+        this.getAppInstallations();
+      }
     });
 
   }
@@ -65,14 +68,22 @@ export class LpHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
     dialogRef.afterClosed().subscribe(result => {
-       console.log("CLOSE");
-       console.log(result);
-       //TODO:install the app returned in result
+      console.log(result);
+      if(result.data) {
+        this.loadingService.startLoading();
+        this.installationService.installApp(result.data)
+      }
     })
   }
   
-  isDemoApp(app: AppInstall):boolean{
-    return app.enabled;
-    //TODO:
+  uninstallApp(app: AppInstall){
+    console.log(app);
+    //  this.loadingService.startLoading();
   }
+  
+  isDemoApp(app: AppInstall):boolean {
+    return app.enabled;
+    // TODO:
+  }
+  
 }

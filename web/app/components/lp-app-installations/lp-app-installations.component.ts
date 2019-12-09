@@ -1,4 +1,4 @@
-import {FormBuilder, FormControl, FormGroup, NgForm} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Event} from '../../shared/models/app-installation/event.model';
 import {EndpointHeader} from "../../shared/models/app-installation/endpointHeaders.model";
@@ -63,7 +63,7 @@ export class LpAppInstallationsComponent implements OnInit {
     this.form = new FormGroup({
       appName: new FormControl(''),
       description: new FormControl(''),
-      endpoint: new FormControl(''),
+      endpoint: new FormControl('', [Validators.pattern(this.pattern)]),
     },);
     
     this.ttlValue = 3600;
@@ -88,6 +88,36 @@ export class LpAppInstallationsComponent implements OnInit {
       });
     }
   }
+  
+  public createAppInstallation(): AppInstall {
+    const appInstall = new AppInstall();
+    const capabilities = new Capabilities();
+    let webhooks = new Webhooks();
+    webhooks.initEndpoints();
+    if(this.isDemoChecked){
+      webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.form.controls['endpoint'].value;
+      webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.form.controls['endpoint'].value;
+      webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.form.controls['endpoint'].value;
+      webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.form.controls['endpoint'].value;
+      webhooks['cqm.ExConversationChangeNotification'].endpoint = this.form.controls['endpoint'].value;
+    } else {
+      webhooks = this.webhooks;
+    }
+    webhooks.retry.retention_time = this.ttlValue;
+    // Construct capabilities
+    capabilities.webhooks = webhooks;
+    // Construct app installation
+    appInstall.client_name = this.form.controls['appName'].value;
+    appInstall.description = this.form.controls['description'].value;
+    appInstall.enabled = true;
+    appInstall.grant_types = ["client_credentials"];
+    appInstall.scope = 'msg.consumer';
+    appInstall.logo_uri = '';
+    appInstall.capabilities = capabilities;
+    return appInstall
+  }
+  
+  
   
   
 }

@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
+import {LpAppInstallationsComponent} from "../lp-app-installations.component";
 
 @Component({
   selector: 'app-lp-installation-dialog',
@@ -10,6 +11,7 @@ import {AppInstall} from "../../../shared/models/app-installation/appInstall.mod
 export class LpInstallationDialogComponent implements OnInit {
   
   appInstall: AppInstall;
+  @ViewChild(LpAppInstallationsComponent, {static: true}) appInstallationsComponent: LpAppInstallationsComponent;
   
   constructor(
     public dialogRef: MatDialogRef<LpInstallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -21,18 +23,11 @@ export class LpInstallationDialogComponent implements OnInit {
     }
   }
   
-  ngOnInit() {
+  ngOnInit() {}
+  
+  public installNewApp(){
+    this.dialogRef.close({data:this.appInstallationsComponent.createAppInstallation()});
   }
   
-  appCreated(appInstall){
   
-  }
-  
-  installNewApp(){
-    if(this.appInstall){
-      this.dialogRef.close("appInstall");
-    }
-  }
-  
-
 }

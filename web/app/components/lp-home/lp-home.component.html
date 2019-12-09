@@ -69,7 +69,7 @@
             <mat-menu #appMenu="matMenu">
               <button *ngIf="isDemoApp(element)" (click)="openDemo(element)" mat-menu-item><mat-icon>play_arrow</mat-icon><span class="p-1" >Demo</span></button>
               <button (click)="openAppInstallationDialog(element)" mat-menu-item><mat-icon>edit</mat-icon> Edit </button>
-              <button mat-menu-item><mat-icon >delete</mat-icon><span class="p-1"> Uninstall</span></button>
+              <button (click)="uninstallApp(element)" mat-menu-item><mat-icon >delete</mat-icon><span class="p-1"> Uninstall</span></button>
             </mat-menu>
 
             <button mat-icon-button [matMenuTriggerFor]="appMenu">

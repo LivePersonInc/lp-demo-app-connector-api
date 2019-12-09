@@ -69,7 +69,7 @@ export class InstallationService extends HttpService {
   }
 
   public installApp(app: AppInstall) {
-    this.doPost(`${this.baseURI}${this.brandId}/${app.id}`, JSON.stringify(app),this.headers).pipe(
+    this.doPost(`${this.baseURI}${this.brandId}`, JSON.stringify(app),this.headers).pipe(
       map(data => {
         this.loadingService.stopLoading();
         this.installationSubject.next('INSTALL_APP');

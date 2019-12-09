@@ -3,7 +3,7 @@
   <lp-app-installations></lp-app-installations>
 </div>
 <div mat-dialog-actions class="container-fluid w-100 d-flex flex-row-reverse">
-  <button mat-raised-button class="m-2" color="primary" [mat-dialog-close]="true"  (click)="installNewApp()">Install</button>
-  <button mat-raised-button class="m-2" color="secondary" [mat-dialog-close]="ture" cdkFocusInitial>Cancel</button>
+  <button mat-raised-button class="m-2" color="primary" [mat-dialog-close]="true" [disabled]="!appInstallationsComponent.form.valid" (click)="installNewApp()">Install</button>
+  <button mat-raised-button class="m-2" color="secondary" [mat-dialog-close]="ture"  cdkFocusInitial>Cancel</button>
 </div>
 

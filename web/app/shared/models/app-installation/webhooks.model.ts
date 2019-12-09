@@ -8,7 +8,8 @@ export class Webhooks implements Deserializable<Webhooks> {
   'ms.MessagingEventNotification.AcceptStatusEvent'?: Endpoint;
   'ms.MessagingEventNotification.ChatStateEvent'?: Endpoint;
   'cqm.ExConversationChangeNotification'?: Endpoint;
-
+   retry: any;
+ 
   deserialize(input: any): Webhooks {
     Object.assign(this, input);
     input['ms.MessagingEventNotification.ContentEvent'] ? this['ms.MessagingEventNotification.ContentEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ContentEvent']): '';
@@ -16,6 +17,7 @@ export class Webhooks implements Deserializable<Webhooks> {
     input['ms.MessagingEventNotification.AcceptStatusEvent'] ? this['ms.MessagingEventNotification.AcceptStatusEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.AcceptStatusEvent']): '';
     input['ms.MessagingEventNotification.ChatStateEvent'] ? this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint().deserialize(input['ms.MessagingEventNotification.ChatStateEvent']): '';
     input['cqm.ExConversationChangeNotification']? this['cqm.ExConversationChangeNotification'] =  new Endpoint().deserialize(input['cqm.ExConversationChangeNotification']): '';
+    input.retry ? this.retry = input.retry: '';
     return this;
   }
 
@@ -25,6 +27,9 @@ export class Webhooks implements Deserializable<Webhooks> {
     this['ms.MessagingEventNotification.AcceptStatusEvent'] =  new Endpoint();
     this['ms.MessagingEventNotification.ChatStateEvent'] =  new Endpoint();
     this['cqm.ExConversationChangeNotification'] =  new Endpoint();
+    this.retry = {
+      retention_time: 0
+    }
   }
 
   serialize(): object {

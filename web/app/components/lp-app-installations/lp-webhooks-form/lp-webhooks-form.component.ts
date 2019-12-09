@@ -11,7 +11,7 @@ export class LpWebhooksFormComponent implements OnInit {
 
   @Input() public webhooks: Webhooks;
 
-  @Output() onSubmit = new EventEmitter<Webhooks>();
+  @Output() webhooksChange = new EventEmitter<Webhooks>();
 
   public webhooksForm: FormGroup;
 
@@ -29,8 +29,8 @@ export class LpWebhooksFormComponent implements OnInit {
     });
   }
 
-  public submit(){
-    this.onSubmit.emit(this.webhooks);
+  public webhooksEnpointChange(){
+    this.webhooksChange.emit(this.webhooks);
   }
 
 }
