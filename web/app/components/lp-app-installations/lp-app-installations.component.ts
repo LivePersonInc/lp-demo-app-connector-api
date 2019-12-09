@@ -2,7 +2,6 @@ import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {Event} from '../../shared/models/app-installation/event.model';
 import {EndpointHeader} from "../../shared/models/app-installation/endpointHeaders.model";
-import {GeneralDetails} from "./lp-app-installation-general-details/GeneralDetails";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatStepper } from "@angular/material/stepper";

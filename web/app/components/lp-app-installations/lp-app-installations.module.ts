@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LpWebhooksEventComponent } from './lp-webhooks-event/lp-webhooks-event.component';
-import { LpWebhooksHeadersComponent } from './lp-webhooks-headers/lp-webhooks-headers.component';
 import {LpAppInstallationsComponent} from "./lp-app-installations.component";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatChipsModule } from "@angular/material/chips";
@@ -14,9 +12,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "../../app-routing.module";
-import {LpEndpointValidationDirective} from "./lp-webhooks-event/lp-endpoint-validation.directive";
-import { LpAppInstallationGeneralDetailsComponent } from './lp-app-installation-general-details/lp-app-installation-general-details.component';
-import { LpDetailsScopeValidationDirective } from './lp-app-installation-general-details/lp-details-scope-validation.directive';
 import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component";
 import { LpInstallationDialogComponent } from './lp-installation-dialog/lp-installation-dialog.component';
 import {LpWebhooksFormComponent} from "./lp-webhooks-form/lp-webhooks-form.component";
@@ -27,9 +22,10 @@ import { LpWebhooksEndpointComponent } from './lp-webhooks-endpoint/lp-webhooks-
     LpConfirmationDialogComponent,
     LpInstallationDialogComponent
   ],
-  declarations: [LpAppInstallationsComponent, LpEndpointValidationDirective,
-    LpConfirmationDialogComponent, LpInstallationDialogComponent, LpWebhooksFormComponent,
-    LpDetailsScopeValidationDirective,
+  declarations: [LpAppInstallationsComponent,
+    LpConfirmationDialogComponent,
+    LpInstallationDialogComponent,
+    LpWebhooksFormComponent,
     LpWebhooksEndpointComponent],
   imports: [
     CommonModule,
