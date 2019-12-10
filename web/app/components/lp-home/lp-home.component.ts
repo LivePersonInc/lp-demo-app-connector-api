@@ -8,6 +8,7 @@ import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import { LpInstallationDialogComponent } from '../lp-app-installations/lp-installation-dialog/lp-installation-dialog.component';
 import {InstallationService} from "../../core/services/installation.service";
+import {LpEditAppIntallationDialogComponent} from "../lp-app-installations/lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component";
 @Component({
   selector: 'lp-home',
   templateUrl: './lp-home.component.html',
@@ -65,8 +66,6 @@ export class LpHomeComponent implements OnInit {
   }
   
   public openAppInstallationDialog(appInstallation) {
-    console.log('openAppInstallationDialog');
-    console.log(appInstallation);
   
     const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
@@ -78,6 +77,22 @@ export class LpHomeComponent implements OnInit {
       }
     })
   }
+  
+  public openAppInstallationEditDialog(appInstallation) {
+    console.log('openAppInstallationDialog EDIR');
+    console.log(appInstallation);
+    
+    const dialogRef = this.dialog.open(LpEditAppIntallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result.data) {
+        this.loadingService.startLoading();
+        this.installationService.installApp(result.data)
+      }
+    })
+  }
+  
   
   public uninstallApp(app: AppInstall){
     console.log(app);

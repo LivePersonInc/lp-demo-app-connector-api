@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
-import {LpAppInstallationsComponent} from "../lp-app-installations.component";
+import {LpAppInstallationsComponent} from "../lp-app-installations/lp-app-installations.component";
 
 @Component({
   selector: 'app-lp-installation-dialog',
@@ -15,8 +15,9 @@ export class LpInstallationDialogComponent implements OnInit {
   
   constructor(
     public dialogRef: MatDialogRef<LpInstallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log("CONSTRUCTOR");
     console.log(data);
-    
+  
     if(data.appInstall) {
       this.appInstall = data.appInstall;
       console.log(this.appInstall);

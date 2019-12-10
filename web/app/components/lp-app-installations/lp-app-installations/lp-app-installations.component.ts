@@ -1,22 +1,22 @@
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
-import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Event} from '../../shared/models/app-installation/event.model';
-import {EndpointHeader} from "../../shared/models/app-installation/endpointHeaders.model";
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Event} from '../../../shared/models/app-installation/event.model';
+import {EndpointHeader} from "../../../shared/models/app-installation/endpointHeaders.model";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatStepper } from "@angular/material/stepper";
 import { MatTabGroup } from "@angular/material/tabs";
-import {AppInstallationsService} from "../../core/services/app-installations.service";
-import {AppInstall} from "../../shared/models/app-installation/appInstall.model";
-import {Webhooks} from "../../shared/models/app-installation/webhooks.model";
-import {LoadingService} from "../../core/services/loading.service";
-import {Capabilities} from "../../shared/models/app-installation/capabilities.model";
+import {AppInstallationsService} from "../../../core/services/app-installations.service";
+import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
+import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
+import {LoadingService} from "../../../core/services/loading.service";
+import {Capabilities} from "../../../shared/models/app-installation/capabilities.model";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {LpConfirmationDialogComponent} from "./lp-confirmation-dialog.component";
-import {AuthenticationService} from "../../core/services/authentication.service";
-import {InstallationService} from "../../core/services/installation.service";
-import {environment} from "../../../environments/environment.prod";
+import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
+import {AuthenticationService} from "../../../core/services/authentication.service";
+import {InstallationService} from "../../../core/services/installation.service";
+import {environment} from "../../../../environments/environment.prod";
 
 @Component({
   selector: 'lp-app-installations',
@@ -35,6 +35,7 @@ export class LpAppInstallationsComponent implements OnInit {
   public currentURL = "https://" + this.server + "/notifications/event";
   private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
   
+  @Input() appInstall: AppInstall;
   @Output() eventCreated = new EventEmitter<Event>();
   @ViewChild('tabs', {static: false}) tabs: MatTabGroup;
   @ViewChild('stepperCreate', {static: false}) stepperCreate: MatStepper;
@@ -54,7 +55,9 @@ export class LpAppInstallationsComponent implements OnInit {
     {value: 9200, viewValue: '6 hours'},
     {value: 9200, viewValue: '12 hours'},
     {value: 9200, viewValue: '24 hours'},
-    {value: 9200, viewValue: '48 hours'}
+    {value: 9200, viewValue: '48 hours'},
+    {value: 9200, viewValue: '72 hours'}
+
 
   ];
   
