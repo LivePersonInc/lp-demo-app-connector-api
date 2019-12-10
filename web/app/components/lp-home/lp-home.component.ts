@@ -70,7 +70,6 @@ export class LpHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.data) {
         this.loadingService.startLoading();
         this.installationService.installApp(result.data)
@@ -79,13 +78,10 @@ export class LpHomeComponent implements OnInit {
   }
   
   public openAppInstallationEditDialog(appInstallation) {
-    console.log('openAppInstallationDialog EDIR');
-    console.log(appInstallation);
     
     const dialogRef = this.dialog.open(LpEditAppIntallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result.data) {
         this.loadingService.startLoading();
         this.installationService.installApp(result.data)

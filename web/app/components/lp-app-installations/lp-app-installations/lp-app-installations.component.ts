@@ -24,41 +24,25 @@ import {environment} from "../../../../environments/environment.prod";
   styleUrls: ['./lp-app-installations.component.scss']
 })
 export class LpAppInstallationsComponent implements OnInit {
-  public selectedAppInstall: AppInstall;
   public webhooks: Webhooks;
-  public completed: boolean;
   public form: FormGroup;
   public isDemoChecked:boolean;
   public ttlValue:number;
-  
   public server = environment.server;
   public currentURL = "https://" + this.server + "/notifications/event";
   private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
   
-  @Input() appInstall: AppInstall;
-  @Output() eventCreated = new EventEmitter<Event>();
-  @ViewChild('tabs', {static: false}) tabs: MatTabGroup;
-  @ViewChild('stepperCreate', {static: false}) stepperCreate: MatStepper;
-  @ViewChild('stepperUpdate', {static: false}) stepperUpdate: MatStepper;
-  @ViewChild('appInstallGeneralDetails', {static: false}) appInstallGeneralDetails;
-  @ViewChild('updateAppInstallGeneralDeateils',  {static: false}) updateAppInstallGeneralDeateils;
-  
-  constructor(private dialog: MatDialog,
-              private snackBar: MatSnackBar,
-              private formBuilder: FormBuilder,
-              private  installationService:InstallationService) {}
+  constructor(private formBuilder: FormBuilder) {}
  
   public ttls = [
     {value: 3600, viewValue: '1 hour'},
     {value: 9200, viewValue: '2 hours'},
-    {value: 9200, viewValue: '4 hours'},
-    {value: 9200, viewValue: '6 hours'},
-    {value: 9200, viewValue: '12 hours'},
-    {value: 9200, viewValue: '24 hours'},
-    {value: 9200, viewValue: '48 hours'},
-    {value: 9200, viewValue: '72 hours'}
-
-
+    {value: 14400, viewValue: '4 hours'},
+    {value: 21600, viewValue: '6 hours'},
+    {value: 24200, viewValue: '12 hours'},
+    {value: 86400, viewValue: '24 hours'},
+    {value: 172800, viewValue: '48 hours'},
+    {value: 259200, viewValue: '72 hours'}
   ];
   
   ngOnInit() {
