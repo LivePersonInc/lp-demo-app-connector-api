@@ -54,17 +54,20 @@ export class LpHomeComponent implements OnInit {
     }
   }
   
-  getAppInstallations() {
+  public getAppInstallations() {
     this.installationService.getAppListList();
   }
   
-  openDemo(appInstallation) {
+  public openDemo(appInstallation: AppInstall) {
     console.log(appInstallation);
     this.installationService.selectedApp = appInstallation;
-    this.router.navigateByUrl('demo');
+    this.router.navigateByUrl('demo/' + appInstallation.client_id);
   }
   
-  openAppInstallationDialog(appInstallation) {
+  public openAppInstallationDialog(appInstallation) {
+    console.log('openAppInstallationDialog');
+    console.log(appInstallation);
+  
     const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -76,12 +79,12 @@ export class LpHomeComponent implements OnInit {
     })
   }
   
-  uninstallApp(app: AppInstall){
+  public uninstallApp(app: AppInstall){
     console.log(app);
     //  this.loadingService.startLoading();
   }
   
-  isDemoApp(app: AppInstall):boolean {
+  public isDemoApp(app: AppInstall):boolean {
     return app.enabled;
     // TODO:
   }

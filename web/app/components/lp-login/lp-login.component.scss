@@ -1,26 +1,40 @@
 :host{
-  display: block;
+  height: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .container{
     margin-top: 50px;
     margin-bottom: 40px;
+    .mat-card-header{
+      text-align:center;
+      width:100%;
+      display:block;
+      font-weight:700;
+      .mat-card-title{
+        font-size:30px;
+        margin:0;
+        padding: 20px;
+      }
+    }
+    .form-container {
+      padding: 40px 70px 50px;
+      max-width: 480px;
+      .brand-form{
+        width: 100%;
+      }
+      button{
+        width: 100%;
+      }
+    }
   }
-
   .start-config-btn{
     margin-left: 30px;
   }
-
-
-}
-
-
-.form-container {
-  max-width: 340px;
-  margin-top: 50px;
-  display: block;
-  .brand-form{
-    width: 100%;
-  }
-  button{
-    width: 100%;
+  .lp-login-button{
+     height: 50px;
   }
 }
+
+
+

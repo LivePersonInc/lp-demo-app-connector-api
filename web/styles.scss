@@ -3,11 +3,12 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~@angular/material/theming';
 
+html,body{height:100%;margin:0;padding:0;}
+
 body {
   background-color: rgb(242, 242, 242) !important;
   background: url("./assets/hardest-263484_1920.jpg");
   font-family: "MyriadPro","Open Sans","myriad-pro-1","myriad-pro-2",sans-serif;
-  margin: 0;
 }
 
 button {
