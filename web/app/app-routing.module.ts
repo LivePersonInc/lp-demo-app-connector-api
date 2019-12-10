@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'home', component: LpHomeComponent, canActivate: [AuthGuardGuard]},
   {path: 'login', component: LpLoginComponent},
   {path: 'logout', component: LpLoginComponent, canActivate: [LogoutGuard]},
-  {path: 'demo', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
+  {path: 'demo/:appId', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
 ];
 
 
