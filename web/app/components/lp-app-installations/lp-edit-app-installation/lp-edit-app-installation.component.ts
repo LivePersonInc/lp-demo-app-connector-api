@@ -48,11 +48,12 @@ export class LpEditAppInstallationComponent implements OnInit {
     if(!this.appInstall.capabilities) {
       this.appInstall.capabilities = new Capabilities();
     }
+  
+    let whs = new Webhooks();
+    whs.initEndpoints();
     
-    if(!this.appInstall.capabilities.webhooks || Object.entries(this.appInstall.capabilities.webhooks).length === 0  )  {
-      this.appInstall.capabilities.webhooks = new Webhooks();
-      this.appInstall.capabilities.webhooks.initEndpoints();
-    }
+    this.appInstall.capabilities.webhooks = Object.assign( whs, this.appInstall.capabilities.webhooks);
+    
   }
   
   public updateEditableApplicationFields(){
