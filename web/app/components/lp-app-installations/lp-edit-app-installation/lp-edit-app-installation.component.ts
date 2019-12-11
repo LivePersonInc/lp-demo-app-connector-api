@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
+import {Capabilities} from "../../../shared/models/app-installation/capabilities.model";
 
 @Component({
   selector: 'lp-edit-app-installation',
@@ -27,6 +29,8 @@ export class LpEditAppInstallationComponent implements OnInit {
   ];
   
   ngOnInit() {
+    this.enabled = this.appInstall.enabled;
+  
     this.form = new FormGroup({
       appName: new FormControl(''),
       description: new FormControl(''),
@@ -37,10 +41,42 @@ export class LpEditAppInstallationComponent implements OnInit {
       description: this.appInstall.description
     });
     
-    //this.appInstall.client_id
-    this.retention_time = this.appInstall.capabilities.webhooks.retry.retention_time;
-    this.enabled = this.appInstall.enabled;
-  
+    if(this.appInstall.capabilities && this.appInstall.capabilities.webhooks && this.appInstall.capabilities.webhooks.retry) {
+      this.retention_time = this.appInstall.capabilities.webhooks.retry.retention_time;
+    }
+    
+    if(!this.appInstall.capabilities) {
+      this.appInstall.capabilities = new Capabilities();
+    }
+    
+    if(!this.appInstall.capabilities.webhooks || Object.entries(this.appInstall.capabilities.webhooks).length === 0  )  {
+      this.appInstall.capabilities.webhooks = new Webhooks();
+      this.appInstall.capabilities.webhooks.initEndpoints();
+    }
   }
-
+  
+  public updateEditableApplicationFields(){
+    this.appInstall.client_name = this.form.controls['appName'].value;
+    this.appInstall.description = this.form.controls['description'].value;
+    this.appInstall.enabled = this.enabled;
+    if(this.retention_time){
+      this.appInstall.capabilities.webhooks.retry.retention_time = this.retention_time;
+    } else {
+      delete this.appInstall.capabilities.webhooks.retry;
+    }
+    this.cleanEmptyEndpoints();
+  }
+  
+  private cleanEmptyEndpoints(){
+    if(this.appInstall.capabilities.webhooks){
+      Object.keys(this.appInstall.capabilities.webhooks).forEach(key => {
+        if(key !=='retry' && !this.appInstall.capabilities.webhooks[key].endpoint ){
+          delete this.appInstall.capabilities.webhooks[key];
+        }
+      });
+    }
+  }
 }
+
+
+

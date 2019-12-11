@@ -1,21 +1,8 @@
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {Event} from '../../../shared/models/app-installation/event.model';
-import {EndpointHeader} from "../../../shared/models/app-installation/endpointHeaders.model";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatStepper } from "@angular/material/stepper";
-import { MatTabGroup } from "@angular/material/tabs";
-import {AppInstallationsService} from "../../../core/services/app-installations.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
 import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
-import {LoadingService} from "../../../core/services/loading.service";
 import {Capabilities} from "../../../shared/models/app-installation/capabilities.model";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
-import {AuthenticationService} from "../../../core/services/authentication.service";
-import {InstallationService} from "../../../core/services/installation.service";
 import {environment} from "../../../../environments/environment.prod";
 
 @Component({
@@ -115,10 +102,20 @@ export class LpAppInstallationsComponent implements OnInit {
     appInstall.scope = 'msg.consumer';
     appInstall.logo_uri = '';
     appInstall.capabilities = capabilities;
+  
+    this.cleanEmptyEndpoints(appInstall);
+    
     return appInstall
   }
   
-  
-  
+  private cleanEmptyEndpoints(appInstall: AppInstall){
+    if(appInstall.capabilities.webhooks){
+      Object.keys(appInstall.capabilities.webhooks).forEach(key => {
+        if(key !=='retry' && !appInstall.capabilities.webhooks[key].endpoint ){
+          delete appInstall.capabilities.webhooks[key];
+        }
+      });
+    }
+  }
   
 }

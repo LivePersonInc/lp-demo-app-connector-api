@@ -1,7 +1,8 @@
 :host{
-  margin-top: 20px;
-  padding-bottom: 60px;
   display: block;
+  .lp-card{
+    background: rgba(255,255, 255, 0.9);;
+  }
 }
 @media (min-width: 1200px) {
   .container-fluid {

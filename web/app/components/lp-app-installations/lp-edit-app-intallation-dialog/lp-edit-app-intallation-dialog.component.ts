@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
+import {LpEditAppInstallationComponent} from "../lp-edit-app-installation/lp-edit-app-installation.component";
 
 @Component({
   selector: 'lp-edit-app-intallation-dialog',
@@ -10,13 +11,10 @@ import {AppInstall} from "../../../shared/models/app-installation/appInstall.mod
 export class LpEditAppIntallationDialogComponent implements OnInit {
   
   public appInstallation: AppInstall;
+  @ViewChild(LpEditAppInstallationComponent, {static: true}) appEditInstallationsComponent: LpEditAppInstallationComponent;
   
   constructor(
     public dialogRef: MatDialogRef<LpEditAppIntallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-  
-    console.log("OPEN DIALOG");
-  
-    console.log(data);
   
     if(data.appInstallation) {
       this.appInstallation = data.appInstallation;
@@ -24,11 +22,11 @@ export class LpEditAppIntallationDialogComponent implements OnInit {
     }
   }
   
-  
   ngOnInit() {}
   
   updateAppInstallation() {
-  
+    this.appEditInstallationsComponent.updateEditableApplicationFields();
+    this.dialogRef.close({data:this.appInstallation});
   }
   
 }
