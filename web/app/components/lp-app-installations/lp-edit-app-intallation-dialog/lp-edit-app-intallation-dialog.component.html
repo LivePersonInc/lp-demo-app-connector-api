@@ -3,7 +3,11 @@
   <lp-edit-app-installation [appInstall]="appInstallation"></lp-edit-app-installation>
 </div>
 <div mat-dialog-actions class="container-fluid w-100 d-flex flex-row-reverse">
-  <button mat-raised-button class="m-2" color="primary" [mat-dialog-close]="true" (click)="updateAppInstallation()">Update</button>
+  <button mat-raised-button class="m-2" color="primary" [mat-dialog-close]="true"
+          [disabled]="!appEditInstallationsComponent.form.valid"
+          (click)="updateAppInstallation()">
+    Update
+  </button>
   <button mat-raised-button class="m-2" color="secondary" [mat-dialog-close]="ture"  cdkFocusInitial>Cancel</button>
 </div>
 

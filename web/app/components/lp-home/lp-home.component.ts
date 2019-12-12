@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import { LpInstallationDialogComponent } from '../lp-app-installations/lp-installation-dialog/lp-installation-dialog.component';
 import {InstallationService} from "../../core/services/installation.service";
 import {LpEditAppIntallationDialogComponent} from "../lp-app-installations/lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component";
+import {MatPaginator, MatTableDataSource} from "@angular/material";
 @Component({
   selector: 'lp-home',
   templateUrl: './lp-home.component.html',
@@ -19,13 +20,17 @@ import {LpEditAppIntallationDialogComponent} from "../lp-app-installations/lp-ed
 export class LpHomeComponent implements OnInit {
   public avaliableApplicationInstallation: AppInstall[];
   private appInstallSubscription: Subscription;
-  displayedColumns: string[] = ['enabled', 'name',"client_secret", "description", 'created_at', 'menu'];
+  public datataSource: MatTableDataSource<AppInstall>;
+  public displayedColumns: string[] = ['enabled', 'name',"client_secret", "description", 'created_at', 'menu'];
+  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
   constructor(public installationService: InstallationService,
               private authenticationService: AuthenticationService,
               private router: Router,
               private dialog: MatDialog,
-              public loadingService: LoadingService) {}
+              public loadingService: LoadingService) {
+  }
 
   ngOnInit() {
     //needed when browser refresh
@@ -41,6 +46,8 @@ export class LpHomeComponent implements OnInit {
     this.appInstallSubscription = this.installationService.installationSubject.subscribe( val => {
       if(val === 'GET_APP_LIST'){
         this.avaliableApplicationInstallation = this.installationService.appList;
+        this.datataSource = new MatTableDataSource<AppInstall>(this.avaliableApplicationInstallation);
+        this.datataSource.paginator = this.paginator;
       }
       if(val === 'INSTALL_APP') {
         this.getAppInstallations();

@@ -35,7 +35,6 @@ import {HistoryService} from "./core/services/history.service";
 import {RequestConsoleInterceptor} from "./core/interceptors/request-console.interceptor";
 import {StateRecoveryService} from "./core/services/state-recovery.service";
 import {LpAppInstallationsModule} from "./components/lp-app-installations/lp-app-installations.module";
-import { LpInstallationDialogComponent } from './components/lp-app-installations/lp-installation-dialog/lp-installation-dialog.component';
 
 @NgModule({
   declarations: [
