@@ -30,6 +30,10 @@ export class HttpService {
     }
     return this.http.get(url, httpOptions);
   }
+  
+  public doDelete(url:string, httpOptions: any ):  Observable<any> {
+    return this.http.delete(url, httpOptions);
+  }
 
   public errorResponse(error: (any | HttpErrorResponse)) {
     this.snackBarConfig.duration = null;

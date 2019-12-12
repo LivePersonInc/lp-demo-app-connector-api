@@ -106,6 +106,20 @@ export class InstallationService extends HttpService {
       })
     ).subscribe();
   }
+  
+  public uninstallApp(appId: string) {
+    this.doDelete(`${this.baseURI}${this.brandId}/${appId}`, this.headers).pipe(
+      map(data => {
+        this.installationSubject.next('DELETE_APP');
+        this.successResponse('This app was successfully Uninstalled');
+        this.loadingService.stopLoading();
+        this.getAppListList();
+      }),catchError((error: any) => {
+        this.errorResponse("Installation server error during the aupdate");
+        return throwError(new Error(error || 'Installation server error during the aupdate'));
+      })
+    ).subscribe();
+  }
 
   public reset() {
     this.appList = null;

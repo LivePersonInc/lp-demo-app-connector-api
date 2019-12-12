@@ -11,6 +11,7 @@ import {InstallationService} from "../../core/services/installation.service";
 import {LpEditAppIntallationDialogComponent} from "../lp-app-installations/lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component";
 import {MatPaginator, MatTableDataSource} from "@angular/material";
 import {MatSort} from '@angular/material/sort';
+import {LpConfirmationDialogComponent} from "../lp-confirmation-dialog/lp-confirmation-dialog.component";
 
 @Component({
   selector: 'lp-home',
@@ -22,6 +23,8 @@ import {MatSort} from '@angular/material/sort';
 export class LpHomeComponent implements OnInit {
   public avaliableApplicationInstallation: AppInstall[];
   private appInstallSubscription: Subscription;
+  private dialogRefSubscription: Subscription;
+  
   public dataSource: MatTableDataSource<AppInstall>;
   public displayedColumns: string[] = ['enabled', 'client_id_issued_at', 'name',"client_secret", "description",'menu'];
   
@@ -53,9 +56,9 @@ export class LpHomeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-      if(val === 'INSTALL_APP' || val === 'UPDATE_APP') {
+     /* if(val === 'INSTALL_APP' || val === 'UPDATE_APP') {
         this.getAppInstallations();
-      }
+      }*/
     });
 
   }
@@ -63,6 +66,9 @@ export class LpHomeComponent implements OnInit {
   ngOnDestroy() {
     if (this.appInstallSubscription) {
       this.appInstallSubscription.unsubscribe();
+    }
+    if (this.dialogRefSubscription) {
+      this.dialogRefSubscription.unsubscribe();
     }
   }
   
@@ -82,8 +88,7 @@ export class LpHomeComponent implements OnInit {
   
   public openAppInstallationDialog(appInstallation) {
   
-    const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
-    });
+    const dialogRef = this.dialog.open(LpInstallationDialogComponent,{data: {appInstallation: appInstallation}, maxWidth:'1000'});
     dialogRef.afterClosed().subscribe(result => {
       if(result && result.data) {
         this.loadingService.startLoading();
@@ -93,8 +98,7 @@ export class LpHomeComponent implements OnInit {
   }
   
   public openAppInstallationEditDialog(appInstallation) {
-    const dialogRef = this.dialog.open(LpEditAppIntallationDialogComponent, {data: {appInstallation: appInstallation},   maxWidth:'1000',
-    });
+    const dialogRef = this.dialog.open(LpEditAppIntallationDialogComponent,{data: {appInstallation: appInstallation}, maxWidth:'1000'});
     dialogRef.afterClosed().subscribe(result => {
       if(result && result.data) {
         this.loadingService.startLoading();
@@ -103,10 +107,18 @@ export class LpHomeComponent implements OnInit {
     })
   }
   
-  
   public uninstallApp(app: AppInstall){
-    console.log(app);
-    //this.loadingService.startLoading();
+    const dialogRef = this.dialog.open(LpConfirmationDialogComponent);
+  
+    dialogRef.componentInstance.title = "Uninstall Application";
+    dialogRef.componentInstance.message = "This action will remove completely you application. Are you sure?";
+  
+    this.dialogRefSubscription = dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadingService.startLoading();
+        this.installationService.uninstallApp(app.client_id);
+      }
+    });
   }
   
   public disableApp(app: AppInstall) {
@@ -123,7 +135,6 @@ export class LpHomeComponent implements OnInit {
   
   public isDemoApp(app: AppInstall):boolean {
     return app.enabled;
-    // TODO:
   }
   
 }
