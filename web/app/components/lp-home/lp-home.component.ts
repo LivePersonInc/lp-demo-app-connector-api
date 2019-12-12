@@ -10,6 +10,8 @@ import { LpInstallationDialogComponent } from '../lp-app-installations/lp-instal
 import {InstallationService} from "../../core/services/installation.service";
 import {LpEditAppIntallationDialogComponent} from "../lp-app-installations/lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component";
 import {MatPaginator, MatTableDataSource} from "@angular/material";
+import {MatSort} from '@angular/material/sort';
+
 @Component({
   selector: 'lp-home',
   templateUrl: './lp-home.component.html',
@@ -20,10 +22,11 @@ import {MatPaginator, MatTableDataSource} from "@angular/material";
 export class LpHomeComponent implements OnInit {
   public avaliableApplicationInstallation: AppInstall[];
   private appInstallSubscription: Subscription;
-  public datataSource: MatTableDataSource<AppInstall>;
-  public displayedColumns: string[] = ['enabled', 'name',"client_secret", "description", 'created_at', 'menu'];
+  public dataSource: MatTableDataSource<AppInstall>;
+  public displayedColumns: string[] = ['enabled', 'client_id_issued_at', 'name',"client_secret", "description",'menu'];
   
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   
   constructor(public installationService: InstallationService,
               private authenticationService: AuthenticationService,
@@ -46,10 +49,11 @@ export class LpHomeComponent implements OnInit {
     this.appInstallSubscription = this.installationService.installationSubject.subscribe( val => {
       if(val === 'GET_APP_LIST'){
         this.avaliableApplicationInstallation = this.installationService.appList;
-        this.datataSource = new MatTableDataSource<AppInstall>(this.avaliableApplicationInstallation);
-        this.datataSource.paginator = this.paginator;
+        this.dataSource = new MatTableDataSource<AppInstall>(this.avaliableApplicationInstallation);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
-      if(val === 'INSTALL_APP') {
+      if(val === 'INSTALL_APP' || val === 'UPDATE_APP') {
         this.getAppInstallations();
       }
     });
@@ -60,6 +64,10 @@ export class LpHomeComponent implements OnInit {
     if (this.appInstallSubscription) {
       this.appInstallSubscription.unsubscribe();
     }
+  }
+  
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
   public getAppInstallations() {
@@ -98,7 +106,19 @@ export class LpHomeComponent implements OnInit {
   
   public uninstallApp(app: AppInstall){
     console.log(app);
-    //  this.loadingService.startLoading();
+    //this.loadingService.startLoading();
+  }
+  
+  public disableApp(app: AppInstall) {
+    this.loadingService.startLoading();
+    app.enabled = false;
+    this.installationService.updateApp(app);
+  }
+  
+  public enableApp(app: AppInstall) {
+    this.loadingService.startLoading();
+    app.enabled = true;
+    this.installationService.updateApp(app);
   }
   
   public isDemoApp(app: AppInstall):boolean {
