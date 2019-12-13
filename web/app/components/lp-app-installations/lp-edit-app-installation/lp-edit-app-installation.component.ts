@@ -18,6 +18,7 @@ export class LpEditAppInstallationComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
   
   public ttls = [
+    {value: 0, viewValue: 'NONE'},
     {value: 3600, viewValue: '1 hour'},
     {value: 9200, viewValue: '2 hours'},
     {value: 14400, viewValue: '4 hours'},
@@ -73,6 +74,8 @@ export class LpEditAppInstallationComponent implements OnInit {
       Object.keys(this.appInstall.capabilities.webhooks).forEach(key => {
         if(key !=='retry' && !this.appInstall.capabilities.webhooks[key].endpoint ){
           delete this.appInstall.capabilities.webhooks[key];
+        } else if (key ==='retry' &&  this.appInstall.capabilities.webhooks[key].retention_time === 0){
+          delete this.appInstall.capabilities.webhooks['retry'];
         }
       });
     }

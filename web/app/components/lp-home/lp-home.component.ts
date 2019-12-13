@@ -56,9 +56,9 @@ export class LpHomeComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-     /* if(val === 'INSTALL_APP' || val === 'UPDATE_APP') {
+      if(val === 'INSTALL_APP' || val === 'UPDATE_APP') {
         this.getAppInstallations();
-      }*/
+      }
     });
 
   }

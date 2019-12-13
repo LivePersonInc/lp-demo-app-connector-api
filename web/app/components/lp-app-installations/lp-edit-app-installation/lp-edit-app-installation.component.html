@@ -29,7 +29,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <!--<div class="row">
         <div class="col-md-4">
           <mat-form-field class="w-100 mt-2">
             <mat-label>TTL</mat-label>
@@ -43,11 +43,27 @@
             <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
           </mat-form-field>
         </div>
-      </div>
+      </div>-->
     </form>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Webhooks configuration</ng-template>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <mat-form-field class="w-100 mt-2">
+            <mat-label>TTL</mat-label>
+            <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail"
+                         [(ngModel)]="retention_time"
+                         [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required >
+                {{ttl.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
       <lp-webhooks-form  *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks" class="mt-4 d-block"></lp-webhooks-form>
     </mat-step>
   </mat-vertical-stepper>
