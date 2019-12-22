@@ -48,13 +48,13 @@ export class LpLoginComponent implements OnInit {
         this.appInstallationService.init();
         this.conversationService.init();
         this.accountConfigService.init();
-        this.goToStartConfigPage();
+        this.goToHomePage();
       }
     });
 
     this.conversationService.conversationRestoredSubject.subscribe( event => {
       if (event === 'RESTORED') {
-        this.goToStartDemoPage();
+        this.goToHomePage();
       }
     });
 
@@ -73,8 +73,7 @@ export class LpLoginComponent implements OnInit {
       this.userName = event.userName;
       this.password = event.password;
     }
-    this.domainsService.getDomainList(this.brandId); //TODO: needed for Upload file since it works differenly , needs to be removed and propperly done
-    
+    this.domainsService.getDomainList(this.brandId);
     this.authenticationService.login(this.brandId, this.userName, this.password);
   }
 
@@ -83,12 +82,8 @@ export class LpLoginComponent implements OnInit {
     this.userName = this.userName.trim();
   }
 
-  public goToStartConfigPage() {
+  private goToHomePage() {
     this.router.navigateByUrl('home');
   }
-
-  public goToStartDemoPage() {
-    this.router.navigateByUrl('home');
-  }
-
+  
 }
