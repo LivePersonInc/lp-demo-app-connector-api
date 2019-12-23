@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import '../../../assets/lp-mat-theme';
-:host{
+
+:host {
   .orange-text {
     color: mat-color($lp-app-primary);
   }
@@ -14,12 +15,10 @@
   mat-card {
     margin-bottom: 15px;
   }
-
   table {
     //text-align: center !important;
-   // width: 100%;
+    // width: 100%;
   }
-
   .mat-header-cell {
     //text-align: center;
   }
