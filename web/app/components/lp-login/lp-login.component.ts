@@ -45,17 +45,20 @@ export class LpLoginComponent implements OnInit, OnDestroy {
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
         this.installationService.init();
-        this.appInstallationService.init();
+        // this.appInstallationService.init(); //TODO: remove APPinstallations service
         this.conversationService.init();
         this.accountConfigService.init();
         this.goToHomePage();
       }
     });
-    this.conversationService.conversationRestoredSubject.subscribe(event => {
+    
+    // TODO: Remove when fix routing
+    /*this.conversationService.conversationRestoredSubject.subscribe(event => {
       if (event === 'RESTORED') {
         this.goToHomePage();
       }
-    });
+     
+    });*/
   }
   
   ngOnDestroy() {

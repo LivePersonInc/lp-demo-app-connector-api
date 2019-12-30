@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LpDemoComponent} from "./components/lp-demo/lp-demo.component";
-import {AuthGuardGuard} from "./core/guards/auth-guard.guard";
-import {LogoutGuard} from "./core/guards/logout.guard";
-import {LpLoginComponent} from "./components/lp-login/lp-login.component";
-import {LpHomeComponent} from "./components/lp-home/lp-home.component";
+import {LpDemoComponent} from './components/lp-demo/lp-demo.component';
+import {AuthGuardGuard} from './core/guards/auth-guard.guard';
+import {LogoutGuard} from './core/guards/logout.guard';
+import {LpLoginComponent} from './components/lp-login/lp-login.component';
+import {LpHomeComponent} from './components/lp-home/lp-home.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -13,7 +13,6 @@ const routes: Routes = [
   {path: 'logout', component: LpLoginComponent, canActivate: [LogoutGuard]},
   {path: 'demo/:appId', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
 ];
-
 
 @NgModule({
   imports: [

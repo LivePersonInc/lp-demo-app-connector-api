@@ -60,7 +60,6 @@ export class LpHomeComponent implements OnInit, OnDestroy {
         this.getAppInstallations();
       }
     });
-    
   }
   
   ngOnDestroy() {
@@ -80,10 +79,8 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     this.installationService.getAppListList();
   }
   
-  public openDemo(appInstallation: AppInstall) {
-    console.log(appInstallation);
-    this.installationService.selectedApp = appInstallation;
-    this.router.navigateByUrl('demo/' + appInstallation.client_id);
+  public openDemo(clientId: string) {
+    this.router.navigateByUrl('demo/' + clientId);
   }
   
   public openAppInstallationDialog(appInstallation) {

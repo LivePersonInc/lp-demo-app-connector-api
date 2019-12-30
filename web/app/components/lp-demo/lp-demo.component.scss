@@ -1,14 +1,16 @@
-:host{
+:host {
   display: block;
-  .lp-card{
-    background: rgba(255,255, 255, 0.9);;
+  .lp-card {
+    background: rgba(255, 255, 255, 0.9);;
   }
 }
+
 @media (min-width: 1200px) {
   .container-fluid {
     max-width: 1450px;
   }
 }
+
 @media (max-width: 800px) {
   .container-fluid {
     padding-left: 0 !important;

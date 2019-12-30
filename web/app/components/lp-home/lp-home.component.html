@@ -74,7 +74,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
               <mat-menu #appMenu="matMenu">
-                <button *ngIf="isDemoApp(element)" (click)="openDemo(element)" mat-menu-item>
+                <button *ngIf="isDemoApp(element)" (click)="openDemo(element.client_id)" mat-menu-item>
                   <mat-icon>play_arrow</mat-icon>
                   <span class="p-1">Demo</span></button>
                 <button (click)="openAppInstallationEditDialog(element)" mat-menu-item>
