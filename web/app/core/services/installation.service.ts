@@ -62,8 +62,8 @@ export class InstallationService extends HttpService {
         this.installationSubject.next('GET_APP_LIST');
       }),
       catchError((error: any) => {
-        this.errorResponse('Problem with getting session object');
-        return throwError(new Error(error || 'Problem with getting session object'));
+        this.errorResponse(error || 'Error in get application list');
+        return throwError(new Error(error || 'Error in get application list'));
       })
     ).subscribe();
   }
@@ -75,7 +75,7 @@ export class InstallationService extends HttpService {
         this.installationSubject.next('INSTALL_APP');
       }),
       catchError((error: any) => {
-        this.errorResponse('Installation server error');
+        this.errorResponse(error || 'Installation server error');
         return throwError(new Error(error || 'Installation server error'));
       })
     ).subscribe();
@@ -88,8 +88,8 @@ export class InstallationService extends HttpService {
         this.successResponse('This app was successfully updated');
         this.getAppListList();
       }), catchError((error: any) => {
-        this.errorResponse('Installation server error during the aupdate');
-        return throwError(new Error(error || 'Installation server error during the aupdate'));
+        this.errorResponse(error || 'Installation server error during the update');
+        return throwError(new Error(error || 'Installation server error during the update'));
       })
     ).subscribe();
   }
@@ -101,8 +101,8 @@ export class InstallationService extends HttpService {
         this.installationSubject.next('APP_SECRET_FOUND'); // TODO: check this logic
         this.loadingService.stopLoading();
       }), catchError((error: any) => {
-        this.errorResponse('Problem with getting session object');
-        return throwError(new Error(error || 'Problem with getting session object'));
+        this.errorResponse(error || 'Problem with getting app installation');
+        return throwError(new Error(error || 'Problem with getting app installation'));
       })
     ).subscribe();
   }
@@ -115,8 +115,8 @@ export class InstallationService extends HttpService {
         this.loadingService.stopLoading();
         this.getAppListList();
       }), catchError((error: any) => {
-        this.errorResponse('Installation server error during the aupdate');
-        return throwError(new Error(error || 'Installation server error during the aupdate'));
+        this.errorResponse(error || 'Installation server error during the Uninstall');
+        return throwError(new Error(error || 'Installation server error during the Uninstall'));
       })
     ).subscribe();
   }

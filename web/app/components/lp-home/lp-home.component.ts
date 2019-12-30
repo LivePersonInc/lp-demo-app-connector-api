@@ -40,9 +40,11 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   
   ngOnInit() {
     // needed when browser refresh
-    this.authenticationService.userLoggedSubject.subscribe(ev => {
-      this.installationService.init();
-      this.getAppInstallations();
+    this.authenticationService.userLoggedSubject.subscribe(event => {
+      if (event === 'LOGGED-IN') {
+        this.installationService.init();
+        this.getAppInstallations();
+      }
     });
     
     if (this.authenticationService.user) {
