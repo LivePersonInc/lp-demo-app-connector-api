@@ -45,6 +45,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     // needed when browser refresh
     this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'USER-SET') {
+        this.installationService.init();
         this.init();
       }
     });

@@ -41,7 +41,6 @@ export class InstallationService extends HttpService {
             'content-type': 'application/json',
           }
       };
-      this.restoreState();
     }
   }
   
