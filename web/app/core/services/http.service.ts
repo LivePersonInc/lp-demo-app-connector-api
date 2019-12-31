@@ -41,9 +41,6 @@ export class HttpService {
     if (error instanceof HttpErrorResponse) {
       this.snackBar.open('[ERROR]: ' + error.status + ' ' +
         (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
-      if (error.status === 401) {
-        this.router.navigateByUrl('/logout');
-      }
     } else {
       console.log(JSON.stringify(error));
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);
