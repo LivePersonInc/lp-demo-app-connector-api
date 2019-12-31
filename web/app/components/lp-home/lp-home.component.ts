@@ -41,7 +41,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // needed when browser refresh
     this.authenticationService.userLoggedSubject.subscribe(event => {
-      if (event === 'LOGGED-IN') {
+      if (event === 'USER-SET') {
         this.installationService.init();
         this.getAppInstallations();
       }
@@ -81,8 +81,9 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     this.installationService.getAppListList();
   }
   
-  public openDemo(clientId: string) {
-    this.router.navigateByUrl('demo/' + clientId);
+  public openDemo(app: AppInstall) {
+    this.installationService.setSelectedApp(app);
+    this.router.navigateByUrl('demo/' + app.client_id);
   }
   
   public openAppInstallationDialog(appInstallation) {

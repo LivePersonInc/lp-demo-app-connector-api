@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="conversation">
   <div class="row h-100">
 
     <div class="col-lg-3  text-center">
@@ -27,7 +27,8 @@
           <lp-conversation-form [conversation]="conversation"></lp-conversation-form>
         </div>
         <div class="col-lg-6">
-          <lp-advances-options-form [conversation]="conversation" (conversationChange)="onConversationChange($event)"></lp-advances-options-form>
+          <lp-advances-options-form [conversation]="conversation"
+                                    (conversationChange)="onConversationChange($event)"></lp-advances-options-form>
         </div>
       </div>
 

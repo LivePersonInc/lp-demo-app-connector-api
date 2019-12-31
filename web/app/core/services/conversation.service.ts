@@ -54,13 +54,6 @@ export class ConversationService extends HttpService {
         }
       });
       
-      // TODO: This probably needs to be removed
-      this.installationService.installationSubject.subscribe(event => {
-        if (event === 'APP_SECRET_FOUND') {
-          this.restoreStoredState('RESTORED');
-        }
-      });
-      
       this.conversationManager.conversationEventSubject.subscribe((event: ConversationEvent) => {
         if (event.event === ConvEvent.EVENT_RECEIVED) {
           this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.EVENT_RECEIVED));
@@ -271,13 +264,14 @@ export class ConversationService extends HttpService {
     return '';
   }
   
-  public restoreStoredState(eventName: string) {
-    let state = this.stateManager.getLastStoredStateByBrand(this.brandId);
+  public restoreStoredState(eventName: string, defaultConv: Conversation) {
+    const state = this.stateManager.getLastStoredStateByBrand(this.brandId);
+    console.log('RESTORE STATE');
     if (state.selectedAppId) {
-      let appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
+      const appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
       if (appState) {
-        this.conversation =
-          new Conversation(this.brandId, this.installationService.selectedApp.client_id, this.installationService.selectedApp.client_secret, appState.userName);
+        this.conversation = new Conversation(this.brandId, this.installationService.selectedApp.client_id,
+          this.installationService.selectedApp.client_secret, appState.userName);
         this.conversation.conversationId = appState.conversationId;
         this.conversation.dialogId = appState.conversationId;
         this.conversation.ext_consumer_id = appState.ext_consumer_id;
@@ -298,6 +292,8 @@ export class ConversationService extends HttpService {
         }, error => {
           this.errorResponse(error);
         });
+      } else {
+        this.conversation = defaultConv;
       }
     }
   }

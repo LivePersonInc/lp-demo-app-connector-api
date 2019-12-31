@@ -10,6 +10,7 @@ import {AppInstall} from '../../shared/models/app-installation/appInstall.model'
 import {Router} from '@angular/router';
 import {StateStorage} from '../util/state-storage';
 import {catchError, map} from 'rxjs/operators';
+import {State} from '../../shared/models/stored-state/AppState';
 
 @Injectable()
 export class InstallationService extends HttpService {
@@ -48,7 +49,7 @@ export class InstallationService extends HttpService {
     return this._selectedApp;
   }
   
-  set selectedApp(app: AppInstall) {
+  setSelectedApp(app: AppInstall) {
     this._selectedApp = app;
     this.updateSelectedAppInState();
     this.installationSubject.next('APP_SELECTED');
@@ -97,8 +98,10 @@ export class InstallationService extends HttpService {
   public getAppByAppId(appId: string) {
     this.doGet(`${this.baseURI}${this.brandId}/${appId}`, this.headers, true).pipe(
       map(app => {
+        // this.selectedApp(app);
         this._selectedApp = app;
-        this.installationSubject.next('APP_SECRET_FOUND'); // TODO: check this logic
+        this.updateSelectedAppInState();
+        this.installationSubject.next('APP_SECRET_FOUND');
         this.loadingService.stopLoading();
       }), catchError((error: any) => {
         this.errorResponse(error || 'Problem with getting app installation');
@@ -121,14 +124,6 @@ export class InstallationService extends HttpService {
     ).subscribe();
   }
   
-  public getAppByIdFromAppList(appId: string): AppInstall {
-    console.log('XXXXX');
-    if (this.appList && this.appList.length > 0) {
-      return this.appList.filter(app => app.client_id = appId)[0];
-    }
-    return null;
-  }
-  
   public reset() {
     this.appList = null;
     this._selectedApp = null;
@@ -147,11 +142,12 @@ export class InstallationService extends HttpService {
     this.stateManager.storeLastStateInLocalStorage(state, this.brandId);
   }
   
-  public restoreState() {
+  public restoreState(): State {
     const state = this.stateManager.getLastStoredStateByBrand(this.brandId);
     if (state && state.selectedAppId) {
       this.getAppByAppId(state.selectedAppId);
     }
+    return state;
   }
   
 }
