@@ -42,14 +42,17 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
-    // needed when browser refresh
-    this.authenticationService.userLoggedSubject.subscribe(event => {
-      if (event === 'USER-SET') {
-        this.installationService.init();
-        this.init();
-      }
-    });
-    this.init();
+    if (this.authenticationService.user) {
+      this.init();
+    } else {
+      // needed when browser refresh
+      this.authenticationService.userLoggedSubject.subscribe(event => {
+        if (event === 'USER-SET') {
+          this.installationService.init();
+          this.init();
+        }
+      });
+    }
   }
   
   ngOnDestroy() {

@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Subject, throwError} from 'rxjs';
 import {Router} from '@angular/router';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, timeout} from 'rxjs/operators';
 
 @Injectable()
 export class HistoryService extends HttpService {
@@ -28,6 +28,7 @@ export class HistoryService extends HttpService {
   
   public getHistoryByConsumerId(consumerId: string) {
     this.doGet(`${this.baseURI}${this.brandId}/consumer/${consumerId}`, {}, true).pipe(
+      timeout(10000),
       map((data: Array<any>) => {
         this.history = data;
         this.loadingService.stopLoading();
