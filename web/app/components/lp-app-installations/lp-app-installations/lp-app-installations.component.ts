@@ -41,7 +41,7 @@ export class LpAppInstallationsComponent implements OnInit {
       endpoint: new FormControl('', [Validators.pattern(this.pattern)]),
     });
     
-    this.ttlValue = 3600;
+    this.ttlValue = 0;
     this.onValueChanges();
     
     this.initWebhooks();
@@ -106,7 +106,7 @@ export class LpAppInstallationsComponent implements OnInit {
     
     this.cleanEmptyEndpoints(appInstall);
     
-    return appInstall
+    return appInstall;
   }
   
   private cleanEmptyEndpoints(appInstall: AppInstall) {

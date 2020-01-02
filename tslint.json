@@ -71,6 +71,7 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "no-trailing-whitespace": false
+    "no-trailing-whitespace": false,
+    "component-selector": false
   }
 }

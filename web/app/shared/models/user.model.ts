@@ -1,7 +1,6 @@
-
-export  class User {
+export class User {
   userName: string;
   brandId: string;
   appKey: string;
-  appSecret: string
+  appSecret: string;
 }

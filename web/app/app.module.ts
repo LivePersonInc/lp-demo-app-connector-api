@@ -1,13 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatListModule} from '@angular/material/list';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {NgModule} from '@angular/core';
-import { MaterialModule} from './material.module';
+import {MaterialModule} from './material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {SendApiService} from './core/services/send-api.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -23,7 +20,6 @@ import {HttpService} from './core/services/http.service';
 import {ConversationService} from './core/services/conversation.service';
 import {LpConfirmationDialogComponent} from './components/lp-confirmation-dialog/lp-confirmation-dialog.component';
 import {DomainsService} from './core/services/domains.service';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LpHeaderModule} from './components/lp-header/lp-header.module';
 import {LpConversationModule} from './components/lp-conversation/lp-conversation.module';
 import {LogoutGuard} from './core/guards/logout.guard';
@@ -31,10 +27,10 @@ import {ConversationManager} from './core/util/conversation-manager';
 import {StateStorage} from './core/util/state-storage';
 import {LpLoginComponent} from './components/lp-login/lp-login.component';
 import {LpFooterComponent} from './components/lp-footer/lp-footer.component';
-import {HistoryService} from "./core/services/history.service";
-import {RequestConsoleInterceptor} from "./core/interceptors/request-console.interceptor";
-import {StateRecoveryService} from "./core/services/state-recovery.service";
-import {LpAppInstallationsModule} from "./components/lp-app-installations/lp-app-installations.module";
+import {HistoryService} from './core/services/history.service';
+import {RequestConsoleInterceptor} from './core/interceptors/request-console.interceptor';
+import {StateRecoveryService} from './core/services/state-recovery.service';
+import {LpAppInstallationsModule} from './components/lp-app-installations/lp-app-installations.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +53,7 @@ import {LpAppInstallationsModule} from "./components/lp-app-installations/lp-app
     HttpClientModule,
     AppRoutingModule,
     MatListModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   entryComponents: [LpConfirmationDialogComponent],
   providers: [
@@ -83,4 +79,5 @@ import {LpAppInstallationsModule} from "./components/lp-app-installations/lp-app
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
