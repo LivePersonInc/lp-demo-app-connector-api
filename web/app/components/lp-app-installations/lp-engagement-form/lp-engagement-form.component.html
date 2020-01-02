@@ -1,0 +1,76 @@
+<form [formGroup]="engagementForm" class="form-container">
+  <div class="row">
+    <div class="col-md-12 align-items-start hint">
+      <p>Engagement design possibilities when designing a campaign for messaging.Without a clear reason to change them,
+        you
+        can use the default values found in the schema.</p>
+    </div>
+    <strong>VALID: {{engagementForm.valid}}</strong>
+    <strong>VALID: {{engagementForm.controls['entryPoints'].value}}</strong>
+
+  </div>
+  <div class="row">
+    <div class="col-md-4 align-items-start mt-4">
+      <div class="container-fluid w-100 d-flex justify-content-start">
+        <mat-checkbox
+          name="demo checked"
+          color="primary"
+          [(ngModel)]="designEngagement"
+          [ngModelOptions]="{standalone: true}"
+          matTooltip="">
+          Desing Engagement
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="col-md-4 align-items-start mt-4">
+      <div class="container-fluid w-100 d-flex justify-content-start">
+        <mat-checkbox
+          name="demo checked"
+          color="primary"
+          [(ngModel)]="designWindow"
+          [ngModelOptions]="{standalone: true}"
+          matTooltip="">
+          Design Window
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="col-md-4 align-items-start mt-4">
+      <div class="container-fluid w-100 d-flex justify-content-start">
+        <mat-checkbox
+          name="demo checked"
+          color="primary"
+          [(ngModel)]="languageSelection"
+          [ngModelOptions]="{standalone: true}"
+          matTooltip="">
+          Language Selection
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="engagementForm.errors"> {{form.errors}}</div>
+  <div class="row align-items-center mt-4">
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-chip-list #entryPointChipList>
+          <mat-chip *ngFor="let entryPoint of engagementForm.get('entryPoints').controls; let i = index;"
+                    [selectable]="selectable"
+                    [removable]="removable" (removed)="removeEntryPoint(i)">
+            {{entryPoint.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput
+                 placeholder="New entry Point."
+                 required
+                 [matChipInputFor]="entryPointChipList"
+                 (matChipInputTokenEnd)="addEntryPoint($event)"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+          >
+        </mat-chip-list>
+        <mat-error>Please this minimun one elment is requered</mat-error>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+</form>

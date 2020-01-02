@@ -1,4 +1,4 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
@@ -19,7 +19,7 @@ export class LpAppInstallationsComponent implements OnInit {
   public currentURL = 'https://' + this.server + '/notifications/event';
   private pattern = '^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$';
   
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
   }
   
   public ttls = [
