@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {fadeInAnimation} from '../../shared/animations/lp-animations';
 
 @Component({
@@ -8,16 +8,12 @@ import {fadeInAnimation} from '../../shared/animations/lp-animations';
   animations: [fadeInAnimation],
   host: {'[@fadeInAnimation]': ''}
 })
-export class LpDemoComponent implements OnInit, OnDestroy {
+export class LpDemoComponent implements OnInit {
   
   constructor() {
   }
   
-  
   ngOnInit() {
   }
   
-  ngOnDestroy() {
-  
-  }
 }

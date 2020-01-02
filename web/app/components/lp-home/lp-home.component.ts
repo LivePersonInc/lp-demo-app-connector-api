@@ -122,14 +122,18 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   
   public disableApp(app: AppInstall) {
     this.loadingService.startLoading();
-    app.enabled = false;
-    this.installationService.updateApp(app);
+    const appCopy = new AppInstall().deserialize(app);
+    appCopy.enabled = false;
+    console.log(appCopy);
+    
+    this.installationService.updateApp(appCopy);
   }
   
   public enableApp(app: AppInstall) {
     this.loadingService.startLoading();
-    app.enabled = true;
-    this.installationService.updateApp(app);
+    const appCopy = new AppInstall().deserialize(app);
+    appCopy.enabled = true;
+    this.installationService.updateApp(appCopy);
   }
   
   public isDemoApp(app: AppInstall): boolean {
