@@ -126,7 +126,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     
     if (this.brandId) {
       this.route.paramMap.subscribe(params => {
-        console.log('ROUTER SUBSCRIPTIOn');
         if (params.get('appId')) {
           const state = this.installationService.restoreState();
           if (!state || !state.selectedAppId) {

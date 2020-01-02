@@ -1,9 +1,9 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
-import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
-import {Webhooks} from "../../../shared/models/app-installation/webhooks.model";
-import {Capabilities} from "../../../shared/models/app-installation/capabilities.model";
-import {environment} from "../../../../environments/environment.prod";
+import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
+import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
+import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
+import {environment} from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'lp-app-installations',
@@ -13,14 +13,15 @@ import {environment} from "../../../../environments/environment.prod";
 export class LpAppInstallationsComponent implements OnInit {
   public webhooks: Webhooks;
   public form: FormGroup;
-  public isDemoChecked:boolean;
-  public ttlValue:number;
+  public isDemoChecked: boolean;
+  public ttlValue: number;
   public server = environment.server;
-  public currentURL = "https://" + this.server + "/notifications/event";
-  private pattern = "^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\'\\/\\\\+=&;%\\$#_]*)?$";
+  public currentURL = 'https://' + this.server + '/notifications/event';
+  private pattern = '^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$';
   
-  constructor(private formBuilder: FormBuilder) {}
- 
+  constructor(private formBuilder: FormBuilder) {
+  }
+  
   public ttls = [
     {value: 0, viewValue: 'NONE'},
     {value: 3600, viewValue: '1 hour'},
@@ -38,17 +39,16 @@ export class LpAppInstallationsComponent implements OnInit {
       appName: new FormControl(''),
       description: new FormControl(''),
       endpoint: new FormControl('', [Validators.pattern(this.pattern)]),
-    },);
+    });
     
     this.ttlValue = 3600;
     this.onValueChanges();
-  
+    
     this.initWebhooks();
   }
-
+  
   onValueChanges(): void {
-    this.form.get('endpoint').valueChanges.subscribe(val=>{
-      console.log(val);
+    this.form.get('endpoint').valueChanges.subscribe(val => {
       this.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.form.controls['endpoint'].value;
       this.webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.form.controls['endpoint'].value;
       this.webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.form.controls['endpoint'].value;
@@ -64,13 +64,13 @@ export class LpAppInstallationsComponent implements OnInit {
   }
   
   public toggleDemoAppServerEndpoint() {
-    if(this.isDemoChecked){
+    if (this.isDemoChecked) {
       this.form.patchValue({
         endpoint: this.currentURL
       });
     } else {
       this.form.patchValue({
-        endpoint: ""
+        endpoint: ''
       });
     }
   }
@@ -80,18 +80,18 @@ export class LpAppInstallationsComponent implements OnInit {
     const capabilities = new Capabilities();
     let webhooks = new Webhooks();
     webhooks.initEndpoints();
-    if(this.isDemoChecked){
+    if (this.isDemoChecked) {
       webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['ms.MessagingEventNotification.RichContentEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['ms.MessagingEventNotification.AcceptStatusEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['ms.MessagingEventNotification.ChatStateEvent'].endpoint = this.form.controls['endpoint'].value;
       webhooks['cqm.ExConversationChangeNotification'].endpoint = this.form.controls['endpoint'].value;
       appInstall.client_name = this.form.controls['appName'].value + '--Demo--';
-  
+      
     } else {
       webhooks = this.webhooks;
       appInstall.client_name = this.form.controls['appName'].value;
-  
+      
     }
     webhooks.retry.retention_time = this.ttlValue;
     // Construct capabilities
@@ -99,22 +99,22 @@ export class LpAppInstallationsComponent implements OnInit {
     // Construct app installation
     appInstall.description = this.form.controls['description'].value;
     appInstall.enabled = true;
-    appInstall.grant_types = ["client_credentials"];
+    appInstall.grant_types = ['client_credentials'];
     appInstall.scope = 'msg.consumer';
     appInstall.logo_uri = '';
     appInstall.capabilities = capabilities;
-  
+    
     this.cleanEmptyEndpoints(appInstall);
     
     return appInstall
   }
   
-  private cleanEmptyEndpoints(appInstall: AppInstall){
-    if(appInstall.capabilities.webhooks){
+  private cleanEmptyEndpoints(appInstall: AppInstall) {
+    if (appInstall.capabilities.webhooks) {
       Object.keys(appInstall.capabilities.webhooks).forEach(key => {
-        if(key !=='retry' && !appInstall.capabilities.webhooks[key].endpoint ){
+        if (key !== 'retry' && !appInstall.capabilities.webhooks[key].endpoint) {
           delete appInstall.capabilities.webhooks[key];
-        }else if (key ==='retry' &&  appInstall.capabilities.webhooks[key].retention_time === 0){
+        } else if (key === 'retry' && appInstall.capabilities.webhooks[key].retention_time === 0) {
           delete appInstall.capabilities.webhooks['retry'];
         }
       });

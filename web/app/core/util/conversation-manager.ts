@@ -199,7 +199,6 @@ export class ConversationManager {
     const body = JSON.stringify(this.getDownloadURLRequestBody(relativePath));
     
     if (!conversation.isConvStarted) {
-      console.log('No authenticated');
       return this.authenticate(conversation).pipe(
         flatMap(r => {
           return this.sendApiService.sendMessage(conversation.branId, body, headers);
