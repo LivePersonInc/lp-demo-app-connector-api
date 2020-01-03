@@ -60,7 +60,7 @@
                  [matChipInputAddOnBlur]="addOnBlur"
           >
         </mat-chip-list>
-        <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('required')">Please alt least one element is
+        <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('required')">Please at least one element is
           required
         </mat-error>
         <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('max10')">Only max 10 elements are allowed
@@ -70,7 +70,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="row align-items-center mt-4">
+  <div class="row align-items-center mt-1">
     <div class="col">
       <mat-form-field class="w-100">
         <mat-chip-list #visitorBehaviorChipList>
@@ -97,5 +97,89 @@
       </mat-form-field>
     </div>
   </div>
-
+  <div class="row align-items-center mt-1">
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-chip-list #targetAudienceChipList>
+          <mat-chip *ngFor="let element of engagementForm.get('targetAudience').controls; let i = index;"
+                    [selectable]="selectable"
+                    [removable]="removable" (removed)="removeChipElement(i, 'targetAudience')">
+            {{element.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput
+                 placeholder="Target Audience"
+                 required
+                 [matChipInputFor]="targetAudienceChipList"
+                 (matChipInputTokenEnd)="addChipElement($event, 'targetAudience')"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+          >
+        </mat-chip-list>
+        <mat-error *ngIf="engagementForm.controls['targetAudience'].hasError('max20')">Only max 20 elements are allowed
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['targetAudience'].hasError('unique')">Repeated elements are not
+          allowed
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row align-items-center mt-1">
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-chip-list #goalsChipList>
+          <mat-chip *ngFor="let element of engagementForm.get('goals').controls; let i = index;"
+                    [selectable]="selectable"
+                    [removable]="removable" (removed)="removeChipElement(i, 'goals')">
+            {{element.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput
+                 placeholder="Goals."
+                 required
+                 [matChipInputFor]="goalsChipList"
+                 (matChipInputTokenEnd)="addChipElement($event, 'goals')"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+          >
+        </mat-chip-list>
+        <mat-error *ngIf="engagementForm.controls['goals'].hasError('max10')">Only max 10 elements are allowed
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['goals'].hasError('unique')">Repeated elements are not
+          allowed
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row align-items-center mt-1">
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-chip-list #consumerIdentityChipList>
+          <mat-chip *ngFor="let element of engagementForm.get('consumerIdentity').controls; let i = index;"
+                    [selectable]="selectable"
+                    [removable]="removable" (removed)="removeChipElement(i, 'consumerIdentity')">
+            {{element.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput
+                 placeholder="Consumer Identity."
+                 required
+                 [matChipInputFor]="consumerIdentityChipList"
+                 (matChipInputTokenEnd)="addChipElement($event, 'consumerIdentity')"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+          >
+        </mat-chip-list>
+        <mat-error *ngIf="engagementForm.controls['consumerIdentity'].hasError('required')">
+          Please at least one element is required
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['consumerIdentity'].hasError('max5')">
+          Only max 5 elements are allowed
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['consumerIdentity'].hasError('unique')">
+          Repeated elements are not allowed
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
 </ng-container>

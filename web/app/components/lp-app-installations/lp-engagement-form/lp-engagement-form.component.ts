@@ -69,6 +69,10 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
   @ViewChild('visitorBehaviorChipList', {static: true}) visitorBehaviorChipList;
+  @ViewChild('targetAudienceChipList', {static: true}) targetAudienceChipList;
+  @ViewChild('goalsChipList', {static: true}) goalsChipList;
+  @ViewChild('consumerIdentityChipList', {static: true}) consumerIdentityChipList;
+  
   
   // chip input props.
   public selectable = true;
@@ -95,14 +99,21 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   }
   
   ngOnInit() {
-    
     this.engagementForm.get('entryPoints').statusChanges.subscribe(
       status => this.entryPointChipList.errorState = status === 'INVALID'
     );
     this.engagementForm.get('visitorBehavior').statusChanges.subscribe(
       status => this.visitorBehaviorChipList.errorState = status === 'INVALID'
     );
-    
+    this.engagementForm.get('targetAudience').statusChanges.subscribe(
+      status => this.targetAudienceChipList.errorState = status === 'INVALID'
+    );
+    this.engagementForm.get('goals').statusChanges.subscribe(
+      status => this.goalsChipList.errorState = status === 'INVALID'
+    );
+    this.engagementForm.get('consumerIdentity').statusChanges.subscribe(
+      status => this.consumerIdentityChipList.errorState = status === 'INVALID'
+    );
   }
   
   /*** Control Value Accessor  and Validator Implemented Methods ***/
@@ -174,7 +185,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   
   validateMax5(c: FormControl) {
     if (c.value.length > 5) {
-      return {max10: true};
+      return {max5: true};
     } else {
       return null;
     }
@@ -182,7 +193,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   
   validateMax20(c: FormControl) {
     if (c.value.length > 20) {
-      return {max10: true};
+      return {max20: true};
     } else {
       return null;
     }
