@@ -5,9 +5,6 @@
         you
         can use the default values found in the schema.</p>
     </div>
-    <strong>VALID: {{engagementForm.valid}}</strong>
-    <strong>VALID: {{engagementForm.controls['entryPoints'].value}}</strong>
-
   </div>
   <div class="row">
     <div class="col-md-4 align-items-start mt-4">
@@ -47,7 +44,6 @@
       </div>
     </div>
   </div>
-  <div *ngIf="engagementForm.errors"> {{form.errors}}</div>
   <div class="row align-items-center mt-4">
     <div class="col">
       <mat-form-field class="w-100">
@@ -67,7 +63,11 @@
                  [matChipInputAddOnBlur]="addOnBlur"
           >
         </mat-chip-list>
-        <mat-error>Please this minimun one elment is requered</mat-error>
+        <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('required')">Please alt least one element is
+          required
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('max10')">Only max 10 elements are allowed
+        </mat-error>
       </mat-form-field>
 
     </div>

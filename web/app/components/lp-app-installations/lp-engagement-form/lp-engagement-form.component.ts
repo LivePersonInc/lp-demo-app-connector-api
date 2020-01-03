@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
@@ -25,7 +25,7 @@ export class LpEngagementFormComponent implements OnInit {
   
   constructor(private fb: FormBuilder) {
     this.engagementForm = this.fb.group({
-      entryPoints: this.fb.array(this.defaultEntryPoints, this.validateRequired),
+      entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10]),
     });
   }
   
@@ -59,20 +59,26 @@ export class LpEngagementFormComponent implements OnInit {
     }
   }
   
-  entryPointValidator(control: AbstractControl) {
-    const entryPointList = control.value;
-    console.log(entryPointList);
-    if (entryPointList.length < 1) {
-      console.log('error');
-      return {validEntryPoints: false};
-    }
-    
-    return null;
-  }
-  
+  // Form Controls
   validateRequired(c: FormControl) {
     if (c.value.length === 0) {
       return {required: true};
+    } else {
+      return null;
+    }
+  }
+  
+  validateMax10(c: FormControl) {
+    if (c.value.length > 10) {
+      return {max10: true};
+    } else {
+      return null;
+    }
+  }
+  
+  validateMax20(c: FormControl) {
+    if (c.value.length > 20) {
+      return {max10: true};
     } else {
       return null;
     }
