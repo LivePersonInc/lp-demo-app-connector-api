@@ -10,9 +10,6 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 })
 export class LpEngagementFormComponent implements OnInit {
   public engagementForm: FormGroup;
-  public designEngagement = false;
-  public designWindow = false;
-  public languageSelection = false;
   public defaultEntryPoints = ['url', 'section'];
   
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
@@ -25,6 +22,9 @@ export class LpEngagementFormComponent implements OnInit {
   
   constructor(private fb: FormBuilder) {
     this.engagementForm = this.fb.group({
+      designEngagement: new FormControl(false),
+      designWindow: new FormControl(false),
+      languageSelection: new FormControl(false),
       entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10]),
     });
   }
