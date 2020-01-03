@@ -4,6 +4,7 @@ import {AppInstall} from '../../../shared/models/app-installation/appInstall.mod
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
 import {environment} from '../../../../environments/environment.prod';
+import {Engagement} from '../../../shared/models/app-installation/engagement.model';
 
 @Component({
   selector: 'lp-app-installations',
@@ -104,6 +105,19 @@ export class LpAppInstallationsComponent implements OnInit {
     appInstall.scope = 'msg.consumer';
     appInstall.logo_uri = '';
     appInstall.capabilities = capabilities;
+    
+    // add engagement object
+    const engagement = this.form.controls['engagementInfo'].value;
+    console.log(engagement);
+    appInstall.capabilities.engagement = new Engagement();
+    appInstall.capabilities.engagement.design_engagement = engagement.designEngagement;
+    appInstall.capabilities.engagement.design_window = engagement.designWindow;
+    appInstall.capabilities.engagement.language_selection = engagement.languageSelection;
+    appInstall.capabilities.engagement.entry_point = engagement.entryPoints;
+    appInstall.capabilities.engagement.visitor_behavior = engagement.visitorBehavior;
+    appInstall.capabilities.engagement.target_audience = engagement.targetAudience;
+    appInstall.capabilities.engagement.goal = engagement.goals;
+    appInstall.capabilities.engagement.consumer_identity = engagement.consumerIdentity;
     
     this.cleanEmptyEndpoints(appInstall);
     

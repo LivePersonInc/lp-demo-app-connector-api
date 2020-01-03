@@ -127,8 +127,12 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     this.engagementForm.valueChanges.subscribe(fn);
   }
   
+  public onTouched: () => void = () => {
+  }
+  
   registerOnTouched(fn: any): void {
-    // Don't care about touched form in this case.
+    console.log('on blur');
+    this.onTouched = fn;
   }
   
   setDisabledState?(isDisabled: boolean): void {
@@ -136,7 +140,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   }
   
   validate(c: AbstractControl): ValidationErrors | null {
-    return this.engagementForm.valid ? null : {invalidForm: {valid: false, message: 'invalid engament'}};
+    return this.engagementForm.valid ? null : {invalidForm: {valid: false, message: 'invalid engagement'}};
   }
   
   /*******/
