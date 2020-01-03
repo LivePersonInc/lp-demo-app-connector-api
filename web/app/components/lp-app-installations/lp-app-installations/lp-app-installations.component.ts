@@ -47,6 +47,9 @@ export class LpAppInstallationsComponent implements OnInit {
     this.onValueChanges();
     
     this.initWebhooks();
+    // little hack to in order to NOT have a empty form value when the form was not touched, needs to be fixed
+    this.setDefaultEngagementFormValues();
+    
   }
   
   onValueChanges(): void {
@@ -134,6 +137,52 @@ export class LpAppInstallationsComponent implements OnInit {
         }
       });
     }
+  }
+  
+  private setDefaultEngagementFormValues() {
+    const defaultEntryPoints = ['url', 'section'];
+    const defaultVisitorBehavior = [
+      'visited_location',
+      'time_on_location',
+      'flow',
+      'engaged_in_session',
+      'about_to_abandon',
+      'cart_value',
+      'cart_items',
+      'visitor_error',
+      'viewed_products',
+      'service_activity'];
+    const defaultTargetAudience = [
+      'external_referral',
+      'search_keywords',
+      'ip',
+      'platform',
+      'geo_location',
+      'returning_visitors',
+      'marketing_source',
+      'customer_type',
+      'age',
+      'balance',
+      'customer_id',
+      'gender',
+      'store_zip_code',
+      'store_number',
+      'company_size',
+      'registration_date'
+    ];
+    const defaultGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
+    const defaultConsumerIdentity = ['auth'];
+    
+    this.form.controls['engagementInfo'].setValue({
+      designEngagement: false,
+      designWindow: false,
+      languageSelection: false,
+      entryPoints: defaultEntryPoints,
+      visitorBehavior: defaultVisitorBehavior,
+      targetAudience: defaultTargetAudience,
+      goals: defaultGoals,
+      consumerIdentity: defaultConsumerIdentity
+    });
   }
   
 }
