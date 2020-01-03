@@ -35,6 +35,37 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, Validator {
   public engagementForm: FormGroup;
   public defaultEntryPoints = ['url', 'section'];
+  public defaultVisitorBehavior = [
+    'visited_location',
+    'time_on_location',
+    'flow',
+    'engaged_in_session',
+    'about_to_abandon',
+    'cart_value',
+    'cart_items',
+    'visitor_error',
+    'viewed_products',
+    'service_activity'];
+  public defaultTargetAudience = [
+    'external_referral',
+    'search_keywords',
+    'ip',
+    'platform',
+    'geo_location',
+    'returning_visitors',
+    'marketing_source',
+    'customer_type',
+    'age',
+    'balance',
+    'customer_id',
+    'gender',
+    'store_zip_code',
+    'store_number',
+    'company_size',
+    'registration_date'
+  ];
+  public defaultGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
+  public defaultConsumerIdentity = ['auth'];
   
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
   
@@ -44,12 +75,21 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   public addOnBlur = true;
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   
+  /*
+   HINT: Validation is base on App Installation SCHEMA:
+    https://lpgithub.dev.lprnd.net/le-infra/Account-Config-Service/
+    blob/master/ac-common-service-contracts/src/main/resources/installations/schema.json
+    */
   constructor(private fb: FormBuilder) {
     this.engagementForm = this.fb.group({
       designEngagement: new FormControl(false),
       designWindow: new FormControl(false),
       languageSelection: new FormControl(false),
-      entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10]),
+      entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10, this.validateUniqueItems]),
+      visitorBehaviour: this.fb.array(this.defaultVisitorBehavior, [this.validateMax10, this.validateUniqueItems]),
+      targetAudience: this.fb.array(this.defaultTargetAudience, [this.validateMax20, this.validateUniqueItems]),
+      goals: this.fb.array(this.defaultGoals, [this.validateMax10, this.validateUniqueItems]),
+      consumerIdentity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
     });
   }
   
@@ -60,6 +100,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     
   }
   
+  /*** Control Value Accessor  and Validator Implemented Methods ***/
   writeValue(val: any): void {
     if (val) {
       this.engagementForm.setValue(val, {emitEvent: false});
@@ -82,14 +123,16 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     return this.engagementForm.valid ? null : {invalidForm: {valid: false, message: 'invalid engament'}};
   }
   
-  addEntryPoint(event: MatChipInputEvent) {
+  /*******/
+  
+  /*** Mat chips form methord **/
+  addChipElement(event: MatChipInputEvent, formControlName: string) {
     const input = event.input;
     const value = event.value;
     
-    // Add our requirement
     if ((value || '').trim()) {
-      const entryPoints = this.engagementForm.get('entryPoints') as FormArray;
-      entryPoints.push(this.fb.control(value.trim()));
+      const chipsElements = this.engagementForm.get(formControlName) as FormArray;
+      chipsElements.push(this.fb.control(value.trim()));
     }
     
     // Reset the input value
@@ -98,12 +141,14 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     }
   }
   
-  removeEntryPoint(index: number) {
-    const entryPoints = this.engagementForm.get('entryPoints') as FormArray;
+  removeChipElement(index: number, formControlName: string) {
+    const chipsElements = this.engagementForm.get(formControlName) as FormArray;
     if (index >= 0) {
-      entryPoints.removeAt(index);
+      chipsElements.removeAt(index);
     }
   }
+  
+  /******/
   
   // Form Controls
   validateRequired(c: FormControl) {
@@ -122,12 +167,27 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     }
   }
   
+  validateMax5(c: FormControl) {
+    if (c.value.length > 5) {
+      return {max10: true};
+    } else {
+      return null;
+    }
+  }
+  
   validateMax20(c: FormControl) {
     if (c.value.length > 20) {
       return {max10: true};
     } else {
       return null;
     }
+  }
+  
+  validateUniqueItems(c: FormControl) {
+    if (c.value.length > 1 && (new Set(c.value)).size !== c.value.length) {
+      return {unique: true};
+    }
+    return null;
   }
   
 }

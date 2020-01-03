@@ -47,7 +47,7 @@
         <mat-chip-list #entryPointChipList>
           <mat-chip *ngFor="let entryPoint of engagementForm.get('entryPoints').controls; let i = index;"
                     [selectable]="selectable"
-                    [removable]="removable" (removed)="removeEntryPoint(i)">
+                    [removable]="removable" (removed)="removeChipElement(i, 'entryPoints')">
             {{entryPoint.value}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
@@ -55,7 +55,7 @@
                  placeholder="New entry Point."
                  required
                  [matChipInputFor]="entryPointChipList"
-                 (matChipInputTokenEnd)="addEntryPoint($event)"
+                 (matChipInputTokenEnd)="addChipElement($event, 'entryPoints')"
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                  [matChipInputAddOnBlur]="addOnBlur"
           >
@@ -64,6 +64,8 @@
           required
         </mat-error>
         <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('max10')">Only max 10 elements are allowed
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('unique')">Repeated elements are not allowed
         </mat-error>
       </mat-form-field>
 
