@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
-import {AppInstall} from "../../../shared/models/app-installation/appInstall.model";
-import {LpEditAppInstallationComponent} from "../lp-edit-app-installation/lp-edit-app-installation.component";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
+import {LpEditAppInstallationComponent} from '../lp-edit-app-installation/lp-edit-app-installation.component';
 
 @Component({
   selector: 'lp-edit-app-intallation-dialog',
@@ -13,20 +13,20 @@ export class LpEditAppIntallationDialogComponent implements OnInit {
   public appInstallation: AppInstall;
   @ViewChild(LpEditAppInstallationComponent, {static: true}) appEditInstallationsComponent: LpEditAppInstallationComponent;
   
-  constructor(
-    public dialogRef: MatDialogRef<LpEditAppIntallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-  
-    if(data.appInstallation) {
-      this.appInstallation = data.appInstallation;
+  constructor(public dialogRef: MatDialogRef<LpEditAppIntallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    
+    if (data.appInstallation) {
+      this.appInstallation = new AppInstall().deserialize(data.appInstallation);
       console.log(this.appInstallation);
     }
   }
   
-  ngOnInit() {}
+  ngOnInit() {
+  }
   
   updateAppInstallation() {
     this.appEditInstallationsComponent.updateEditableApplicationFields();
-    this.dialogRef.close({data:this.appInstallation});
+    this.dialogRef.close({data: this.appInstallation});
   }
   
 }

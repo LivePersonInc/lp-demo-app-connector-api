@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
@@ -9,12 +9,14 @@ import {Capabilities} from '../../../shared/models/app-installation/capabilities
   templateUrl: './lp-edit-app-installation.component.html',
   styleUrls: ['./lp-edit-app-installation.component.sass']
 })
-export class LpEditAppInstallationComponent implements OnInit {
+export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   
   @Input() appInstall: AppInstall;
   public form: FormGroup;
   public retention_time: number;
   public enabled: boolean;
+  
+  public formValue = {};
   
   constructor(private formBuilder: FormBuilder) {
   }
@@ -37,7 +39,7 @@ export class LpEditAppInstallationComponent implements OnInit {
     this.form = new FormGroup({
       appName: new FormControl(''),
       description: new FormControl(''),
-      // engagementInfo: new FormControl('')
+      engagementInfo: new FormControl('')
     });
     
     this.form.patchValue({
@@ -57,21 +59,26 @@ export class LpEditAppInstallationComponent implements OnInit {
     whs.initEndpoints();
     
     this.appInstall.capabilities.webhooks = Object.assign(whs, this.appInstall.capabilities.webhooks);
+    
+    this.formValue = {
+      designEngagement: this.appInstall.capabilities.engagement.design_engagement,
+      designWindow: this.appInstall.capabilities.engagement.design_window,
+      languageSelection: this.appInstall.capabilities.engagement.language_selection,
+      entryPoints: this.appInstall.capabilities.engagement.entry_point,
+      visitorBehavior: this.appInstall.capabilities.engagement.visitor_behavior,
+      targetAudience: this.appInstall.capabilities.engagement.target_audience,
+      goals: this.appInstall.capabilities.engagement.goal,
+      consumerIdentity: this.appInstall.capabilities.engagement.consumer_identity
+    };
+    
+  }
+  
+  ngAfterViewInit() {
     if (this.appInstall.capabilities.engagement) {
-      /* this.form.controls['engagementInfo'].setValue({
-         designEngagement: this.appInstall.capabilities.engagement.design_engagement,
-         designWindow: this.appInstall.capabilities.engagement.design_window,
-         languageSelection: this.appInstall.capabilities.engagement.language_selection,
-         entryPoints: this.appInstall.capabilities.engagement.entry_point,
-         visitorBehavior: this.appInstall.capabilities.engagement.visitor_behavior,
-         targetAudience: this.appInstall.capabilities.engagement.target_audience,
-         goals: this.appInstall.capabilities.engagement.goal,
-         consumerIdentity: this.appInstall.capabilities.engagement.consumer_identity
-    });*/
+      this.form.controls['engagementInfo'].setValue(this.formValue);
     }
   }
   
-  public
   
   updateEditableApplicationFields() {
     this.appInstall.client_name = this.form.controls['appName'].value;
@@ -83,19 +90,18 @@ export class LpEditAppInstallationComponent implements OnInit {
       delete this.appInstall.capabilities.webhooks.retry;
     }
     if (this.appInstall.capabilities.engagement) {
-      /* this.appInstall.capabilities.engagement.design_engagement = this.form.controls['engagementInfo'].value.designEngagement;
-       this.appInstall.capabilities.engagement.design_window = this.form.controls['engagementInfo'].value.designWindow;
-       this.appInstall.capabilities.engagement.language_selection = this.form.controls['engagementInfo'].value.languageSelection;
-       this.appInstall.capabilities.engagement.entry_point = this.form.controls['engagementInfo'].value.entryPoints;
-       this.appInstall.capabilities.engagement.visitor_behavior = this.form.controls['engagementInfo'].value.visitorBehavior;
-       this.appInstall.capabilities.engagement.target_audience = this.form.controls['engagementInfo'].value.targetAudience;
-       this.appInstall.capabilities.engagement.goal = this.form.controls['engagementInfo'].value.goals;
-       this.appInstall.capabilities.engagement.consumer_identity = this.form.controls['engagementInfo'].value.consumerIdentity;*/
+      this.appInstall.capabilities.engagement.design_engagement = this.form.controls['engagementInfo'].value.designEngagement;
+      this.appInstall.capabilities.engagement.design_window = this.form.controls['engagementInfo'].value.designWindow;
+      this.appInstall.capabilities.engagement.language_selection = this.form.controls['engagementInfo'].value.languageSelection;
+      this.appInstall.capabilities.engagement.entry_point = this.form.controls['engagementInfo'].value.entryPoints;
+      this.appInstall.capabilities.engagement.visitor_behavior = this.form.controls['engagementInfo'].value.visitorBehavior;
+      this.appInstall.capabilities.engagement.target_audience = this.form.controls['engagementInfo'].value.targetAudience;
+      this.appInstall.capabilities.engagement.goal = this.form.controls['engagementInfo'].value.goals;
+      this.appInstall.capabilities.engagement.consumer_identity = this.form.controls['engagementInfo'].value.consumerIdentity;
     }
     this.cleanEmptyEndpoints();
   }
   
-  private
   
   cleanEmptyEndpoints() {
     if (this.appInstall.capabilities.webhooks) {

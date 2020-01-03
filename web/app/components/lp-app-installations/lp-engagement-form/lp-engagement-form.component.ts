@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
+import {Component, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -80,13 +80,27 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   public addOnBlur = true;
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   
+  @Input('value')
+  set value(val: any) {
+    this.defaultVisitorBehavior = val.visitorBehavior;
+    this.defaultEntryPoints = val.entryPoints;
+    this.defaultConsumerIdentity = val.consumerIdentity;
+    this.defaultGoals = val.goals;
+    this.defaultTargetAudience = val.targetAudience;
+  }
+  
   /*
    HINT: Validation is base on App Installation SCHEMA:
     https://lpgithub.dev.lprnd.net/le-infra/Account-Config-Service/
     blob/master/ac-common-service-contracts/src/main/resources/installations/schema.json
     */
   constructor(private fb: FormBuilder) {
-    this.engagementForm = this.fb.group({
+  
+  }
+  
+  ngOnInit() {
+    
+    this.engagementForm = new FormGroup({
       designEngagement: new FormControl(false),
       designWindow: new FormControl(false),
       languageSelection: new FormControl(false),
@@ -96,9 +110,8 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
       goals: this.fb.array(this.defaultGoals, [this.validateMax10, this.validateUniqueItems]),
       consumerIdentity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
     });
-  }
-  
-  ngOnInit() {
+    
+    
     this.engagementForm.get('entryPoints').statusChanges.subscribe(
       status => this.entryPointChipList.errorState = status === 'INVALID'
     );
@@ -119,7 +132,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   /*** Control Value Accessor  and Validator Implemented Methods ***/
   writeValue(val: any): void {
     if (val) {
-      this.engagementForm.setValue(val, {emitEvent: false});
+      this.engagementForm.setValue(val);
     }
   }
   
