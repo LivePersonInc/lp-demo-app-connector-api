@@ -68,6 +68,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   public defaultConsumerIdentity = ['auth'];
   
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
+  @ViewChild('visitorBehaviorChipList', {static: true}) visitorBehaviorChipList;
   
   // chip input props.
   public selectable = true;
@@ -86,7 +87,7 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
       designWindow: new FormControl(false),
       languageSelection: new FormControl(false),
       entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10, this.validateUniqueItems]),
-      visitorBehaviour: this.fb.array(this.defaultVisitorBehavior, [this.validateMax10, this.validateUniqueItems]),
+      visitorBehavior: this.fb.array(this.defaultVisitorBehavior, [this.validateMax10, this.validateUniqueItems]),
       targetAudience: this.fb.array(this.defaultTargetAudience, [this.validateMax20, this.validateUniqueItems]),
       goals: this.fb.array(this.defaultGoals, [this.validateMax10, this.validateUniqueItems]),
       consumerIdentity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
@@ -94,8 +95,12 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   }
   
   ngOnInit() {
+    
     this.engagementForm.get('entryPoints').statusChanges.subscribe(
       status => this.entryPointChipList.errorState = status === 'INVALID'
+    );
+    this.engagementForm.get('visitorBehavior').statusChanges.subscribe(
+      status => this.visitorBehaviorChipList.errorState = status === 'INVALID'
     );
     
   }

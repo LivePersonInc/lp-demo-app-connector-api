@@ -68,7 +68,33 @@
         <mat-error *ngIf="engagementForm.controls['entryPoints'].hasError('unique')">Repeated elements are not allowed
         </mat-error>
       </mat-form-field>
-
+    </div>
+  </div>
+  <div class="row align-items-center mt-4">
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-chip-list #visitorBehaviorChipList>
+          <mat-chip *ngFor="let element of engagementForm.get('visitorBehavior').controls; let i = index;"
+                    [selectable]="selectable"
+                    [removable]="removable" (removed)="removeChipElement(i, 'visitorBehavior')">
+            {{element.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input matInput
+                 placeholder="Visitor Behaviour."
+                 required
+                 [matChipInputFor]="visitorBehaviorChipList"
+                 (matChipInputTokenEnd)="addChipElement($event, 'visitorBehavior')"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+          >
+        </mat-chip-list>
+        <mat-error *ngIf="engagementForm.controls['visitorBehavior'].hasError('max10')">Only max 10 elements are allowed
+        </mat-error>
+        <mat-error *ngIf="engagementForm.controls['visitorBehavior'].hasError('unique')">Repeated elements are not
+          allowed
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
 
