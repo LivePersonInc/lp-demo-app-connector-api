@@ -1,6 +1,6 @@
 <div class="container" style="width:900px">
   <form [formGroup]="form">
-    <mat-vertical-stepper [linear]="true" #stepperCreate>
+    <mat-vertical-stepper [linear]="false" #stepperCreate>
       <mat-step>
         <ng-template matStepLabel>Application Installation Details. Id: {{appInstall.client_id}}</ng-template>
         <div class="form-container">
@@ -52,6 +52,10 @@
 
         <lp-webhooks-form *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks"
                           class="mt-4 d-block"></lp-webhooks-form>
+      </mat-step>
+      <mat-step *ngIf="!isDemoChecked">
+        <ng-template matStepLabel>Engagement (Optional)</ng-template>
+        <!--<lp-engagement-form formControlName="engagementInfo"></lp-engagement-form>-->
       </mat-step>
     </mat-vertical-stepper>
   </form>
