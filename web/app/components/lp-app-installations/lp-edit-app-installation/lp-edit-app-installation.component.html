@@ -1,70 +1,58 @@
 <div class="container" style="width:900px">
-  <mat-vertical-stepper [linear]="true" #stepperCreate>
-    <mat-step>
-      <ng-template matStepLabel>Application Installation Details. Id: {{appInstall.client_id}} </ng-template>
-      <form [formGroup]="form" class="form-container">
-      <div class="row">
-        <div class="col-md-9 align-items-center">
-          <mat-form-field class="w-100">
-            <mat-label>Application name</mat-label>
-            <input formControlName="appName" matInput placeholder="" required>
-            <mat-hint align="start"><strong>Unique name for your app</strong></mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 align-items-center mt-4">
-          <div class="container-fluid w-100 d-flex justify-content-end">
-            <mat-slide-toggle  [(ngModel)]="enabled" color="primary"  [ngModelOptions]="{standalone: true}">
-              <span *ngIf="enabled">enabled</span>
-              <span *ngIf="!enabled">disabled</span>
-            </mat-slide-toggle>
+  <form [formGroup]="form">
+    <mat-vertical-stepper [linear]="true" #stepperCreate>
+      <mat-step>
+        <ng-template matStepLabel>Application Installation Details. Id: {{appInstall.client_id}}</ng-template>
+        <div class="form-container">
+          <div class="row">
+            <div class="col-md-9 align-items-center">
+              <mat-form-field class="w-100">
+                <mat-label>Application name</mat-label>
+                <input formControlName="appName" matInput placeholder="" required>
+                <mat-hint align="start"><strong>Unique name for your app</strong></mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3 align-items-center mt-4">
+              <div class="container-fluid w-100 d-flex justify-content-end">
+                <mat-slide-toggle [(ngModel)]="enabled" color="primary" [ngModelOptions]="{standalone: true}">
+                  <span *ngIf="enabled">enabled</span>
+                  <span *ngIf="!enabled">disabled</span>
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-sm-12 align-items-center">
+              <mat-form-field class="w-100 mt-2">
+                <mat-label>Description</mat-label>
+                <input maxlength="256" formControlName="description" matInput placeholder="" required>
+                <mat-hint align="start"><strong>Short explanation of your app purpose</strong></mat-hint>
+              </mat-form-field>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row align-items-center">
-        <div class="col-sm-12 align-items-center">
-          <mat-form-field class="w-100 mt-2">
-            <mat-label>Description</mat-label>
-            <input  maxlength="256"  formControlName="description" matInput placeholder="" required>
-            <mat-hint align="start"><strong>Short explanation of your app purpose</strong></mat-hint>
-          </mat-form-field>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Webhooks configuration</ng-template>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <mat-form-field class="w-100 mt-2">
+              <mat-label>TTL</mat-label>
+              <mat-select matTooltip="Max time that an event is stored in the DB when endpoint fail"
+                          [(ngModel)]="retention_time"
+                          [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required>
+                  {{ttl.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-      <!--<div class="row">
-        <div class="col-md-4">
-          <mat-form-field class="w-100 mt-2">
-            <mat-label>TTL</mat-label>
-            <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail"
-                         [(ngModel)]="retention_time"
-                         [ngModelOptions]="{standalone: true}">
-              <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required >
-                {{ttl.viewValue}}
-              </mat-option>
-            </mat-select>
-            <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
-          </mat-form-field>
-        </div>
-      </div>-->
-    </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Webhooks configuration</ng-template>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <mat-form-field class="w-100 mt-2">
-            <mat-label>TTL</mat-label>
-            <mat-select  matTooltip="Max time that an event is stored in the DB when endpoint fail"
-                         [(ngModel)]="retention_time"
-                         [ngModelOptions]="{standalone: true}">
-              <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required >
-                {{ttl.viewValue}}
-              </mat-option>
-            </mat-select>
-            <mat-hint align="start"><strong> Retention time in DB </strong></mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
 
-      <lp-webhooks-form  *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks" class="mt-4 d-block"></lp-webhooks-form>
-    </mat-step>
-  </mat-vertical-stepper>
+        <lp-webhooks-form *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks"
+                          class="mt-4 d-block"></lp-webhooks-form>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
 </div>

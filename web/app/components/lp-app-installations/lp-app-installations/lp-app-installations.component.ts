@@ -39,6 +39,7 @@ export class LpAppInstallationsComponent implements OnInit {
       appName: new FormControl(''),
       description: new FormControl(''),
       endpoint: new FormControl('', [Validators.pattern(this.pattern)]),
+      engagementInfo: new FormControl('')
     });
     
     this.ttlValue = 0;

@@ -1,14 +1,38 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator
+} from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'lp-engagement-form',
   templateUrl: './lp-engagement-form.component.html',
-  styleUrls: ['./lp-engagement-form.component.scss']
+  styleUrls: ['./lp-engagement-form.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => LpEngagementFormComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => LpEngagementFormComponent),
+      multi: true
+    }
+  ]
 })
-export class LpEngagementFormComponent implements OnInit {
+
+export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, Validator {
   public engagementForm: FormGroup;
   public defaultEntryPoints = ['url', 'section'];
   
@@ -34,6 +58,28 @@ export class LpEngagementFormComponent implements OnInit {
       status => this.entryPointChipList.errorState = status === 'INVALID'
     );
     
+  }
+  
+  writeValue(val: any): void {
+    if (val) {
+      this.engagementForm.setValue(val, {emitEvent: false});
+    }
+  }
+  
+  registerOnChange(fn: any): void {
+    this.engagementForm.valueChanges.subscribe(fn);
+  }
+  
+  registerOnTouched(fn: any): void {
+    // Don't care about touched form in this case.
+  }
+  
+  setDisabledState?(isDisabled: boolean): void {
+    isDisabled ? this.engagementForm.disable() : this.engagementForm.enable();
+  }
+  
+  validate(c: AbstractControl): ValidationErrors | null {
+    return this.engagementForm.valid ? null : {invalidForm: {valid: false, message: 'invalid engament'}};
   }
   
   addEntryPoint(event: MatChipInputEvent) {
@@ -82,11 +128,6 @@ export class LpEngagementFormComponent implements OnInit {
     } else {
       return null;
     }
-  }
-  
-  /* Handle form errors in Angular 8 */
-  public errorHandling = (control: string, error: string) => {
-    return this.engagementForm.controls[control].hasError(error);
   }
   
 }
