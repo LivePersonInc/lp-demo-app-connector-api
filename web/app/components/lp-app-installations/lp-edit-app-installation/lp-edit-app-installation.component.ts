@@ -16,7 +16,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   public retention_time: number;
   public enabled: boolean;
   
-  public formValue = {};
+  public engagementFormValue = {};
   
   constructor(private formBuilder: FormBuilder) {
   }
@@ -60,7 +60,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     
     this.appInstall.capabilities.webhooks = Object.assign(whs, this.appInstall.capabilities.webhooks);
     
-    this.formValue = {
+    this.engagementFormValue = {
       designEngagement: this.appInstall.capabilities.engagement.design_engagement,
       designWindow: this.appInstall.capabilities.engagement.design_window,
       languageSelection: this.appInstall.capabilities.engagement.language_selection,
@@ -75,7 +75,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit() {
     if (this.appInstall.capabilities.engagement) {
-      this.form.controls['engagementInfo'].setValue(this.formValue);
+      this.form.controls['engagementInfo'].setValue(this.engagementFormValue);
     }
   }
   

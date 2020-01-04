@@ -34,45 +34,27 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, Validator {
   public engagementForm: FormGroup;
-  public defaultEntryPoints = ['url', 'section'];
-  public defaultVisitorBehavior = [
-    'visited_location',
-    'time_on_location',
-    'flow',
-    'engaged_in_session',
-    'about_to_abandon',
-    'cart_value',
-    'cart_items',
-    'visitor_error',
-    'viewed_products',
-    'service_activity'];
-  public defaultTargetAudience = [
-    'external_referral',
-    'search_keywords',
-    'ip',
-    'platform',
-    'geo_location',
-    'returning_visitors',
-    'marketing_source',
-    'customer_type',
-    'age',
-    'balance',
-    'customer_id',
-    'gender',
-    'store_zip_code',
-    'store_number',
-    'company_size',
-    'registration_date'
-  ];
-  public defaultGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
-  public defaultConsumerIdentity = ['auth'];
+  public defaultEntryPoints = [];
+  public defaultVisitorBehavior = [];
+  public defaultTargetAudience = [];
+  public defaultGoals = [];
+  public defaultConsumerIdentity = [];
+  
+  public availableEntryPoints = ['url', 'section'];
+  public filteredEntryPoints = [];
+  public availableVisitorBehavior = ['visited_location', 'time_on_location', 'flow', 'engaged_in_session', 'about_to_abandon', 'cart_value', 'cart_items', 'visitor_error', 'viewed_products', 'service_activity'];
+  public filteredVisitorBehavior = [];
+  public availableTargetAudience = ['external_referral', 'search_keywords', 'ip', 'platform', 'geo_location', 'returning_visitors', 'marketing_source', 'customer_type', 'age', 'balance', 'customer_id', 'gender', 'store_zip_code', 'store_number', 'company_size', 'registration_date'];
+  public filteredTargetAudience = [];
+  public availableGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
+  public filteredGoals = [];
+  public availableConsumerIdentity = ['auth'];
   
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
   @ViewChild('visitorBehaviorChipList', {static: true}) visitorBehaviorChipList;
   @ViewChild('targetAudienceChipList', {static: true}) targetAudienceChipList;
   @ViewChild('goalsChipList', {static: true}) goalsChipList;
   @ViewChild('consumerIdentityChipList', {static: true}) consumerIdentityChipList;
-  
   
   // chip input props.
   public selectable = true;
@@ -89,17 +71,12 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     this.defaultTargetAudience = val.targetAudience;
   }
   
-  /*
-   HINT: Validation is base on App Installation SCHEMA:
-    https://lpgithub.dev.lprnd.net/le-infra/Account-Config-Service/
-    blob/master/ac-common-service-contracts/src/main/resources/installations/schema.json
-    */
   constructor(private fb: FormBuilder) {
-  
   }
   
   ngOnInit() {
-    
+    /* HINT: Validation is base on App Installation SCHEMA: https://lpgithub.dev.lprnd.net/le-infra/Account-Config-Service/
+blob/master/ac-common-service-contracts/src/main/resources/installations/schema.json*/
     this.engagementForm = new FormGroup({
       designEngagement: new FormControl(false),
       designWindow: new FormControl(false),

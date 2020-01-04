@@ -19,6 +19,7 @@ export class LpAppInstallationsComponent implements OnInit {
   public server = environment.server;
   public currentURL = 'https://' + this.server + '/notifications/event';
   private pattern = '^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$';
+  public engagementFormValue = {};
   
   constructor() {
   }
@@ -173,7 +174,7 @@ export class LpAppInstallationsComponent implements OnInit {
     const defaultGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
     const defaultConsumerIdentity = ['auth'];
     
-    this.form.controls['engagementInfo'].setValue({
+    this.engagementFormValue = {
       designEngagement: false,
       designWindow: false,
       languageSelection: false,
@@ -182,7 +183,8 @@ export class LpAppInstallationsComponent implements OnInit {
       targetAudience: defaultTargetAudience,
       goals: defaultGoals,
       consumerIdentity: defaultConsumerIdentity
-    });
+    };
+    
   }
   
 }

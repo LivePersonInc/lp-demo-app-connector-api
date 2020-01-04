@@ -73,7 +73,7 @@
       </mat-step>
       <mat-step *ngIf="!isDemoChecked">
         <ng-template matStepLabel>Engagement (Optional)</ng-template>
-        <lp-engagement-form formControlName="engagementInfo"></lp-engagement-form>
+        <lp-engagement-form formControlName="engagementInfo" [value]="engagementFormValue"></lp-engagement-form>
       </mat-step>
     </mat-vertical-stepper>
   </form>

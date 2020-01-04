@@ -1,7 +1,9 @@
 <ng-container [formGroup]="engagementForm" class="form-container">
   <div class="row">
     <div class="col-md-12 align-items-start hint">
-      <p>Engagement design possibilities when designing a campaign for messaging.Without a clear reason to change them,
+      <p>This affects the Engagement design possibilities when designing a campaign for messaging.Without a clear reason
+        to change
+        them,
         you
         can use the default values found in the schema.</p>
     </div>
@@ -52,7 +54,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input matInput
-                 placeholder="New entry Point."
+                 placeholder="Entry Point."
                  required
                  [matChipInputFor]="entryPointChipList"
                  (matChipInputTokenEnd)="addChipElement($event, 'entryPoints')"
