@@ -48,7 +48,6 @@ export class LpAppInstallationsComponent implements OnInit {
     this.onValueChanges();
     
     this.initWebhooks();
-    // little hack to in order to NOT have a empty form value when the form was not touched, needs to be fixed
     this.setDefaultEngagementFormValues();
     
   }

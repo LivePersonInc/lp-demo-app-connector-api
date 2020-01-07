@@ -60,21 +60,25 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     
     this.appInstall.capabilities.webhooks = Object.assign(whs, this.appInstall.capabilities.webhooks);
     
-    this.engagementFormValue = {
-      designEngagement: this.appInstall.capabilities.engagement.design_engagement,
-      designWindow: this.appInstall.capabilities.engagement.design_window,
-      languageSelection: this.appInstall.capabilities.engagement.language_selection,
-      entryPoints: this.appInstall.capabilities.engagement.entry_point,
-      visitorBehavior: this.appInstall.capabilities.engagement.visitor_behavior,
-      targetAudience: this.appInstall.capabilities.engagement.target_audience,
-      goals: this.appInstall.capabilities.engagement.goal,
-      consumerIdentity: this.appInstall.capabilities.engagement.consumer_identity
-    };
-    
+    if (this.appInstall.capabilities.engagement) {
+      this.engagementFormValue = {
+        designEngagement: this.appInstall.capabilities.engagement.design_engagement,
+        designWindow: this.appInstall.capabilities.engagement.design_window,
+        languageSelection: this.appInstall.capabilities.engagement.language_selection,
+        entryPoints: this.appInstall.capabilities.engagement.entry_point,
+        visitorBehavior: this.appInstall.capabilities.engagement.visitor_behavior,
+        targetAudience: this.appInstall.capabilities.engagement.target_audience,
+        goals: this.appInstall.capabilities.engagement.goal,
+        consumerIdentity: this.appInstall.capabilities.engagement.consumer_identity
+      };
+    } else {
+      this.setDefaultEngagementFormValues();
+    }
   }
   
   ngAfterViewInit() {
     if (this.appInstall.capabilities.engagement) {
+      console.log('RNGA');
       this.form.controls['engagementInfo'].setValue(this.engagementFormValue);
     }
   }
@@ -102,7 +106,6 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     this.cleanEmptyEndpoints();
   }
   
-  
   cleanEmptyEndpoints() {
     if (this.appInstall.capabilities.webhooks) {
       Object.keys(this.appInstall.capabilities.webhooks).forEach(key => {
@@ -113,6 +116,26 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+  
+  private setDefaultEngagementFormValues() {
+    const defaultEntryPoints = [];
+    const defaultVisitorBehavior = [];
+    const defaultTargetAudience = [];
+    const defaultGoals = [];
+    const defaultConsumerIdentity = [];
+    
+    this.engagementFormValue = {
+      designEngagement: false,
+      designWindow: false,
+      languageSelection: false,
+      entryPoints: defaultEntryPoints,
+      visitorBehavior: defaultVisitorBehavior,
+      targetAudience: defaultTargetAudience,
+      goals: defaultGoals,
+      consumerIdentity: defaultConsumerIdentity
+    };
+    
   }
 }
 

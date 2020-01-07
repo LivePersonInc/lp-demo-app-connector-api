@@ -27,7 +27,7 @@ export class LpWebhooksEndpointComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.endpointFormControl = new FormControl('', [Validators.pattern(this.pattern),]);
+    this.endpointFormControl = new FormControl('', [Validators.pattern(this.pattern)]);
   }
   
   webhookChange(value) {

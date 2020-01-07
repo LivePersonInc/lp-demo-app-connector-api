@@ -15,6 +15,20 @@ export class LpWebhooksFormComponent implements OnInit {
   
   public webhooksForm: FormGroup;
   
+  public ttlValue: number;
+  
+  public ttls = [
+    {value: 0, viewValue: 'NONE'},
+    {value: 3600, viewValue: '1 hour'},
+    {value: 9200, viewValue: '2 hours'},
+    {value: 14400, viewValue: '4 hours'},
+    {value: 21600, viewValue: '6 hours'},
+    {value: 24200, viewValue: '12 hours'},
+    {value: 86400, viewValue: '24 hours'},
+    {value: 172800, viewValue: '48 hours'},
+    {value: 259200, viewValue: '72 hours'}
+  ];
+  
   private pattern = '^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$';
   
   constructor(private formBuilder: FormBuilder) {
