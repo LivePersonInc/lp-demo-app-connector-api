@@ -3,6 +3,7 @@ import {AppInstall} from '../../../shared/models/app-installation/appInstall.mod
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
+import {Engagement} from '../../../shared/models/app-installation/engagement.model';
 
 @Component({
   selector: 'lp-edit-app-installation',
@@ -88,21 +89,27 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     this.appInstall.client_name = this.form.controls['appName'].value;
     this.appInstall.description = this.form.controls['description'].value;
     this.appInstall.enabled = this.enabled;
+    
     if (this.retention_time) {
       this.appInstall.capabilities.webhooks.retry.retention_time = this.retention_time;
     } else {
       delete this.appInstall.capabilities.webhooks.retry;
     }
-    if (this.appInstall.capabilities.engagement) {
-      this.appInstall.capabilities.engagement.design_engagement = this.form.controls['engagementInfo'].value.designEngagement;
-      this.appInstall.capabilities.engagement.design_window = this.form.controls['engagementInfo'].value.designWindow;
-      this.appInstall.capabilities.engagement.language_selection = this.form.controls['engagementInfo'].value.languageSelection;
-      this.appInstall.capabilities.engagement.entry_point = this.form.controls['engagementInfo'].value.entryPoints;
-      this.appInstall.capabilities.engagement.visitor_behavior = this.form.controls['engagementInfo'].value.visitorBehavior;
-      this.appInstall.capabilities.engagement.target_audience = this.form.controls['engagementInfo'].value.targetAudience;
-      this.appInstall.capabilities.engagement.goal = this.form.controls['engagementInfo'].value.goals;
-      this.appInstall.capabilities.engagement.consumer_identity = this.form.controls['engagementInfo'].value.consumerIdentity;
+    
+    const engagement = this.form.controls['engagementInfo'].value;
+    
+    if (!this.appInstall.capabilities.engagement) {
+      this.appInstall.capabilities.engagement = new Engagement();
     }
+    this.appInstall.capabilities.engagement.design_engagement = engagement.designEngagement;
+    this.appInstall.capabilities.engagement.design_window = engagement.designWindow;
+    this.appInstall.capabilities.engagement.language_selection = engagement.languageSelection;
+    this.appInstall.capabilities.engagement.entry_point = engagement.entryPoints;
+    this.appInstall.capabilities.engagement.visitor_behavior = engagement.visitorBehavior;
+    this.appInstall.capabilities.engagement.target_audience = engagement.targetAudience;
+    this.appInstall.capabilities.engagement.goal = engagement.goals;
+    this.appInstall.capabilities.engagement.consumer_identity = engagement.consumerIdentity;
+    
     this.cleanEmptyEndpoints();
   }
   
@@ -119,11 +126,38 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   }
   
   private setDefaultEngagementFormValues() {
-    const defaultEntryPoints = [];
-    const defaultVisitorBehavior = [];
-    const defaultTargetAudience = [];
-    const defaultGoals = [];
-    const defaultConsumerIdentity = [];
+    const defaultEntryPoints = ['url', 'section'];
+    const defaultVisitorBehavior = [
+      'visited_location',
+      'time_on_location',
+      'flow',
+      'engaged_in_session',
+      'about_to_abandon',
+      'cart_value',
+      'cart_items',
+      'visitor_error',
+      'viewed_products',
+      'service_activity'];
+    const defaultTargetAudience = [
+      'external_referral',
+      'search_keywords',
+      'ip',
+      'platform',
+      'geo_location',
+      'returning_visitors',
+      'marketing_source',
+      'customer_type',
+      'age',
+      'balance',
+      'customer_id',
+      'gender',
+      'store_zip_code',
+      'store_number',
+      'company_size',
+      'registration_date'
+    ];
+    const defaultGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
+    const defaultConsumerIdentity = ['auth'];
     
     this.engagementFormValue = {
       designEngagement: false,

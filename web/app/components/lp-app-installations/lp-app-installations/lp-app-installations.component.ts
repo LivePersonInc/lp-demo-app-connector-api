@@ -184,6 +184,8 @@ export class LpAppInstallationsComponent implements OnInit {
       consumerIdentity: defaultConsumerIdentity
     };
     
+    this.form.controls['engagementInfo'].setValue(this.engagementFormValue);
+    
   }
   
 }

@@ -121,7 +121,6 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
   }
   
   registerOnTouched(fn: any): void {
-    console.log('on blur');
     this.onTouched = fn;
   }
   
