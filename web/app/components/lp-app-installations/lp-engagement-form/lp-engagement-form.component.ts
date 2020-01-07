@@ -88,7 +88,6 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
       consumerIdentity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
     });
     
-    
     this.engagementForm.get('entryPoints').statusChanges.subscribe(
       status => this.entryPointChipList.errorState = status === 'INVALID'
     );
@@ -104,6 +103,7 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
     this.engagementForm.get('consumerIdentity').statusChanges.subscribe(
       status => this.consumerIdentityChipList.errorState = status === 'INVALID'
     );
+    
   }
   
   /*** Control Value Accessor  and Validator Implemented Methods ***/
@@ -117,11 +117,10 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
     this.engagementForm.valueChanges.subscribe(fn);
   }
   
-  public onTouched: () => void = () => {
-  }
   
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+  registerOnTouched(fn): void {
+    
+    this.engagementForm.valueChanges.subscribe(fn);
   }
   
   setDisabledState?(isDisabled: boolean): void {

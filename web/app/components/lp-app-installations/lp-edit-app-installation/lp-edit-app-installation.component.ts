@@ -79,8 +79,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit() {
     if (this.appInstall.capabilities.engagement) {
-      console.log('RNGA');
-      this.form.controls['engagementInfo'].setValue(this.engagementFormValue);
+      // this.form.controls['engagementInfo'].setValue(this.engagementFormValue);
     }
   }
   
