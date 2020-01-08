@@ -52,7 +52,7 @@
         <lp-webhooks-form *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks"
                           class="mt-4 d-block"></lp-webhooks-form>
       </mat-step>
-      <mat-step *ngIf="!isDemoChecked">
+      <mat-step>
         <ng-template matStepLabel>Engagement</ng-template>
         <lp-engagement-form formControlName="engagementInfo" [value]="engagementFormValue"></lp-engagement-form>
       </mat-step>

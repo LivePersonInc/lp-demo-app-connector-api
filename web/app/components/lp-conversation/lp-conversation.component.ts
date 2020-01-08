@@ -150,6 +150,8 @@ export class LpConversationComponent implements OnInit, OnDestroy {
             if (this.conversationService.conversation) {
               this.conversation = this.conversationService.conversation;
             }
+          } else if (event === 'APP_NO_STATE') {
+            this.conversation = new Conversation(this.brandId, this.appKey, this.appSecret, this.userName);
           }
         });
         

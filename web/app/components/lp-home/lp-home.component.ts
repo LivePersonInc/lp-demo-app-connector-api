@@ -86,8 +86,8 @@ export class LpHomeComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('demo/' + app.client_id);
   }
   
-  public openAppInstallationDialog(appInstallation) {
-    const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: appInstallation}, maxWidth: '1000'});
+  public openAppInstallationDialog() {
+    const dialogRef = this.dialog.open(LpInstallationDialogComponent, {data: {appInstallation: null}, maxWidth: '1000'});
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.data) {
         this.loadingService.startLoading();

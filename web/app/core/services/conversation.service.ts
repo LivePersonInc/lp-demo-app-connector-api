@@ -291,6 +291,7 @@ export class ConversationService extends HttpService {
           this.errorResponse(error);
         });
       } else {
+        this.conversationRestoredSubject.next('APP_NO_STATE');
         this.conversation = defaultConv;
       }
     }
