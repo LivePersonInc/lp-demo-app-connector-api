@@ -286,7 +286,6 @@ export class ConversationService extends HttpService {
           if (this.conversation.conversationId) {
             this.historyService.getHistoryByConsumerId(this.conversation.conversationId);
             this.conversationRestoredSubject.next(eventName);
-            
           }
         }, error => {
           this.errorResponse(error);

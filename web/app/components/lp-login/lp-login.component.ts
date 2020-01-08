@@ -8,7 +8,6 @@ import {ConversationService} from '../../core/services/conversation.service';
 import {AccountConfigService} from '../../core/services/account-config.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Subscription} from 'rxjs';
-import {AppInstallationsService} from '../../core/services/app-installations.service';
 
 @Component({
   selector: 'lp-login',
@@ -17,9 +16,6 @@ import {AppInstallationsService} from '../../core/services/app-installations.ser
 })
 
 export class LpLoginComponent implements OnInit, OnDestroy {
-  public brandId: string;
-  public userName: string;
-  public password: string;
   public loginForm: FormGroup;
   private loginSubscription: Subscription;
   private domainSubscription: Subscription;
@@ -27,7 +23,6 @@ export class LpLoginComponent implements OnInit, OnDestroy {
   
   constructor(private fromBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
-              private appInstallationService: AppInstallationsService,
               private installationService: InstallationService,
               private domainsService: DomainsService,
               private router: Router,
@@ -39,26 +34,17 @@ export class LpLoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loginForm = this.fromBuilder.group({
       brand: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
+      userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
     this.loginSubscription = this.authenticationService.userLoggedSubject.subscribe(event => {
       if (event === 'LOGGED-IN') {
         this.installationService.init();
-        // this.appInstallationService.init(); //TODO: remove APPinstallations service
         this.conversationService.init();
         this.accountConfigService.init();
         this.goToHomePage();
       }
     });
-    
-    // TODO: Remove when fix routing
-    /*this.conversationService.conversationRestoredSubject.subscribe(event => {
-      if (event === 'RESTORED') {
-        this.goToHomePage();
-      }
-     
-    });*/
   }
   
   ngOnDestroy() {
@@ -74,19 +60,11 @@ export class LpLoginComponent implements OnInit, OnDestroy {
   }
   
   public authenticate(event) {
-    this.removedWhiteSpacesAtEndAndBeginning();
-    if (event && event.brandId && event.userName && event.password) {
-      this.brandId = event.brandId;
-      this.userName = event.userName;
-      this.password = event.password;
-    }
-    this.domainsService.getDomainList(this.brandId);
-    this.authenticationService.login(this.brandId, this.userName, this.password);
-  }
-  
-  public removedWhiteSpacesAtEndAndBeginning() {
-    this.brandId = this.brandId.trim();
-    this.userName = this.userName.trim();
+    const brandId = this.loginForm.controls['brand'].value.trim();
+    const userName = this.loginForm.controls['userName'].value.trim();
+    const password = this.loginForm.controls['password'].value;
+    this.domainsService.getDomainList(brandId);
+    this.authenticationService.login(brandId, userName, password);
   }
   
   private goToHomePage() {

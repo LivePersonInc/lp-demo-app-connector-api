@@ -5,14 +5,13 @@
     </mat-card-header>
     <form [formGroup]="loginForm" (ngSubmit)="authenticate($event)">
       <mat-form-field class="brand-form" color="primary">
-        <input matInput placeholder="Account number" formControlName="brand" [(ngModel)]="brandId">
+        <input matInput placeholder="Account number" formControlName="brand">
       </mat-form-field>
       <mat-form-field class="brand-form" color="primary">
-        <input matInput placeholder="Login name" formControlName="email" [(ngModel)]="userName">
+        <input matInput placeholder="Login name" formControlName="userName">
       </mat-form-field>
       <mat-form-field class="brand-form" color="primary">
-        <input matInput type="Password" placeholder="Password" formControlName="password"
-               [(ngModel)]="password">
+        <input matInput type="Password" placeholder="Password" formControlName="password">
       </mat-form-field>
       <button mat-raised-button
               class="lp-login-button"

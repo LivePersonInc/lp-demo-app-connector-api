@@ -17,7 +17,6 @@ export class LpEditAppIntallationDialogComponent implements OnInit {
     
     if (data.appInstallation) {
       this.appInstallation = new AppInstall().deserialize(data.appInstallation);
-      console.log(this.appInstallation);
     }
   }
   
