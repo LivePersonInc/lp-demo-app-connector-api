@@ -22,6 +22,7 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   public conversation: Conversation;
   private conversationSubscription: Subscription;
   private installationSubscription: Subscription;
+  private conversationRestoredSubscription: Subscription;
   private stopNotificationSent = false;
   private isFistTime = true;
   private timeout = null;
@@ -61,6 +62,9 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     }
     if (this.installationSubscription) {
       this.installationSubscription.unsubscribe();
+    }
+    if (this.conversationRestoredSubscription) {
+      this.conversationRestoredSubscription.unsubscribe();
     }
   }
   
@@ -141,10 +145,17 @@ export class LpConversationComponent implements OnInit, OnDestroy {
           this.appKey = this.installationService.selectedApp.client_id;
           this.appSecret = this.installationService.selectedApp.client_secret;
         }
+        
+        this.conversationRestoredSubscription = this.conversationService.conversationRestoredSubject.subscribe(event => {
+          if (event === 'RESTORED') {
+            if (this.conversationService.conversation) {
+              this.conversation = this.conversationService.conversation;
+            }
+          }
+        });
+        
         this.conversationService.restoreStoredState('RESTORED', new Conversation(this.brandId, this.appKey, this.appSecret, this.userName));
-        if (this.conversationService.conversation) {
-          this.conversation = this.conversationService.conversation;
-        }
+        
       }
     });
     

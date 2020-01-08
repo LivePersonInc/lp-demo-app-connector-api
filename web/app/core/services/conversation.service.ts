@@ -197,14 +197,14 @@ export class ConversationService extends HttpService {
   
   
   public notifyMessagesWasRead() {
-    let sequenceList = this.getLastReadMessages();
+    const sequenceList = this.getLastReadMessages();
     if (sequenceList.length > 0) {
       this.notifyMessageStatus(Status.READ, sequenceList);
     }
   }
   
   public notifyMessageWasAccepted(sequence: number) {
-    let sequenceList = [sequence];
+    const sequenceList = [sequence];
     if (sequenceList.length > 0) {
       this.notifyMessageStatus(Status.ACCEPT, sequenceList);
     }
@@ -266,7 +266,6 @@ export class ConversationService extends HttpService {
   
   public restoreStoredState(eventName: string, defaultConv: Conversation) {
     const state = this.stateManager.getLastStoredStateByBrand(this.brandId);
-    console.log('RESTORE STATE');
     if (state.selectedAppId) {
       const appState = this.conversationManager.fidAppById(state.states, state.selectedAppId);
       if (appState) {
