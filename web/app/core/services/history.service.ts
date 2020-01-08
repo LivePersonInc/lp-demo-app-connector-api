@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import {catchError, map, timeout} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Subject, throwError} from 'rxjs';
 
 @Injectable()
 export class HistoryService extends HttpService {
