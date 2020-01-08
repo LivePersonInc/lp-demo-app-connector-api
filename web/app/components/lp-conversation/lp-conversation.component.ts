@@ -119,7 +119,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   }
   
   private init(): void {
-    console.log('Conversation Init');
     this.appKey = '';
     this.appSecret = '';
     this.userName = 'Kim';

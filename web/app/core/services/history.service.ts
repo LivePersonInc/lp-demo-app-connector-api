@@ -5,9 +5,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {LoadingService} from './loading.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Subject, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, map, timeout} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class HistoryService extends HttpService {
@@ -18,7 +18,8 @@ export class HistoryService extends HttpService {
   private baseURI = `${environment.protocol}://${environment.server}:${environment.port}/demo/history/`;
   
   
-  constructor(private authenticationService: AuthenticationService, protected snackBar: MatSnackBar, protected http: HttpClient, protected loadingService: LoadingService, protected  router: Router) {
+  constructor(private authenticationService: AuthenticationService, protected snackBar: MatSnackBar,
+              protected http: HttpClient, protected loadingService: LoadingService, protected  router: Router) {
     super(snackBar, http, loadingService, router);
   }
   
