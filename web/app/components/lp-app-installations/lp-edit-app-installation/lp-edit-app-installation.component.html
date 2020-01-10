@@ -49,8 +49,11 @@
             </mat-form-field>
           </div>
         </div>
-        <lp-webhooks-form *ngIf="appInstall.capabilities" [(webhooks)]="appInstall.capabilities.webhooks"
-                          class="mt-4 d-block"></lp-webhooks-form>
+        <lp-webhooks-form
+          *ngIf="appInstall.capabilities"
+          [(webhooks)]="appInstall.capabilities.webhooks"
+          (webhooksChange)="onWhChange($event)"
+          class="mt-4 d-block"></lp-webhooks-form>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Engagement</ng-template>

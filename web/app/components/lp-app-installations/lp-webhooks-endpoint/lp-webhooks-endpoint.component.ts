@@ -37,7 +37,6 @@ export class LpWebhooksEndpointComponent implements OnInit {
   addHeader() {
     const header: EndpointHeader = new EndpointHeader(this.headerName, this.headerValue);
     this.webhooksEndpoint.headers.push(header);
-    console.log(this.webhooksEndpoint);
   }
   
   removeHeader(i) {

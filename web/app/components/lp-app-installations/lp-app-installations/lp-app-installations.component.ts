@@ -20,6 +20,7 @@ export class LpAppInstallationsComponent implements OnInit {
   public currentURL = 'https://' + this.server + '/notifications/event';
   private pattern = '^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$';
   public engagementFormValue = {};
+  public whValid: boolean;
   
   constructor() {
   }
@@ -137,6 +138,19 @@ export class LpAppInstallationsComponent implements OnInit {
         }
       });
     }
+  }
+  
+  onWhChange(event: Webhooks) {
+    this.whValid = true;
+    const pattern = RegExp('^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$');
+    // Validate webhooks in order to have the value in parent component
+    Object.keys(event).forEach(key => {
+      if (key !== 'retry' && event[key].endpoint) {
+        if (!pattern.test(event[key].endpoint)) {
+          this.whValid = false;
+        }
+      }
+    });
   }
   
   private setDefaultEngagementFormValues() {

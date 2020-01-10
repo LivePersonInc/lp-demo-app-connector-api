@@ -21,7 +21,7 @@
     </div>
     <div class="row mb-2">
       <div class="col-sm-12">
-      <strong>Headers</strong>
+        <strong>Headers</strong>
       </div>
     </div>
     <div class="row">
@@ -35,11 +35,11 @@
             </td>
             <td>
               <mat-form-field>
-                <input name="headerValue"  matInput placeholder="Header Value" [(ngModel)]="headerValue">
+                <input name="headerValue" matInput placeholder="Header Value" [(ngModel)]="headerValue">
               </mat-form-field>
             </td>
             <td>
-              <button (click)="addHeader()"[disabled]="headerValue.length == 0 || headerName.length == 0" mat-button>
+              <button (click)="addHeader()" [disabled]="headerValue.length == 0 || headerName.length == 0" mat-button>
                 <mat-icon>add</mat-icon>
                 Add Header
               </button>
@@ -48,7 +48,7 @@
           <tr *ngFor="let header of webhooksEndpoint.headers;  let i = index;">
             <td>
               <mat-form-field>
-                <input name="headerName_{{i}}" matInput placeholder="Header name"  [(ngModel)]="header.header_name">
+                <input name="headerName_{{i}}" matInput placeholder="Header name" [(ngModel)]="header.header_name">
               </mat-form-field>
             </td>
             <td>

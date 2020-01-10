@@ -67,7 +67,9 @@
             </mat-form-field>
           </div>
         </div>
-        <lp-webhooks-form [(webhooks)]="webhooks"></lp-webhooks-form>
+        <lp-webhooks-form [(webhooks)]="webhooks"
+                          (webhooksChange)="onWhChange($event)"
+        ></lp-webhooks-form>
       </mat-step>
       <mat-step *ngIf="!isDemoChecked">
         <ng-template matStepLabel>Engagement (Optional)</ng-template>

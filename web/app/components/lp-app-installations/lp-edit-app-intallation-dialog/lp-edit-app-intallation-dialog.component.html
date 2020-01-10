@@ -2,9 +2,10 @@
 <div mat-dialog-content>
   <lp-edit-app-installation [appInstall]="appInstallation"></lp-edit-app-installation>
 </div>
+
 <div mat-dialog-actions class="container-fluid w-100 d-flex flex-row-reverse">
   <button mat-raised-button class="m-2" color="primary" [mat-dialog-close]="true"
-          [disabled]="!appEditInstallationsComponent.form.valid"
+          [disabled]="!appEditInstallationsComponent.form.valid || !appEditInstallationsComponent.whValid"
           (click)="updateAppInstallation()">
     Update
   </button>
