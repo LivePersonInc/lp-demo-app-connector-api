@@ -12,6 +12,7 @@ const routes: Routes = [
   {path: 'login', component: LpLoginComponent},
   {path: 'logout', component: LpLoginComponent, canActivate: [LogoutGuard]},
   {path: 'demo/:appId', component: LpDemoComponent, canActivate: [AuthGuardGuard]},
+  {path: '**', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuardGuard]},
 ];
 
 @NgModule({
