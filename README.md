@@ -8,13 +8,13 @@ inaccuracies, errors, bugs or interruptions.  LivePerson will not be
 liable for any claims,  damages or liability related to the sample
 applications and code or your use of them.
 
-# Demo App for Connector API
+# Connector App Hub (Demo App for Connector API)
 
-This project contains a demo app for the Connector API that can create a conversation within a consumer and an agent. 
+This project contains an app management hub and demo application for the Connector API that can install/edit apps, create a conversation within a consumer and an agent. 
 You can send messages and events with it as well as 
 visualize the incoming events or notifications.
 
-Look at [Connector API first steps](https://developers.liveperson.com/connector-api-first-steps-overview.html) for a better
+Look at [Connector API getting started](https://developers.liveperson.com/connector-api-getting-started.html) for a better
 understanding.
 
 ---
@@ -22,7 +22,7 @@ understanding.
 `Important!`
 
 This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is not using
-any database, sensitive data is saved in your browser local storage (this will be changed in the future).
+any database, potential sensitive data is saved in your browser local storage (AppID and ConversationID).
 
 ## Table of Contents
   - [Requirements](#requirements)
@@ -90,8 +90,32 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 
 ## Usage
 
-1. Login with a valid brandID, user and password (the first time it will redirect you to the "step by step" settings section).
-1. You have to select an installed APP from the list.
+You must Login with a valid brandID, user and password. If the login process was successful it will redirect you to the home page. This page contains a list of installed apps (compatible with Connector API).
+![alt text](docs/imgs/home.png)
+
+### Create a new app
+1. Click on "Create App" button. It will pop up a new dialog window.
+1. You must fill the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box", it will provide you this app server endpoint ready to test (demo), you can edit an change this application configuration later.
+1. If all required fields are completed and the form is valid you will be able to click on install.
+#### Advanced webhooks configuration
+ When you introduce an enpoint in the apllication Installation details, it wil be adde automatically to every kind of event. You can customize endpoints per type of event here and add headers. (e.g. you can use differnt servers for handle a Content Events )
+ 
+ ![alt text](docs/imgs/webhooksConf.png)
+
+#### Engagement Configutatuon
+ This affects the Engagement design possibilities when designing a campaign for messaging.Without a clear reason to change them, you can use the default values found in the schema.
+ 
+### Edit a existing app
+1. Open the actions menu of an app from a list and click on edit.
+2. You can do any change 
+3. Click on update.
+
+### Enable, Disable and Uninstall apps
+Open the actions menu of an app from a list and click on edit.
+ ![alt text](/docs/imgs/actions_menu.png)
+
+### Demo app (Stablish conversation)
+1. Open the actions menu of an app from a list and click on demo (if option available).
 1. Add your server url to the [webhooks configuration endpoints](#configure-the-webhooks-endpoints) of the selected APP. For using NgRok the URL should be similar like 
 ``https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
 1. After updating the webhooks endpoints you will be redirected to the chat window.
@@ -129,8 +153,8 @@ Angular CLI provides a fast development server using Webpack. Every change is au
 To run the application using the dev server instead of a built project:
 
 1. ```node app``` to run the server
-1. ```ng serve``` to run web development server
-1. Open ``` http://localhost:4200``` in your browser. All changes in the web folder would be reflected immediately
+1. Open another terminal and type```npm run build-watch``` to build and watch for changes in the UI
+1. Open ``` http://localhost:8282``` in your browser. All changes in the web folder would be reflected immediately
 
 ### Project structure
 
