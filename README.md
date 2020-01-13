@@ -10,15 +10,12 @@ applications and code or your use of them.
 
 # Connector App Hub (Demo App for Connector API)
 
-This project contains an app management hub and demo application for the Connector API that can install/edit apps, create a conversation within a consumer and an agent. 
-You can send messages and events with it as well as 
-visualize the incoming events or notifications.
+This project contains a demo application for the Connector API witch allows you to manage your apps and create a demo conversation within a consumer and an agent. 
 
 Look at [Connector API getting started](https://developers.liveperson.com/connector-api-getting-started.html) for a better
 understanding.
 
 ---
-
 `Important!`
 
 This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is not using
@@ -90,29 +87,30 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 
 ## Usage
 
-You must Login with a valid brandID, user and password. If the login process was successful it will redirect you to the home page. This page contains a list of installed apps (compatible with Connector API).
+You must Login with a valid brandID, user and password. If the login process was successful the application will redirect you to the home page. This page contains a list of installed apps (compatible with Connector API).
 ![alt text](docs/imgs/home.png)
 
 ### Create a new app
 1. Click on "Create App" button. It will pop up a new dialog window.
-1. You must fill the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box", it will provide you this app server endpoint ready to test (demo), you can edit an change this application configuration later.
+1. You must fill the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box", it will provide you "this app server endpoint" ready to test webhooks notifications. If desired, you can edit an change this application configuration later.
 1. If all required fields are completed and the form is valid you will be able to click on install.
+
 #### Advanced webhooks configuration
- When you introduce an enpoint in the apllication Installation details, it wil be adde automatically to every kind of event. You can customize endpoints per type of event here and add headers. (e.g. you can use differnt servers for handle a Content Events )
+ When you introduce an endpoint in the application Installation details, it wil be automatically asigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle a Content Events )
  
  ![alt text](docs/imgs/webhooksConf.png)
 
-#### Engagement Configutatuon
- This affects the Engagement design possibilities when designing a campaign for messaging.Without a clear reason to change them, you can use the default values found in the schema.
- 
-### Edit a existing app
-1. Open the actions menu of an app from a list and click on edit.
-2. You can do any change 
-3. Click on update.
+#### Engagement configuration
+ You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. Without a clear reason to change them, you can use the default values found in the schema. The Default values are automatically assigned to you app if nothing is changed.
 
 ### Enable, Disable and Uninstall apps
 Open the actions menu of an app from a list and click on edit.
  ![alt text](/docs/imgs/actions_menu.png)
+ 
+### Edit a existing app
+  You can edit an existing appOpen the actions menu of an app from a list and click on edit.
+ 2. You can do any change 
+ 3. Click on update.
 
 ### Demo app (Stablish conversation)
 1. Open the actions menu of an app from a list and click on demo (if option available).
