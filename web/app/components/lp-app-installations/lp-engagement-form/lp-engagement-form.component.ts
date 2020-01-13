@@ -133,7 +133,7 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
   
   /*******/
   
-  /*** Mat chips form methord **/
+  /*** Mat chips form method **/
   addChipElement(event: MatChipInputEvent, formControlName: string) {
     const input = event.input;
     const value = event.value;
