@@ -87,38 +87,38 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 
 ## Usage
 
-You must Login with a valid brandID, user and password. If the login process was successful the application will redirect you to the home page. This page contains a list of installed apps (compatible with Connector API).
+You must Login with a valid brandID, user and password. If the login process was successful, the application will redirect you to the home page. This page contains a list of installed apps compatible with Connector API.
 ![alt text](docs/imgs/home.png)
 
 ### Create a new app
+
 1. Click on "Create App" button. It will pop up a new dialog window.
-1. You must fill the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box", it will provide you "this app server endpoint" ready to test webhooks notifications. If desired, you can edit an change this application configuration later.
+1. You must fill up the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box, it will provide you with this "app server endpoint" ready to test webhooks notifications. If desired, you can edit an change this application configuration later.
 1. If all required fields are completed and the form is valid you will be able to click on install.
 
 #### Advanced webhooks configuration
- When you introduce an endpoint in the application Installation details, it wil be automatically asigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle a Content Events )
+ When you introduce an endpoint in the application Installation details, it wil be automatically asigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle  Content type Events )
  
  ![alt text](docs/imgs/webhooksConf.png)
 
 #### Engagement configuration
+
  You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. Without a clear reason to change them, you can use the default values found in the schema. The Default values are automatically assigned to you app if nothing is changed.
 
 ### Enable, Disable and Uninstall apps
-Open the actions menu of an app from a list and click on edit.
+
+Open the action menu of an app from a list and click on the desired action.
  ![alt text](/docs/imgs/actions_menu.png)
  
 ### Edit a existing app
-  You can edit an existing appOpen the actions menu of an app from a list and click on edit.
- 2. You can do any change 
- 3. Click on update.
+
+  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are set, just click on update button.
 
 ### Demo app (Stablish conversation)
-1. Open the actions menu of an app from a list and click on demo (if option available).
-1. Add your server url to the [webhooks configuration endpoints](#configure-the-webhooks-endpoints) of the selected APP. For using NgRok the URL should be similar like 
-``https://b36a71d7.ngrok.io/notifications/event``. Every webhooks endpoint should be on the following format: ``https://{your server url}/notifications/event``
-1. After updating the webhooks endpoints you will be redirected to the chat window.
-1. Type any message in order to start a conversation.
-1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications and play with it. 
+
+1. Open the action menu of the desired app from the list and click on demo (if option available). Note: if you want to be able to receive wehooks events you must add the demo app server url to the the selected APP. Every webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+1. Type any message in order to start a conversation and press enter.
+1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications etc. 
 
 [Note!!] Before starting a conversation, you can select some headers that will be sent in every request, It can be use for example, to activate the Auto-messages feature. Also you can modify the Campaign Id or Skill.
 
