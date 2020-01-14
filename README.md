@@ -31,10 +31,10 @@ any database, potential sensitive data is saved in your browser local storage (A
     - [Create a new app](#create-a-new-app)
       - [Advanced Webhooks configuration](#advanced-webhooks-configuration)
       - [Engagement configuration](#engagement-configuration)
-    - [Enable, Disable and Uninstall](#enable,-disable-and-uninstall])
-    - [Edit a existing app](#edit-a-existing-app)
+    - [Enable, Disable and Uninstall](#enable-disable-and-uninstall])
+    - [Edit an existing app](#edit-an-existing-app)
     - [Demo app](#demo-app)
-      - [create conversation](#create-conversation)
+      - [Create conversation](#create-conversation)
       - [File sharing](#file-sharing)
       - [Auto-messages](#auto-messages)
       - [Post Conversation Survey](#post-conversation-survey)
@@ -73,7 +73,7 @@ In order to install the project dependencies type this command in a terminal fro
 
 1. ```npm run start-local``` will build the project and start the server.
 1. Open ``` http://localhost:8282``` in your browser. 
-1. Login with a valid LE account.
+1. Log in with a valid LE account.
 
 ### Running NgRok
 
@@ -122,7 +122,7 @@ Open the action menu of an app from a list and click on the desired action.
 
  ![alt text](/docs/imgs/actions_menu.png)
  
-### Edit a existing app
+### Edit an existing app
 
   You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are made, just click on update button.
 
@@ -154,7 +154,7 @@ You should have configured properly the LE Auto-Messages feature before. Then Yo
 Before being able to use this feature you should have properly a Survey Bot configured
 [click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html)
 
-Before starting a new conversation you should enter the Survey Skill Id and check the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Then you should close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey.
+Before starting a new conversation you must enter the Survey Skill Id and select the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Then you must close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey.
 
 ![alt text](docs/imgs/pcs.png)
 
