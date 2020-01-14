@@ -126,7 +126,7 @@ Open the action menu of an app from a list and click on the desired action.
 
   You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are made, just click on update button.
 
-### Demo app (conversation)
+### Demo app
 
   Open the action menu of the chosen app from the list and click on demo (if option available). Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
 
@@ -141,9 +141,26 @@ Open the action menu of an app from a list and click on the desired action.
 
 #### File sharing
 
+First you need to enable the file sharing feature for your account [click here for mor information](https://developers.liveperson.com/messaging-window-api-tutorials-file-sharing.html#step-1---enable-file-sharing)
+
+You can click on the open file button and select a valid file.
+
+![alt text](docs/imgs/fileSharing.png)
+
+
 #### Auto messages
 
+You should have configured properly the LE Automessages feature. You can check the AutoMessage header and start a conversation. If everything was propertly configure you should receive your automatic messages.
+
 #### Post Conversation Survey
+
+Before being able to use this feature you should have properly a Survey Bot configured
+[click here for mor information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html)
+
+Before starting a new conversation you should enter the Survey Skill id and check the features  RICH_CONTENT QUICK_REPLIES and MULTI_DIALOG. Then you should close the dialog by clicking on "Close conversation with PCS".
+
+![alt text](docs/imgs/pcs.png)
+
 
 ## Settings
 
