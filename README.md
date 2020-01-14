@@ -40,7 +40,6 @@ any database, potential sensitive data is saved in your browser local storage (A
       - [Post Conversation Survey](#post-conversation-survey)
   - [Settings](#settings)
     - [Configure the webhooks endpoints](#configure-the-webhooks-endpoints)
-    - [Web environment files](#web-environment-files)
   - [Development Mode](#development-mode)
     - [Project structure](#project-structure)
     - [Sending and handling conversation events](#sending-and-handling-conversation-events)
