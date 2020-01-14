@@ -158,7 +158,7 @@ You should have configured properly the LE Auto-Messages feature before. Then Yo
 Before being able to use this feature you should have properly a Survey Bot configured,
 [click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html).
 
-Before starting a new conversation you must enter the Survey Skill Id and select the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Then you must close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey.
+Before starting a new conversation you must enter the Survey Skill Id and select the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Once the conversation started you must close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey events.
 
 ![alt text](docs/imgs/pcs.png)
 
