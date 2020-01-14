@@ -143,23 +143,21 @@ Open the action menu of an app from a list and click on the desired action.
 
 First you need to enable the file sharing feature for your account [click here for mor information](https://developers.liveperson.com/messaging-window-api-tutorials-file-sharing.html#step-1---enable-file-sharing)
 
-You can click on the open file button and select a valid file.
-
-![alt text](docs/imgs/fileSharing.png)
-
+You can click on the open file button next to che chat box text input and select a valid file.
 
 #### Auto messages
 
-You should have configured properly the LE Automessages feature. You can check the AutoMessage header and start a conversation. If everything was propertly configure you should receive your automatic messages.
+You should have configured properly the LE Auto-Messages feature. You can check the AUTO_MESSAGES feature header and start a conversation. If everything was property configured you should receive your automatic messages.
 
 #### Post Conversation Survey
 
 Before being able to use this feature you should have properly a Survey Bot configured
 [click here for mor information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html)
 
-Before starting a new conversation you should enter the Survey Skill id and check the features  RICH_CONTENT QUICK_REPLIES and MULTI_DIALOG. Then you should close the dialog by clicking on "Close conversation with PCS".
+Before starting a new conversation you should enter the Survey Skill id and check the features RICH_CONTENT QUICK_REPLIES and MULTI_DIALOG. Then you should close the dialog by clicking on "Close conversation with PCS". If everything was property configured you will receive the survey.
 
 ![alt text](docs/imgs/pcs.png)
+
 
 
 ## Settings
@@ -179,8 +177,6 @@ You can add this after login, in the configuration Webhooks page.
 
 NOTE: You would need to configure an HTTPS proxy server with valid certificates that redirect all request to http://localhost:8282/notifications/event
 Webhooks require HTTPS.
-
-![alt text](docs/gifs/webhook_config.gif)
 
 ## Development Mode:
 
