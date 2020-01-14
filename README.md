@@ -28,6 +28,16 @@ any database, potential sensitive data is saved in your browser local storage (A
     - [Running NgRok](#running-ngrok)
     - [Running with Docker](#running-with-docker)
   - [Usage](#usage)
+    - [Create a new app](#create-a-new-app)
+      - [Advanced Webhooks configuration](#advanced-webhooks-configuration)
+      - [Engagement configuration](#engagement-configuration)
+    - [Enable, Disable and Uninstall](#enable,-disable-and-uninstall])
+    - [Edit a existing app](#edit-a-existing-app)
+    - [Demo app](#demo-app)
+      - [create conversation](#create-conversation)
+      - [File sharing](#file-sharing)
+      - [Auto-messages](#auto-messages)
+      - [Post Conversation Survey](#post-conversation-survey)
   - [Settings](#settings)
     - [Configuring the webhooks endpoints](#configuring-the-webhooks-endpoints)
     - [Web environment files](#Web-environment-files)
@@ -87,6 +97,7 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 ## Usage
 
 You must Login with a valid brand Id, user and password. If the login process was successful, the application will redirect you to the home page. This page contains a list of installed apps compatible with the Connector API.
+
 ![alt text](docs/imgs/home.png)
 
 ### Create a new app
@@ -105,24 +116,34 @@ You must Login with a valid brand Id, user and password. If the login process wa
 
  You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. Without a clear reason to change them, you can use the default values found in the schema. The Default values are automatically assigned to you app if nothing is changed.
 
-### Enable, Disable and Uninstall apps
+### Enable, Disable and Uninstall
 
 Open the action menu of an app from a list and click on the desired action.
+
  ![alt text](/docs/imgs/actions_menu.png)
  
 ### Edit a existing app
 
   You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are made, just click on update button.
 
-### Demo app (Stablish conversation)
+### Demo app (conversation)
 
-1. Open the action menu of the chosen app from the list and click on demo (if option available). Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+  Open the action menu of the chosen app from the list and click on demo (if option available). Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+
+#### Create conversation
+
 1. Type any message in order to start a conversation and press enter.
 1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, Webhooks notifications etc. 
 
 [Note!!] Before starting a conversation, you can select some headers that will be sent in every request, It can be use for example, to activate the Auto-messages feature. Also you can modify the Campaign Id or Skill.
 
 ![alt text](docs/gifs/example.gif)
+
+#### File sharing
+
+#### Auto messages
+
+#### Post Conversation Survey
 
 ## Settings
 
