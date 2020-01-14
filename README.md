@@ -108,13 +108,15 @@ You must Login with a valid brand Id, user and password. If the login process wa
 
 #### Advanced Webhooks configuration
 
- When you introduce an endpoint in the application Installation details, it wil be automatically assigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle  Content type Events )
+ When you introduce an endpoint in the application Installation details form, it wil be automatically assigned to every kind of event.
+  
+  You can customize endpoints per event type in the "Advaced Webhooks configuration" form and add custom headers. (e.g. you can use different server to handle Content type Events)
  
  ![alt text](docs/imgs/webhooksConf.png)
 
 #### Engagement configuration
 
- You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. Without a clear reason to change them, you can use the default values found in the schema. The Default values are automatically assigned to you app if nothing is changed.
+ You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. The Default values are automatically assigned to you app if nothing is changed.
 
 ### Enable, Disable and Uninstall
 
@@ -124,11 +126,13 @@ Open the action menu of an app from a list and click on the desired action.
  
 ### Edit an existing app
 
-  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are made, just click on update button.
+  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are done, just click on update button.
 
 ### Demo app
 
-  Open the action menu of the chosen app from the list and click on demo (if option available). Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+  Open the action menu of the chosen app from the list and click on demo (if option available).
+   
+   Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
 
 #### Create conversation
 
@@ -141,9 +145,9 @@ Open the action menu of an app from a list and click on the desired action.
 
 #### File sharing
 
-First you need to enable the file sharing feature for your account [click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-file-sharing.html#step-1---enable-file-sharing)
+First you need to enable the file sharing feature for your account, [click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-file-sharing.html#step-1---enable-file-sharing).
 
-You can click on the open file button next to che chat box text input and select a valid file.
+You can click on the open file button next to the chat box text input and select a valid file from your disk.
 
 #### Auto messages
 
@@ -151,8 +155,8 @@ You should have configured properly the LE Auto-Messages feature before. Then Yo
 
 #### Post Conversation Survey
 
-Before being able to use this feature you should have properly a Survey Bot configured
-[click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html)
+Before being able to use this feature you should have properly a Survey Bot configured,
+[click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html).
 
 Before starting a new conversation you must enter the Survey Skill Id and select the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Then you must close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey.
 
