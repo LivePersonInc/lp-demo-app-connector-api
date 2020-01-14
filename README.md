@@ -194,7 +194,7 @@ To run the application using the dev server open a terminal and type the followi
 
 - Server: NodeJS server used as notification server (receive Webhooks notifications and map it to the correct conversation).
 The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
-- Web app: Angular 7 project.
+- Web app: Angular 8 project.
 
 ### Sending and handling conversation events
 
