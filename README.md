@@ -48,9 +48,9 @@ any database, potential sensitive data is saved in your browser local storage (A
 - [Angular CLI](https://cli.angular.io/) 1.7.3 or higher. 
 - A valid brandID with _Async prop Messaging_ enabled.
 - An installed APP for your brandID with the data sources configured in LiveEngage. 
-- Your server must be accessible if you want to receive events from webhooks. Or you can use a tool to redirect all the
+- Your server must be accessible if you want to receive events from Webhooks. Or you can use a tool to redirect all the
  notifications from outside to your internal network.
-  * (optional). Use [NgRok](#running-ngrok) for redirecting the webhooks notifications from internet to your local host.
+  * (optional). Use [NgRok](#running-ngrok) for redirecting the Webhooks notifications from internet to your local host.
   Run it with the port 8282 by default ```./ngRok http 8282``` .
 
 ## Installation
@@ -63,12 +63,11 @@ In order to install the project dependencies type this command in a terminal fro
 
 1. ```npm run start-local``` will build the project and start the server.
 1. Open ``` http://localhost:8282``` in your browser. 
-1. Login with your account (by default it does not work with QA accounts, you need to change the CSDS domain property in [settings.json](settings.json)).
-
+1. Login with a valid LE account.
 
 ### Running NgRok
 
-  You can use [NgRok](https://ngrok.com/) as an optional tool for redirecting the webhooks notifications from the internet to your local host.
+  You can use [NgRok](https://ngrok.com/) as an optional tool for redirecting the Webhooks notifications from the internet to your local host.
   The default port that we use in our server is 8282. To run it, you have to [download](https://ngrok.com/download) and execute the following command (in the same directory):
   
   ```./ngRok http 8282``` 
@@ -87,17 +86,18 @@ Requirements: [Docker](https://www.docker.com/products/docker-desktop) installed
 
 ## Usage
 
-You must Login with a valid brandID, user and password. If the login process was successful, the application will redirect you to the home page. This page contains a list of installed apps compatible with Connector API.
+You must Login with a valid brand Id, user and password. If the login process was successful, the application will redirect you to the home page. This page contains a list of installed apps compatible with the Connector API.
 ![alt text](docs/imgs/home.png)
 
 ### Create a new app
 
 1. Click on "Create App" button. It will pop up a new dialog window.
-1. You must fill up the required fields. App Name and Description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box, it will provide you with this "app server endpoint" ready to test webhooks notifications. If desired, you can edit an change this application configuration later.
+1. You must fill up the required fields. Application name and description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box, it will provide you with this "app server endpoint" ready to test Webhooks notifications (demo). If desired, you can edit and change this application configuration later.
 1. If all required fields are completed and the form is valid you will be able to click on install.
 
-#### Advanced webhooks configuration
- When you introduce an endpoint in the application Installation details, it wil be automatically asigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle  Content type Events )
+#### Advanced Webhooks configuration
+
+ When you introduce an endpoint in the application Installation details, it wil be automatically assigned to every kind of event. You can customize endpoints per type of event here and add custom headers. (e.g. you can use different server for handle  Content type Events )
  
  ![alt text](docs/imgs/webhooksConf.png)
 
@@ -112,13 +112,13 @@ Open the action menu of an app from a list and click on the desired action.
  
 ### Edit a existing app
 
-  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are set, just click on update button.
+  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are made, just click on update button.
 
 ### Demo app (Stablish conversation)
 
-1. Open the action menu of the desired app from the list and click on demo (if option available). Note: if you want to be able to receive wehooks events you must add the demo app server url to the the selected APP. Every webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+1. Open the action menu of the chosen app from the list and click on demo (if option available). Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
 1. Type any message in order to start a conversation and press enter.
-1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, webhooks notifications etc. 
+1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, Webhooks notifications etc. 
 
 [Note!!] Before starting a conversation, you can select some headers that will be sent in every request, It can be use for example, to activate the Auto-messages feature. Also you can modify the Campaign Id or Skill.
 
@@ -129,15 +129,15 @@ Open the action menu of an app from a list and click on the desired action.
 Before running the app, maybe you want to change some configuration parameters in [settings.json](settings.json):
 
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
-  1. [SERVER_HTTP_PORT] : The port of the server listening for webhooks notifications.
+  1. [SERVER_HTTP_PORT] : The port of the server listening for Webhooks notifications.
   
-### Configure the webhooks endpoints
+### Configure the Webhooks endpoints
 
 In your app installation you need to add this webhook listener server url:
 
 ``https://{your server domain or ip}/notifications/event``
 
-You can add this after login, in the configuration webhooks page.
+You can add this after login, in the configuration Webhooks page.
 
 NOTE: You would need to configure an HTTPS proxy server with valid certificates that redirect all request to http://localhost:8282/notifications/event
 Webhooks require HTTPS.
@@ -148,15 +148,15 @@ Webhooks require HTTPS.
 
 Angular CLI provides a fast development server using Webpack. Every change is automatically refreshed in the browser.
 
-To run the application using the dev server instead of a built project:
+To run the application using the dev server open a terminal and type the following:
 
 1. ```node app``` to run the server
 1. Open another terminal and type```npm run build-watch``` to build and watch for changes in the UI
-1. Open ``` http://localhost:8282``` in your browser. All changes in the web folder would be reflected immediately
+1. Open ``` http://localhost:8282``` in your browser. All changes in the web folder would be reflected immediately after clicking on refresh.
 
 ### Project structure
 
-- Server: NodeJS server used as notification server (receive webhooks notifications and map it to the correct conversation).
+- Server: NodeJS server used as notification server (receive Webhooks notifications and map it to the correct conversation).
 The server is also used as a bridge to avoid Cross-Domain restrictions in the browser.
 - Web app: Angular 7 project.
 
@@ -317,7 +317,7 @@ The demo connector app also can handle most of the message status events, i.e. w
     
   ```
   
-  When an agent has read some of your messages, you will get via webhooks a notification like this:
+  When an agent has read some of your messages, you will get via Webhooks a notification like this:
   
   ```json
         {
@@ -358,8 +358,8 @@ The demo connector app also can handle most of the message status events, i.e. w
 
 For a correct deployment of this app, we need to consider the following:
 
- -  A HTTPS server in order to be able to receive events via webhooks.
- -  Valid certificates are needed in order to use the webhooks service.
+ -  A HTTPS server in order to be able to receive events via Webhooks.
+ -  Valid certificates are needed in order to use the Webhooks service.
  -  A reverse proxy like Ngnix would redirect all HTTPS requests to our HTTP server. If we don't do this, the browser will block all HTTP requests considered not secure.
  -  Related to the previous point, we need to keep the properties protocol and port in `web/environment/environment.prod.ts` like defult: 
     
