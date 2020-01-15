@@ -40,16 +40,6 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   public defaultGoals = [];
   public defaultConsumerIdentity = [];
   
-  public availableEntryPoints = ['url', 'section'];
-  public filteredEntryPoints = [];
-  public availableVisitorBehavior = ['visited_location', 'time_on_location', 'flow', 'engaged_in_session', 'about_to_abandon', 'cart_value', 'cart_items', 'visitor_error', 'viewed_products', 'service_activity'];
-  public filteredVisitorBehavior = [];
-  public availableTargetAudience = ['external_referral', 'search_keywords', 'ip', 'platform', 'geo_location', 'returning_visitors', 'marketing_source', 'customer_type', 'age', 'balance', 'customer_id', 'gender', 'store_zip_code', 'store_number', 'company_size', 'registration_date'];
-  public filteredTargetAudience = [];
-  public availableGoals = ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'];
-  public filteredGoals = [];
-  public availableConsumerIdentity = ['auth'];
-  
   @ViewChild('entryPointChipList', {static: true}) entryPointChipList;
   @ViewChild('visitorBehaviorChipList', {static: true}) visitorBehaviorChipList;
   @ViewChild('targetAudienceChipList', {static: true}) targetAudienceChipList;
@@ -116,7 +106,6 @@ blob/master/ac-common-service-contracts/src/main/resources/installations/schema.
   registerOnChange(fn: any): void {
     this.engagementForm.valueChanges.subscribe(fn);
   }
-  
   
   registerOnTouched(fn): void {
     

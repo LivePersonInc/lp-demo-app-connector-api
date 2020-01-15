@@ -109,7 +109,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   private subscribeToConversationEvents() {
     this.conversationSubscription = this.conversationService.conversationEventSubject.subscribe((event: ConversationEvent) => {
       if (this.conversationService.conversation && event.conversationId === this.conversationService.conversation.conversationId) {
-        
         if (event.event === ConvEvent.OPEN) {
           this.conversation = this.conversationService.conversation;
         }
@@ -122,7 +121,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
     this.appKey = '';
     this.appSecret = '';
     this.userName = 'Kim';
-    
     if (this.authenticationService.user) {
       this.brandId = this.authenticationService.user.brandId || '';
     }
@@ -144,7 +142,6 @@ export class LpConversationComponent implements OnInit, OnDestroy {
           this.appKey = this.installationService.selectedApp.client_id;
           this.appSecret = this.installationService.selectedApp.client_secret;
         }
-        
         this.conversationRestoredSubscription = this.conversationService.conversationRestoredSubject.subscribe(event => {
           if (event === 'RESTORED') {
             if (this.conversationService.conversation) {
@@ -154,12 +151,9 @@ export class LpConversationComponent implements OnInit, OnDestroy {
             this.conversation = new Conversation(this.brandId, this.appKey, this.appSecret, this.userName);
           }
         });
-        
         this.conversationService.restoreStoredState('RESTORED', new Conversation(this.brandId, this.appKey, this.appSecret, this.userName));
-        
       }
     });
-    
     this.subscribeToConversationEvents();
   }
   
@@ -167,23 +161,16 @@ export class LpConversationComponent implements OnInit, OnDestroy {
   public handleTypingEvent(isTyping) {
     if (isTyping && this.conversation && this.conversation.isConvStarted) {
       clearTimeout(this.timeout);
-      
       if (this.stopNotificationSent || this.isFistTime) {
         this.conversationService.notifyAgentThatUserIsTyping();
-        
         this.isFistTime = false;
         this.stopNotificationSent = false;
       }
-      
       this.timeout = setTimeout(() => {
-        
         this.conversationService.notifyAgentThatUserStopsTyping();
-        
         this.stopNotificationSent = true;
-        
       }, 1000);
     }
-    
   }
   
   private onVisible(): void {

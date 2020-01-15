@@ -142,7 +142,7 @@ export class LpAppInstallationsComponent implements OnInit {
   
   onWhChange(event: Webhooks) {
     this.whValid = true;
-    const pattern = RegExp('^https\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\:\\\'\\/\\\\+=&;%\\$#_]*)?$');
+    const pattern = RegExp(this.pattern);
     // Validate webhooks in order to have the value in parent component
     Object.keys(event).forEach(key => {
       if (key !== 'retry' && event[key].endpoint) {

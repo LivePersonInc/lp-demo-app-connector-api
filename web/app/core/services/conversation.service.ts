@@ -85,7 +85,7 @@ export class ConversationService extends HttpService {
         this.errorResponse(error);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
-    ).subscribe()
+    ).subscribe();
   }
   
   public sendMessage(message: string) {
@@ -243,7 +243,7 @@ export class ConversationService extends HttpService {
   }
   
   private getLastReadMessages(): Array<number> {
-    let lastReadSequenceList = [];
+    const lastReadSequenceList = [];
     this.conversation.messages.forEach(message => {
       if (message.type === MessageType.RECEIVED && !message.read) {
         message.read = true;

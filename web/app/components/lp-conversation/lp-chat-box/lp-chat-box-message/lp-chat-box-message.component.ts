@@ -1,9 +1,7 @@
-import {Component, Input, Output, OnInit, AfterViewInit, EventEmitter, Renderer, Renderer2, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {ChatMessage, MessageType} from '../../../../shared/models/conversation/chatMessage.model';
 import {FileMessage} from '../../../../shared/models/conversation/fileMessage.model';
 import * as JsonPollock from '../../../../../../node_modules/json-pollock/dist/json-pollock.js';
-
-
 
 @Component({
   selector: 'lp-chat-box-message',
@@ -14,18 +12,19 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
   @Input() public message: ChatMessage;
   @Output() download = new EventEmitter<FileMessage>();
   @Output() onSendMessage = new EventEmitter<string>();
-
+  
   public messageType: string;
-
+  
   @ViewChild('structuredContent', {static: false}) d1: ElementRef;
-
-  constructor (private renderer: Renderer2) { }
-
+  
+  constructor(private renderer: Renderer2) {
+  }
+  
   public addRichContentTextElement(content) {
     const rooEl = JsonPollock.render(content);
     const structuredContentElement: HTMLParagraphElement = rooEl;
     this.renderer.appendChild(this.d1.nativeElement, structuredContentElement);
-    this.renderer.addClass(this.d1.nativeElement, "rich-content-text");
+    this.renderer.addClass(this.d1.nativeElement, 'rich-content-text');
   }
   
   public addRichContentQuickReplyButtonElement(content) {
@@ -37,46 +36,45 @@ export class LpChatBoxMessageComponent implements OnInit, AfterViewInit {
       this.onSendMessage.emit(btnEl.textContent);
     });
   }
-
+  
   ngAfterViewInit(): void {
-    if(this.message.isRichContent) {
+    if (this.message.isRichContent) {
       this.addRichContentTextElement(this.message.message.content);
-      if(this.message.message && this.message.message.quickReplies && this.message.message.quickReplies.replies) {
-        this.message.message.quickReplies.replies.forEach( reply => {
+      if (this.message.message && this.message.message.quickReplies && this.message.message.quickReplies.replies) {
+        this.message.message.quickReplies.replies.forEach(reply => {
           this.addRichContentQuickReplyButtonElement(reply);
-        })
+        });
       }
     }
   }
-
+  
   ngOnInit() {
     const linkCallback = (data) => {
-      window.open(data.actionData.uri,"_blank");
+      window.open(data.actionData.uri, '_blank');
     };
     JsonPollock.registerAction('link', linkCallback);
     this.messageType = MessageType[this.message.type].toLocaleLowerCase();
   }
-
+  
   public isTodayMessage(): boolean {
-    let messageDate = new Date(this.message.timestamp);
-    let today = new Date();
-
-    return (messageDate.getFullYear() === today.getFullYear())  &&
+    const messageDate = new Date(this.message.timestamp);
+    const today = new Date();
+    return (messageDate.getFullYear() === today.getFullYear()) &&
       (messageDate.getMonth() === today.getMonth()) &&
       (messageDate.getDay() === today.getDay());
   }
-
+  
   public isYesterdayMessage(): boolean {
-    let messageDate = new Date(this.message.timestamp);
-    let today = new Date();
-
-    return (messageDate.getFullYear() === today.getFullYear())  &&
+    const messageDate = new Date(this.message.timestamp);
+    const today = new Date();
+    
+    return (messageDate.getFullYear() === today.getFullYear()) &&
       (messageDate.getMonth() === today.getMonth()) &&
-      (messageDate.getDay() === today.getDay()-1);
+      (messageDate.getDay() === today.getDay() - 1);
   }
-
+  
   public onDownload() {
-     this.download.emit(this.message.file);
+    this.download.emit(this.message.file);
   }
-
+  
 }

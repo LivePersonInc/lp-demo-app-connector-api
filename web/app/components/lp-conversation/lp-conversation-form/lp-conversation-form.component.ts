@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Conversation} from "../../../shared/models/conversation/conversation.model";
+import {Component, Input, OnInit} from '@angular/core';
+import {Conversation} from '../../../shared/models/conversation/conversation.model';
 
 @Component({
   selector: 'lp-conversation-form',
@@ -8,19 +8,21 @@ import {Conversation} from "../../../shared/models/conversation/conversation.mod
 })
 export class LpConversationFormComponent implements OnInit {
   private _conversation: Conversation;
-
-  @Input() set conversation(conversation: Conversation){
+  
+  @Input()
+  set conversation(conversation: Conversation) {
     this._conversation = conversation;
-  };
-
-  get conversation(): Conversation{
-    return this._conversation
   }
-
-  constructor() { }
-
-  ngOnInit() {}
-
-
-
+  
+  get conversation(): Conversation {
+    return this._conversation;
+  }
+  
+  constructor() {
+  }
+  
+  ngOnInit() {
+  }
+  
+  
 }

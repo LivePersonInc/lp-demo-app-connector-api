@@ -59,7 +59,7 @@ export class ConversationManager {
         return this.getConsumerJWS(conversation).pipe(
           map((res: any) => {
             conversation.consumerJWS = res['token'];
-          }))
+          }));
       }));
   }
   
@@ -94,10 +94,10 @@ export class ConversationManager {
   
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
-    // TODO: should be done with sendRaw endopoin (sendMessage) wiht the right payload
+    // TODO: should be done with sendRaw endpoint (sendMessage) wiht the right payload
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
       map(res => {
-        this.unSubscribeToMessageNotifications(conversation); //TODO: this line should be removed for PCS
+        this.unSubscribeToMessageNotifications(conversation); // TODO: this line should be removed for PCS
         conversation.isConvStarted = false;
         this.updateState(conversation);
       }));
@@ -257,10 +257,8 @@ export class ConversationManager {
   private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
-        data.body.changes[0].originatorMetadata.role != 'CONSUMER') {
-        
+        data.body.changes[0].originatorMetadata.role !== 'CONSUMER') {
         if (data.body.changes[0].event.message) {
-          
           conversation.messages.push(
             new ChatMessage(
               MessageType.RECEIVED,
@@ -272,9 +270,7 @@ export class ConversationManager {
               false
             )
           );
-          
           this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId, ConvEvent.MSG_RECEIVED));
-          
         }
       }
     } catch (error) {
@@ -286,9 +282,7 @@ export class ConversationManager {
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role != 'CONSUMER') {
-        
         if (data.body.changes[0].event.type && data.body.changes[0].event.type === 'RichContentEvent') {
-          
           conversation.messages.push(
             new ChatMessage(
               MessageType.RECEIVED,
@@ -300,9 +294,7 @@ export class ConversationManager {
               true
             )
           );
-          
           this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId, ConvEvent.MSG_RECEIVED));
-          
         }
       }
     } catch (error) {
@@ -313,12 +305,12 @@ export class ConversationManager {
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
-        data.body.changes[0].originatorMetadata.role != 'CONSUMER') {
+        data.body.changes[0].originatorMetadata.role !== 'CONSUMER') {
         
         if (data.body.changes[0].event.type === 'AcceptStatusEvent') {
           if (data.body.changes[0].event.status === 'ACCEPT') {
             data.body.changes[0].event.sequenceList.forEach(number => {
-              let message = this.findMessageInConversationBySequence(number, conversation);
+              const message = this.findMessageInConversationBySequence(number, conversation);
               if (message) {
                 message.accepted = true;
               }
@@ -326,7 +318,7 @@ export class ConversationManager {
           }
           if (data.body.changes[0].event.status === 'READ') {
             data.body.changes[0].event.sequenceList.forEach(number => {
-              let message = this.findMessageInConversationBySequence(number, conversation);
+              const message = this.findMessageInConversationBySequence(number, conversation);
               if (message) {
                 message.accepted = true;
                 message.read = true;
@@ -401,15 +393,16 @@ export class ConversationManager {
   }
   
   private getShowUserValue(userName: string, conversation: Conversation): boolean {
-    return conversation.messages && (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
+    return conversation.messages &&
+      (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
   
   private getMessageRequestBody(message: string, dialogId: string, conversationId: string): Request {
-    let body = new PublishContentEvent(dialogId, conversationId, new Event('ContentEvent', 'text/plain', message));
+    const body = new PublishContentEvent(dialogId, conversationId, new Event('ContentEvent', 'text/plain', message));
     return new Request('req', '3', 'ms.PublishEvent', body);
   }
   
-  private getMessageWithFileRequestBody(message: Object, dialogId: string, conversationId: string): Request {
+  private getMessageWithFileRequestBody(message: object, dialogId: string, conversationId: string): Request {
     return new Request('req', '3', 'ms.PublishEvent', new PublishContentEvent(dialogId, conversationId,
       new Event('ContentEvent', 'hosted/file', message)));
   }
@@ -426,9 +419,9 @@ export class ConversationManager {
   }
   
   private getOpenConvRequestBody(conversation: Conversation): any {
-    let campaignInfo = new CampaignInfo(conversation.campaignId, conversation.engagementId);
-    let conversationContext = new ConversationContext(conversation.context_name, conversation.features);
-    let requestBody = new ConsumerRequestConversation(
+    const campaignInfo = new CampaignInfo(conversation.campaignId, conversation.engagementId);
+    const conversationContext = new ConversationContext(conversation.context_name, conversation.features);
+    const requestBody = new ConsumerRequestConversation(
       'CUSTOM',
       campaignInfo,
       'MESSAGING',
@@ -436,11 +429,11 @@ export class ConversationManager {
       conversation.skillId,
       conversationContext
     );
-    let requestConversationPayload = new Request('req', '1,', 'cm.ConsumerRequestConversation', requestBody);
+    const requestConversationPayload = new Request('req', '1,', 'cm.ConsumerRequestConversation', requestBody);
     
-    let pushNotificationData = new PushNotificationData('Service', 'CertName', 'TOKEN');
-    let privateData = new PrivateData('1750345346', 'test@email.com', pushNotificationData);
-    let setUserProfileBody = new SetUserProfile(
+    const pushNotificationData = new PushNotificationData('Service', 'CertName', 'TOKEN');
+    const privateData = new PrivateData('1750345346', 'test@email.com', pushNotificationData);
+    const setUserProfileBody = new SetUserProfile(
       conversation.userName || 'WEB UI USER',
       '',
       'http://avatarurl.com',
@@ -449,38 +442,31 @@ export class ConversationManager {
       'Test Description',
       privateData
     );
-    let setUserProfilePayload = new Request('req', '2,', 'userprofile.SetUserProfile', setUserProfileBody);
-    
+    const setUserProfilePayload = new Request('req', '2,', 'userprofile.SetUserProfile', setUserProfileBody);
     return [setUserProfilePayload, requestConversationPayload];
   }
   
   // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
-    let eventChatState = new EventChatState(event);
-    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventChatState);
+    const eventChatState = new EventChatState(event);
+    const requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventChatState);
     return new Request('req', '1,', 'ms.PublishEvent', requestBody);
   }
   
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
-    let eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
-    
-    let requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventAcceptStatus);
-    
+    const eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
+    const requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventAcceptStatus);
     return new Request('req', '1,', 'ms.PublishEvent', requestBody);
   }
   
   private updateState(conversation: Conversation) {
-    let state = this.stateManager.getLastStoredStateByBrand(conversation.branId);
-    
+    const state = this.stateManager.getLastStoredStateByBrand(conversation.branId);
     state.selectedAppId = conversation.appKey;
-    
     let appState = this.fidAppById(state.states, conversation.appKey);
-    
     if (!appState) {
       appState = new AppState();
       state.states.push(appState);
     }
-    
     appState.conversationId = conversation.conversationId;
     appState.appId = conversation.appKey;
     appState.ext_consumer_id = conversation.ext_consumer_id;
@@ -489,7 +475,6 @@ export class ConversationManager {
     appState.skillId = conversation.skillId;
     appState.campaignId = conversation.campaignId;
     appState.engagementId = conversation.engagementId;
-    
     this.stateManager.storeLastStateInLocalStorage(state, conversation.branId);
   }
   
@@ -541,7 +526,7 @@ export class ConversationManager {
         let messageType = MessageType.RECEIVED;
         let userName = record.sentBy;
         
-        if (record.sentBy == 'Consumer') {
+        if (record.sentBy === 'Consumer') {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
@@ -577,7 +562,7 @@ export class ConversationManager {
         return ((new Date(a.timestamp).getTime()) - (new Date(b.timestamp).getTime()));
       });
       
-      //this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
+      // this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
     }
   }
   
@@ -614,22 +599,22 @@ export class ConversationManager {
           const scaleFactor = width / img.width;
           elem.width = width;
           elem.height = img.height * scaleFactor;
-          const ctx = <CanvasRenderingContext2D>elem.getContext('2d');
+          const ctx = <CanvasRenderingContext2D> elem.getContext('2d');
           ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
           
           ctx.canvas.toBlob(
             blob => {
-              const reader = new FileReader();
-              reader.readAsDataURL(
+              const readerNew = new FileReader();
+              readerNew.readAsDataURL(
                 new File([blob], file.name, {
                   type: 'image/jpeg',
                   lastModified: Date.now(),
                 }));
-              reader.onload = () => {
+              readerNew.onload = () => {
                 observer.next(
-                  reader.result
+                  readerNew.result
                 );
-              }
+              };
             },
             'image/jpeg',
             1,

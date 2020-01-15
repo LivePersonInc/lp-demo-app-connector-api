@@ -56,7 +56,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
       this.appInstall.capabilities = new Capabilities();
     }
     
-    let whs = new Webhooks();
+    const whs = new Webhooks();
     whs.initEndpoints();
     
     this.appInstall.capabilities.webhooks = Object.assign(whs, this.appInstall.capabilities.webhooks);
