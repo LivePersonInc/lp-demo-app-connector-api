@@ -10,7 +10,7 @@ applications and code or your use of them.
 
 # Connector App Hub (Demo App for Connector API)
 
-This project contains a demo application for the Connector API witch allows you to manage your apps and create a demo conversation within a consumer and an agent. 
+This project allows managing apps for the Connector API and provides a built-in example connector for demonstration purposes. 
 
 Look at [Connector API getting started](https://developers.liveperson.com/connector-api-getting-started.html) for a better
 understanding.
@@ -18,8 +18,7 @@ understanding.
 ---
 `Important!`
 
-This app ONLY should be used with TEST ACCOUNTS, it could compromise your sensitive data. Since this app is not using
-any database, potential sensitive data is saved in your browser local storage (AppID and ConversationID).
+It is recommended to use this app only with test accounts. When using the demo connector, the app Id and conversation Id will be stored in you browser local storage. This information is not deleted on log out. However this data cannot be use for creating requests or log in to your account.
 
 ## Table of Contents
   - [Requirements](#requirements)
@@ -36,7 +35,7 @@ any database, potential sensitive data is saved in your browser local storage (A
     - [Demo app](#demo-app)
       - [Create conversation](#create-conversation)
       - [File sharing](#file-sharing)
-      - [Auto-messages](#auto-messages)
+      - [Auto Messages](#auto-messages)
       - [Post Conversation Survey](#post-conversation-survey)
   - [Settings](#settings)
     - [Configure the webhooks endpoints](#configure-the-webhooks-endpoints)
@@ -71,8 +70,8 @@ In order to install the project dependencies type this command in a terminal fro
 ## How to make it running locally
 
 1. ```npm run start-local``` will build the project and start the server.
-1. Open ``` http://localhost:8282``` in your browser. 
-1. Log in with a valid LE account.
+2. Open ``` http://localhost:8282``` in your browser. 
+3. Log in with a valid LE account.
 
 ### Running NgRok
 
@@ -102,8 +101,8 @@ You must Login with a valid brand Id, user and password. If the login process wa
 ### Create a new app
 
 1. Click on "Create App" button. It will pop up a new dialog window.
-1. You must fill up the required fields. Application name and description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box, it will provide you with this "app server endpoint" ready to test Webhooks notifications (demo). If desired, you can edit and change this application configuration later.
-1. If all required fields are completed and the form is valid you will be able to click on install.
+2. You must fill up the required fields. Application name and description are the minimum required data (other required data is automatically added when you click on install). Note: If you select the "demo app" check box, it will provide you with this "app server endpoint" ready to test Webhooks notifications (demo). If desired, you can edit and change this application configuration later.
+3. If all required fields are completed and the form is valid you will be able to click on install.
 
 #### Advanced Webhooks configuration
 
@@ -115,7 +114,7 @@ You must Login with a valid brand Id, user and password. If the login process wa
 
 #### Engagement configuration
 
- You can change the engagement properties of you app here. This affects the Engagement design possibilities when designing a campaign for messaging. The Default values are automatically assigned to you app if nothing is changed.
+ You can change the engagement properties of your app here. This affects the Engagement design possibilities when designing a campaign for messaging. The Default values are automatically assigned to your app if nothing is changed.
 
 ### Enable, Disable and Uninstall
 
@@ -125,20 +124,20 @@ Open the action menu of an app from a list and click on the desired action.
  
 ### Edit an existing app
 
-  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are done, just click on update button.
+  You can edit an existing app configuration: Open the actions menu of an app from the list and click on edit. After the changes are done, just click on the update button.
 
 ### Demo app
 
-  Open the action menu of the chosen app from the list and click on demo (if option available).
-   
-   Note: if you want to be able to receive Webhooks events you must add the demo app server url to the the selected App. Every Webhooks endpoint should be on the following format: ``https://{demo app server url}/notifications/event``
+Upon installing your app, you can choose the Demo option. This will change every endpoint to ``https://{demo app server url}/notifications/event``, where ``{demo app server url}`` is replaced by the current host. After installing the app, you can choose the demo option from the action menu. 
+
+Note: The demo action also works, when you don't change the endpoint urls. However, you won't receive any events from LiveEngange.
 
 #### Create conversation
 
 1. Type any message in order to start a conversation and press enter.
-1. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, Webhooks notifications etc. 
+2. You can login with you account in LiveEngage platform (better to use another user for that brand in order to avoid conflicts), see the sent messages, Webhooks notifications etc. 
 
-[Note!!] Before starting a conversation, you can select some headers that will be sent in every request, It can be use for example, to activate the Auto-messages feature. Also you can modify the Campaign Id or Skill.
+Note: Before starting a conversation, you can select some headers that will be sent in every request. This can be used, for example, to activate the Auto Messages feature. Also you can modify the Campaign Id or Skill.
 
 ![alt text](docs/gifs/example.gif)
 
@@ -148,13 +147,13 @@ First you need to enable the file sharing feature for your account, [click here 
 
 You can click on the open file button next to the chat box text input and select a valid file from your disk.
 
-#### Auto messages
+#### Auto Messages
 
-You should have configured properly the LE Auto-Messages feature before. Then You can select the AUTO_MESSAGES feature header and start a conversation. If everything was property configured you should receive your automatic messages.
+Auto Messages must be properly configured for your account. Then You can select the AUTO_MESSAGES feature header and start a conversation. If everything was property configured you should receive your automatic messages.
 
 #### Post Conversation Survey
 
-Before being able to use this feature you should have properly a Survey Bot configured,
+Before being able to use this feature you need Post Conversation Surveys configured for your account.
 [click here for more information](https://developers.liveperson.com/messaging-window-api-tutorials-post-conversation-survey-pcs.html).
 
 Before starting a new conversation you must enter the Survey Skill Id and select the features RICH_CONTENT, QUICK_REPLIES and MULTI_DIALOG. Once the conversation started you must close the dialog by clicking on "Close conversation with PCS". If everything was property configured, you will receive the survey events.
@@ -166,8 +165,8 @@ Before starting a new conversation you must enter the Survey Skill Id and select
 Before running the app, maybe you want to change some configuration parameters in [settings.json](settings.json):
 
   1. [CSDS_DOMAIN] : The URL of the Domain API from which you can get the base URLs of any service (the production Domain API is set by default).
-  1. [CSDS_DOMAIN_QA] : The URL of the Domain API  in QA.
-  1. [SERVER_HTTP_PORT] : The port of the server listening for Webhooks notifications (this app server).
+  2. [CSDS_DOMAIN_QA] : The URL of the Domain API  in QA.
+  3. [SERVER_HTTP_PORT] : The port of the server listening for Webhooks notifications (this app server).
   
   
 ### Configure the Webhooks endpoints
@@ -186,8 +185,8 @@ Angular CLI provides a fast development server using Webpack. Every change is au
 To run the application using the dev server open a terminal and type the following:
 
 1. ```node app``` to run the server
-1. Open another terminal and type```npm run build-watch``` to build and watch for changes in the UI
-1. Open ``` http://localhost:8282``` in your browser. All changes in the web folder would be reflected immediately after clicking on refresh.
+2. Open another terminal and type```npm run build-watch``` to build and watch for changes in the UI
+3. Open ``` http://localhost:8282``` in your browser. All changes in the web folder would be reflected immediately after clicking on refresh.
 
 ### Project structure
 
