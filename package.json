@@ -20,6 +20,7 @@
     "start-dev": "node app",
     "build-watch": "ng build --watch",
     "build": "ng build --prod",
+    "build-local": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
