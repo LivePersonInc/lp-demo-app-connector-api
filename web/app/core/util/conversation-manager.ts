@@ -97,14 +97,13 @@ export class ConversationManager {
     // TODO: should be done with sendRaw endpoint (sendMessage) wiht the right payload
     return this.sendApiService.closeConversation(conversation.branId, conversation.conversationId, headers).pipe(
       map(res => {
-        this.unSubscribeToMessageNotifications(conversation); // TODO: this line should be removed for PCS
+        this.unSubscribeToMessageNotifications(conversation);
         conversation.isConvStarted = false;
         this.updateState(conversation);
       }));
     
   }
   
-  // TODO: Seb - Close conversation with the PCS payload added...
   public closeConversationWithPCS(conversation: Conversation): Observable<any> {
     conversation.isPostSurveyStarted = true;
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
@@ -113,7 +112,6 @@ export class ConversationManager {
   }
   
   
-  // TODO: Seb - get close conversation body with PCS. Body might need the creation of new field+type+dialog and dialogId+state model
   private getCloseConversationWithPCSBody(conversation: Conversation): Request {
     const dialogState = new DialogState(conversation.dialogId, 'CLOSE', 'Closed by consumer');
     const dialogChange = new DialogChange('DialogChange', 'UPDATE', dialogState);

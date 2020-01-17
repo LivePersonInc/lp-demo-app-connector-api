@@ -10,7 +10,7 @@
   .full-width {
     width: 100%;
   }
-  .res-info{
+  .res-info {
     width: 100%;
     height: 63px;
     overflow-x: auto;
@@ -19,19 +19,25 @@
   .mat-form-field {
     /*font-size: 12px;*/
   }
-  .lp-card{
+  .lp-card {
     padding-top: 66px;
   }
 
-  .console-container{
+  .console-container {
     margin-top: 10px;
     height: 300px;
     display: block;
   }
 
   @media (min-width: 1200px) {
-    .console-container{
+    .console-container {
       height: 300px;
+    }
+  }
+
+  @media (min-width: 2300px) {
+    .console-container {
+      height: 492px;
     }
   }
 
@@ -48,7 +54,7 @@
     margin-left: 0;
     text-align: left;
   }
-  .conv-closed-info{
+  .conv-closed-info {
     font-size: 14px;
   }
 }

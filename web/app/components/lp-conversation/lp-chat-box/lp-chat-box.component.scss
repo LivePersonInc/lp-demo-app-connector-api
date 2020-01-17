@@ -1,17 +1,17 @@
-:host{
+:host {
   overflow: hidden;
   width: 100%;
   height: 100%;
   border: 1px solid #d6d6d6;
   border-radius: 2px;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
   background-color: #FFFFFF;
   max-width: 500px;
   min-width: 200px;
   min-height: 500px;
   max-height: 508px;
   display: inline-block;
-  .conv-closed{
+  .conv-closed {
     position: absolute;
     text-align: center;
     display: block;
@@ -24,9 +24,9 @@
     font-weight: bold;
     z-index: 10;
   }
-  .messages-area{
+  .messages-area {
     width: 100%;
-    height: -webkit-calc(100%- 55px);
+    height: -webkit-calc(100% - 55px);
     /* Firefox */
     height: -moz-calc(100% - 55px);
     /* WebKit */
@@ -38,7 +38,7 @@
     overflow-x: hidden;
     border-bottom: 1px solid lightgray;
   }
-  .typing{
+  .typing {
     padding: 2px;
     padding-left: 5px;
     position: absolute;
@@ -47,4 +47,10 @@
   }
 }
 
+//2k
+@media(min-width: 2500px) {
+  :host {
+    max-height: 700px !important;
+  }
+}
 
