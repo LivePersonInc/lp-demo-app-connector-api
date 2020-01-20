@@ -52,7 +52,7 @@
       </mat-step>
       <mat-step *ngIf="!isDemoChecked">
         <ng-template matStepLabel>Advanced webhooks configuration (Optional)</ng-template>
-        <!--<div class="row mb-3">
+        <div class="row mb-3">
           <div class="col-md-6">
             <mat-form-field class="w-100 mt-2">
               <mat-label>Choose a retention time value</mat-label>
@@ -66,7 +66,7 @@
               <mat-hint align="start"><strong>Events retention time in DB </strong></mat-hint>
             </mat-form-field>
           </div>
-        </div>-->
+        </div>
         <lp-webhooks-form [(webhooks)]="webhooks"
                           (webhooksChange)="onWhChange($event)"
         ></lp-webhooks-form>
