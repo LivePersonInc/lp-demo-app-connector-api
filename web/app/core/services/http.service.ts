@@ -35,12 +35,18 @@ export class HttpService {
     return this.http.delete(url, httpOptions);
   }
   
-  public errorResponse(error: (any | HttpErrorResponse)) {
+  public errorResponse(error: (any | HttpErrorResponse), logout: boolean) {
     this.snackBarConfig.duration = null;
     this.snackBarConfig.panelClass = ['snack-error'];
     if (error instanceof HttpErrorResponse) {
+      console.log(error);
       this.snackBar.open('[ERROR]: ' + error.status + ' ' +
-        (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig);
+        (error.error.message || error.statusText || error.error ), 'Close', this.snackBarConfig).afterOpened().subscribe(() => {
+        if (error.status === 401 && logout) {
+          this.router.navigateByUrl('/logout');
+        }
+      });
+      
     } else {
       console.log(JSON.stringify(error));
       this.snackBar.open('[ERROR]: ' + error, 'Close', this.snackBarConfig);

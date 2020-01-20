@@ -82,7 +82,7 @@ export class ConversationService extends HttpService {
         this.sendMessage(initialMessage);
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, false);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
@@ -96,12 +96,12 @@ export class ConversationService extends HttpService {
           this.conversationEventSubject.next(new ConversationEvent(this.conversation.conversationId, ConvEvent.MESSAGE_SENT));
         }),
         catchError(error => {
-          this.errorResponse(error);
+          this.errorResponse(error, false);
           return throwError(new Error(error || 'An error occurred, please try again later'));
         })
       ).subscribe()
     } else {
-      this.errorResponse('A Conversation has to be intialized before send a message');
+      this.errorResponse('A Conversation has to be intialized before send a message', false);
     }
   };
   
@@ -121,12 +121,12 @@ export class ConversationService extends HttpService {
           )
         }),
         catchError((error: any) => {
-          this.errorResponse(error);
+          this.errorResponse(error, false);
           return throwError(new Error(error || 'An error occurred, please try again later'));
         })
       ).subscribe();
     } else {
-      this.errorResponse('File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported');
+      this.errorResponse('File type not supported, ony the types JPG, PNG, JPEG, PNG and GIF supported', false);
     }
   }
   
@@ -138,7 +138,7 @@ export class ConversationService extends HttpService {
           window.open(`https://${this.domainsService.getDomainByServiceName('swift')}${r.body.relativePath}?temp_url_sig=${r.body.queryParams.temp_url_sig}&temp_url_expires=${r.body.queryParams.temp_url_expires}`);
         }),
         catchError((error: any) => {
-          this.errorResponse(error);
+          this.errorResponse(error, false);
           return throwError(new Error(error || 'An error occurred, please try again later'));
         })
       ).subscribe();
@@ -152,7 +152,7 @@ export class ConversationService extends HttpService {
         this.successResponse('Conversation CLOSED successfully with id ' + this.conversation.conversationId);
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, true);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
@@ -165,7 +165,7 @@ export class ConversationService extends HttpService {
         this.successResponse('Conversation CLOSED successfully with id ' + this.conversation.conversationId);
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, true);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
@@ -223,7 +223,7 @@ export class ConversationService extends HttpService {
         this.activateLoadingService();
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, true);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
@@ -236,7 +236,7 @@ export class ConversationService extends HttpService {
         this.activateLoadingService();
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, true);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
@@ -288,7 +288,7 @@ export class ConversationService extends HttpService {
             this.conversationRestoredSubject.next(eventName);
           }
         }, error => {
-          this.errorResponse(error);
+          this.errorResponse(error, true);
         });
       } else {
         this.conversationRestoredSubject.next('APP_NO_STATE');

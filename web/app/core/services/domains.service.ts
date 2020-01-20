@@ -28,7 +28,7 @@ export class DomainsService extends HttpService {
         }
         this.domainsSubject.next('READY');
       }), catchError((error: any) => {
-        this.errorResponse('Problem with getting session object');
+        this.errorResponse('Problem with getting session object', true);
         return throwError(new Error(error || 'Problem with getting session object'));
       })
     ).subscribe();

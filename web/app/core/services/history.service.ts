@@ -35,7 +35,7 @@ export class HistoryService extends HttpService {
         this.loadingService.stopLoading();
         this.historySubject.next('GET_CONV_HISTORY');
       }), catchError((error: any) => {
-        this.errorResponse('Error getting Consumer History');
+        this.errorResponse('Error getting Consumer History', true);
         return throwError(new Error(error || 'Error getting Consumer History'));
       })
     ).subscribe();

@@ -8,9 +8,11 @@ const LOGIN_DOMAIN_NAME = "agentVep";
 
 function authLocalStrategy() {
   return new LocalStrategy(
-    { usernameField: 'username',
-      passReqToCallback: true },
-    ( req, username, password, done) => {
+    {
+      usernameField: 'username',
+      passReqToCallback: true
+    },
+    (req, username, password, done) => {
       try {
         nconf.file({file: "./settings.json"});
         const idpService = new IdpService(nconf);
@@ -65,7 +67,7 @@ function authLocalStrategy() {
           logger.error("ERROR: Promise rejected", error);
           return done(null, false, {message: 'Invalid credentials.\n'});
         });
-      } catch(error) {
+      } catch (error) {
         logger.error("ERROR: " + error);
         return done(null, false, {message: 'Invalid credentials.\n'});
       }

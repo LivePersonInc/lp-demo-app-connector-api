@@ -41,7 +41,7 @@ export class AccountConfigService extends HttpService {
         this.acSubject.next('DONE');
       }),
       catchError(error => {
-        this.errorResponse(error);
+        this.errorResponse(error, true);
         return throwError(new Error(error || 'An error occurred, please try again later'));
       })
     ).subscribe();
