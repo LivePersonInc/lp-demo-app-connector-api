@@ -8,9 +8,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build-local
 
 EXPOSE 8282
 
-CMD ["npm", "start"]
-
+CMD ["node", "app"]
