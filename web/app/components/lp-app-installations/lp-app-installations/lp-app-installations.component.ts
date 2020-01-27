@@ -26,7 +26,7 @@ export class LpAppInstallationsComponent implements OnInit {
   }
   
   public ttls = [
-    {value: 0, viewValue: 'NONE'},
+    {value: 0, viewValue: 'None'},
     {value: 3600, viewValue: '1 hour'},
     {value: 9200, viewValue: '2 hours'},
     {value: 14400, viewValue: '4 hours'},

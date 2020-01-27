@@ -37,15 +37,15 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <mat-form-field class="w-100 mt-2">
-              <mat-label>Choose a retention time value</mat-label>
-              <mat-select matTooltip="Max time that an event is stored in the DB when endpoint fail"
-                          [(ngModel)]="retention_time"
+              <mat-label>Choose a Retention Time value</mat-label>
+              <mat-select [(ngModel)]="retention_time"
                           [ngModelOptions]="{standalone: true}">
                 <mat-option *ngFor="let ttl of ttls" [value]="ttl.value" required>
                   {{ttl.viewValue}}
                 </mat-option>
               </mat-select>
-              <mat-hint align="start"><strong>Events retention time in DB </strong></mat-hint>
+              <mat-hint align="start"><strong>Maximum time that an event is stored when an endpoint fails</strong>
+              </mat-hint>
             </mat-form-field>
           </div>
         </div>
