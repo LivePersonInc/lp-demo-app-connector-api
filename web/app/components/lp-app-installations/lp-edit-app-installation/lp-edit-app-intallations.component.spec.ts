@@ -11,7 +11,44 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 describe('LpEditAppIntallationComponent', () => {
   let component: LpEditAppInstallationComponent;
   let fixture: ComponentFixture<LpEditAppInstallationComponent>;
-  
+  const appInstallJSON = {
+    'client_name': 'Test Name',
+    'description': 'This is a description',
+    'enabled': true,
+    'grant_types': ['client_credentials'],
+    'response_types': ['code', 'token', 'id_token'],
+    'scope': 'msg.consumer',
+    'logo_uri': '/src/modules/campaigns/assets/img/software/Mobile-App.png',
+    'capabilities': {
+      'engagement': {
+        'design_engagement': false,
+        'design_window': true,
+        'entry_point': ['section'],
+        'visitor_behavior': ['flow'],
+        'target_audience': ['external_referral', 'search_keywords', 'ip', 'platform', 'geo_location', 'returning_visitors', 'marketing_source', 'customer_type', 'age', 'balance', 'customer_id', 'gender', 'store_zip_code', 'store_number', 'company_size', 'registration_date'],
+        'goal': ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'],
+        'consumer_identity': ['auth'],
+        'language_selection': false
+      },
+      'webhooks': {
+        'ms.MessagingEventNotification.ContentEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
+        'ms.MessagingEventNotification.RichContentEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
+        'ms.MessagingEventNotification.AcceptStatusEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
+        'ms.MessagingEventNotification.ChatStateEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
+        'cqm.ExConversationChangeNotification': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
+        'retry': {'retention_time': 3600}
+      },
+      'broadcast': {'enabled': false},
+      // this property does not exist in a reall app installation
+      //'anyobject': {'enabled': {'otherobject': {'other': ['test']}}}
+    },
+    'client_id_issued_at': 1579856355,
+    'client_secret_expires_at': 0,
+    'client_id': 'xxxx-wewe-43e0-we-xxxxxxx',
+    'client_secret': 'xxxxewerq3r2qt',
+    'id': 'xxxx-b353-xx-bdc9-xxxxx',
+    'deleted': false
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         declarations: [LpEditAppInstallationComponent, LpWebhooksFormComponent, LpEngagementFormComponent, LpWebhooksEndpointComponent],
@@ -29,15 +66,50 @@ describe('LpEditAppIntallationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LpEditAppInstallationComponent);
     component = fixture.componentInstance;
-    
     // Input()
     component.appInstall = new AppInstall();
-    
     fixture.detectChanges();
+    component.appInstall.deserialize(appInstallJSON);
+    component.ngOnInit();
+    fixture.detectChanges();
+    
   });
   
-  it('should create', () => {
+  
+  it('should create component', () => {
     expect(component).toBeTruthy();
+  });
+  
+  it('should contain the tested properites from the app Installation JSON object', () => {
+    expect(component.appInstall.client_name).toEqual('Test Name');
+    expect(component.appInstall.scope).toEqual('msg.consumer');
+    expect(component.appInstall.grant_types).toEqual(['client_credentials']);
+    expect(component.appInstall.capabilities.webhooks['ms.MessagingEventNotification.ContentEvent'].endpoint).toEqual('https://your/webhooks/endpoint');
+    expect(component.appInstall.capabilities.webhooks.retry.retention_time).toEqual(3600);
+    expect(component.appInstall.capabilities.engagement.design_engagement).toEqual(false);
+    expect(component.appInstall.capabilities.engagement.consumer_identity).toEqual(['auth']);
+  });
+  
+  it('should containt the properties that are not in the Type AppInstallation', () => {
+    // 'This property is not in the Type AppInstallation but is must be assign to the object in order to don't remove data when update
+    expect(component.appInstall.hasOwnProperty('response_types')).toBe(true);
+    expect(component.appInstall['response_types']).toEqual(['code', 'token', 'id_token']);
+    
+    // this property does not exist in a reall app installation
+    // console.log(component.appInstall['response_types']);
+    // expect(component.appInstall['broadcast'].hasOwnProperty('enabled')).toBe(true);
+    
+  });
+  
+  it('Should has the same value than in the app instalation JSON', () => {
+    expect(component.form.controls['appName'].value).toEqual('Test Name');
+  });
+  
+  it('Should update the app properties when the form value changes', () => {
+    expect(component.form.controls['appName'].value).toEqual('Test Name');
+    component.form.controls['appName'].setValue('New Name');
+    component.updateEditableApplicationFields();
+    expect(component.form.controls['appName'].value).toEqual('New Name');
   });
   
   
