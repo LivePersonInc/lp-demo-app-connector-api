@@ -1,7 +1,7 @@
-import {Capabilities} from "./capabilities.model";
-import {Deserializable} from "../deserializable.model";
+import {Capabilities} from './capabilities.model';
+import {Deserializable} from '../deserializable.model';
 
-export class AppInstall implements Deserializable<AppInstall>{
+export class AppInstall implements Deserializable<AppInstall> {
   client_name: string;
   description: string;
   enabled: boolean;
@@ -15,11 +15,10 @@ export class AppInstall implements Deserializable<AppInstall>{
   client_secret: string;
   id: string;
   deleted: boolean;
-
+  
   deserialize(input: any): AppInstall {
     Object.assign(this, input);
-    input.capabilities ? this.capabilities = new Capabilities().deserialize(input.capabilities): null;
+    input.capabilities ? this.capabilities = new Capabilities().deserialize(input.capabilities) : null;
     return this;
   }
-
 }
