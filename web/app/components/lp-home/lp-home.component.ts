@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {LpInstallationDialogComponent} from '../lp-app-installations/lp-installation-dialog/lp-installation-dialog.component';
 import {InstallationService} from '../../core/services/installation.service';
-import {LpEditAppIntallationDialogComponent} from '../lp-app-installations/lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component';
+import {LpEditAppInstallationDialogComponent} from '../lp-app-installations/lp-edit-app-installation-dialog/lp-edit-app-installation-dialog.component';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {MatSort} from '@angular/material/sort';
 import {LpConfirmationDialogComponent} from '../lp-confirmation-dialog/lp-confirmation-dialog.component';
@@ -97,7 +97,7 @@ export class LpHomeComponent implements OnInit, OnDestroy {
   }
   
   public openAppInstallationEditDialog(appInstallation) {
-    const dialogRef = this.dialog.open(LpEditAppIntallationDialogComponent, {data: {appInstallation: appInstallation}, maxWidth: '1000'});
+    const dialogRef = this.dialog.open(LpEditAppInstallationDialogComponent, {data: {appInstallation: appInstallation}, maxWidth: '1000'});
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.data) {
         this.loadingService.startLoading();

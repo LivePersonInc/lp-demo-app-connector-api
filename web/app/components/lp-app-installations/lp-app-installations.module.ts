@@ -17,19 +17,19 @@ import {LpInstallationDialogComponent} from './lp-installation-dialog/lp-install
 import {LpWebhooksFormComponent} from './lp-webhooks-form/lp-webhooks-form.component';
 import {LpWebhooksEndpointComponent} from './lp-webhooks-endpoint/lp-webhooks-endpoint.component';
 import {LpEditAppInstallationComponent} from './lp-edit-app-installation/lp-edit-app-installation.component';
-import {LpEditAppIntallationDialogComponent} from './lp-edit-app-intallation-dialog/lp-edit-app-intallation-dialog.component';
+import {LpEditAppInstallationDialogComponent} from './lp-edit-app-installation-dialog/lp-edit-app-installation-dialog.component';
 import {LpEngagementFormComponent} from './lp-engagement-form/lp-engagement-form.component';
 
 @NgModule({
   entryComponents: [
     LpConfirmationDialogComponent,
     LpInstallationDialogComponent,
-    LpEditAppIntallationDialogComponent
+    LpEditAppInstallationDialogComponent
   ],
   declarations: [LpAppInstallationsComponent,
     LpConfirmationDialogComponent,
     LpInstallationDialogComponent,
-    LpEditAppIntallationDialogComponent,
+    LpEditAppInstallationDialogComponent,
     LpWebhooksFormComponent,
     LpWebhooksEndpointComponent,
     LpEditAppInstallationComponent,

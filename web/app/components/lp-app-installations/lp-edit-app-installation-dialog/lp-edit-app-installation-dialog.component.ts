@@ -5,15 +5,15 @@ import {LpEditAppInstallationComponent} from '../lp-edit-app-installation/lp-edi
 
 @Component({
   selector: 'lp-edit-app-intallation-dialog',
-  templateUrl: './lp-edit-app-intallation-dialog.component.html',
-  styleUrls: ['./lp-edit-app-intallation-dialog.component.sass']
+  templateUrl: './lp-edit-app-installation-dialog.component.html',
+  styleUrls: ['./lp-edit-app-installation-dialog.component.sass']
 })
-export class LpEditAppIntallationDialogComponent implements OnInit {
+export class LpEditAppInstallationDialogComponent implements OnInit {
   
   public appInstallation: AppInstall;
   @ViewChild(LpEditAppInstallationComponent, {static: true}) appEditInstallationsComponent: LpEditAppInstallationComponent;
   
-  constructor(public dialogRef: MatDialogRef<LpEditAppIntallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<LpEditAppInstallationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     
     if (data.appInstallation) {
       this.appInstallation = new AppInstall().deserialize(data.appInstallation);
@@ -25,6 +25,7 @@ export class LpEditAppIntallationDialogComponent implements OnInit {
   
   updateAppInstallation() {
     this.appEditInstallationsComponent.updateEditableApplicationFields();
+    console.log(this.appInstallation);
     this.dialogRef.close({data: this.appInstallation});
   }
   
