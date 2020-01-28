@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Webhooks} from '../../../shared/models/app-installation/webhooks.model';
 import {Capabilities} from '../../../shared/models/app-installation/capabilities.model';
 import {Engagement} from '../../../shared/models/app-installation/engagement.model';
@@ -19,7 +19,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
   public whValid: boolean;
   public engagementFormValue = {};
   
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
   }
   
   public ttls = [
