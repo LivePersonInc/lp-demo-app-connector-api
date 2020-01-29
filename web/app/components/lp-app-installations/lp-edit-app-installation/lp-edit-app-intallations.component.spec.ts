@@ -7,48 +7,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LpWebhooksEndpointComponent} from '../lp-webhooks-endpoint/lp-webhooks-endpoint.component';
 import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import appInstallationJson from '../../../shared/mocks/appInstallation.json';
 
 describe('LpEditAppIntallationComponent', () => {
   let component: LpEditAppInstallationComponent;
   let fixture: ComponentFixture<LpEditAppInstallationComponent>;
-  const appInstallJSON = {
-    'client_name': 'Test Name',
-    'description': 'This is a description',
-    'enabled': true,
-    'grant_types': ['client_credentials'],
-    'response_types': ['code', 'token', 'id_token'],
-    'scope': 'msg.consumer',
-    'logo_uri': '/src/modules/campaigns/assets/img/software/Mobile-App.png',
-    'capabilities': {
-      'engagement': {
-        'design_engagement': false,
-        'design_window': true,
-        'entry_point': ['section'],
-        'visitor_behavior': ['flow'],
-        'target_audience': ['external_referral', 'search_keywords', 'ip', 'platform', 'geo_location', 'returning_visitors', 'marketing_source', 'customer_type', 'age', 'balance', 'customer_id', 'gender', 'store_zip_code', 'store_number', 'company_size', 'registration_date'],
-        'goal': ['url', 'purchase_total', 'num_of_pages', 'lead', 'service_activity'],
-        'consumer_identity': ['auth'],
-        'language_selection': false
-      },
-      'webhooks': {
-        'ms.MessagingEventNotification.ContentEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
-        'ms.MessagingEventNotification.RichContentEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
-        'ms.MessagingEventNotification.AcceptStatusEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
-        'ms.MessagingEventNotification.ChatStateEvent': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
-        'cqm.ExConversationChangeNotification': {'headers': [], 'endpoint': 'https://your/webhooks/endpoint'},
-        'retry': {'retention_time': 3600}
-      },
-      'broadcast': {'enabled': false},
-      // this property does not exist in a reall app installation
-      //'anyobject': {'enabled': {'otherobject': {'other': ['test']}}}
-    },
-    'client_id_issued_at': 1579856355,
-    'client_secret_expires_at': 0,
-    'client_id': 'xxxx-wewe-43e0-we-xxxxxxx',
-    'client_secret': 'xxxxewerq3r2qt',
-    'id': 'xxxx-b353-xx-bdc9-xxxxx',
-    'deleted': false
-  };
+  const appInstallJSON = appInstallationJson;
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
