@@ -6,10 +6,17 @@ import {LpHomeComponent} from './lp-home.component';
 import {InstallationService} from '../../core/services/installation.service';
 import {LoadingService} from '../../core/services/loading.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import appInstallationJson from '../../shared/mocks/appInstallation.json';
+import {AppInstall} from '../../shared/models/app-installation/appInstall.model';
+import {InstallationServiceStub} from '../../shared/mocks/installation.service.mock';
 
 describe('LpHomeComponent', () => {
   let component: LpHomeComponent;
   let fixture: ComponentFixture<LpHomeComponent>;
+  let appInstallation: AppInstall;
+  
+  appInstallation = new AppInstall().deserialize(appInstallationJson);
+  
   const authenticationService = {
     userLoggedSubject: {
       subscribe: () => {
@@ -23,19 +30,10 @@ describe('LpHomeComponent', () => {
       }
     }
   };
-  const installationService = {
-    selectedApp: {
-      client_id: 'XXX',
-      client_secret: 'XXXX'
-    },
-    installationSubject: {
-      subscribe: () => {
-      
-      }
-    }
-  };
   const loadingService = {
     isLoadingSubscription: () => {
+    },
+    startLoading: () => {
     }
   };
   const router = jasmine.createSpy('Router');
@@ -45,8 +43,9 @@ describe('LpHomeComponent', () => {
         imports: [MaterialModule, BrowserAnimationsModule],
         declarations: [LpHomeComponent],
         providers: [
+          {provide: InstallationService, useClass: InstallationServiceStub},
           {provide: AuthenticationService, useValue: authenticationService},
-          {provide: InstallationService, useValue: installationService},
+          {provide: authenticationService},
           {provide: LoadingService, useValue: loadingService},
           {provide: Router, useValue: router}
         ]
@@ -64,9 +63,40 @@ describe('LpHomeComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  it('Should not modify any other property when the app is disabled/enabled', () => {
+  it('Should not modify the appInstallation passed object after diabled', () => {
+    expect(appInstallation.enabled).toEqual(true);
+    component.disableApp(appInstallation);
+    expect(appInstallation.enabled).toEqual(true);
+  });
+  
+  it('Should receive UPDATE_APP event when disabled', async () => {
+    let eventRecived = null;
     
-    // component.disableApp();
+    component.installationService.installationSubject.subscribe(event => {
+      if (event === 'UPDATE_APP') {
+        eventRecived = event;
+      }
+      
+    });
+    expect(appInstallation.enabled).toEqual(true);
+    component.disableApp(appInstallation);
+    expect(appInstallation.enabled).toEqual(true);
+    
+    expect(eventRecived).toEqual('UPDATE_APP');
     
   });
+  
+  it('Should not modify the appInstallation passed object after enable an app', () => {
+    appInstallation.enabled = false;
+    expect(appInstallation.enabled).toEqual(false);
+    component.enableApp(appInstallation);
+    expect(appInstallation.enabled).toEqual(false);
+    appInstallation.enabled = true;
+  });
+  
+  /*it('Should call openDemo when ' , () => {
+  
+  });*/
+  
+  
 });

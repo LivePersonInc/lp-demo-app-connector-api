@@ -118,7 +118,6 @@ describe('LpEditAppIntallationComponent', () => {
     component.updateEditableApplicationFields();
     
     expect(component.appInstall.capabilities.engagement).toBeDefined();
-    
   });
   
 });
