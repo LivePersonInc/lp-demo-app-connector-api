@@ -42,17 +42,16 @@ function authLocalStrategy() {
               logger.error("ERROR: Domain with name: " + LOGIN_DOMAIN_NAME + " was not found");
               return;
             }
-
             idpService
               .logIn(brandId, args, loginDomain)
               .then((resolve) => {
                 if (handleStatusCode(resolve[1].statusCode)) {
                   user = resolve[0];
-                  if (user.config && user.config.isAdmin) {
+                  if (user.config && user.config.isAdmin || user.config.isLPA) {
                     return done(null, user);
                   } else {
-                    logger.error("Unauthorized, Only admins users can login.");
-                    return done(null, false, {message: 'Only admins users can login.\n'});
+                    logger.error("Unauthorized, Only admins users Or LPA users can login.");
+                    return done(null, false, {message: 'Only admins users or LPA users can login.\n'});
                   }
                 } else {
                   logger.error("Unauthorized");
