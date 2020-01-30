@@ -54,11 +54,11 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   
   @Input('value')
   set value(val: any) {
-    this.defaultVisitorBehavior = val.visitorBehavior;
-    this.defaultEntryPoints = val.entryPoints;
-    this.defaultConsumerIdentity = val.consumerIdentity;
-    this.defaultGoals = val.goals;
-    this.defaultTargetAudience = val.targetAudience;
+    this.defaultVisitorBehavior = val.visitorBehavior || [];
+    this.defaultEntryPoints = val.entryPoints || [];
+    this.defaultConsumerIdentity = val.consumerIdentity || [];
+    this.defaultGoals = val.goals || [];
+    this.defaultTargetAudience = val.targetAudience || [];
   }
   
   constructor(private fb: FormBuilder) {
