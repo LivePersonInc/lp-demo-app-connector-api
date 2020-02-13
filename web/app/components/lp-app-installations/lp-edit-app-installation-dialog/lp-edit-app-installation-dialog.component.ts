@@ -25,7 +25,6 @@ export class LpEditAppInstallationDialogComponent implements OnInit {
   
   updateAppInstallation() {
     this.appEditInstallationsComponent.updateEditableApplicationFields();
-    console.log(this.appInstallation);
     this.dialogRef.close({data: this.appInstallation});
   }
   

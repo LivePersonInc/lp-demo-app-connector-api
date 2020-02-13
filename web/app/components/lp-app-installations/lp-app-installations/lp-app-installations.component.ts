@@ -112,7 +112,6 @@ export class LpAppInstallationsComponent implements OnInit {
     
     // add engagement object
     const engagement = this.form.controls['engagementInfo'].value;
-    console.log(engagement);
     appInstall.capabilities.engagement = new Engagement();
     appInstall.capabilities.engagement.design_engagement = engagement.designEngagement;
     appInstall.capabilities.engagement.design_window = engagement.designWindow;
