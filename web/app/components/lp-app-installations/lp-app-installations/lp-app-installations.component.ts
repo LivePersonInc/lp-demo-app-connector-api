@@ -113,14 +113,7 @@ export class LpAppInstallationsComponent implements OnInit {
     // add engagement object
     const engagement = this.form.controls['engagementInfo'].value;
     appInstall.capabilities.engagement = new Engagement();
-    appInstall.capabilities.engagement.design_engagement = engagement.designEngagement;
-    appInstall.capabilities.engagement.design_window = engagement.designWindow;
-    appInstall.capabilities.engagement.language_selection = engagement.languageSelection;
-    appInstall.capabilities.engagement.entry_point = engagement.entryPoints;
-    appInstall.capabilities.engagement.visitor_behavior = engagement.visitorBehavior;
-    appInstall.capabilities.engagement.target_audience = engagement.targetAudience;
-    appInstall.capabilities.engagement.goal = engagement.goals;
-    appInstall.capabilities.engagement.consumer_identity = engagement.consumerIdentity;
+    appInstall.capabilities.engagement.deserialize(engagement);
     
     this.cleanEmptyEndpoints(appInstall);
     
@@ -187,14 +180,14 @@ export class LpAppInstallationsComponent implements OnInit {
     const defaultConsumerIdentity = ['auth'];
     
     this.engagementFormValue = {
-      designEngagement: false,
-      designWindow: false,
-      languageSelection: false,
-      entryPoints: defaultEntryPoints,
-      visitorBehavior: defaultVisitorBehavior,
-      targetAudience: defaultTargetAudience,
-      goals: defaultGoals,
-      consumerIdentity: defaultConsumerIdentity
+      design_engagement: false,
+      design_window: false,
+      language_selection: false,
+      entry_point: defaultEntryPoints,
+      visitor_behavior: defaultVisitorBehavior,
+      target_audience: defaultTargetAudience,
+      goal: defaultGoals,
+      consumer_identity: defaultConsumerIdentity
     };
     
     this.form.controls['engagementInfo'].setValue(this.engagementFormValue);

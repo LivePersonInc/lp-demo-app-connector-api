@@ -63,14 +63,14 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     
     if (this.appInstall.capabilities.engagement) {
       this.engagementFormValue = {
-        designEngagement: this.appInstall.capabilities.engagement.design_engagement,
-        designWindow: this.appInstall.capabilities.engagement.design_window,
-        languageSelection: this.appInstall.capabilities.engagement.language_selection,
-        entryPoints: this.appInstall.capabilities.engagement.entry_point,
-        visitorBehavior: this.appInstall.capabilities.engagement.visitor_behavior,
-        targetAudience: this.appInstall.capabilities.engagement.target_audience,
-        goals: this.appInstall.capabilities.engagement.goal,
-        consumerIdentity: this.appInstall.capabilities.engagement.consumer_identity
+        design_engagement: this.appInstall.capabilities.engagement.design_engagement,
+        design_window: this.appInstall.capabilities.engagement.design_window,
+        language_selection: this.appInstall.capabilities.engagement.language_selection,
+        entry_point: this.appInstall.capabilities.engagement.entry_point,
+        visitor_behavior: this.appInstall.capabilities.engagement.visitor_behavior,
+        target_audience: this.appInstall.capabilities.engagement.target_audience,
+        goal: this.appInstall.capabilities.engagement.goal,
+        consumer_identity: this.appInstall.capabilities.engagement.consumer_identity
       };
     } else {
       this.setDefaultEngagementFormValues();
@@ -102,14 +102,7 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     
     // If app has not engagement the default values will be added
     if (engagement) {
-      this.appInstall.capabilities.engagement.design_engagement = engagement.designEngagement;
-      this.appInstall.capabilities.engagement.design_window = engagement.designWindow;
-      this.appInstall.capabilities.engagement.language_selection = engagement.languageSelection;
-      this.appInstall.capabilities.engagement.entry_point = engagement.entryPoints;
-      this.appInstall.capabilities.engagement.visitor_behavior = engagement.visitorBehavior;
-      this.appInstall.capabilities.engagement.target_audience = engagement.targetAudience;
-      this.appInstall.capabilities.engagement.goal = engagement.goals;
-      this.appInstall.capabilities.engagement.consumer_identity = engagement.consumerIdentity;
+      this.appInstall.capabilities.engagement.deserialize(engagement);
     } else {
       // if the form was not touched, the value that contains engagement properties is not load when the app has not engagement
       this.appInstall.capabilities.engagement.deserialize(this.engagementFormValue);
@@ -178,14 +171,14 @@ export class LpEditAppInstallationComponent implements OnInit, AfterViewInit {
     const defaultConsumerIdentity = ['auth'];
     
     this.engagementFormValue = {
-      designEngagement: false,
-      designWindow: false,
-      languageSelection: false,
-      entryPoints: defaultEntryPoints,
-      visitorBehavior: defaultVisitorBehavior,
-      targetAudience: defaultTargetAudience,
-      goals: defaultGoals,
-      consumerIdentity: defaultConsumerIdentity
+      design_engagement: false,
+      design_window: false,
+      language_selection: false,
+      entry_point: defaultEntryPoints,
+      visitor_behavior: defaultVisitorBehavior,
+      target_audience: defaultTargetAudience,
+      goal: defaultGoals,
+      consumer_identity: defaultConsumerIdentity
     };
     
   }

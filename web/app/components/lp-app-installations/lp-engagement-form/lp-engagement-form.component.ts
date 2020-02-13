@@ -54,11 +54,11 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
   
   @Input('value')
   set value(val: any) {
-    this.defaultVisitorBehavior = val.visitorBehavior || [];
-    this.defaultEntryPoints = val.entryPoints || [];
-    this.defaultConsumerIdentity = val.consumerIdentity || [];
-    this.defaultGoals = val.goals || [];
-    this.defaultTargetAudience = val.targetAudience || [];
+    this.defaultVisitorBehavior = val.visitor_behavior || [];
+    this.defaultEntryPoints = val.entry_point || [];
+    this.defaultConsumerIdentity = val.consumer_identity || [];
+    this.defaultGoals = val.goal || [];
+    this.defaultTargetAudience = val.target_audience || [];
   }
   
   constructor(private fb: FormBuilder) {
@@ -68,29 +68,29 @@ export class LpEngagementFormComponent implements OnInit, ControlValueAccessor, 
     /* HINT: Validation is base on App Installation SCHEMA: https://lpgithub.dev.lprnd.net/le-infra/Account-Config-Service/
 blob/master/ac-common-service-contracts/src/main/resources/installations/schema.json*/
     this.engagementForm = new FormGroup({
-      designEngagement: new FormControl(false),
-      designWindow: new FormControl(false),
-      languageSelection: new FormControl(false),
-      entryPoints: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10, this.validateUniqueItems]),
-      visitorBehavior: this.fb.array(this.defaultVisitorBehavior, [this.validateMax10, this.validateUniqueItems]),
-      targetAudience: this.fb.array(this.defaultTargetAudience, [this.validateMax20, this.validateUniqueItems]),
-      goals: this.fb.array(this.defaultGoals, [this.validateMax10, this.validateUniqueItems]),
-      consumerIdentity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
+      design_engagement: new FormControl(false),
+      design_window: new FormControl(false),
+      language_selection: new FormControl(false),
+      entry_point: this.fb.array(this.defaultEntryPoints, [this.validateRequired, this.validateMax10, this.validateUniqueItems]),
+      visitor_behavior: this.fb.array(this.defaultVisitorBehavior, [this.validateMax10, this.validateUniqueItems]),
+      target_audience: this.fb.array(this.defaultTargetAudience, [this.validateMax20, this.validateUniqueItems]),
+      goal: this.fb.array(this.defaultGoals, [this.validateMax10, this.validateUniqueItems]),
+      consumer_identity: this.fb.array(this.defaultConsumerIdentity, [this.validateRequired, this.validateMax5, this.validateUniqueItems])
     });
     
-    this.engagementForm.get('entryPoints').statusChanges.subscribe(
+    this.engagementForm.get('entry_point').statusChanges.subscribe(
       status => this.entryPointChipList.errorState = status === 'INVALID'
     );
-    this.engagementForm.get('visitorBehavior').statusChanges.subscribe(
+    this.engagementForm.get('visitor_behavior').statusChanges.subscribe(
       status => this.visitorBehaviorChipList.errorState = status === 'INVALID'
     );
-    this.engagementForm.get('targetAudience').statusChanges.subscribe(
+    this.engagementForm.get('target_audience').statusChanges.subscribe(
       status => this.targetAudienceChipList.errorState = status === 'INVALID'
     );
-    this.engagementForm.get('goals').statusChanges.subscribe(
+    this.engagementForm.get('goal').statusChanges.subscribe(
       status => this.goalsChipList.errorState = status === 'INVALID'
     );
-    this.engagementForm.get('consumerIdentity').statusChanges.subscribe(
+    this.engagementForm.get('consumer_identity').statusChanges.subscribe(
       status => this.consumerIdentityChipList.errorState = status === 'INVALID'
     );
     
