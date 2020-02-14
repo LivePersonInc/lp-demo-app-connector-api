@@ -4,4 +4,6 @@ dist/
 .idea/
 docs/
 coverage/
+e2e/
+test/
 npm-debug.log
