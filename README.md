@@ -46,7 +46,7 @@ It is recommended to use this app only with test accounts. When using the demo c
       - [Chat state events](#chat-state-events)
       - [Message status events](#message-status-events)
   - [Deployment](#Deployment)
-    - [Session_Secret](#Session-Secret)
+    - [Session Secret](#Session-Secret)
     - [Configuring Nginx](#Configuring-Nginx)
     - [Nginx configuration sample file](#Nginx-configuration-sample-file)
   
