@@ -46,6 +46,7 @@ It is recommended to use this app only with test accounts. When using the demo c
       - [Chat state events](#chat-state-events)
       - [Message status events](#message-status-events)
   - [Deployment](#Deployment)
+    - [Session_Secret](#Session-Secret)
     - [Configuring Nginx](#Configuring-Nginx)
     - [Nginx configuration sample file](#Nginx-configuration-sample-file)
   
@@ -405,6 +406,12 @@ For a correct deployment of this app, we need to consider the following:
         ...
       ```
  -  Run it with ```mpm start```. This will build the project with the production configuration.
+ 
+### Session Secret
+
+In order to create a secure session, we must create the secret environment variable: `process.env.secret`, if no environment variable is provided the default session key  
+will be used which is not secure. If you are using the docker-compose file included in this project, you need to provide a `.env` file in the deployment folded that contains `SESSION_SECRET="{your_secret}"`. If the session secret is not provided, it won't be possible to deploy the application.
+
   
 ### Configuring Nginx
 
