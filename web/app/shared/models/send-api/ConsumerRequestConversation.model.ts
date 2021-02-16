@@ -6,7 +6,7 @@ export class ConsumerRequestConversation {
   public skillId;
   public conversationContext;
   constructor(ttrDefName, campaignInfo, channelType, brandId, skillId, conversationContext) {
-    this.ttrDefName = ttrDefName || "CUSTOM";
+    this.ttrDefName = ttrDefName;
     this.campaignInfo = campaignInfo;
     this.channelType = channelType || "MESSAGING";
     this.brandId = brandId;

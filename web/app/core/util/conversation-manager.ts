@@ -30,17 +30,17 @@ import {DialogChange} from 'web/app/shared/models/send-api/DialogChange.model';
 
 @Injectable()
 export class ConversationManager {
-  
+
   public conversationEventSubject = new Subject<ConversationEvent>();
-  
+
   constructor(private sendApiService: SendApiService,
               protected stateManager: StateStorage,
               protected historyService: HistoryService) {
   }
-  
+
   public openConversation(conversation: Conversation): Observable<any> {
     conversation.isPostSurveyStarted = false;
-    
+
     return this.authenticate(conversation).pipe(flatMap((res: any) => {
       return this.openConversationRequest(conversation).pipe(map((res: any) => {
         conversation.conversationId = res['convId'];
@@ -51,7 +51,7 @@ export class ConversationManager {
       }));
     }))
   }
-  
+
   public authenticate(conversation: Conversation): Observable<any> {
     return this.getAppJWT(conversation).pipe(
       flatMap((res: any) => {
@@ -62,7 +62,7 @@ export class ConversationManager {
           }));
       }));
   }
-  
+
   public sendMessage(message: string, conversation: Conversation): Observable<any> {
     return this.sendMessageRequest(message, conversation).pipe(map(res => {
       let sequence;
@@ -70,11 +70,11 @@ export class ConversationManager {
         sequence = res.body.sequence;
       }
       conversation.messages.push(new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false));
-      
+
       this.updateState(conversation);
     }));
   }
-  
+
   public sendMessageWithImage(file: any, type: string, relativePath: string,
                               message: string, fileName: string, conversation: Conversation): Observable<any> {
     return this.getPreviewImage(file).pipe(flatMap(preview => {
@@ -86,12 +86,12 @@ export class ConversationManager {
         const msg = new ChatMessage(MessageType.SENT, new Date, message, conversation.userName, true, sequence, false);
         msg.file = new FileMessage(fileName, preview, relativePath);
         conversation.messages.push(msg);
-        
+
         this.updateState(conversation);
       }));
     }));
   }
-  
+
   public closeConversation(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     // TODO: should be done with sendRaw endpoint (sendMessage) wiht the right payload
@@ -101,28 +101,28 @@ export class ConversationManager {
         conversation.isConvStarted = false;
         this.updateState(conversation);
       }));
-    
+
   }
-  
+
   public closeConversationWithPCS(conversation: Conversation): Observable<any> {
     conversation.isPostSurveyStarted = true;
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getCloseConversationWithPCSBody(conversation));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
-  
+
+
   private getCloseConversationWithPCSBody(conversation: Conversation): Request {
     const dialogState = new DialogState(conversation.dialogId, 'CLOSE', 'Closed by consumer');
     const dialogChange = new DialogChange('DialogChange', 'UPDATE', dialogState);
     const body = new UpdateConversationField(conversation.conversationId, dialogChange);
-    
+
     return new Request('req', '2', 'cm.UpdateConversationField', body);
   }
-  
+
   public subscribeToMessageNotifications(conversation: Conversation) {
     conversation.eventSource = new EventSourcePolyfill(`${environment.protocol}://${environment.server}:${environment.port}/subscribe/notifications/${conversation.conversationId}/${conversation.appKey}`, {withCredentials: environment.production});
-    
+
     conversation.eventSource.onmessage = (notification => {
       this.handleIncomingNotifications(notification, conversation);
     });
@@ -133,7 +133,7 @@ export class ConversationManager {
       console.log(e);
     };
   }
-  
+
   public unSubscribeToMessageNotifications(conversation: Conversation) {
     if (conversation.eventSource instanceof EventSourcePolyfill) {
       conversation.eventSource.close();
@@ -141,7 +141,7 @@ export class ConversationManager {
       console.log('Error: There is not any instance of EventSourcePolyfill');
     }
   }
-  
+
   private getAppJWT(conversation: Conversation): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -150,7 +150,7 @@ export class ConversationManager {
     };
     return this.sendApiService.getAppJWT(conversation.branId, conversation.appKey, conversation.appSecret, httpOptions);
   }
-  
+
   private getConsumerJWS(conversation: Conversation): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -161,41 +161,41 @@ export class ConversationManager {
     const body = {ext_consumer_id: conversation.ext_consumer_id};
     return this.sendApiService.getConsumerJWS(conversation.branId, body, httpOptions);
   }
-  
+
   private sendMessageRequest(message: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getMessageRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   private openConversationRequest(conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getOpenConvRequestBody(conversation));
     return this.sendApiService.openConversation(conversation.branId, body, headers);
   }
-  
+
   public sendChatStateEventRequest(conversation: Conversation, event: ChatState): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getChatStateRequestBody(conversation, event));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   public sendEventAcceptStatusRequest(conversation: Conversation, event: Status, sequenceList: Array<number>): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getEventAcceptStatusRequestBody(conversation, event, sequenceList));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   public sendUploadUrlRequest(fileSize: string, fileType: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getUploadURLRequestBody(fileSize, fileType));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   public getDownloadUrl(relativePath: string, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const body = JSON.stringify(this.getDownloadURLRequestBody(relativePath));
-    
+
     if (!conversation.isConvStarted) {
       return this.authenticate(conversation).pipe(
         flatMap(r => {
@@ -205,18 +205,18 @@ export class ConversationManager {
     }
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   public uploadFileRequest(file: any, relativePath: string, tempUrlSig: string, tempUrlExpires: string): Observable<any> {
     return this.sendApiService.uploadFile(relativePath, tempUrlSig, tempUrlExpires, file);
   }
-  
+
   public sendMessageWithUploadedFileRequest(caption: string, relativePath: string, fileType: string, preview: any, conversation: Conversation): Observable<any> {
     const headers = this.addSendRawEndpointHeaders(conversation.appJWT, conversation.consumerJWS, conversation.features);
     const message = {'caption': caption, 'relativePath': relativePath, 'fileType': fileType, 'preview': preview};
     const body = JSON.stringify(this.getMessageWithFileRequestBody(message, conversation.dialogId, conversation.conversationId));
     return this.sendApiService.sendMessage(conversation.branId, body, headers);
   }
-  
+
   private addSendRawEndpointHeaders(appJWT, consumerJWS, features): any {
     return {
       'headers': {
@@ -227,31 +227,31 @@ export class ConversationManager {
       }
     };
   }
-  
+
   private handleIncomingNotifications(notification: any, conversation: Conversation) {
-    
+
     this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId, ConvEvent.EVENT_RECEIVED));
-    
+
     let data = JSON.parse(notification.data);
-    
+
     this.setChatState(data, conversation);
-    
+
     conversation.serverNotifications.push(data);
-    
+
     this.checkAndFilterIncomingTextMessages(data, conversation);
-    
+
     this.checkAndFilterIncomingRichContextMessages(data, conversation);
-    
+
     this.checkIfMessageIsAcceptedOrRead(data, conversation);
-    
+
     this.checkIfSurveyOpen(data, conversation);
-    
+
     this.checkIfConversationWasClosed(data, conversation);
     this.checkConsumerGeneratedId(data, conversation);
-    
+
     this.updateState(conversation);
   }
-  
+
   private checkAndFilterIncomingTextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -275,7 +275,7 @@ export class ConversationManager {
       console.error('ERROR parsing notification', error);
     }
   }
-  
+
   private checkAndFilterIncomingRichContextMessages(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
@@ -299,12 +299,12 @@ export class ConversationManager {
       console.error('ERROR parsing notification', error);
     }
   }
-  
+
   private checkIfMessageIsAcceptedOrRead(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].originatorMetadata &&
         data.body.changes[0].originatorMetadata.role !== 'CONSUMER') {
-        
+
         if (data.body.changes[0].event.type === 'AcceptStatusEvent') {
           if (data.body.changes[0].event.status === 'ACCEPT') {
             data.body.changes[0].event.sequenceList.forEach(number => {
@@ -323,14 +323,14 @@ export class ConversationManager {
               }
             });
           }
-          
+
         }
       }
     } catch (error) {
       console.error('ERROR parsing notification', error);
     }
   }
-  
+
   private checkIfConversationWasClosed(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails
@@ -347,7 +347,7 @@ export class ConversationManager {
       console.error('ERROR parsing notification', error);
     }
   }
-  
+
   private checkIfSurveyOpen(data: any, conversation: Conversation) {
     try {
       if (data.body.changes[0].result && data.body.changes[0].result.conversationDetails) {
@@ -365,21 +365,21 @@ export class ConversationManager {
       console.error('ERROR retrieving post survey', error);
     }
   }
-  
+
   private checkConsumerGeneratedId(data: any, conversation: Conversation) {
     try {
       if (!conversation.consumerId && data.body.changes[0].originatorMetadata
         && data.body.changes[0].originatorMetadata.role === 'CONSUMER') {
-        
+
         conversation.consumerId = data.body.changes[0].originatorMetadata.id;
-        
+
       }
-      
+
     } catch (error) {
       console.error('ERROR parsing notification', error);
     }
   }
-  
+
   private findMessageInConversationBySequence(sequence: number, conversation: Conversation): ChatMessage {
     let res = null;
     conversation.messages.forEach(m => {
@@ -389,38 +389,38 @@ export class ConversationManager {
     });
     return res;
   }
-  
+
   private getShowUserValue(userName: string, conversation: Conversation): boolean {
     return conversation.messages &&
       (conversation.messages.length === 0 || conversation.messages[conversation.messages.length - 1].userName !== userName);
   }
-  
+
   private getMessageRequestBody(message: string, dialogId: string, conversationId: string): Request {
     const body = new PublishContentEvent(dialogId, conversationId, new Event('ContentEvent', 'text/plain', message));
     return new Request('req', '3', 'ms.PublishEvent', body);
   }
-  
+
   private getMessageWithFileRequestBody(message: object, dialogId: string, conversationId: string): Request {
     return new Request('req', '3', 'ms.PublishEvent', new PublishContentEvent(dialogId, conversationId,
       new Event('ContentEvent', 'hosted/file', message)));
   }
-  
+
   private getUploadURLRequestBody(fileSize: string, fileType: string): Request {
     const body = {'fileSize': '' + fileSize + '', 'fileType': 'PNG'};
     return new Request('req', '3', 'ms.GenerateURLForUploadFile', body);
   }
-  
+
   private getDownloadURLRequestBody(relativePath: string): Request {
     const body = {'relativePath': '' + relativePath + ''};
-    
+
     return new Request('req', '3', 'ms.GenerateURLForDownloadFile', body);
   }
-  
+
   private getOpenConvRequestBody(conversation: Conversation): any {
     const campaignInfo = new CampaignInfo(conversation.campaignId, conversation.engagementId);
     const conversationContext = new ConversationContext(conversation.context_name, conversation.features);
     const requestBody = new ConsumerRequestConversation(
-      'CUSTOM',
+      null,
       campaignInfo,
       'MESSAGING',
       conversation.branId,
@@ -428,7 +428,7 @@ export class ConversationManager {
       conversationContext
     );
     const requestConversationPayload = new Request('req', '1,', 'cm.ConsumerRequestConversation', requestBody);
-    
+
     const pushNotificationData = new PushNotificationData('Service', 'CertName', 'TOKEN');
     const privateData = new PrivateData('1750345346', 'test@email.com', pushNotificationData);
     const setUserProfileBody = new SetUserProfile(
@@ -443,20 +443,20 @@ export class ConversationManager {
     const setUserProfilePayload = new Request('req', '2,', 'userprofile.SetUserProfile', setUserProfileBody);
     return [setUserProfilePayload, requestConversationPayload];
   }
-  
+
   // After some investigation, post survey does not accept any event states. The api should not be called when survey is triggered.
   private getChatStateRequestBody(conversation: Conversation, event: ChatState): any {
     const eventChatState = new EventChatState(event);
     const requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventChatState);
     return new Request('req', '1,', 'ms.PublishEvent', requestBody);
   }
-  
+
   private getEventAcceptStatusRequestBody(conversation: Conversation, event: Status, sequenceList: Array<number>): any {
     const eventAcceptStatus = new EventAcceptStatus(event, sequenceList);
     const requestBody = new PublishContentEvent(conversation.dialogId, conversation.conversationId, eventAcceptStatus);
     return new Request('req', '1,', 'ms.PublishEvent', requestBody);
   }
-  
+
   private updateState(conversation: Conversation) {
     const state = this.stateManager.getLastStoredStateByBrand(conversation.branId);
     state.selectedAppId = conversation.appKey;
@@ -475,7 +475,7 @@ export class ConversationManager {
     appState.engagementId = conversation.engagementId;
     this.stateManager.storeLastStateInLocalStorage(state, conversation.branId);
   }
-  
+
   public fidAppById(states: Array<AppState>, appId: string): AppState {
     if (states && states.length) {
       for (let i = 0; i < states.length; i++) {
@@ -486,7 +486,7 @@ export class ConversationManager {
     }
     return null;
   }
-  
+
   private setChatState(notificationJson: any, conversation: Conversation) {
     if (this.checkIfAcceptStatusEvent(notificationJson)) {
       if (notificationJson.body.changes[0].originatorMetadata &&
@@ -499,38 +499,38 @@ export class ConversationManager {
       }
     }
   }
-  
+
   private checkIfHasChatStateEventProperty(notification: any) {
     return notification.type === 'ms.MessagingEventNotification' && notification.body && notification.body.changes.length > 0
       && (notification.body.changes[0].event && notification.body.changes[0].event.type && notification.body.changes[0].event.chatState);
   }
-  
-  
+
+
   private checkIfAcceptStatusEvent(notification: any) {
     return this.checkIfHasChatStateEventProperty(notification) && notification.body.changes[0].event.type === 'ChatStateEvent';
   }
-  
+
   public addHistoryMessageToCurrentState(conversation: Conversation) {
     if (this.historyService.history && this.historyService.history.conversationHistoryRecords[0]
       && this.historyService.history.conversationHistoryRecords[0].messageRecords) {
-      
+
       if (this.checkIfConversationWasClosedInHistroy(this.historyService.history.conversationHistoryRecords[0])) {
         conversation.isConvStarted = false;
       } else {
         conversation.isConvStarted = true;
       }
-      
+
       this.historyService.history.conversationHistoryRecords[0].messageRecords.forEach(record => {
         let messageType = MessageType.RECEIVED;
         let userName = record.sentBy;
-        
+
         if (record.sentBy === 'Consumer') {
           messageType = MessageType.SENT;
           userName = conversation.userName;
         }
-        
+
         let message = new ChatMessage(messageType, record.timeL, '[ERROR] problem with record type!!', userName, true, record.seq, false);
-        
+
         switch (record.type) {
           case 'TEXT_PLAIN':
             message = new ChatMessage(messageType, record.timeL, record.messageData.msg.text, userName, true, record.seq, false);
@@ -550,40 +550,40 @@ export class ConversationManager {
             }
             break;
         }
-        
+
         conversation.messages.push(message);
       });
-      
+
       this.updateMessagesStatus(this.historyService.history.conversationHistoryRecords[0].messageStatuses, conversation);
-      
+
       conversation.messages.sort((a: ChatMessage, b: ChatMessage) => {
         return ((new Date(a.timestamp).getTime()) - (new Date(b.timestamp).getTime()));
       });
-      
+
       // this.conversationEventSubject.next(new ConversationEvent(conversation.conversationId,ConvEvent.MSG_RECEIVED));
     }
   }
-  
+
   private updateMessagesStatus(messageStatuses: any, conversation: Conversation) {
     messageStatuses.forEach(status => {
       const message = this.findMessageInConversationBySequence(status.seq, conversation);
       if (message) {
-        
+
         if (status.messageDeliveryStatus === 'READ') {
           message.read = true;
         }
-        
+
         if (status.messageDeliveryStatus === 'ACCEPT') {
           message.accepted = true;
         }
       }
     });
   }
-  
+
   private checkIfConversationWasClosedInHistroy(history): boolean {
     return history && history.info && history.info.status === 'CLOSE';
   }
-  
+
   private getPreviewImage(file): Observable<any> {
     const width = 100; // For scaling relative to width
     const reader = new FileReader();
@@ -599,7 +599,7 @@ export class ConversationManager {
           elem.height = img.height * scaleFactor;
           const ctx = <CanvasRenderingContext2D> elem.getContext('2d');
           ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-          
+
           ctx.canvas.toBlob(
             blob => {
               const readerNew = new FileReader();
@@ -622,5 +622,5 @@ export class ConversationManager {
       };
     });
   }
-  
+
 }
