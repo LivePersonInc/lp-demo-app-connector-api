@@ -10,9 +10,19 @@ services:
     ports:
       - 80:80
       - 443:443
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
   demoapp:
     image: eplaza/lp-connector-api-demo-app:latest
     environment:
       - secret=${SESSION_SECRET}
     container_name: demo-connector-app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
 
