@@ -13,6 +13,9 @@ const appInstallationService = new AppInstallationService(nconf);
 
 const serviceName = 'accountConfigReadWrite';
 
+const userAgentHeaderName = 'user-agent';
+const userAgentConnectorAppHub = 'Connector App Hub';
+
 router.get("/:brandId", (req, res, next) => {
   try {
     let brandId = req.params.brandId;
@@ -82,6 +85,7 @@ router.post("/:brandId", (req, res, next) => {
     args.headers = {};
     args.headers['content-type'] = 'application/json';
     args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+    args.headers[userAgentHeaderName] = userAgentConnectorAppHub;
     args.data = JSON.stringify(req.body);
     const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
@@ -112,6 +116,7 @@ router.put("/:brandId/:appId", (req, res, next) => {
     args.data = {};
     args.headers = {};
     args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+    args.headers[userAgentHeaderName] = userAgentConnectorAppHub;
     args.data = JSON.stringify(req.body);
     const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
@@ -148,6 +153,7 @@ router.delete("/:brandId/:appId", (req, res, next) => {
     args.data = {};
     args.headers = {};
     args.headers['authorization'] = `Bearer ${req.session.passport.user.bearer}`
+    args.headers[userAgentHeaderName] = userAgentConnectorAppHub;
     const domain = getDomainObjectByServiceName(serviceName, req.session.passport.user.csdsCollectionResponse).baseURI;
 
     appInstallationService.getAppById(appId, brandId, args, domain)
