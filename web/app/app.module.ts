@@ -8,7 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {SendApiService} from './core/services/send-api.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LpHomeComponent} from './components/lp-home/lp-home.component';
+import {LpHomeComponent} from './components/lp-home/lp-home/lp-home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {LpDemoComponent} from './components/lp-demo/lp-demo.component';
 import {AuthenticationService} from './core/services/authentication.service';

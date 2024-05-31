@@ -4,7 +4,7 @@ import {LpDemoComponent} from './components/lp-demo/lp-demo.component';
 import {AuthGuardGuard} from './core/guards/auth-guard.guard';
 import {LogoutGuard} from './core/guards/logout.guard';
 import {LpLoginComponent} from './components/lp-login/lp-login.component';
-import {LpHomeComponent} from './components/lp-home/lp-home.component';
+import {LpHomeComponent} from './components/lp-home/lp-home/lp-home.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},

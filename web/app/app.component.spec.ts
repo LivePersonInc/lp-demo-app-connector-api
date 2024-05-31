@@ -4,7 +4,7 @@ import {AppComponent} from './app.component';
 import {LpHeaderModule} from './components/lp-header/lp-header.module';
 import {MaterialModule} from './material.module';
 import {LoadingService} from './core/services/loading.service';
-import {LpHomeComponent} from './components/lp-home/lp-home.component';
+import {LpHomeComponent} from './components/lp-home/lp-home/lp-home.component';
 import {LpDemoComponent} from './components/lp-demo/lp-demo.component';
 import {LpConversationModule} from './components/lp-conversation/lp-conversation.module';
 import {APP_BASE_HREF} from '@angular/common';
@@ -15,7 +15,7 @@ import {LpAppInstallationsModule} from './components/lp-app-installations/lp-app
 describe('AppComponent', () => {
   beforeEach(async(() => {
     const authenticationService = jasmine.createSpy('AuthenticationService');
-    
+
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -37,11 +37,11 @@ describe('AppComponent', () => {
       ]
     }).compileComponents();
   }));
-  
+
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  
+
 });
