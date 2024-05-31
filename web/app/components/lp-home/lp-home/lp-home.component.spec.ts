@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import appInstallationJson from '../../../shared/mocks/appInstallation.json';
 import {AppInstall} from '../../../shared/models/app-installation/appInstall.model';
 import {InstallationServiceStub} from '../../../shared/mocks/installation.service.mock';
+import {LpAppSecretComponent} from '../lp-app-secret/lp-app-secret.component';
 
 describe('LpHomeComponent', () => {
   let component: LpHomeComponent;
@@ -41,7 +42,7 @@ describe('LpHomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [MaterialModule, BrowserAnimationsModule],
-        declarations: [LpHomeComponent],
+        declarations: [LpHomeComponent, LpAppSecretComponent],
         providers: [
           {provide: InstallationService, useClass: InstallationServiceStub},
           {provide: AuthenticationService, useValue: authenticationService},
