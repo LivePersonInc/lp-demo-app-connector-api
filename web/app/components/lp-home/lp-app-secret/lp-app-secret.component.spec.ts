@@ -56,6 +56,21 @@ describe('LpAppSecretComponent', () => {
     expect(secretTextElement.textContent).toEqual(component.maskedSecret);
   });
 
+  it('Should not fail on null client secret', () => {
+    // given a null client secret
+    component.clientSecret = null;
+    // given the button to reveal/mask the secret
+    const button = fixture.nativeElement.querySelector('button');
+
+    // when the button is clicked
+    button.click();
+    fixture.detectChanges();
+
+    // then an empty client secret is shown
+    expect(component.secretRevealed).toBeTrue();
+    expect(secretTextElement.textContent).toEqual('');
+  });
+
   it('#toggleMask() should toggle #secretRevealed', () => {
     expect(component.secretRevealed).toBeFalse();
     component.toggleMask();
